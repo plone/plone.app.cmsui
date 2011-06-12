@@ -1,0 +1,32 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:gs="http://namespaces.zope.org/genericsetup"
+    xmlns:zcml="http://namespaces.zope.org/zcml"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    xmlns:i18n="http://namespaces.zope.org/i18n"
+    i18n_domain="plone">
+
+    <include package="plone.app.registry" />
+
+    <gs:registerProfile
+        name="default"
+        title="CMS User Interface"
+        description="Installs a the Plone CMS User Interface"
+        directory="profiles/default"
+        for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+        provides="Products.GenericSetup.interfaces.EXTENSION"
+        />
+
+    <browser:resource
+        name="plone.app.cmsui.gif"
+        image="icon.gif"
+        />
+
+    <browser:page
+        name="cmsui-controlpanel"
+        for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+        class=".controlpanel.CMSUIControlPanelView"
+        permission="cmf.ManagePortal"
+        />
+
+</configure>

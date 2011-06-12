@@ -1,0 +1,6 @@
+<layers>
+    <layer
+        name="plone.app.cmsui"
+        interface="plone.app.cmsui.interfaces.ICMSUILayer"
+        />
+</layers>
