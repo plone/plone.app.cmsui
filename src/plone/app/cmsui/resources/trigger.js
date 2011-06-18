@@ -61,7 +61,6 @@
             id: 'cmsui-menu',
             name: 'cmsui-menu',
             src: '@@cmsui-menu',
-            style: 'position: fixed; with: 100%; z-index: 9999;',
             scrolling: 'no'
         });
         menu.wrapper = div({'class': 'cmsui-reset', id: 'cmsui-menu-wrapper'}, [

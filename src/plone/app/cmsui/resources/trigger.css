@@ -27,7 +27,7 @@
     position: fixed;
     width: 100%;
     height: 0;
-    z-index: 9999;
+    z-index: 9997;
 }
 
 /* @end */
@@ -52,6 +52,7 @@
     -moz-box-shadow: 0 0 3em 0.5em #666;
     -webkit-box-shadow: 0 0 3em #666;
     padding: 20px;
+    z-index: 9999;
 }
 
 #cmsui-overlay {
