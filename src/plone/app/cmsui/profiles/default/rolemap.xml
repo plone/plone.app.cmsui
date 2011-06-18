@@ -1,0 +1,10 @@
+<rolemap>
+    <permissions>
+        <permission name="Plone: View CMS UI" acquire="False">
+            <role name="Manager" />
+            <role name="Owner" />
+            <role name="Editor" />
+            <role name="Reviwer" />
+        </permission>
+    </permissions>
+</rolemap>

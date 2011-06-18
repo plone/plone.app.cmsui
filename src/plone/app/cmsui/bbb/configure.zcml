@@ -1,0 +1,44 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:gs="http://namespaces.zope.org/genericsetup"
+    xmlns:zcml="http://namespaces.zope.org/zcml"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    xmlns:i18n="http://namespaces.zope.org/i18n"
+    i18n_domain="plone">
+    
+    <!-- BBB registrations: Used to override/disable parts of Plone 4.x that
+         should not be in place when using plone.app.cmsui
+      -->
+
+    <browser:viewlet
+        name="plone.cmsui.menulink"
+        for="*"
+        layer="..interfaces.ICMSUILayer"
+        manager="plone.app.layout.viewlets.interfaces.IPortalTop"
+        template="menulink.pt"
+        permission="plone.ViewCMSUI"
+        />
+
+    <!-- TODO: Disable elements that should not be used when the new UI is
+               in place. See http://projects.plone.org/browse/NEWUI-1
+      -->
+
+    <browser:viewlet
+        name="plone.contentviews"
+        for="*"
+        layer="..interfaces.ICMSUILayer"
+        manager="plone.app.layout.viewlets.interfaces.IContentViews"
+        class=".nullviewlet.NullViewlet"
+        permission="zope.Public"
+        />
+    
+    <browser:viewlet
+        name="plone.contentactions"
+        for="*"
+        layer="..interfaces.ICMSUILayer"
+        manager="plone.app.layout.viewlets.interfaces.IContentViews"
+        class=".nullviewlet.NullViewlet"
+        permission="zope.Public"
+        />
+
+</configure>

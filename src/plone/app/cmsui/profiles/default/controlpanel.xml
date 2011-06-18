@@ -2,7 +2,7 @@
 <object
     name="portal_controlpanel"
     xmlns:i18n="http://xml.zope.org/namespaces/i18n"
-    i18n:domain="plone.app.cmsui"
+    i18n:domain="plone"
     purge="False">
 
     <configlet
@@ -12,7 +12,7 @@
         category="Plone"
         condition_expr=""
         url_expr="string:${portal_url}/@@cmsui-controlpanel"
-        icon_expr="string:${portal_url}/++resource++plone.app.cmsui.gif"
+        icon_expr="string:${portal_url}/++resource++plone.app.cmsui/icon.gif"
         visible="True"
         i18n:attributes="title">
             <permission>Manage portal</permission>

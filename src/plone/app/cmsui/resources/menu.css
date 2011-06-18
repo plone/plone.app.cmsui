@@ -1,0 +1,11 @@
+/* Styles applying to the toolbar iframe
+ */
+body {
+    padding: 0;
+    margin: 0;
+}
+
+#cmsui-menu-panel {
+    background-color: white;
+    border: solid black 1px;
+}

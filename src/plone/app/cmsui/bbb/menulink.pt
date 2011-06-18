@@ -1,0 +1,6 @@
+<!-- Fallback link to the menu, replaced on page load with an iframe version -->
+
+<!-- TODO: Improve the placement and appearance of this.
+           See http://projects.plone.org/browse/NEWUI-12
+  -->
+<a id="cmsui-menu-link" href="@@cmsui-menu">Manage page</a>

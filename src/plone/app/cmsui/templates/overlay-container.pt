@@ -1,0 +1,75 @@
+<metal:page define-macro="master">
+<tal:doctype tal:replace="structure string:&lt;!DOCTYPE html PUBLIC
+  &quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot;
+  &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;&gt;" />
+
+<html xmlns="http://www.w3.org/1999/xhtml" 
+    tal:define="portal_state context/@@plone_portal_state;
+        context_state context/@@plone_context_state;
+        plone_view context/@@plone;
+        lang portal_state/language;
+        portal_url portal_state/portal_url;
+        checkPermission nocall: context/portal_membership/checkPermission"
+    tal:attributes="lang lang;">
+
+<head>
+    
+    <!-- TODO: Manage overlay resources and shared elements here.
+               See http://projects.plone.org/browse/NEWUI-83 and
+                   http://projects.plone.org/browse/NEWUI-86
+      -->    
+    
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <!-- Forces IE8+ into newest rendering engine even if on an intranet. This has to be defined before any script/style tags. -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" /> 
+
+    <metal:baseslot define-slot="base">
+        <base tal:attributes="href plone_view/renderBase" /><!--[if lt IE 7]></base><![endif]-->
+    </metal:baseslot>
+
+    <tal:comment replace="nothing"> 
+        Various slots where you can insert elements in the header from a template.
+    </tal:comment>
+    <metal:topslot define-slot="top_slot" />
+    <metal:headslot define-slot="head_slot" />
+    <metal:styleslot define-slot="style_slot" />
+    <metal:javascriptslot define-slot="javascript_head_slot" />
+
+    <meta name="viewport" content="width=device-width; initial-scale=0.6666; maximum-scale=1.0; minimum-scale=0.6666" />
+    <meta name="generator" content="Plone - http://plone.org" />
+</head>
+
+<body tal:define="isRTL portal_state/is_rtl"
+    tal:attributes="dir python:isRTL and 'rtl' or 'ltr'">
+
+<div id="visual-portal-wrapper">
+
+        <metal:block define-slot="content">
+            <div metal:define-macro="content">
+
+                <div metal:use-macro="context/global_statusmessage/macros/portal_message">
+                    Status message
+                </div>
+
+                <metal:slot define-slot="body">
+                    <div id="content">
+
+                        <metal:header define-slot="header" tal:content="nothing">
+                            Visual Header
+                        </metal:header>
+
+                        <metal:bodytext define-slot="main" tal:content="nothing">
+                            Body
+                        </metal:bodytext>
+                    </div>
+                </metal:slot>
+
+            </div>
+        </metal:block>
+
+</div>
+</body>
+</html>
+
+</metal:page>
