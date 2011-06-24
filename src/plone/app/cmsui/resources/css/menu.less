@@ -1,0 +1,181 @@
+@totalWidth: 100%;
+@columns: 12;
+@horizontalSpace: 2%;
+@verticalSpace: 10px;
+
+@totalCell: @totalWidth / @columns;
+@columnWidth: @totalCell - (@horizontalSpace * 2);
+
+@baseFontFamily: Arial, "Helvetica Neue", Helvetica, Verdana, sans-serif;
+@baseFontSize: 12px;
+@baseFontColor: #fff;
+
+@headersFontFamily: 'Arial Black', sans-serif;
+@smallestBaseFont: Verdana, sans-serif;
+
+@linkColor: #fff;
+@verticalSpace: 10px;
+
+@ploneColor: #329FD7;
+
+@import "mixins.less";
+@import "960gs.less";
+@import "typography.less";
+
+html {
+    overflow-y: visible;
+}
+#toolbar {
+	.container();
+	.css3_linear_gradient(darken(@ploneColor, 20%), @ploneColor);
+	.css3_box_shadow(0 2px 12px rgba(0,0,0,0.5));
+	margin-top: 0;
+	padding-top: @verticalSpace/2;
+	
+	&:after {
+	    content: " ";
+	    display: block;
+	    height: 2px;
+	    background: darken(@ploneColor, 20%);
+	}
+	
+	ul {
+	    .horList();
+	    margin: 0;
+	    padding: 0;
+	}
+	a {
+	    color: @linkColor;
+	    text-decoration: none;
+	}
+		
+	.container:first-of-type {
+	    margin-top: 0;
+	    margin-bottom: 0;
+	    padding-bottom: @verticalSpace;
+	    padding-top: @verticalSpace;	    
+	    line-height: 2em;
+	    border-bottom: 1px solid darken(@ploneColor, 25%);
+
+    	#portal-logo {
+		    img {
+			    width: 100%;
+			}
+		}
+		#portal-breadcrumbs {
+			line-height: 2em;
+		    a {
+				display: inline-block;
+				padding: 0;
+				&:after {
+				    content: "\25BA";
+				    display: inline-block;
+				    margin-left: 0.5em;
+				    margin-right: 0.5em;
+				}				
+			}
+			li#path-home {
+			    a {
+				    background: transparent url(../images/plone_logo.png) 50% 50% no-repeat;
+				    width: 95px;
+				    height: 24px;
+				    position: relative;
+				    top: -0.3em;
+				}
+				&:after {
+				    content: "\25BA";
+				    display: inline-block;
+				    margin-left: 0.5em;
+				    margin-right: 0.5em;
+				}
+			}
+			span.current {
+			    padding: 0;
+			}	
+		}
+		#personal-tools {
+		    text-align: right;
+		}
+	}
+	
+	.container:last-of-type {
+	    margin-top: 0;
+	    padding-top: @verticalSpace;
+	    border-top: 1px solid lighten(@ploneColor, 5%);
+	    
+		#document-info,
+		#folder-actions {
+			display: inline;
+			li a {
+			    padding-top: 24px + @verticalSpace/3;
+			    text-align: center;
+			}
+		}		
+		span#avail-languages {
+		    .smaller();
+		}
+		#folder-actions {
+		    margin-left: @horizontalSpace * 2;
+		}		
+		#site-setup {	
+		    text-align: right;
+		    a {
+				display: inline-block;
+			    padding-top: 24px + @verticalSpace/3;
+			    text-align: center;			    
+			}
+		}
+	}
+}
+
+#toggle-toolbar {
+    background: @ploneColor;
+    height: @verticalSpace;
+    text-align: right;
+    a {
+	    display: inline-block;
+	    .css3_linear_gradient(@ploneColor, darken(@ploneColor, 20%));
+	    .css3_border_radius(0 0 5px 5px);
+	    border: 1px darken(@ploneColor, 30%);
+	    /*span {
+			display: inline-block;
+			height: 30px;
+			width: 30px;
+			background: transparent url('../images/pointer_down.png') 50% 50% no-repeat;		    
+		}*/
+	}
+}
+
+/* @group Icons */
+
+#document-workflow_state_draft a {
+    background: transparent url('../icons/Action.png') 50% 0 no-repeat;
+}
+#document-language a {
+    background: transparent url('../icons/Globe_Alt.png') 50% 0 no-repeat;
+}
+#document-creation_date a {
+    background: transparent url('../icons/Clock.png') 50% 0 no-repeat;
+}
+#document-author a {
+    background: transparent url('../icons/Person.png') 50% 0 no-repeat;
+}
+#document-settings a {
+    background: transparent url('../icons/List.png') 50% 0 no-repeat;
+}
+#document-edit a {
+    background: transparent url('../icons/Edit.png') 50% 0 no-repeat;
+}
+
+#folder-contents a {
+    background: transparent url('../icons/Folder.png') 50% 0 no-repeat;    
+}
+#folder-add_content a {
+    background: transparent url('../icons/Folder_Add.png') 50% 0 no-repeat;
+}
+
+#site-setup a {
+    background: transparent url('../icons/Wrench_Screwdriver.png') 50% 0 no-repeat;    
+}
+
+/* @end */	    
