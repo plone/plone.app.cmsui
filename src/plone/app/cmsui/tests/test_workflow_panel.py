@@ -76,3 +76,25 @@ class TestWorkflowPanel(unittest.TestCase):
         
         self.assertEqual("published", portal.portal_workflow.getInfoFor(document, "review_state"))
     
+    def test_can_enter_changenote(self):
+        browser = Browser(self.layer['app'])
+        portal = self.layer['portal']
+        setRoles(portal, TEST_USER_ID, ('Member', 'Manager'))
+        document_id = portal.invokeFactory("Document", "changenote_transition_doc", title="Workflow note")
+        document = portal[document_id]
+        transaction.commit()
+        
+        browser_login(portal, browser)
+        browser.open(document.absolute_url())
+        browser.getLink("Manage page").click()
+        browser.getLink("Workflow actions").click()
+        workflow_actions = browser.getControl(name="workflow_action")
+        workflow_actions.getControl(value="publish").click()
+        # We set up a comment this time
+        browser.getControl(name="comment").value = "wibble fkjwel"
+        browser.getControl("Save").click()
+        
+        # and it shows up in the workflow history
+        self.assertEqual("publish", document.workflow_history['plone_workflow'][-1]['action'])
+        self.assertEqual("wibble fkjwel", document.workflow_history['plone_workflow'][-1]['comments'])
+    
