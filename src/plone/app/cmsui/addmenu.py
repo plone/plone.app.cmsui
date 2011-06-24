@@ -19,9 +19,6 @@ class AddableTypesVocabulary(object):
         
         factories_view = getMultiAdapter((context, request), name='folder_factories')
 
-        haveMore = False
-        include = None
-
         addContext = factories_view.add_context()
         allowedTypes = _allowedTypes(request, addContext)
         items = [SimpleTerm(i.id, i.id, i.Title()) for i in allowedTypes]
