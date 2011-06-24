@@ -53,6 +53,18 @@
         permission="plone.ViewCMSUI"
         />
 
+    <!-- "Add new" menu overlay -->
+
+    <browser:page
+        name="cmsui-add-new"
+        for="*"
+        class=".addmenu.AddMenu"
+        template="templates/add-menu.pt"
+        permission="plone.ViewCMSUI"
+        />
+
+
+
     <!-- Static resources -->
 
     <browser:resourceDirectory
