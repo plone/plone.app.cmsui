@@ -27,17 +27,17 @@
 
           <dl>
               <tal:typelist repeat="item view/addable_types">
-                  <dt>
-                      <input type="radio" name="url"
-                             tal:attributes="value item/action;
-                                             id string:form-field-${item/extra/id}" />
-                      <label tal:attributes="class string:contenttype-${item/extra/id};
-                                             for string:form-field-${item/extra/id};">
-                          <img tal:attributes="src item/icon" alt="" />
-                          <span tal:replace="item/title">Type title</span>
-                      </label>
-                  </dt>
-                  <dd tal:content="item/description">Type description</dd>
+                  <label tal:attributes="class string:contenttype-${item/extra/id};
+                                         for string:form-field-${item/extra/id};">
+                      <dt>
+                          <input type="radio" name="url"
+                                 tal:attributes="value item/action;
+                                                 id string:form-field-${item/extra/id}" />
+                              <img tal:attributes="src item/icon" alt="" />
+                              <span tal:replace="item/title">Type title</span>
+                      </dt>
+                      <dd tal:content="item/description">Type description</dd>
+                  </label>
               </tal:typelist>
           </dl>
 
