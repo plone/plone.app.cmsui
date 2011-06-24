@@ -165,7 +165,7 @@ class FolderContents(BrowserView):
             if obj.portal_type in use_view_action:
                 view_url = url + '/view'
             elif obj.is_folderish:
-                view_url = url + "/folder_contents"
+                view_url = url + "/cmsui-folder-contents"
             else:
                 view_url = url
 
