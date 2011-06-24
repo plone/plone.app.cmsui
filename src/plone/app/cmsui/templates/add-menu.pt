@@ -21,21 +21,39 @@
 
       -->
 
-      <dl>
-          <tal:typelist repeat="item view/addable_types">
-              <dt>
-                  <input type="radio" name="url"
-                         tal:attributes="value item/action;
-                                         id string:form-field-${item/extra/id}" />
-                  <label tal:attributes="class string:contenttype-${item/extra/id};
-                                         for string:form-field-${item/extra/id};">
-                      <img tal:attributes="src item/icon" alt="" />
-                      <span tal:replace="item/title">Type title</span>
-                  </label>
-              </dt>
-              <dd tal:content="item/description">Type description</dd>
-          </tal:typelist>
-      </dl>
+      
+      <form name="quickAdd" method="post" 
+          tal:attributes="action string:${context/absolute_url}/@@folder_factories">
+
+          <dl>
+              <tal:typelist repeat="item view/addable_types">
+                  <dt>
+                      <input type="radio" name="url"
+                             tal:attributes="value item/action;
+                                             id string:form-field-${item/extra/id}" />
+                      <label tal:attributes="class string:contenttype-${item/extra/id};
+                                             for string:form-field-${item/extra/id};">
+                          <img tal:attributes="src item/icon" alt="" />
+                          <span tal:replace="item/title">Type title</span>
+                      </label>
+                  </dt>
+                  <dd tal:content="item/description">Type description</dd>
+              </tal:typelist>
+          </dl>
+
+          <label for="title">Title</label>
+          <input type="text" id="title" name="title" />
+
+          <div class="formControls">
+              <input class="standalone"
+                    type="submit"
+                    value="Add"
+                    name="form.button.Add"
+                    i18n:attributes="value label_add"
+                    />
+          </div>
+      </form>      
+      
 
 
 </metal:content-core>
