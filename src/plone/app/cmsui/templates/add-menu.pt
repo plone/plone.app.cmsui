@@ -11,9 +11,8 @@
 
     <h1 class="documentFirstHeading" i18n:translate="heading_add_new_item">Add new item</h1>
 
-    <div class="documentDescription"
-       i18n:translate="description_add_new_item">
-        Select the type of item you want to add to your folder.
+    <div>Adding content to
+        <span>Home > Products > MyFolder</span>
     </div>
     
     <form name="quickAdd" method="post" 
