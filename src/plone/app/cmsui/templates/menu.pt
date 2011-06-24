@@ -65,8 +65,8 @@
             <ul id="document-info">
                 <li id="document-creation_date"><a href="#">June 23, 2011</a></li>
                 <li id="document-author"><a href="#">John Doe</a></li>
-                <li id="document-workflow_state_draft"><a href="#">Workflow actions</a></li>
-                <li id="document-language" href="@@cmsui-workflow-panel"><a href="#">English
+                <li id="document-workflow_state_draft"><a class="overlayLink" href="@@cmsui-workflow-panel">Workflow actions</a></li>
+                <li id="document-language"><a href="#">English
                     <span id="avail-languages">(+de, es)</span></a></li>
                 <li id="document-edit"><a href="#">Edit</a></li>
                 <li id="document-settings"><a href="#">Settings</a></li>
@@ -82,7 +82,6 @@
         <aside class="grid_2" id="site-setup">
             <a href="#">Site configuration</a>
         </aside>
->>>>>>> master
     </div>
 
 </section>
