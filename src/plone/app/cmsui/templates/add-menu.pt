@@ -9,7 +9,12 @@
 
 <metal:content-core fill-slot="content">
 
-    <h1 class="documentFirstHeading">Add new</h1>
+    <h1 class="documentFirstHeading" i18n:translate="heading_add_new_item">Add new item</h1>
+
+    <div class="documentDescription"
+       i18n:translate="description_add_new_item">
+        Select the type of item you want to add to your folder.
+    </div>
     
     <!-- TODO: Put overlay contents here.
                See http://projects.plone.org/browse/NEWUI-8
