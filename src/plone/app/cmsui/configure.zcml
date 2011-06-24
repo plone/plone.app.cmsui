@@ -53,6 +53,15 @@
         permission="plone.ViewCMSUI"
         />
 
+    <!-- Folder contents overlay -->
+    <browser:page
+        name="cmsui-folder-contents"
+        for="*"
+        class=".foldercontents.FolderContents"
+        template="templates/folder-contents.pt"
+        permission="plone.ViewCMSUI"
+        />
+
     <!-- Static resources -->
 
     <browser:resourceDirectory
