@@ -4,19 +4,16 @@
  */
 
 (function ($) {
-    var cmsui = window.parent.cmsui;
-    cmsui.overlay.close(function () {
-
-        // TODO
-
-    });
     $().ready(function () {
-        $('#document-info a, #folder-actions a, #site-setup a').click(function (e) {
-            var link = $(this);
-            cmsui.overlay.open(link.attr('href'), function () {
+        var iframe = $('#plone-cmsui-menu', window.parent.document);
+        $('a.overlayLink').prepOverlay({
+            subtype: 'ajax',
+            filter: common_content_filter
             });
-            e.preventDefault();
-        });
+
+        iframe.height('100%');
+        $(window.parent.document.body).css('overflow', 'hidden');
+        //iframe.height($('#visual-portal-wrapper').height());
 
     });
 }(jQuery));
