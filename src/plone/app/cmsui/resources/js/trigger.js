@@ -60,7 +60,7 @@
         menu.iframe = iframe({
             id: 'cmsui-menu',
             name: 'cmsui-menu',
-            src: '@@cmsui-menu',
+            src: $("#cmsui-menu-link").attr("href"),
             scrolling: 'no'
         });
         menu.wrapper = div({'class': 'cmsui-reset', id: 'cmsui-menu-wrapper'}, [
