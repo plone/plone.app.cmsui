@@ -5,6 +5,7 @@ from plone.app.testing import TEST_USER_PASSWORD
 from plone.app.testing import applyProfile
 from plone.app.testing.layers import FunctionalTesting
 from plone.app.testing.layers import IntegrationTesting
+from Products.CMFCore.utils import getToolByName
 from zope.configuration import xmlconfig
 
 class CMSUI(PloneSandboxLayer):
@@ -18,6 +19,9 @@ class CMSUI(PloneSandboxLayer):
     def setUpPloneSite(self, portal):
         # install into the Plone site
         applyProfile(portal, 'plone.app.cmsui:default')
+        workflowTool = getToolByName(portal, 'portal_workflow')
+        workflowTool.setDefaultChain('plone_workflow')
+
 
 CMSUI_FIXTURE = CMSUI()
 CMSUI_INTEGRATION_TESTING = IntegrationTesting(bases=(CMSUI_FIXTURE,), name="CMSUI:Integration")
