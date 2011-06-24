@@ -41,5 +41,14 @@
         class=".nullviewlet.NullViewlet"
         permission="zope.Public"
         />
+    
+    <browser:page
+        name="folder_contents"
+        for="*"
+        layer="..interfaces.ICMSUILayer"
+        class="..foldercontents.FolderContents"
+        template="../templates/folder-contents.pt"
+        permission="plone.ViewCMSUI"
+        />
 
 </configure>
