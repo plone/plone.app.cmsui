@@ -131,7 +131,7 @@
 		</td>
 		<td>
                   <img tal:replace="structure item/icon|nothing" />
-                  <a href="#" tal:attributes="href string:${context/absolute_url}/@@cmsui-folder-contents;
+                  <a href="#" tal:attributes="href string:${item/view_url};
                                               title item/url_href_title|nothing;
                                               class string: ${item/state_class|python:''} ${item/type_class|python:''};">
                     <strong tal:omit-tag="not: item/is_browser_default|nothing"
