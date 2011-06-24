@@ -58,10 +58,14 @@
     <browser:page
         name="cmsui-add-new"
         for="*"
-        class=".addmenu.AddMenu"
-        template="templates/add-menu.pt"
+        class=".addmenu.AddForm"
         permission="plone.ViewCMSUI"
         />
+
+    <utility
+      component=".addmenu.AddableTypesVocabularyFactory"
+      name="plone.app.cmsui.AddableContentTypes"
+      />
 
 
 
