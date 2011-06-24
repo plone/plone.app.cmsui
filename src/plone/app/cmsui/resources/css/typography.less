@@ -1,0 +1,159 @@
+/* Modular Scale 
+---------------------- 
+12px @ 1:1.618	 69px @ 1:1.618	 
+----------------------*/
+/*
+Pixels      Ems      % of 13
+911.973    75.998   7,015.177
+765.142    63.762   5,885.708
+563.642    46.97    4,335.708
+472.894    39.408   3,637.646
+348.357    29.03    2,679.669
+292.271    24.356   2,248.238
+215.301    17.942   1,656.162
+180.637    15.053   1,389.515
+133.066    11.089   1,023.585
+111.642     9.304     858.785
+ 82.241     6.853     632.623
+ 69.000     5.75      530.769
+ 50.829     4.236     390.992
+ 42.645     3.554     328.038
+ 31.415     2.618     241.654
+ 26.357     2.196     202.746
+ 19.416     1.618     149.354
+ 16.290     1.358     125.308
+ 12.000     1          92.308
+ 10.068     0.839      77.446
+  7.417     0.618      57.054
+  6.222     0.519      47.862
+  4.584     0.382      35.262
+  3.845     0.32       29.577
+  2.833     0.236      21.792
+  2.376     0.198      18.277
+  1.751     0.146      13.469
+  1.468     0.122      11.292
+  1.082     0.09        8.323
+*/
+
+/* Provide sub–, sup–like styles without affecting line-height: gist.github.com/413930 */
+.sub, 
+.sup { line-height: 0; position: relative; }
+.sup { top: -0.5em; }
+.sub { bottom: -0.25em; }
+
+
+
+body {
+    font-size: @baseFontSize; 
+    line-height: 1.5em;
+    font-family: @baseFontFamily;
+    color: @baseFontColor;
+}
+
+h1, h2, h3, .portletHeader {
+    padding-top: 0;
+    padding-bottom: 0;
+    line-height: 1.25;
+    font-family: @headersFontFamily;
+}
+.portletHeader {
+    font-size: 1.358 * @baseFontSize;
+}
+h1 {
+    font-size: 3.554 * @baseFontSize;
+	font-family: @headersFontFamily;
+    margin: @verticalSpace 0;
+    line-height: 1.1em;
+}
+
+h2 {
+    font-size: 1.618 * @baseFontSize;  
+    margin: (@baseFontSize * 1.3) 0 0;
+}
+
+h3 {
+    font-size: 1.358 * @baseFontSize;
+    margin: (1.4 * @baseFontSize) 0;
+}
+.normal {
+    font-size: @baseFontSize;
+}
+.smaller {
+    font-size: 0.839 * @baseFontSize;
+    font-family: @smallestBaseFont;    
+}
+.smallest {
+    font-size: 0.618 * @baseFontSize;
+    font-family: @smallestBaseFont;
+}
+.larger {
+    font-size: 1.358 * @baseFontSize;
+}
+.largest {
+    font-size: 1.618 * @baseFontSize;
+}
+p, ul, ol, dl {
+    margin-top: 0;
+    margin-bottom: @verticalSpace;
+    p, ul, ol, dl {
+        margin-top:@verticalSpace/2;
+        margin-bottom:@verticalSpace/2;        
+    }
+}
+
+dt {
+    font-weight: bold;
+	margin-bottom: (@verticalSpace / 2)/1.3;
+}
+dd {
+    margin-left: @horizontalSpace;
+}
+pre {
+    padding: @verticalSpace @horizontalSpace;
+}
+table {
+    margin: @verticalSpace 0;
+    th, td {
+	    padding: 0.6em 1.25em;
+	}
+	table {
+	    margin: 0;
+	    th, td {
+	        padding: 3px;
+	    }
+	}
+	tr.even {
+	    /* even row in a table or a listing */
+	}
+	tr.selected { 
+		/* style for the selected row of a table */
+	}	
+}
+fieldset {
+	margin: @verticalSpace @horizontalSpace 0;
+	padding: 0;
+	legend {
+		margin-left: 0;
+		margin-bottom: @verticalSpace/2;
+		text-transform: uppercase;
+		font-weight: bold;
+	}
+	label {
+	    font-weight: bold;
+	    display: inline-block;
+	    margin-top: 0;
+	}
+	.fieldRequired,
+	.required {
+	    .smaller;
+	    display: inline-block;
+	    color: #ff0000;		
+	}
+}
+header {
+    margin-bottom: 2 * @verticalSpace;
+}
+footer {
+    margin-top: 2* @verticalSpace;
+    margin-bottom: @verticalSpace;
+}

@@ -16,6 +16,7 @@
         layer="..interfaces.ICMSUILayer"
         manager="plone.app.layout.viewlets.interfaces.IPortalTop"
         template="menulink.pt"
+        class=".menulink.MenuLinkViewlet"
         permission="plone.ViewCMSUI"
         />
 
