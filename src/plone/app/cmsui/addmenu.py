@@ -1,3 +1,5 @@
+from zope.component import queryUtility
+from plone.i18n.normalizer.interfaces import IIDNormalizer
 from plone.app.content.browser.folderfactories import _allowedTypes
 from plone.app.z3cform.layout import wrap_form
 from z3c.form import button, form, field
@@ -48,10 +50,10 @@ class AddMenu(form.Form):
         # invoke factory
         title = data['title']
         # title-to-id
-        id = 'bob'
+        util = queryUtility(IIDNormalizer)
+        id = util.normalize(title)
         # create the object
         self.context.invokeFactory('Document', id=id, title=title)
-        import pdb; pdb.set_trace( )
         # redirect to immediate_view
         # open edit overlay    
 
