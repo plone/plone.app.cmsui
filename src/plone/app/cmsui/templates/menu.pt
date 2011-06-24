@@ -18,7 +18,12 @@
                See http://projects.plone.org/browse/NEWUI-83
     -->
 
-    <script type="text/javascript" src="++resource++plone.app.cmsui/js/libs/jquery.js"></script>
+    <tal:resourceregistries>
+      <tal:styles replace="structure provider:plone.resourceregistries.styles" />
+      <tal:styles replace="structure provider:plone.resourceregistries.kineticstylesheets" />
+      <tal:scripts replace="structure provider:plone.resourceregistries.scripts" />
+    </tal:resourceregistries>
+    
     <script type="text/javascript" src="++resource++plone.app.cmsui/js/menu.js"></script>
 
     <link rel="stylesheet" href="++resource++plone.app.cmsui/css/boilerplate.css" />
