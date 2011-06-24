@@ -8,3 +8,6 @@ class Menu(BrowserView):
         # Disable theming
         self.request.response.setHeader('X-Theme-Disabled', 'True')
         return self.index()
+    
+    def baseURL(self):
+        return self.context.absolute_url()
