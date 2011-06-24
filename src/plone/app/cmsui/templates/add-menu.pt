@@ -9,7 +9,7 @@
 
 <metal:content-core fill-slot="content">
 
-    <h1 class="documentFirstHeading" i18n:translate="heading_add_new_item">Add new item</h1>
+    <h1 class="documentFirstHeading" i18n:translate="heading_add_new_item">Add content</h1>
 
     <div>
         Adding content to
