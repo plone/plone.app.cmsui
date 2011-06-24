@@ -1,12 +1,11 @@
-from zope.schema.vocabulary import SimpleVocabulary
-from zope.schema.vocabulary import SimpleTerm
 from plone.app.content.browser.folderfactories import _allowedTypes
 from plone.app.z3cform.layout import wrap_form
 from z3c.form import button, form, field
 from zope import interface, schema
-from zope.schema.interfaces import IVocabularyFactory
 from zope.component import getMultiAdapter
 from zope.interface import implements
+from zope.schema.interfaces import IVocabularyFactory
+from zope.schema.vocabulary import SimpleVocabulary, SimpleTerm
 
 
 class AddableTypesVocabulary(object):
