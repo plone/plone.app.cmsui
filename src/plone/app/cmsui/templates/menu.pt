@@ -1,15 +1,18 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
-      xmlns:tal="http://xml.zope.org/namespaces/tal"
-      xmlns:metal="http://xml.zope.org/namespaces/metal"
-      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
-      lang="en"
-      metal:use-macro="context/@@cmsui-overlay-container/macros/master"
-      i18n:domain="plone">
-
+<html xmlns="http://www.w3.org/1999/xhtml"
+      tal:define="portal_state context/@@plone_portal_state;
+          context_state context/@@plone_context_state;
+          plone_view context/@@plone;
+          lang portal_state/language;
+          portal_url portal_state/portal_url;
+          checkPermission nocall: context/portal_membership/checkPermission"
+      tal:attributes="lang lang;">
 <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <!-- Forces IE8+ into newest rendering engine even if on an intranet. This has to be defined before any script/style tags. -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" /> 
 
-<metal:block fill-slot="javascript_head_slot">
+    <base tal:attributes="href plone_view/renderBase" /><!--[if lt IE 7]></base><![endif]-->
 
     <!-- TODO: These should probably be managed by the resource registries.
                See http://projects.plone.org/browse/NEWUI-83
@@ -21,13 +24,12 @@
     <link rel="stylesheet" href="++resource++plone.app.cmsui/css/boilerplate.css" />
     <link rel="stylesheet" href="++resource++plone.app.cmsui/css/menu.css" />
 
-</metal:block>
-
 </head>
+<body tal:define="isRTL portal_state/is_rtl"
+    tal:attributes="dir python:isRTL and 'rtl' or 'ltr'">
 
-<body>
+<div id="visual-portal-wrapper">
 
-<metal:content-core fill-slot="content">
 
 <section id="toolbar">
 
@@ -66,7 +68,8 @@
             <ul id="document-info">
                 <li id="document-creation_date"><a href="#">June 23, 2011</a></li>
                 <li id="document-author"><a href="#">John Doe</a></li>
-                <li id="document-workflow_state_draft"><a href="#">Draft</a></li>
+                <li id="document-workflow_state_draft"><a class="overlayLink" href="" 
+                    tal:attributes="href string:${view/baseURL}/@@cmsui-workflow-panel">Workflow actions</a></li>
                 <li id="document-language"><a href="#">English
                     <span id="avail-languages">(+de, es)</span></a></li>
                 <li id="document-edit"><a href="#">Edit</a></li>
@@ -87,7 +90,6 @@
 
 </section>
 
-</metal:content-core>
-
+</div>
 </body>
 </html>

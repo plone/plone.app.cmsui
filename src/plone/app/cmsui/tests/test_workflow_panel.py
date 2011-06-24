@@ -1,0 +1,100 @@
+import unittest2 as unittest
+
+from plone.app.cmsui.testing import CMSUI_FUNCTIONAL_TESTING
+from plone.app.cmsui.testing import browser_login
+from plone.app.testing import TEST_USER_ID
+from plone.app.testing import setRoles
+from plone.testing.z2 import Browser
+import transaction
+
+class TestWorkflowPanel(unittest.TestCase):
+
+    layer = CMSUI_FUNCTIONAL_TESTING
+
+    def test_panel_linked_to_in_menu(self):
+        browser = Browser(self.layer['app'])
+        portal = self.layer['portal']
+        setRoles(portal, TEST_USER_ID, ('Member', 'Manager'))
+        # Commit so the change in roles is visible to the browser
+        transaction.commit()
+        
+        browser_login(portal, browser)
+        browser.open(portal.absolute_url())
+        browser.getLink("Manage page").click()
+        
+        # raises exception if not present
+        browser.getLink("Workflow actions").click()
+        self.assertIn("Workflow panel", browser.contents)
+    
+    def test_available_workflow_transition_shown_in_workflow_panel(self):
+        browser = Browser(self.layer['app'])
+        portal = self.layer['portal']
+        setRoles(portal, TEST_USER_ID, ('Member', 'Manager'))
+        document_id = portal.invokeFactory("Document", "transition_shown_in_workflow_panel_doc", title="Workflow transitions")
+        document = portal[document_id]
+        # Commit so the change in roles is visible to the browser
+        transaction.commit()
+        
+        browser_login(portal, browser)
+        browser.open(document.absolute_url())
+        browser.getLink("Manage page").click()
+        browser.getLink("Workflow actions").click()
+        
+        # The submit button should be available
+        transitions = portal.portal_workflow.getTransitionsFor(document)
+        transition_ids = [transition['id'] for transition in transitions]
+        # Ensure the workflow transition we are going to look for in the
+        # workflow panel is actually available to save debugging headaches
+        # later
+        self.assertEqual(sorted(['submit', 'hide', 'publish']), sorted(transition_ids))
+        
+        workflow_actions = browser.getControl(name="workflow_action")
+        submit_control = workflow_actions.getControl(value="submit")
+        hide_control = workflow_actions.getControl(value="hide")
+        publish_control = workflow_actions.getControl(value="publish")
+        
+        # Ugly, but it will do
+        self.assertEqual('Member submits content for publication', submit_control.mech_item.attrs['title'])
+        self.assertEqual('Member makes content private', hide_control.mech_item.attrs['title'])
+        self.assertEqual('Reviewer publishes content', publish_control.mech_item.attrs['title'])
+    
+    def test_choosing_transition_transitions_content(self):
+        browser = Browser(self.layer['app'])
+        portal = self.layer['portal']
+        setRoles(portal, TEST_USER_ID, ('Member', 'Manager'))
+        document_id = portal.invokeFactory("Document", "do_workflow_transition_doc", title="Workflow transitioning")
+        document = portal[document_id]
+        transaction.commit()
+        
+        browser_login(portal, browser)
+        browser.open(document.absolute_url())
+        browser.getLink("Manage page").click()
+        browser.getLink("Workflow actions").click()
+        workflow_actions = browser.getControl(name="workflow_action")
+        workflow_actions.getControl(value="publish").click()
+        browser.getControl("Save").click()
+        
+        self.assertEqual("published", portal.portal_workflow.getInfoFor(document, "review_state"))
+    
+    def test_can_enter_changenote(self):
+        browser = Browser(self.layer['app'])
+        portal = self.layer['portal']
+        setRoles(portal, TEST_USER_ID, ('Member', 'Manager'))
+        document_id = portal.invokeFactory("Document", "changenote_transition_doc", title="Workflow note")
+        document = portal[document_id]
+        transaction.commit()
+        
+        browser_login(portal, browser)
+        browser.open(document.absolute_url())
+        browser.getLink("Manage page").click()
+        browser.getLink("Workflow actions").click()
+        workflow_actions = browser.getControl(name="workflow_action")
+        workflow_actions.getControl(value="publish").click()
+        # We set up a comment this time
+        browser.getControl(name="comment").value = "wibble fkjwel"
+        browser.getControl("Save").click()
+        
+        # and it shows up in the workflow history
+        self.assertEqual("publish", document.workflow_history['plone_workflow'][-1]['action'])
+        self.assertEqual("wibble fkjwel", document.workflow_history['plone_workflow'][-1]['comments'])
+    
