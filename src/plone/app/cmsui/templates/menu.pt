@@ -14,10 +14,11 @@
                See http://projects.plone.org/browse/NEWUI-83
     -->
 
-    <script type="text/javascript" src="jquery.js"></script>
-    <script type="text/javascript" src="++resource++plone.app.cmsui/menu.js"></script>
+    <script type="text/javascript" src="++resource++plone.app.cmsui/js/libs/jquery.js"></script>
+    <script type="text/javascript" src="++resource++plone.app.cmsui/js/menu.js"></script>
 
-    <link rel="stylesheet" href="++resource++plone.app.cmsui/menu.css" />
+    <link rel="stylesheet" href="++resource++plone.app.cmsui/css/boilerplate.css" />
+    <link rel="stylesheet" href="++resource++plone.app.cmsui/css/menu.css" />
 
 </metal:block>
 
@@ -27,13 +28,63 @@
 
 <metal:content-core fill-slot="content">
 
-    <div id="cmsui-menu-panel">
-        
-        <!-- TODO: Put toolbar elements here -->
-        
-        <a class="overlayLink" href="@@cmsui-display-options">Display options</a>
-        
+<section id="toolbar">
+
+    <div class="container clearfix">
+
+        <!-- Plone log -->
+        <!-- <div class="grid_1">
+            <img src="images/plone_logo.png" id="portal-logo" alt="Plone logo" />
+        </div> -->
+
+        <!-- Breadcrumbs -->
+        <nav id="portal-breadcrumbs" class="grid_7 ">
+            <ul>
+                <li id='path-home'><a href="#"  class="ir">Home</a></li><li
+                ><a href="#">Products</a></li
+                ><li><a href="#">XYZ</a></li
+                ><li><span class="current">Features</span></li>
+            </ul>
+        </nav>
+
+        <!-- Personal links -->
+        <div class="grid_5">
+            <ul id="personal-tools">
+                <li><a href="#">My Preferences</a></li>
+                <li><a href="#">My Dashboard</a></li>
+                <li><a href="#">Logged in as John Doe</a></li>
+                <li><a href="#">Log out</a></li>
+            </ul>
+        </div>
     </div>
+
+    <div class="container clearfix">
+
+        <!-- Information about the current document -->
+        <div class="grid_10">
+            <ul id="document-info">
+                <li id="document-creation_date"><a href="#">June 23, 2011</a></li>
+                <li id="document-author"><a href="#">John Doe</a></li>
+                <li id="document-workflow_state_draft"><a href="#">Draft</a></li>
+                <li id="document-language"><a href="#">English
+                    <span id="avail-languages">(+de, es)</span></a></li>
+                <li id="document-edit"><a href="#">Edit</a></li>
+                <li id="document-settings"><a href="#">Settings</a></li>
+            </ul>
+
+            <!-- Links tangentially related to the current document -->
+            <ul id="folder-actions">
+                <li id="folder-contents"><a href="#">Contents</a></li>
+                <li id="folder-add_content"><a href="#">Add Content</a></li>
+            </ul>
+        </div>
+
+        <aside class="grid_2" id="site-setup">
+            <a href="#">Site configuration</a>
+        </aside>
+    </div>
+
+</section>
 
 </metal:content-core>
 
