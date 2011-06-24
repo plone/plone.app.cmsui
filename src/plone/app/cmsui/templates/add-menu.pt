@@ -46,9 +46,13 @@
                     />
           </div>
       </form>      
-      
 
-
+      <div>
+          <form>
+              Or select a file to upload
+              <input type="file" />
+          </form>
+      </div>
 </metal:content-core>
 
 </body>
