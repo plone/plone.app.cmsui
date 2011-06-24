@@ -7,7 +7,7 @@
       i18n:domain="plone">
 <body>
 
-<metal:content-core fill-slot="content">
+<metal:content-core fill-slot="body">
 
   <h1 class="documentFirstHeading" tal:content="view/title"> 
     Title
@@ -66,7 +66,8 @@
         </tr>
 
         <tr>
-          <th class="nosort column" id="foldercontents-order-column">
+          <th class="nosort column" id="foldercontents-order-column"
+              tal:condition="view/show_sort_column">
           </th>
           <th class="nosort" id="foldercontents-select-column">&nbsp;</th>
           <th class="nosort column"
@@ -130,7 +131,7 @@
 		</td>
 		<td>
                   <img tal:replace="structure item/icon|nothing" />
-                  <a href="#" tal:attributes="href string:${context/absolute_url}/@@cmsui-folder-contents;
+                  <a href="#" tal:attributes="href string:${item/view_url};
                                               title item/url_href_title|nothing;
                                               class string: ${item/state_class|python:''} ${item/type_class|python:''};">
                     <strong tal:omit-tag="not: item/is_browser_default|nothing"
