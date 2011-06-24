@@ -29,7 +29,8 @@
 
 <metal:content-core fill-slot="content">
 
-<section id="toolbar">
+<section id="toolbar"
+         tal:define="folder context/@@plone_context_state/folder">
 
     <div class="container clearfix">
 
@@ -75,7 +76,7 @@
 
             <!-- Links tangentially related to the current document -->
             <ul id="folder-actions">
-                <li id="folder-contents"><a href="#">Contents</a></li>
+                <li id="folder-contents"><a class="overlayLink" tal:attributes="href string:${folder/absolute_url}/cmsui-folder-contents">Contents</a></li>
                 <li id="folder-add_content"><a href="#">Add Content</a></li>
             </ul>
         </div>
