@@ -34,7 +34,7 @@
         template="templates/menu.pt"
         permission="plone.ViewCMSUI"
         />
-    
+
     <browser:page
         name="cmsui-overlay-container"
         for="*"
@@ -44,7 +44,7 @@
         />
 
     <!-- Display menu overlay -->
-    
+
     <browser:page
         name="cmsui-display-options"
         for="*"
@@ -59,7 +59,7 @@
         name="plone.app.cmsui"
         directory="resources"
         />
-    
+
     <!-- Control panel -->
 
     <browser:page
