@@ -25,9 +25,9 @@ body {
 }
 /* Font settings */
 body, button, input, select, textarea {
-	font: 16px/1.625 Georgia, serif;
 	*font-size: 1em; /* IE7 and older: IE can't resize px based text and most mobiles don't default the text to 16px */
 	color: #222; /* Black on white is too much contrast, #222 is a lot better */
+	font-family: Verdana, Arial, Helvetica, sans-serif;
 }
 p, blockquote, q, pre, address, hr, code, samp, dl, ol, ul, form, table, fieldset, menu, h4, h5, h6, img {
 	margin: 0 0 1.625em;
@@ -39,7 +39,7 @@ p, blockquote, q, pre, address, hr, code, samp, dl, ol, ul, form, table, fieldse
 h1, h2, h3, h4, h5, h6 {
 	font-size: 1em;
 	font-weight: bold;
-	font-family: Palatino, 'Palatino Linotype', 'Book Antiqua', FreeSerif, serif;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
 }
 h1 {
 	font-size: 4.25em; /* 68px */
