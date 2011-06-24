@@ -15,7 +15,8 @@
                See http://projects.plone.org/browse/NEWUI-7
       -->
 
-    <form>
+    <form method="POST" action="" tal:attributes="action request/URL">
+      <input type="hidden" name="paths:list" value="" tal:attributes="value python:'/'.join(context.getPhysicalPath())"/>
       <fieldset>
         <tal:radiobutton repeat="transition view/getTransitions">
           <input type="radio" name="workflow_action" value="" 
@@ -25,6 +26,9 @@
           <label for="" tal:attributes="for transition/id" tal:content="transition/title" />
         </tal:radiobutton>
       </fieldset>
+
+      <input type="submit" name="form.button.folderPublish" value="Save" />
+
     </form>
 
 

@@ -58,3 +58,21 @@ class TestWorkflowPanel(unittest.TestCase):
         self.assertEqual('Member makes content private', hide_control.mech_item.attrs['title'])
         self.assertEqual('Reviewer publishes content', publish_control.mech_item.attrs['title'])
     
+    def test_choosing_transition_transitions_content(self):
+        browser = Browser(self.layer['app'])
+        portal = self.layer['portal']
+        setRoles(portal, TEST_USER_ID, ('Member', 'Manager'))
+        document_id = portal.invokeFactory("Document", "do_workflow_transition_doc", title="Workflow transitioning")
+        document = portal[document_id]
+        transaction.commit()
+        
+        browser_login(portal, browser)
+        browser.open(document.absolute_url())
+        browser.getLink("Manage page").click()
+        browser.getLink("Workflow actions").click()
+        workflow_actions = browser.getControl(name="workflow_action")
+        workflow_actions.getControl(value="publish").click()
+        browser.getControl("Save").click()
+        
+        self.assertEqual("published", portal.portal_workflow.getInfoFor(document, "review_state"))
+    
