@@ -1,18 +1,15 @@
-from zope.schema.vocabulary import SimpleVocabulary
-from zope.component import getUtility
-from zope.app.publisher.interfaces.browser import IBrowserMenu
-from zope.publisher.browser import BrowserView
-from zope.component import queryUtility
-from plone.i18n.normalizer.interfaces import IIDNormalizer
 from plone.app.content.browser.folderfactories import _allowedTypes
-from plone.app.z3cform.layout import wrap_form
+from plone.i18n.normalizer.interfaces import IIDNormalizer
+from plone.z3cform.interfaces import IWrappedForm
 from z3c.form import button, form, field
 from zope import interface, schema
-from zope.component import getMultiAdapter
+from zope.app.publisher.interfaces.browser import IBrowserMenu
+from zope.component import getUtility, queryUtility, getMultiAdapter
 from zope.interface import implements
+from zope.publisher.browser import BrowserView
 from zope.schema.interfaces import IVocabularyFactory
 from zope.schema.vocabulary import SimpleVocabulary, SimpleTerm
-from plone.z3cform.interfaces import IWrappedForm
+
 
 class AddableTypesVocabulary(object):
     implements(IVocabularyFactory)
