@@ -33,6 +33,7 @@
     </tal:comment>
     <metal:topslot define-slot="top_slot" />
     <metal:headslot define-slot="head_slot" />
+    <link rel="stylesheet" href="++resource++plone.app.cmsui/css/gridless.css" />
     <metal:styleslot define-slot="style_slot" />
     <metal:javascriptslot define-slot="javascript_head_slot" />
 
