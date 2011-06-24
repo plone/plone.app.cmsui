@@ -311,6 +311,10 @@ class FolderContents(BrowserView):
         """
         return "nosort"
 
+    @lazy_property
+    def view_url(self):
+        return self.context.absolute_url() + '/cmsui-folder-contents'
+
     @property
     def selectall_url(self):
         return self.selectnone_url+'&select=all'
@@ -321,7 +325,7 @@ class FolderContents(BrowserView):
 
     @property
     def selectnone_url(self):
-        base = self.context.absolute_url() + '?pagenumber=%s' % (self.pagenumber)
+        base = self.view_url + '?pagenumber=%s' % (self.pagenumber)
         if self.show_all:
             base += '&show_all=true'
         return base
@@ -335,9 +339,5 @@ class FolderContents(BrowserView):
             return True
         return False
 
-    @property
-    def viewname(self):
-        return self.view_url.split('?')[0].split('/')[-1]
-    
     def quote_plus(self, string):
         return urllib.quote_plus(string)
