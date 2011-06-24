@@ -16,28 +16,22 @@
         Select the type of item you want to add to your folder.
     </div>
     
-    <!-- TODO: Put overlay contents here.
-               See http://projects.plone.org/browse/NEWUI-8
-
-      -->
-
-      
-      <form name="quickAdd" method="post" 
+    <form name="quickAdd" method="post" 
           tal:attributes="action string:${context/absolute_url}/@@folder_factories">
 
-          <dl>
-              <tal:typelist repeat="item view/addable_types">
-                  <label tal:attributes="class string:contenttype-${item/extra/id};
+        <dl>
+            <tal:typelist repeat="item view/addable_types">
+                <label tal:attributes="class string:contenttype-${item/extra/id};
                                          for string:form-field-${item/extra/id};">
-                      <dt>
-                          <input type="radio" name="url"
-                                 tal:attributes="value item/action;
-                                                 id string:form-field-${item/extra/id}" />
-                              <img tal:attributes="src item/icon" alt="" />
-                              <span tal:replace="item/title">Type title</span>
-                      </dt>
-                      <dd tal:content="item/description">Type description</dd>
-                  </label>
+                    <dt>
+                      <input type="radio" name="url"
+                             tal:attributes="value item/action;
+                                             id string:form-field-${item/extra/id}" />
+                      <img tal:attributes="src item/icon" alt="" />
+                      <span tal:replace="item/title">Type title</span>
+                    </dt>
+                    <dd tal:content="item/description">Type description</dd>
+                </label>
               </tal:typelist>
           </dl>
 
