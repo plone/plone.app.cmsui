@@ -33,17 +33,17 @@
 
     <div class="container clearfix">
 
-        <!-- Plone logo -->
-        <!-- <div class="grid_1">
-            <img src="images/plone_logo.png" id="portal-logo" alt="Plone logo" />
-        </div> -->
-
         <!-- Breadcrumbs -->
         <nav id="portal-breadcrumbs" class="grid_7 ">
             <ul>
                 <li id='path-home'><a tal:attributes="href view/portalState/navigation_root_url" class="ir">Home</a></li
                 ><li tal:repeat="crumb view/breadcrumbs"
-                ><a tal:attributes="href crumb/absolute_url" tal:content="crumb/Title">Item</a></li>
+                ><a tal:condition="not:repeat/crumb/end"
+                    tal:attributes="href crumb/absolute_url;"
+                    tal:content="crumb/Title">Item</a
+                ><span tal:condition="repeat/crumb/end" class="current"
+                       tal:content="crumb/Title">Item</span
+                ></li>
             </ul>
         </nav>
 
