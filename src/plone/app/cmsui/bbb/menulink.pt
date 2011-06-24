@@ -3,4 +3,4 @@
 <!-- TODO: Improve the placement and appearance of this.
            See http://projects.plone.org/browse/NEWUI-12
   -->
-<a id="cmsui-menu-link" href="@@cmsui-menu">Manage page</a>
+<a id="cmsui-menu-link" href="" tal:attributes="href view/getLink">Manage page</a>
