@@ -11,11 +11,11 @@
 
     });
     $().ready(function () {
-        $('a.overlayLink').click(function (e) {
+        $('#document-info a, #folder-actions a, #site-setup a').click(function (e) {
             var link = $(this);
             cmsui.overlay.open(link.attr('href'), function () {
             });
-            return false;
+            e.preventDefault();
         });
 
     });
