@@ -43,6 +43,17 @@
         permission="plone.ViewCMSUI"
         />
 
+    <!-- Workflow overlay -->
+    
+    <browser:page
+        name="cmsui-workflow-panel"
+        for="*"
+        class=".workflowpanel.WorkflowPanel"
+        template="templates/workflow-panel.pt"
+        permission="plone.ViewCMSUI"
+        />
+
+
     <!-- Display menu overlay -->
     
     <browser:page

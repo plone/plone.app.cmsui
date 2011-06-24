@@ -32,6 +32,7 @@
         <!-- TODO: Put toolbar elements here -->
         
         <a class="overlayLink" href="@@cmsui-display-options">Display options</a>
+        <a class="overlayLink" href="@@cmsui-workflow-panel">Workflow actions</a>
         
     </div>
 
