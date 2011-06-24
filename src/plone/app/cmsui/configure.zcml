@@ -69,7 +69,8 @@
     <browser:page
         name="cmsui-add-new"
         for="*"
-        class=".addmenu.AddForm"
+        class=".addmenu.AddMenu"
+        template="templates/add-menu.pt"
         permission="plone.ViewCMSUI"
         />
 
