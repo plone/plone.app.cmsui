@@ -8,6 +8,8 @@ class ICMSUISettings(Interface):
     """CMS UI settings stored in the registry
     """
 
+    folder_contents_batch_size = schema.Int(title=_(u"Folder Contents Batch Size"), default=20)
+
 class ICMSUILayer(Interface):
     """Browser layer used to indicate that plone.app.cmsui is installed
     """
