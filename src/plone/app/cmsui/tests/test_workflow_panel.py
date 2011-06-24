@@ -12,22 +12,22 @@ class TestWorkflowPanel(unittest.TestCase):
     layer = CMSUI_FUNCTIONAL_TESTING
 
     def test_panel_linked_to_in_menu(self):
-        self.browser = Browser(self.layer['app'])
+        browser = Browser(self.layer['app'])
         portal = self.layer['portal']
         setRoles(portal, TEST_USER_ID, ('Member', 'Manager'))
         # Commit so the change in roles is visible to the browser
         transaction.commit()
         
-        browser_login(portal, self.browser)
-        self.browser.open(portal.absolute_url())
-        self.browser.getLink("Manage page").click()
+        browser_login(portal, browser)
+        browser.open(portal.absolute_url())
+        browser.getLink("Manage page").click()
         
         # raises exception if not present
-        self.browser.getLink("Workflow actions").click()
-        self.assertIn("Workflow panel", self.browser.contents)
+        browser.getLink("Workflow actions").click()
+        self.assertIn("Workflow panel", browser.contents)
     
     def test_available_workflow_transition_shown_in_workflow_panel(self):
-        self.browser = Browser(self.layer['app'])
+        browser = Browser(self.layer['app'])
         portal = self.layer['portal']
         setRoles(portal, TEST_USER_ID, ('Member', 'Manager'))
         document_id = portal.invokeFactory("Document", "transition_shown_in_workflow_panel_doc", title="Workflow transitions")
@@ -35,10 +35,10 @@ class TestWorkflowPanel(unittest.TestCase):
         # Commit so the change in roles is visible to the browser
         transaction.commit()
         
-        browser_login(portal, self.browser)
-        self.browser.open(document.absolute_url())
-        self.browser.getLink("Manage page").click()
-        self.browser.getLink("Workflow actions").click()
+        browser_login(portal, browser)
+        browser.open(document.absolute_url())
+        browser.getLink("Manage page").click()
+        browser.getLink("Workflow actions").click()
         
         # The submit button should be available
         transitions = portal.portal_workflow.getTransitionsFor(document)
@@ -48,7 +48,7 @@ class TestWorkflowPanel(unittest.TestCase):
         # later
         self.assertEqual(sorted(['submit', 'hide', 'publish']), sorted(transition_ids))
         
-        workflow_actions = self.browser.getControl(name="workflow_action")
+        workflow_actions = browser.getControl(name="workflow_action")
         submit_control = workflow_actions.getControl(value="submit")
         hide_control = workflow_actions.getControl(value="hide")
         publish_control = workflow_actions.getControl(value="publish")
