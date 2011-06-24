@@ -1,3 +1,4 @@
+from Products.CMFCore.utils import getToolByName
 from zope.publisher.browser import BrowserView
 
 class WorkflowPanel(BrowserView):
@@ -8,3 +9,8 @@ class WorkflowPanel(BrowserView):
         # Disable theming
         self.request.response.setHeader('X-Theme-Disabled', 'True')
         return self.index()
+    
+    def getTransitions(self):
+        wft = getToolByName(self.context, 'portal_workflow')
+        return wft.getTransitionsFor(self.context)
+    

@@ -15,6 +15,19 @@
                See http://projects.plone.org/browse/NEWUI-7
       -->
 
+    <form>
+      <fieldset>
+        <tal:radiobutton repeat="transition view/getTransitions">
+          <input type="radio" name="workflow_action" value="" 
+            tal:attributes="value transition/id;
+                            id transition/id;
+                            title transition/title" />
+          <label for="" tal:attributes="for transition/id" tal:content="transition/title" />
+        </tal:radiobutton>
+      </fieldset>
+    </form>
+
+
 </metal:content-core>
 
 </body>
