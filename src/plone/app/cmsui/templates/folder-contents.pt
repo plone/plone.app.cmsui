@@ -7,7 +7,7 @@
       i18n:domain="plone">
 <body>
 
-<metal:content-core fill-slot="content">
+<metal:content-core fill-slot="body">
 
   <h1 class="documentFirstHeading" tal:content="view/title"> 
     Title
