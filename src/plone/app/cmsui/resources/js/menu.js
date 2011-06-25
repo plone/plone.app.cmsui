@@ -109,9 +109,9 @@ function eraseCookie(name) {
             toolbar.addClass('large').removeClass('small');
             height = toolbar.outerHeight();            
             $('#toolbar-bottom').css('top', -bottom_height);
-            parent_body.animate({'margin-top': height}, 1000);
-            $('#toolbar-bottom').animate({'top': 0}, 1000);
-            iframe.animate({'height': height}, 1000);
+            parent_body.animate({'margin-top': height}, 500);
+            $('#toolbar-bottom').animate({'top': 0}, 500);
+            iframe.animate({'height': height}, 500);
             createCookie('__plone_menu', 'large');
             createCookie('__plone_height', height);
             return false;
@@ -119,11 +119,11 @@ function eraseCookie(name) {
         $('#manage-page-close').click(function () {
             var bottom_height = $('#toolbar-bottom').outerHeight();
             height = toolbar.outerHeight() - bottom_height + 1;
-            iframe.animate({'height': height}, 1000);
-            parent_body.animate({'margin-top': height}, 1000, function () {
+            iframe.animate({'height': height}, 500);
+            parent_body.animate({'margin-top': height}, 500, function () {
                 toolbar.addClass('small').removeClass('large');
             });
-            $('#toolbar-bottom').animate({'top': -bottom_height}, 1000);
+            $('#toolbar-bottom').animate({'top': -bottom_height}, 500);
             createCookie('__plone_menu', 'small');
             createCookie('__plone_height', height);
             return false;
