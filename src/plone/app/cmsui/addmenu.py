@@ -73,7 +73,24 @@ class FileUploadForm(form.Form):
         data, errors = self.extractData()
         if errors:
             return
+        # Context may not be a container, get one.
+        context_state = getMultiAdapter((self.context, self.request), name="plone_context_state")
+        container = context_state.folder()
 
+        title = data['file'].filename
+        # Generate a name based on the title..
+        util = queryUtility(IIDNormalizer)
+        id = util.normalize(title)
+        
+        # Make sure our chosen id is unique, iterate until we get one that is.
+        chooser = INameChooser(container)
+        id = chooser._findUniqueName(id, None)
+
+        # create the object
+        container.invokeFactory('File', id=id, title=title)
+        container[id].setFile(data['file']self.data)
+        
+        self.request.response.redirect("%s" % container[id].absolute_url())
 
 FileUploadFormView = wrap_form(FileUploadForm)
 
