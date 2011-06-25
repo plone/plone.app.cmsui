@@ -40,7 +40,7 @@
     <div id="toolbar-top" class="container clearfix">
 
         <!-- Breadcrumbs -->
-        <nav id="portal-breadcrumbs" class="grid_7 ">
+        <nav id="portal-breadcrumbs" class="grid_5 ">
             <ul>
                 <li id='path-home'>
                     <a tal:attributes="href view/portalState/navigation_root_url">Home</a></li>
@@ -52,6 +52,11 @@
                 </li>
             </ul>
         </nav>
+
+        <div id="manage-page" class="grid_2">
+          <a href="#" id="manage-page-open">Make me bigger</a>
+          <a href="#" id="manage-page-close">Make me smaller</a>
+        </div>
 
         <!-- Personal links -->
         <ul id="personal-tools" class="grid_5">
