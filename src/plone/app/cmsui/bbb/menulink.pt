@@ -8,9 +8,7 @@
         tal:attributes="src view/getLink"></iframe>
 <div id="plone-cmsui-trigger" style="display:none;">
   <!-- diazo prepend rule -->
-  <noscript>
-    <a id="cmsui-menu-link" href="" tal:attributes="href view/getLink">Manage page</a>
-  </noscript>
+  <a id="cmsui-menu-link" href="" tal:attributes="href view/getLink">Manage page</a>
   <script type="text/javascript">
     // create the iframe
   </script>
