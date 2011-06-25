@@ -18,7 +18,7 @@ class TestMenuLink(unittest.TestCase):
         not the default view.
         """
 
-        self.browser = Browser(self.layer['app'])
+        browser = Browser(self.layer['app'])
         portal = self.layer['portal']
         setRoles(portal, TEST_USER_ID, ('Member', 'Manager'))
         document_id = portal.invokeFactory("Document", "menu_test_context", title="Context test")
@@ -26,8 +26,8 @@ class TestMenuLink(unittest.TestCase):
         # Commit so the change in roles is visible to the browser
         transaction.commit()
         
-        browser_login(portal, self.browser)
-        self.browser.open(document.absolute_url())
-        self.browser.getLink("Manage page").click()
-        self.assertIn("menu_test_context", self.browser.url)
+        browser_login(portal, browser)
+        browser.open(document.absolute_url())
+        browser.getLink("Manage page").click()
+        self.assertIn("menu_test_context", browser.url)
     

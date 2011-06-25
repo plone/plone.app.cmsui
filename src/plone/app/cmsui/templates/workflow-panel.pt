@@ -1,0 +1,43 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="context/@@cmsui-overlay-container/macros/master"
+      i18n:domain="plone">
+<body>
+
+<metal:content-core fill-slot="body">
+  <div id="content">
+
+    <h1 class="documentFirstHeading">Workflow panel</h1>
+    
+    <!-- TODO: Put overlay contents here.
+               See http://projects.plone.org/browse/NEWUI-7
+      -->
+
+    <form method="POST" action="" tal:attributes="action request/URL">
+      <input type="hidden" name="paths:list" value="" tal:attributes="value python:'/'.join(context.getPhysicalPath())"/>
+      <fieldset>
+        <tal:radiobutton repeat="transition view/getTransitions">
+          <input type="radio" name="workflow_action" value="" 
+            tal:attributes="value transition/id;
+                            id transition/id;
+                            title transition/title" />
+          <label for="" tal:attributes="for transition/id" tal:content="transition/title" />
+        </tal:radiobutton>
+      </fieldset>
+
+      <label for="comment">Enter a description of this change, e.g. the reason this was transitioned.</label>
+      <textarea name="comment" id="comment" />
+
+      <input type="submit" name="form.button.folderPublish" value="Save" />
+
+    </form>
+
+  </div>
+</metal:content-core>
+
+</body>
+</html>
+
