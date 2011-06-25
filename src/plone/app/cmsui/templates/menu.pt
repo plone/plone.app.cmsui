@@ -74,6 +74,10 @@
         <!-- Information about the current document -->
         <div class="grid_10">
             <ul id="document-info">
+                <li id="folder-contents"><a href="#"
+                    ><span i18n:translate="cmsui_contents" tal:omit-tag="">Structure</span
+                    ><tal:block condition="python:(view.contextState.is_structural_folder() or view.contextState.is_default_page()) and view.itemsInFolder() is not None"> (<span tal:replace="view/itemsInFolder">12</span>)</tal:block
+                    ></a></li>
                 <li tal:condition="python:view.modificationDate()"
                     id="document-history"
                     ><a class="overlayLink" href="#" tal:content="view/modificationDate">June 23, 2011</a></li>
@@ -84,18 +88,17 @@
                     id="document-workflow_state"
                     ><a class="overlayLink"
                         tal:attributes="href string:${view/baseURL}/@@cmsui-workflow-panel"
-                        tal:content="view/workflowState">Draft</a></li>
-                <li id="document-edit"
-                    ><a class="overlayLink" href="#">Edit</a></li>
-                <li id="document-settings"><a href="#">Settings</a></li>
+                        tal:content="view/workflowState">Draft</a></li
+                ><li tal:condition="python:view.editLink()"
+                    id="document-edit"
+                    ><a class="overlayLink"
+                        tal:attributes="href view/editLink"
+                        i18n:translate="cmsui_edit">Edit</a></li
+                ><li id="document-settings"><a href="#">Settings</a></li>
             </ul>
 
             <!-- Links tangentially related to the current document -->
             <ul id="folder-actions">
-                <li id="folder-contents"><a href="#"
-                    ><span i18n:translate="cmsui_contents" tal:omit-tag="">Structure</span
-                    ><tal:block condition="python:(view.contextState.is_structural_folder() or view.contextState.is_default_page()) and view.itemsInFolder() is not None"> (<span tal:replace="view/itemsInFolder">12</span>)</tal:block
-                    ></a></li>
                 <li id="folder-add_content"><a href="#">Add Content</a></li>
             </ul>
         </div>
