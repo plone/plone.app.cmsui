@@ -9,7 +9,6 @@
 
     <metal:content-core fill-slot="body">
       <div id="content">
-
         <h1 class="documentFirstHeading" i18n:translate="heading_add_new_item">Add content</h1>
 
         <div>
@@ -21,15 +20,23 @@
                    tal:attributes="href crumb/absolute_url" />
             </tal:children>
         </div>
-    
-        <dl>
-            <a class="overlayLink" tal:repeat="type view/allowedTypes"
-               tal:attributes="href type/action">
-                <dt tal:content="type/title"
-                    tal:attributes="class string:contenttype-${type/extra/id}"></dt>
-                <dd tal:content="type/description"></dd>
-            </a>
-        </dl>
+
+        <div class="row">
+            <div class="cell width-1:3 position-0">
+                <dl>
+                    <a class="overlayLink" tal:repeat="type view/allowedTypes"
+                       tal:attributes="href type/action">
+                        <dt tal:content="type/title"
+                            tal:attributes="class string:contenttype-${type/extra/id}"></dt>
+                        <dd tal:content="type/description"></dd>
+                    </a>
+                </dl>
+            </div>
+            <div class="cell width:2:3 position-1:3">
+            
+                [File upload goes here]
+            </div>
+        </div>
       </div> 
     
 </metal:content-core>
