@@ -13,7 +13,7 @@ function expandMenu() {
 function contractMenu(offset) {
     $('body', window.parent.document).css('overflow', 'auto');
     $(window.parent).scrollTop(offset);
-    $('#plone-cmsui-menu', window.parent.document).css('height', '139px');
+    $('#plone-cmsui-menu', window.parent.document).css('height', '116px');
 }
  
 (function ($) {

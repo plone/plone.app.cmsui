@@ -26,7 +26,7 @@
           z-index: 9999;
           -webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
           -moz-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
-          box-shadow: 0 2px 5x rgba(0, 0, 0, 0.5);
+          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
       }
   </style>
   <script type="text/javascript">
@@ -34,7 +34,7 @@
           var iframe = document.createElement('iframe'),
               link = document.getElementById('plone-cmsui-menu-link'),
               height_cookie = document.cookie.match(/__plone_height=([^;]*)/),
-              height = height_cookie ? height_cookie[1] : '111';
+              height = height_cookie ? height_cookie[1] : '116';
           if (iframe.allowTransparency !== undefined) {
               iframe.allowTransparency = 'true';
           }
