@@ -1,0 +1,38 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="context/@@cmsui-overlay-container/macros/master"
+      i18n:domain="plone">
+<body>
+
+    <metal:content-core fill-slot="body">
+      <div id="content">
+
+        <h1 class="documentFirstHeading" i18n:translate="heading_add_new_item">Add content</h1>
+
+        <div>
+            Adding content to
+            <a tal:attributes="href portal_state/navigation_root_url">Home</a>
+            <tal:children tal:repeat="crumb view/breadcrumbs">
+                &rsaquo;
+                <a tal:content="crumb/Title"
+                   tal:attributes="href crumb/absolute_url" />
+            </tal:children>
+        </div>
+    
+        <dl>
+            <a class="overlayLink" tal:repeat="type view/allowedTypes"
+               tal:attributes="href type/action">
+                <dt tal:content="type/title"
+                    tal:attributes="class string:contenttype-${type/extra/id}"></dt>
+                <dd tal:content="type/description"></dd>
+            </a>
+        </dl>
+      </div> 
+    
+</metal:content-core>
+
+</body>
+</html>
