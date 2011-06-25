@@ -142,12 +142,20 @@ class Menu(BrowserView):
 
     @memoize
     def editLink(self):
-        """Get the URL of the edit action
+        """Get the URL of the edit action - taking locking into account
         """
+        
+        if not self.securityManager.checkPermission('Modify portal content', self.context):
+            return None
+        
+        if self.contextState.is_locked():
+            return self.context.absolute_url() + "/@@cmsui-locked"
+        
         objectActions = self.contextState.actions('object')
         for action in objectActions:
             if action['id'] == self.EDIT_ACTION_ID:
-                return action['url']
+                return "%s?last_referer=%s" % (action['url'], self.context.absolute_url())
+        
         return None
     
     @memoize
