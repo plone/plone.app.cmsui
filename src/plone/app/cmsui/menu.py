@@ -101,7 +101,13 @@ class Menu(BrowserView):
     def authorName(self):
         """Get the full name of the author
         """
-        acl_users, owner = self.context.getOwnerTuple()
+        
+        owner = None
+        if hasattr(aq_base(self.context), 'Creator'):
+            owner = self.context.Creator()
+        if owner is None:
+            acl_users, owner = self.context.getOwnerTuple()
+        
         membership = self.tools.membership()
         memberInfo = membership.getMemberInfo(owner)
         return memberInfo.get('fullname', '') or owner
