@@ -15,7 +15,15 @@ function contractMenu(offset) {
     $(window.parent).scrollTop(offset);
     $('#plone-cmsui-menu', window.parent.document).css('height', '139px');
 }
- 
+
+function openLinksInOverlay() {
+    $("a.overlayLink").live('click', function(){
+        var url = $(this).attr("href");
+        $(".pb-ajax").load(url + ' ' + common_content_filter);
+        return false;
+    })
+}
+
 (function ($) {
     $().ready(function () {
         var iframe = $('#plone-cmsui-menu', window.parent.document);
@@ -30,11 +38,15 @@ function contractMenu(offset) {
                     offset = expandMenu();
                     return true; 
                 },
+                onLoad: function (e) {
+                    openLinksInOverlay();
+                    return true; 
+                }, 
                 onClose: function (e) { 
                     contractMenu(offset);
                     return true; 
-                } 
-            } 
+                }
+            }
         });
 
         // iframe.height($('#visual-portal-wrapper').outerHeight());
