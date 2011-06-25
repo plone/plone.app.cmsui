@@ -2,14 +2,15 @@ from plone.app.content.browser.folderfactories import _allowedTypes
 from plone.i18n.normalizer.interfaces import IIDNormalizer
 from plone.z3cform.interfaces import IWrappedForm
 from z3c.form import button, form, field
+from z3c.form.browser.radio import RadioFieldWidget
 from zope import interface, schema
 from zope.app.publisher.interfaces.browser import IBrowserMenu
 from zope.component import getUtility, queryUtility, getMultiAdapter
+from zope.container.interfaces import INameChooser
 from zope.interface import implements
 from zope.publisher.browser import BrowserView
 from zope.schema.interfaces import IVocabularyFactory
 from zope.schema.vocabulary import SimpleVocabulary, SimpleTerm
-from zope.container.interfaces import INameChooser
 
 
 class AddableTypesVocabulary(object):
@@ -41,7 +42,8 @@ class AddForm(form.Form):
     fields = field.Fields(IAddMenu)
     ignoreContext = True # don't use context to get widget data
     label = "Add content"
-    
+
+    fields['content_type'].widgetFactory = RadioFieldWidget
     
     @button.buttonAndHandler(u'Add content')
     def handleApply(self, action):
