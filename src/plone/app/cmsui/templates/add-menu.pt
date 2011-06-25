@@ -7,16 +7,32 @@
       i18n:domain="plone">
 <body>
 
-<metal:content-core fill-slot="content">
+    <metal:content-core fill-slot="body">
+      <div id="content">
 
-    <h1 class="documentFirstHeading">Add new</h1>
+        <h1 class="documentFirstHeading" i18n:translate="heading_add_new_item">Add content</h1>
+
+        <div>
+            Adding content to
+            <a tal:attributes="href portal_state/navigation_root_url">Home</a>
+            <tal:children tal:repeat="crumb view/breadcrumbs">
+                &rsaquo;
+                <a tal:content="crumb/Title"
+                   tal:attributes="href crumb/absolute_url" />
+            </tal:children>
+        </div>
     
-    <!-- TODO: Put overlay contents here.
-               See http://projects.plone.org/browse/NEWUI-8
-      -->
-
+        <dl>
+            <a tal:repeat="type view/allowedTypes"
+               tal:attributes="href type/action">
+                <dt tal:content="type/title"
+                    tal:attributes="class string:contenttype-${type/extra/id}"></dt>
+                <dd tal:content="type/description"></dd>
+            </a>
+        </dl>
+      </div> 
+    
 </metal:content-core>
 
 </body>
 </html>
-
