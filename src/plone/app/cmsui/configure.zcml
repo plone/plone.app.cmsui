@@ -78,7 +78,7 @@
     <!-- "Add new" menu overlay -->
 
     <browser:page
-        name="cmsui-add-new"
+        name="cmsui-add-content"
         for="*"
         class=".addmenu.AddMenu"
         template="templates/add-menu.pt"
@@ -86,7 +86,7 @@
         />
 
     <browser:page
-        name="cmsui-add-new-form"
+        name="cmsui-add-new-content"
         for="*"
         class=".addmenu.AddNewContentForm"
         permission="plone.ViewCMSUI"

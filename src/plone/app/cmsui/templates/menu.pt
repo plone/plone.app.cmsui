@@ -101,7 +101,7 @@
             <ul id="folder-actions">
                 <li id="folder-add_content">
                     <a class="overlayLink" href="" 
-                       tal:attributes="href string:${view/baseURL}/@@cmsui-add-new">
+                       tal:attributes="href string:${view/baseURL}/@@cmsui-add-content">
                     Add Content
                     </a>
                 </li>
