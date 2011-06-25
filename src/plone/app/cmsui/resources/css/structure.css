@@ -27,3 +27,7 @@ table.listing tbody tr.odd.error td, tr.error {
     margin-left: 0.5em;
     margin-right: 0.5em;
 }
+
+tr.dragging{ outline: 2px solid #FFD700; border-bottom:none; }
+tr.dragging td{ border-bottom: none }
+tr.dragindicator{ outline: none;}

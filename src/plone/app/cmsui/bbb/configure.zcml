@@ -48,11 +48,20 @@
         name="folder_contents"
         for="*"
         layer="..interfaces.ICMSUILayer"
-        class="..foldercontents.FolderContents"
-        template="../templates/folder-contents.pt"
+        class="..structure.StructureView"
+        template="../templates/structure.pt"
         permission="plone.ViewCMSUI"
         />
 
+    <browser:viewlet
+        name="plone.personal_bar"
+        for="*"
+        layer="..interfaces.ICMSUILayer"
+        manager="plone.app.layout.viewlets.interfaces.IPortalHeader"
+        class=".nullviewlet.NullViewlet"
+        permission="zope.Public"
+        />
+    
     <cmf:registerDirectory name="skins"
         directory="skins"
         recursive="true" />

@@ -6,13 +6,14 @@
       metal:use-macro="context/@@cmsui-overlay-container/macros/master"
       i18n:domain="plone">
 <head>
-<metal:block fill-slot="javascript_head_slot">
-    <script type="text/javascript" src="++resource++plone.app.cmsui/js/libs/jquery.js"></script>
-    <script type="text/javascript" src="++resource++plone.app.cmsui/js/dragdropreorder.js"></script>
-</metal:block>
-<metal:block fill-slot="style_slot">
-  <link rel="stylesheet" type="text/css" href="++resource++plone.app.cmsui/css/structure.css" />
-</metal:block>
+<tal:js metal:fill-slot="javascript_head_slot">
+<script type="text/javascript" src="++resource++plone.app.cmsui/js/dragdropreorder.js"></script>
+<script type="text/javascript">
+jq(function(){
+  jQuery("#listing-table").ploneDnD();
+});
+</script>
+</tal:js>
 </head>
 
 <body>
@@ -45,7 +46,6 @@
       <input type="hidden" id="base-url" name="base-url" tal:attributes="value context/absolute_url" />
 
       <table class="listing"
-             style="width: 100%;"
              id="listing-table"
              summary="Content listing"
              i18n:attributes="summary summary_content_listing;"
@@ -181,7 +181,7 @@
             </tr>
             <tr tal:condition="view/show_all">
               <th colspan="6" class="nosort">
-		<a tal:attributes="href string:${context/absolute_url}/@@cmsui-folder-contents"
+		<a tal:attributes="href string:${context/absolute_url}/@@cmsui-structure"
                    i18n:translate="label_show_batched"
                    id="foldercontents-show-batched">Show batched</a>
               </th>
@@ -207,7 +207,6 @@
   </div>
   <br style="clear: both;" />
   </div>
-
 </metal:content-core>
 </body>
 </html>
