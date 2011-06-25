@@ -34,7 +34,7 @@
           var iframe = document.createElement('iframe'),
               link = document.getElementById('plone-cmsui-menu-link'),
               height_cookie = document.cookie.match(/__plone_height=([^;]*)/),
-              height = height_cookie ? height_cookie[1] : '137';
+              height = height_cookie ? height_cookie[1] : '111';
           if (iframe.allowTransparency !== undefined) {
               iframe.allowTransparency = 'true';
           }
