@@ -1,0 +1,45 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      tal:omit-tag="">
+<span class="option"
+      tal:repeat="item view/items">
+  <label for=""
+         tal:attributes="for item/id">
+    <input id="" name="" class="" alt="" title=""
+           tabindex="" disabled="" readonly="" accesskey="" value=""
+           checked="" type="radio"
+           tal:define="checked item/checked"
+           tal:attributes="id item/id;
+                           name item/name;
+                           class view/klass;
+                           value item/value;
+                           style view/style;
+                           title view/title;
+                           lang view/lang;
+                           onclick view/onclick;
+                           ondblclick view/ondblclick;
+                           onmousedown view/onmousedown;
+                           onmouseup view/onmouseup;
+                           onmouseover view/onmouseover;
+                           onmousemove view/onmousemove;
+                           onmouseout view/onmouseout;
+                           onkeypress view/onkeypress;
+                           onkeydown view/onkeydown;
+                           onkeyup view/onkeyup;
+                           disabled view/disabled;
+                           tabindex view/tabindex;
+                           onfocus view/onfocus;
+                           onblur view/onblur;
+                           onchange view/onchange;
+                           readonly view/readonly;
+                           alt view/alt;
+                           accesskey view/accesskey;
+                           onselect view/onselect;
+                           checked python: checked and 'checked' or None"
+    />
+    <span class="label" tal:content="item/label">Label</span>
+  </label>
+</span>
+<input name="field-empty-marker" type="hidden" value="1"
+       tal:attributes="name string:${view/name}-empty-marker" />
+</html>
