@@ -18,7 +18,7 @@ class WorkflowActionsSourceBinder(object):
     def __call__(self, context):
         wft = getToolByName(context, 'portal_workflow')
         return vocabulary.SimpleVocabulary([
-            vocabulary.SimpleVocabulary.createTerm(t['id'],t['id'],t['title'])
+            vocabulary.SimpleVocabulary.createTerm(t['id'],t['id'],t['name'])
             for t in wft.getTransitionsFor(context)
         ])
 

@@ -56,9 +56,9 @@ class TestWorkflowPanel(unittest.TestCase):
         # Make sure we have both labels and values for all possible workflow actions
         workflow_actions = browser.getControl(name="form.widgets.workflow_action:list")
         self.assertEqual(len(workflow_actions.mech_control.items),3)
-        self.assertEqual(workflow_actions.getControl(label='Member submits content for publication').optionValue, 'submit')
-        self.assertEqual(workflow_actions.getControl(label='Member makes content private').optionValue, 'hide')
-        self.assertEqual(workflow_actions.getControl(label='Reviewer publishes content').optionValue, 'publish')
+        self.assertEqual(workflow_actions.getControl(label='Submit for publication').optionValue, 'submit')
+        self.assertEqual(workflow_actions.getControl(label='Make private').optionValue, 'hide')
+        self.assertEqual(workflow_actions.getControl(label='Publish').optionValue, 'publish')
     
     def test_choosing_transition_transitions_content(self):
         browser = Browser(self.layer['app'])
