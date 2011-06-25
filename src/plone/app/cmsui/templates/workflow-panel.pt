@@ -7,7 +7,8 @@
       i18n:domain="plone">
 <body>
 
-<metal:content-core fill-slot="content">
+<metal:content-core fill-slot="body">
+  <div id="content">
 
     <h1 class="documentFirstHeading">Workflow panel</h1>
     
@@ -34,7 +35,7 @@
 
     </form>
 
-
+  </div>
 </metal:content-core>
 
 </body>
