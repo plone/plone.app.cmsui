@@ -23,7 +23,7 @@ table.listing tbody tr.odd.error td, tr.error {
 }
 
 #structure-dialog #portal-breadcrumbs a:after {
-    content: "►";
+    content: "/";
     margin-left: 0.5em;
     margin-right: 0.5em;
 }
