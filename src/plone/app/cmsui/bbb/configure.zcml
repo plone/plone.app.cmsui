@@ -4,6 +4,7 @@
     xmlns:zcml="http://namespaces.zope.org/zcml"
     xmlns:browser="http://namespaces.zope.org/browser"
     xmlns:i18n="http://namespaces.zope.org/i18n"
+    xmlns:cmf="http://namespaces.zope.org/cmf"
     i18n_domain="plone">
     
     
@@ -42,5 +43,18 @@
         class=".nullviewlet.NullViewlet"
         permission="zope.Public"
         />
+    
+    <browser:viewlet
+        name="plone.personal_bar"
+        for="*"
+        layer="..interfaces.ICMSUILayer"
+        manager="plone.app.layout.viewlets.interfaces.IPortalHeader"
+        class=".nullviewlet.NullViewlet"
+        permission="zope.Public"
+        />
+    
+    <cmf:registerDirectory name="skins"
+        directory="skins"
+        recursive="true" />
 
 </configure>
