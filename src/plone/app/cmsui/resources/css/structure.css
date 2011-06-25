@@ -16,3 +16,14 @@ table.listing tbody tr.odd.error td, tr.error {
     background-color: #FFDDCC;
     border: 2px dashed red;
 }
+
+#structure-dialog #portal-breadcrumbs li {
+    font-size: 180%;
+    display: inline-block;
+}
+
+#structure-dialog #portal-breadcrumbs a:after {
+    content: "►";
+    margin-left: 0.5em;
+    margin-right: 0.5em;
+}

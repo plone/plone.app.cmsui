@@ -22,22 +22,19 @@
   <div id="structure-dialog">
   <div class="structure-slider">
 
-  <h1 class="documentFirstHeading" tal:content="view/title"> 
-    Title
-  </h1>
-  
-  <div class="documentDescription" tal:content="context/Description" tal:condition="context/Description">
-    Description
-  </div>
-  
-    <a href=""
-       class="link-parent"
-       tal:define="parent_url view/parent_url"
-       tal:condition="parent_url"
-       tal:attributes="href string:${parent_url}/@@cmsui-folder-contents"
-       i18n:translate="go_to_parent_url">
-      Up one level
-    </a>
+  <nav id="portal-breadcrumbs">
+      <ul>
+          <li id='path-home'><a tal:attributes="href view/@@plone_portal_state/navigation_root_url">Home</a></li
+          ><li tal:repeat="crumb view/breadcrumbs"
+          ><a class="link-parent"
+              tal:condition="not:repeat/crumb/end"
+              tal:attributes="href string:${crumb/absolute_url}/cmsui-folder-contents;"
+              tal:content="crumb/Title">Item</a
+          ><span tal:condition="repeat/crumb/end" class="current"
+                 tal:content="crumb/Title">Item</span
+          ></li>
+      </ul>
+  </nav>
 
     <div tal:replace="structure view/batching" tal:condition="not:view/show_all"/>
     <form name="folderContentsForm"

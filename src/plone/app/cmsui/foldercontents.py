@@ -92,6 +92,9 @@ class FolderContents(BrowserView):
         except Unauthorized:
             return None
 
+    def breadcrumbs(self):
+        breadcrumbsView = getMultiAdapter((self.context, self.request), name='breadcrumbs_view')
+        return breadcrumbsView.breadcrumbs()
 
     def contentsMethod(self):
         context = aq_inner(self.context)
