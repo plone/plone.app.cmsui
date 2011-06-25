@@ -51,14 +51,19 @@ class AddForm(form.Form):
         title = data['title']
         # title-to-id
         util = queryUtility(IIDNormalizer)
+        
+        # from zope.container.interfaces import INameChooser
+        # chooser = INameChooser(self.context)
+        # chooser.chooseName(None, item)
         id = util.normalize(title)
         # create the object
-        self.context.invokeFactory('Document', id=id, title=title)
+        self.context.invokeFactory(data['content_type'], id=id, title=title)
         # redirect to immediate_view
+        # obj =
+        iview = self.context.portal_types[data['content_type']].immediate_view
+        
+        # self.request.response.redirect(self.context[id][iview].absolute_url())
         # open edit overlay    
-
-# AddForm = wrap_form(AddMenu)
-
 
 
 class AddMenu(BrowserView):
