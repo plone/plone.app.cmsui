@@ -15,17 +15,19 @@ class TestWorkflowPanel(unittest.TestCase):
         browser = Browser(self.layer['app'])
         portal = self.layer['portal']
         setRoles(portal, TEST_USER_ID, ('Member', 'Manager'))
+        document_id = portal.invokeFactory("Document", "panel_linked_to_in_menu_doc", title="Workflow transitions")
+        document = portal[document_id]
         # Commit so the change in roles is visible to the browser
         transaction.commit()
         
         browser_login(portal, browser)
-        browser.open(portal.absolute_url())
+        browser.open(document.absolute_url())
         browser.getLink("Manage page").click()
         
         # raises exception if not present
-        browser.getLink("Workflow actions").click()
-        self.assertIn("form.widgets.workflow_action", browser.contents) #TODO: Should have something less magical to check for
-    
+        browser.getLink("Public draft").click()
+        self.assertIn("form.widgets.workflow_action", browser.contents)
+
     def test_available_workflow_transition_shown_in_workflow_panel(self):
         browser = Browser(self.layer['app'])
         portal = self.layer['portal']
@@ -38,7 +40,7 @@ class TestWorkflowPanel(unittest.TestCase):
         browser_login(portal, browser)
         browser.open(document.absolute_url())
         browser.getLink("Manage page").click()
-        browser.getLink("Workflow actions").click()
+        browser.getLink("Public draft").click()
         
         # The submit button should be available
         transitions = portal.portal_workflow.getTransitionsFor(document)
@@ -66,7 +68,7 @@ class TestWorkflowPanel(unittest.TestCase):
         browser_login(portal, browser)
         browser.open(document.absolute_url())
         browser.getLink("Manage page").click()
-        browser.getLink("Workflow actions").click()
+        browser.getLink("Public draft").click()
         workflow_actions = browser.getControl(name="form.widgets.workflow_action:list")
         workflow_actions.getControl(value="publish").click()
         browser.getControl("Save").click()
@@ -84,7 +86,7 @@ class TestWorkflowPanel(unittest.TestCase):
         browser_login(portal, browser)
         browser.open(document.absolute_url())
         browser.getLink("Manage page").click()
-        browser.getLink("Workflow actions").click()
+        browser.getLink("Public draft").click()
         workflow_actions = browser.getControl(name="form.widgets.workflow_action:list")
         workflow_actions.getControl(value="publish").click()
         # We set up a comment this time
