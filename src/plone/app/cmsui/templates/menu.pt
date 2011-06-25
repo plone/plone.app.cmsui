@@ -33,9 +33,6 @@
 <body tal:define="isRTL portal_state/is_rtl"
     tal:attributes="dir python:isRTL and 'rtl' or 'ltr'">
 
-<div id="visual-portal-wrapper">
-
-
 <section id="toolbar"
          tal:define="folder context/@@plone_context_state/folder">
 
@@ -44,14 +41,14 @@
         <!-- Breadcrumbs -->
         <nav id="portal-breadcrumbs" class="grid_7 ">
             <ul>
-                <li id='path-home'><a tal:attributes="href view/portalState/navigation_root_url" class="ir">Home</a></li
-                ><li tal:repeat="crumb view/breadcrumbs"
-                ><a tal:condition="not:repeat/crumb/end"
-                    tal:attributes="href crumb/absolute_url;"
-                    tal:content="crumb/Title">Item</a
-                ><span tal:condition="repeat/crumb/end" class="current"
-                       tal:content="crumb/Title">Item</span
-                ></li>
+                <li id='path-home'>
+                    <a tal:attributes="href view/portalState/navigation_root_url" class="ir">Home</a></li>
+                <li tal:repeat="crumb view/breadcrumbs">
+                    <a tal:condition="not:repeat/crumb/end"
+                       tal:attributes="href crumb/absolute_url;"
+                       tal:content="crumb/Title">Item</a>
+                    <span tal:condition="repeat/crumb/end" class="current" tal:content="crumb/Title">Item</span>
+                </li>
             </ul>
         </nav>
 
@@ -59,12 +56,12 @@
         <div class="grid_5">
             <ul id="personal-tools">
                 <li id="cmsui-logged-in-as" i18n:translate="cmsui_logged_in_as">
-                    <a tal:attributes="href view/userHomeLinkURL">
+                    <a class="overlayLink" tal:attributes="href view/userHomeLinkURL">
                         Logged in as <span i18n:name="name" tal:replace="view/userName" />
                     </a>
                 </li>
-                <li tal:repeat="action view/personalActions" tal:attributes="id string:cmsui-personallink-${action/id}">
-                    <a tal:attributes="href action/url" tal:content="action/title" />
+                <li class="overlayLink" tal:repeat="action view/personalActions" tal:attributes="id string:cmsui-personallink-${action/id}">
+                    <a class="overlayLink" tal:attributes="href action/url" tal:content="action/title" />
                 </li>
             </ul>
         </div>
@@ -75,30 +72,43 @@
         <!-- Information about the current document -->
         <div class="grid_10">
             <ul id="document-info">
+                <li id="folder-contents"><a href="#"
+                    class="overlayLink" tal:attributes="href string:${folder/absolute_url}/cmsui-folder-contents"
+                    ><span i18n:translate="cmsui_contents" tal:omit-tag="">Structure</span
+                    ><tal:block condition="python:(view.contextState.is_structural_folder() or view.contextState.is_default_page()) and view.itemsInFolder() is not None"> (<span tal:replace="view/itemsInFolder">12</span>)</tal:block
+                    ></a></li>
                 <li tal:condition="python:view.modificationDate()"
-                    id="document-history"><a href="#" tal:content="view/modificationDate">June 23, 2011</a></li>
+                    id="document-history"
+                    ><a class="overlayLink" href="#" tal:content="view/modificationDate">June 23, 2011</a></li>
                 <li tal:condition="python:view.authorName()"
-                    id="document-author"><a href="#" tal:content="view/authorName">John Doe</a></li>
+                    id="document-author"
+                    ><a class="overlayLink" href="#" tal:content="view/authorName">John Doe</a></li>
                 <li tal:condition="python:view.workflowState()"
                     id="document-workflow_state"
-                    ><a tal:attributes="href string:${view/baseURL}/@@cmsui-workflow-panel"
-                        tal:content="view/workflowState">Draft</a></li>
-                <li id="document-edit"><a href="#">Edit</a></li>
-                <li id="document-settings"><a href="#">Settings</a></li>
+                    ><a class="overlayLink"
+                        tal:attributes="href string:${view/baseURL}/@@cmsui-workflow-panel"
+                        tal:content="view/workflowState">Draft</a></li
+                ><li tal:condition="python:view.editLink()"
+                    id="document-edit"
+                    ><a class="overlayLink"
+                        tal:attributes="href view/editLink"
+                        i18n:translate="cmsui_edit">Edit</a></li
+                ><li id="document-settings"><a href="#">Settings</a></li>
             </ul>
 
             <!-- Links tangentially related to the current document -->
             <ul id="folder-actions">
-                <li id="folder-contents"><a href="#" class="overlayLink" tal:attributes="href string:${folder/absolute_url}/cmsui-folder-contents"
-                    ><span i18n:translate="cmsui_contents" tal:omit-tag="">Structure</span
-                    ><tal:block condition="python:(view.contextState.is_structural_folder() or view.contextState.is_default_page()) and view.itemsInFolder() is not None"> (<span tal:replace="view/itemsInFolder">12</span>)</tal:block
-                    ></a></li>
-                <li id="folder-add_content"><a href="#">Add Content</a></li>
+                <li id="folder-add_content">
+                    <a class="overlayLink" href="" 
+                       tal:attributes="href string:${view/baseURL}/@@cmsui-add-content">
+                    Add Content
+                    </a>
+                </li>
             </ul>
         </div>
 
         <aside class="grid_2" id="site-setup">
-            <a
+            <a class="overlayLink"
                 tal:attributes="href string:${view/portalState/navigation_root_url}/@@overview-controlpanel"
                 i18n:translate="cmsui_site_configuration">Site configuration</a>
         </aside>
@@ -106,8 +116,5 @@
 
 </section>
 
-<div class="visualClear"></div>
-
-</div>
 </body>
 </html>

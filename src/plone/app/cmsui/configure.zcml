@@ -4,6 +4,7 @@
     xmlns:zcml="http://namespaces.zope.org/zcml"
     xmlns:browser="http://namespaces.zope.org/browser"
     xmlns:i18n="http://namespaces.zope.org/i18n"
+    xmlns:z3c="http://namespaces.zope.org/z3c"
     i18n_domain="plone">
 
     <!-- Permissions -->
@@ -22,6 +23,16 @@
         description="Installs a the Plone CMS User Interface"
         directory="profiles/default"
         for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+        provides="Products.GenericSetup.interfaces.EXTENSION"
+        />
+    
+    <!-- BBB profile -->
+    <gs:registerProfile
+        name="z_bbb"
+        title="CMS User Interface - BBB registrations"
+        description="Performs backwards compatibility migrations"
+        directory="bbb/profiles/bbb"
+        for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
         provides="Products.GenericSetup.interfaces.EXTENSION"
         />
 
@@ -65,6 +76,7 @@
         />
 
     <!-- Folder contents overlay -->
+
     <browser:page
         name="cmsui-folder-contents"
         for="*"
@@ -79,6 +91,24 @@
         permission="plone.ViewCMSUI"
         layer=".interfaces.ICMSUILayer"
         />
+
+    <!-- "Add new" menu overlay -->
+
+    <browser:page
+        name="cmsui-add-content"
+        for="*"
+        class=".addmenu.AddMenu"
+        template="templates/add-menu.pt"
+        permission="plone.ViewCMSUI"
+        />
+
+    <browser:page
+        name="cmsui-add-content-form"
+        for="*"
+        class=".addmenu.AddNewContentForm"
+        permission="plone.ViewCMSUI"
+        />
+
     <!-- Static resources -->
 
     <browser:resourceDirectory

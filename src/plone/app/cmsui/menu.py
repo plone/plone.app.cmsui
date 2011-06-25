@@ -107,10 +107,20 @@ class Menu(BrowserView):
     @memoize
     def itemsInFolder(self):
         folder = self.contextState.folder()
-        if IPloneSiteRoot.providedBy(folder):
-            return None
         
+        if IPloneSiteRoot.providedBy(folder):
+            return len(folder.contentIds())
+        
+        # XXX: Assumes other folders behave well and only contain content
         return len(folder)
+
+    @memoize
+    def editLink(self):
+        objectActions = self.contextState.actions('object')
+        for action in objectActions:
+            if action['id'] == 'edit':
+                return action['url']
+        return None
     
     @memoize
     def baseURL(self):
