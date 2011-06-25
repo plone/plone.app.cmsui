@@ -67,24 +67,30 @@
         <!-- Information about the current document -->
         <div class="grid_10">
             <ul id="document-info">
-                <li id="document-creation_date"><a href="#">June 23, 2011</a></li>
-                <li id="document-author"><a href="#">John Doe</a></li>
-                <li id="document-workflow_state_draft"><a href="#">Draft</a></li>
-                <li id="document-language"><a href="#">English
-                    <span id="avail-languages">(+de, es)</span></a></li>
+                <li tal:condition="python:view.modificationDate()"
+                    id="document-history"><a href="#" tal:content="view/modificationDate">June 23, 2011</a></li>
+                <li tal:condition="python:view.authorName()"
+                    id="document-author"><a href="#" tal:content="view/authorName">John Doe</a></li>
+                <li tal:condition="python:view.workflowState()"
+                    id="document-workflow_state"><a href="#" tal:content="view/workflowState">Draft</a></li>
                 <li id="document-edit"><a href="#">Edit</a></li>
                 <li id="document-settings"><a href="#">Settings</a></li>
             </ul>
 
             <!-- Links tangentially related to the current document -->
             <ul id="folder-actions">
-                <li id="folder-contents"><a href="#">Contents</a></li>
+                <li id="folder-contents"><a href="#"
+                    ><span i18n:translate="cmsui_contents" tal:omit-tag="">Structure</span
+                    ><tal:block condition="python:(view.contextState.is_structural_folder() or view.contextState.is_default_page()) and view.itemsInFolder() is not None"> (<span tal:replace="view/itemsInFolder">12</span>)</tal:block
+                    ></a></li>
                 <li id="folder-add_content"><a href="#">Add Content</a></li>
             </ul>
         </div>
 
         <aside class="grid_2" id="site-setup">
-            <a href="#">Site configuration</a>
+            <a
+                tal:attributes="href string:${view/portalState/navigation_root_url}/@@overview-controlpanel"
+                i18n:translate="cmsui_site_configuration">Site configuration</a>
         </aside>
     </div>
 
