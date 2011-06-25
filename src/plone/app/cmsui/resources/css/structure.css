@@ -1,0 +1,4 @@
+table.listing tbody tr.odd.error td, tr.error {
+    background-color: #FFDDCC;
+    border: 2px dashed red;
+}
