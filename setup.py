@@ -28,6 +28,7 @@ setup(name='plone.app.cmsui',
           'setuptools',
           'plone.app.registry',
           'Products.CMFPlone',
+          'plone.namedfile',
       ],
       extras_require={
         'test': ['plone.app.testing'],

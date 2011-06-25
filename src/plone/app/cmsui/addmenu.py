@@ -7,7 +7,7 @@ from zope.app.publisher.interfaces.browser import IBrowserMenu
 from zope.component import getUtility, queryUtility, getMultiAdapter
 from zope.container.interfaces import INameChooser
 from zope.publisher.browser import BrowserView
-
+from plone.namedfile.field import NamedFile
 
 class IAddNewContent(interface.Interface):
 
@@ -53,6 +53,24 @@ class AddNewContentForm(form.Form):
         self.request.response.redirect("%s/edit" % container[id].absolute_url())
 
 AddNewContentView = wrap_form(AddNewContentForm)
+
+
+class IFileUploadForm(interface.Interface):
+    file = schema.NamedFile(title=u"File")
+
+class FileUploadForm(form.Form):
+    fields = field.Fields(IAddNewContent)
+    ignoreContext = True # don't use context to get widget data
+    label = "Add content"
+
+    @button.buttonAndHandler(u'Upload content')
+    def handleApply(self, action):
+        data, errors = self.extractData()
+        if errors:
+            return
+
+
+FileUploadFormView = wrap_form(FileUploadForm)
 
 
 class AddMenu(BrowserView):

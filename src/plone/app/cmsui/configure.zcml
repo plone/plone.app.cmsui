@@ -92,6 +92,13 @@
         permission="plone.ViewCMSUI"
         />
 
+    <browser:page
+        name="cmsui-file-upload-form"
+        for="*"
+        class=".addmenu.FileUploadFormView"
+        permission="plone.ViewCMSUI"
+        />
+
     <!-- Static resources -->
 
     <browser:resourceDirectory
