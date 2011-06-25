@@ -1,0 +1,61 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="context/@@cmsui-overlay-container/macros/master"
+      i18n:domain="plone">
+<body>
+
+<metal:content-core fill-slot="main" tal:define="lock_info view/lock_info">
+
+    <h1 class="documentFirstHeading">Locking</h1>
+
+    <tal:block condition="nocall:lock_info">
+
+        <p tal:condition="not:lock_info/is_locked" i18n:translate="description_not_locked">
+            This item is not locked
+        </p>
+
+        <p tal:condition="lock_info/is_locked" tal:define="lock_details lock_info/lock_info">
+
+            <tal:author-page
+                tal:condition="lock_details/author_page"
+                i18n:translate="description_webdav_locked_by_author_on_time">
+              This item was locked by 
+              <a i18n:name="author"
+                 tal:content="lock_details/fullname"
+                 tal:attributes="href lock_details/author_page" />
+              <span i18n:name="time"
+                    tal:content="lock_details/time_difference" /> ago.
+            </tal:author-page>
+            <tal:no-author-page
+                tal:condition="not:lock_details/author_page"
+                i18n:translate="description_webdav_locked_by_author_on_time">
+              This item was locked by 
+              <span i18n:name="author"
+                    tal:content="lock_details/fullname" />
+              <span i18n:name="time"
+                    tal:content="lock_details/time_difference" /> ago.
+            </tal:no-author-page>
+            <form tal:condition="lock_info/lock_is_stealable"
+                  tal:attributes="action string:${context/absolute_url}/@@plone_lock_operations/force_unlock">
+              <span i18n:translate="description_webdav_locked_steal">
+                If you are certain this user has abandoned the object,
+                you may
+                <input type="submit" 
+                       value="Unlock" 
+                       i18n:name="unlock_button"
+                       i18n:attributes="value" /> 
+                the object. You will then be able to edit it.
+              </span>
+            </form>
+
+      </p>
+    </tal:block>
+
+</metal:content-core>
+
+</body>
+</html>
+

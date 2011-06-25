@@ -84,6 +84,7 @@ class WorkflowPanel(form.Form):
         except Unauthorized:
             retryContentEdit = True
         
+        postwf_context = None
         if workflow_action is not None:
             postwf_context = real_context.portal_workflow.doActionFor(self.context,
                              workflow_action, comment=data.get('comment', ''))

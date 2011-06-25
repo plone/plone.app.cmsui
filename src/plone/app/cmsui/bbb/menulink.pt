@@ -19,6 +19,8 @@
           outline: 0;
           background: transparent;
           position: fixed;
+          _position: absolute;
+          _top: expression(eval((document.body.scrollTop)?document.body.scrollTop:document.documentElement.scrollTop));
           opacity: 0;
           left: 0;
           top: 0;
@@ -28,13 +30,16 @@
           -moz-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
           box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
       }
+      body {
+          margin-top: 0;
+      }
   </style>
   <script type="text/javascript">
       (function () {
           var iframe = document.createElement('iframe'),
               link = document.getElementById('plone-cmsui-menu-link'),
               height_cookie = document.cookie.match(/__plone_height=([^;]*)/),
-              height = height_cookie ? height_cookie[1] : '116';
+              height = height_cookie ? height_cookie[1] : '0';
           if (iframe.allowTransparency !== undefined) {
               iframe.allowTransparency = 'true';
           }

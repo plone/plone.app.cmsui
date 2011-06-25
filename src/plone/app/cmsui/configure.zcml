@@ -60,7 +60,6 @@
         name="cmsui-workflow-panel"
         for="*"
         class=".workflowpanel.WorkflowPanel"
-        template="templates/workflow-panel.pt"
         permission="plone.ViewCMSUI"
         />
 
@@ -106,6 +105,16 @@
         name="cmsui-add-content-form"
         for="*"
         class=".addmenu.AddNewContentForm"
+        permission="plone.ViewCMSUI"
+        />
+
+    <!-- Lock info overlay -->
+
+    <browser:page
+        name="cmsui-lock-info"
+        for="*"
+        class=".lockinfo.LockInfo"
+        template="templates/lockinfo.pt"
         permission="plone.ViewCMSUI"
         />
 

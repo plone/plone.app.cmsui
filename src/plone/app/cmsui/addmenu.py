@@ -10,29 +10,13 @@ from zope.interface import implements
 from zope.publisher.browser import BrowserView
 from zope.schema.interfaces import IVocabularyFactory
 from zope.schema.vocabulary import SimpleVocabulary, SimpleTerm
-
-
-class AddableTypesVocabulary(object):
-    implements(IVocabularyFactory)
-
-    def __call__(self, context):
-        context = getattr(context, 'context', context)
-        request = context.REQUEST
-        
-        factories_view = getMultiAdapter((context, request), name='folder_factories')
-
-        addContext = factories_view.add_context()
-        allowedTypes = _allowedTypes(request, addContext)
-        items = [SimpleTerm(i.id, i.id, i.Title()) for i in allowedTypes]
-        return SimpleVocabulary(items)
-
-AddableTypesVocabularyFactory = AddableTypesVocabulary()
+from z3c.form.interfaces import HIDDEN_MODE
 
 
 class IAddNewContent(interface.Interface):
 
     title = schema.TextLine(title=u"Title")
-    content_type = schema.TextLine(title=u"Type")
+    type_name = schema.TextLine(title=u"Type")
 
 
 class AddNewContentForm(form.Form):
@@ -41,6 +25,12 @@ class AddNewContentForm(form.Form):
     ignoreContext = True # don't use context to get widget data
     label = "Add content"
     
+    def update(self):
+        tn = self.fields['type_name']
+        tn.mode = HIDDEN_MODE
+        tn.field.default = unicode(getattr(self.request, 'type_name', ''))
+        super(AddNewContentForm, self).update()
+
     @button.buttonAndHandler(u'Add content')
     def handleApply(self, action):
         data, errors = self.extractData()
@@ -62,8 +52,9 @@ class AddNewContentForm(form.Form):
         id = chooser._findUniqueName(id, None)
 
         # create the object
-        container.invokeFactory(data['content_type'], id=id, title=title)
+        container.invokeFactory(data['type_name'], id=id, title=title)
         # redirect to immediate_view
+        
         self.request.response.redirect("%s/edit" % container[id].absolute_url())
         # open edit overlay    
 
