@@ -1,3 +1,6 @@
+from datetime import datetime
+from DateTime import DateTime
+
 from Products.CMFCore.utils import getToolByName
 from zope.publisher.browser import BrowserView
 from plone.app.cmsui.interfaces import _
@@ -35,6 +38,20 @@ class IWorkflowPanel(Interface):
                                    "items are selected, this comment will be attached to all of them."),
         required= False,
         )
+    effective_date = schema.Datetime(
+        title = _(u'label_effective_date', u'Publishing Date'),
+        description = _(u'help_effective_date',
+                          default=u"If this date is in the future, the content will "
+                                   "not show up in listings and searches until this date."),
+        required = False
+        )
+    expiration_date = schema.Datetime(
+        title = _(u'label_expiration_date', u'Expiration Date'),
+        description = _(u'help_expiration_date',
+                              default=u"When this date is reached, the content will no"
+                                       "longer be visible in listings and searches."),
+        required = False
+        )
 
 class WorkflowPanel(form.Form):
     """Shows a panel with the adanced workflow options
@@ -51,6 +68,13 @@ class WorkflowPanel(form.Form):
             return
         
         workflow_action = data.get('workflow_action', '')
+        effective_date = data.get('effective_date', None)
+        if workflow_action and not effective_date and self.context.EffectiveDate()=='None':
+            effective_date=DateTime()
+        expiration_date = data.get('expiration_date', None)
+        
+        self._editContent(self.context, effective_date, expiration_date)
+        
         if workflow_action is not None:
             self.context.portal_workflow.doActionFor(self.context, workflow_action, comment=data.get('comment', ''))
             return "Complete"
@@ -59,3 +83,15 @@ class WorkflowPanel(form.Form):
     @button.buttonAndHandler(u'Cancel')
     def cancel(self, action):
         self.request.response.redirect(self.context.absolute_url())
+
+    def _editContent(self, context, effective, expiry):
+        kwargs = {}
+        if isinstance(effective, datetime):
+            kwargs['effective_date'] = DateTime(effective)
+        elif effective and (isinstance(effective, DateTime) or len(effective) > 5): # may contain the year
+            kwargs['effective_date'] = effective
+        if isinstance(expiry, datetime):
+            kwargs['expiration_date'] = DateTime(expiry)
+        elif expiry and (isinstance(expiry, DateTime) or len(expiry) > 5): # may contain the year
+            kwargs['expiration_date'] = expiry
+        context.plone_utils.contentEdit(context, **kwargs)
