@@ -58,12 +58,12 @@
         <div class="grid_5">
             <ul id="personal-tools">
                 <li id="cmsui-logged-in-as" i18n:translate="cmsui_logged_in_as">
-                    <a tal:attributes="href view/userHomeLinkURL">
+                    <a class="overlayLink" tal:attributes="href view/userHomeLinkURL">
                         Logged in as <span i18n:name="name" tal:replace="view/userName" />
                     </a>
                 </li>
-                <li tal:repeat="action view/personalActions" tal:attributes="id string:cmsui-personallink-${action/id}">
-                    <a tal:attributes="href action/url" tal:content="action/title" />
+                <li class="overlayLink" tal:repeat="action view/personalActions" tal:attributes="id string:cmsui-personallink-${action/id}">
+                    <a class="overlayLink" tal:attributes="href action/url" tal:content="action/title" />
                 </li>
             </ul>
         </div>
@@ -75,14 +75,18 @@
         <div class="grid_10">
             <ul id="document-info">
                 <li tal:condition="python:view.modificationDate()"
-                    id="document-history"><a href="#" tal:content="view/modificationDate">June 23, 2011</a></li>
+                    id="document-history"
+                    ><a class="overlayLink" href="#" tal:content="view/modificationDate">June 23, 2011</a></li>
                 <li tal:condition="python:view.authorName()"
-                    id="document-author"><a href="#" tal:content="view/authorName">John Doe</a></li>
+                    id="document-author"
+                    ><a class="overlayLink" href="#" tal:content="view/authorName">John Doe</a></li>
                 <li tal:condition="python:view.workflowState()"
                     id="document-workflow_state"
-                    ><a tal:attributes="href string:${view/baseURL}/@@cmsui-workflow-panel"
+                    ><a class="overlayLink"
+                        tal:attributes="href string:${view/baseURL}/@@cmsui-workflow-panel"
                         tal:content="view/workflowState">Draft</a></li>
-                <li id="document-edit"><a href="#">Edit</a></li>
+                <li id="document-edit"
+                    ><a class="overlayLink" href="#">Edit</a></li>
                 <li id="document-settings"><a href="#">Settings</a></li>
             </ul>
 
@@ -97,7 +101,7 @@
         </div>
 
         <aside class="grid_2" id="site-setup">
-            <a
+            <a class="overlayLink"
                 tal:attributes="href string:${view/portalState/navigation_root_url}/@@overview-controlpanel"
                 i18n:translate="cmsui_site_configuration">Site configuration</a>
         </aside>
