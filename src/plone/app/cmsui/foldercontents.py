@@ -180,7 +180,6 @@ class FolderContents(BrowserView):
                 path = path,
                 title_or_id = safe_unicode(pretty_title_or_id(plone_utils, obj)),
                 obj_type = obj_type,
-                size = obj.getObjSize,
                 modified = modified,
                 icon = icon.html_tag(),
                 type_class = type_class,

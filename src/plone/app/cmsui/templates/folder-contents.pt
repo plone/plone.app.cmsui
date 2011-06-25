@@ -91,9 +91,6 @@
               id="foldercontents-title-column">&nbsp;<tal:title i18n:translate="listingheader_title"
 								>Title</tal:title>&nbsp;</th>
           <th class="nosort column"
-              id="foldercontents-size-column">&nbsp;<tal:size i18n:translate="listingheader_size"
-							      >Size</tal:size>&nbsp;</th>
-          <th class="nosort column"
               id="foldercontents-modified-column">&nbsp;<tal:modified i18n:translate="listingheader_modified"
 								      >Modified</tal:modified>&nbsp;</th>
           <th class="nosort column"
@@ -160,12 +157,6 @@
 			i18n:translate="time_expired">expired</span>
 		</td>
 		
-		<td>
-                  <span tal:condition="not: item/size"> &nbsp; </span>
-                  <span tal:condition="item/size"
-			tal:content="item/size"
-			tal:attributes="class item/state_class|nothing"> size </span>
-		</td>
 		<td tal:content="item/modified"
                     tal:attributes="class item/state_class|nothing">
                   08/19/2001 03:01 AM
