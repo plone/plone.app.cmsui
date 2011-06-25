@@ -1,3 +1,17 @@
+div#structure-dialog {
+    position: relative;
+    overflow: hidden;
+    min-height: 400px;
+}
+
+div.structure-slider {
+    width: 100%;
+}
+
+div#structure-dialog .link-parent {
+    display: block;
+}
+
 table.listing tbody tr.odd.error td, tr.error {
     background-color: #FFDDCC;
     border: 2px dashed red;
