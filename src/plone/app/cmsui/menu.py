@@ -13,7 +13,7 @@ class Menu(BrowserView):
     
     EDIT_ACTION_ID = 'edit'
     EXCLUDED_ACTION_IDS = ('view', 'edit',)
-    DEFAULT_ACTION_ICON = '/++resource++plone.app.cmsui/icons/List.jpg'
+    DEFAULT_ACTION_ICON = '/++resource++plone.app.cmsui/icons/List.png'
     
     def __call__(self):
         # Disable theming
