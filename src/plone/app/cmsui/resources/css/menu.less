@@ -15,8 +15,8 @@
 
 @linkColor: #fff;
 @verticalSpace: 10px;
-
-@ploneColor: #329FD7;
+@ploneColorOld: #329FD7;
+@ploneColor: #3272aa;
 
 @import "mixins.less";
 @import "960gs.less";
@@ -27,7 +27,7 @@ html {
 }
 #toolbar {
 	.container();
-	.css3_linear_gradient(darken(@ploneColor, 20%), @ploneColor);
+	.css3_linear_gradient(darken(@ploneColor, 5%), @ploneColor);
 	.css3_box_shadow(0 2px 12px rgba(0,0,0,0.5));
 	margin-top: 0;
 	padding-top: @verticalSpace/2;
@@ -174,7 +174,7 @@ html {
     background: transparent url('../icons/Folder.png') 50% 0 no-repeat;    
 }
 #folder-add_content a {
-    background: transparent url('../icons/Folder_Add.png') 50% 0 no-repeat;
+    background: transparent url('../icons/Add.png') 50% 0 no-repeat;
 }
 
 #site-setup a {
