@@ -1,3 +1,4 @@
+from zope.interface import implements
 from plone.app.z3cform.layout import wrap_form
 from plone.i18n.normalizer.interfaces import IIDNormalizer
 from z3c.form import button, form, field
@@ -8,6 +9,7 @@ from zope.component import getUtility, queryUtility, getMultiAdapter
 from zope.container.interfaces import INameChooser
 from zope.publisher.browser import BrowserView
 from plone.namedfile.field import NamedFile
+from plone.z3cform.interfaces import IWrappedForm
 
 class IAddNewContent(interface.Interface):
 
@@ -59,6 +61,8 @@ class IFileUploadForm(interface.Interface):
     file = NamedFile(title=u"File")
 
 class FileUploadForm(form.Form):
+    implements(IWrappedForm)
+    
     fields = field.Fields(IFileUploadForm)
     ignoreContext = True # don't use context to get widget data
     label = "Add content"
@@ -92,6 +96,9 @@ class AddMenu(BrowserView):
         factories_view = getMultiAdapter((self.context, self.request), name='folder_factories')
         
         self.allowedTypes = factories_view.addable_types()
+        
+        self.uploadForm = FileUploadForm(self.context, self.request)
+        self.uploadForm.update()
         
         return self.index()
 
