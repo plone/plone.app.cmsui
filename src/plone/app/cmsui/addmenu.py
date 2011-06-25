@@ -12,22 +12,6 @@ from zope.schema.interfaces import IVocabularyFactory
 from zope.schema.vocabulary import SimpleVocabulary, SimpleTerm
 from z3c.form.interfaces import HIDDEN_MODE
 
-class AddableTypesVocabulary(object):
-    implements(IVocabularyFactory)
-
-    def __call__(self, context):
-        context = getattr(context, 'context', context)
-        request = context.REQUEST
-        
-        factories_view = getMultiAdapter((context, request), name='folder_factories')
-
-        addContext = factories_view.add_context()
-        allowedTypes = _allowedTypes(request, addContext)
-        items = [SimpleTerm(i.id, i.id, i.Title()) for i in allowedTypes]
-        return SimpleVocabulary(items)
-
-AddableTypesVocabularyFactory = AddableTypesVocabulary()
-
 
 class IAddNewContent(interface.Interface):
 
