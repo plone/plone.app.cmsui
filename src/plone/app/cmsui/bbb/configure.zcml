@@ -43,7 +43,16 @@
         class=".nullviewlet.NullViewlet"
         permission="zope.Public"
         />
-
+    
+    <browser:viewlet
+        name="plone.personal_bar"
+        for="*"
+        layer="..interfaces.ICMSUILayer"
+        manager="plone.app.layout.viewlets.interfaces.IPortalHeader"
+        class=".nullviewlet.NullViewlet"
+        permission="zope.Public"
+        />
+    
     <cmf:registerDirectory name="skins"
         directory="skins"
         recursive="true" />
