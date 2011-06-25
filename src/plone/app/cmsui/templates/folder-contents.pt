@@ -6,13 +6,14 @@
       metal:use-macro="context/@@cmsui-overlay-container/macros/master"
       i18n:domain="plone">
 <head>
-<metal:block fill-slot="javascript_head_slot">
-    <script type="text/javascript" src="++resource++plone.app.cmsui/js/libs/jquery.js"></script>
-    <script type="text/javascript" src="++resource++plone.app.cmsui/js/dragdropreorder.js"></script>
-</metal:block>
-<metal:block fill-slot="style_slot">
-  <link rel="stylesheet" type="text/css" href="++resource++plone.app.cmsui/css/structure.css" />
-</metal:block>
+<tal:js metal:fill-slot="javascript_head_slot">
+<script type="text/javascript" src="++resource++plone.app.cmsui/js/dragdropreorder.js"></script>
+<script type="text/javascript">
+jq(function(){
+  jQuery("#listing-table").ploneDnD();
+});
+</script>
+</tal:js>
 </head>
 
 <body>
@@ -214,47 +215,6 @@
 
   </div>
   </div>
-<script type="text/javascript">
-jQuery(function($) {
-  var current_location = '';
-  
-  var slideTo = function(href, dir) {
-    var $slider = $('.structure-slider');
-    var width = $slider.outerWidth();
-    
-    $('body').css('overflow', 'hidden');
-    $('#content').css({position: 'relative'});
-    $slider.css('position', 'relative').animate({'left': (dir=='left')?-width:width}, 200, null, function() {$slider.detach();});
-    $('<div class="structure-slider" style="width: 100%"><' + '/div>')
-        .appendTo($('#content'))
-        .load(href + ' .structure-slider>*')
-        .css({position: 'absolute', left: (dir=='left'?width:-width), top: 0})
-        .animate({'left': 0}, 200, function() {$('body').css('overflow', 'auto');});
-        
-    current_location = href;
-  }
-  
-  $('a.link-child').live('click', function(e) {
-    e.preventDefault();
-    var href = $(this).attr('href');
-    slideTo(href, 'left');
-    history.pushState(href, null, location.href);
-  });
-
-  $('a.link-parent').live('click', function(e) {
-    e.preventDefault();
-    var href = $(this).attr('href');
-    slideTo(href, 'right');
-    history.pushState(href, null, location.href);
-  });
-  
-  $(window).bind('popstate', function(e) {
-    var href = e.originalEvent.state;
-    slideTo(href, (current_location.length > href.length ? 'right' : 'left'));
-  });
-  history.replaceState(location.href, null, location.href);
-});
-</script>
   <br style="clear: both;" />
   </div>
 </metal:content-core>

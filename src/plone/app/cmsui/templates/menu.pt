@@ -25,6 +25,7 @@
     </tal:resourceregistries>
     
     <script type="text/javascript" src="++resource++plone.app.cmsui/js/menu.js"></script>
+    <script type="text/javascript" src="++resource++plone.app.cmsui/js/dragdropreorder.js"></script>
 
     <link rel="stylesheet" href="++resource++plone.app.cmsui/css/boilerplate.css" />
     <link rel="stylesheet" href="++resource++plone.app.cmsui/css/menu.css" />

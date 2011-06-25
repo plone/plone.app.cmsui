@@ -364,30 +364,27 @@ jQuery.tableDnD = {
             result += tableId + '[]=' + rowId;
         }
         return result;
-	},
-
-	serializeTables: function() {
+    },
+    
+    serializeTables: function() {
         var result = "";
         this.each(function() {
 	    // this is now bound to each matching table
 	    result += jQuery.tableDnD.serializeTable(this);
 	});
-            return result;
-	}
-    
+        return result;
+    }
 }
 
-jQuery.fn.extend(
-    {
-	tableDnD : jQuery.tableDnD.build,
-	tableDnDUpdate : jQuery.tableDnD.updateTables,
-	tableDnDSerialize: jQuery.tableDnD.serializeTables
-    }
-);
+jQuery.fn.extend({
+    tableDnD : jQuery.tableDnD.build,
+    tableDnDUpdate : jQuery.tableDnD.updateTables,
+    tableDnDSerialize: jQuery.tableDnD.serializeTables
+});
 
-(function($){
-$(function() {
-
+var ploneDnD = function(){
+var table = this;
+(function($){ $(function() {
     var get_pos = function(tr){
 	tr = $(tr); // make sure we have the plain object
 	var tbody = $(tr).parent();
@@ -397,30 +394,32 @@ $(function() {
 	    if(rows[i] == tr[0]){ return pos; }
 	    pos += 1;
 	}
-    }
-    
+    };
+
     var store_order = function(){
 	$("#listing-table").data('ploneDnDReorder.subset_ids', $.map(
-            $("#listing-table tr.draggable"),
+            $("tr.draggable", table),
             function(elem) {
 		return $(elem).attr('id').substr('folder-contents-item-'.length);
 	    }));
-    }
+    };
+
     var store_positions = function(){
 	var pos = 0;
-	$("#listing-table tbody tr").each(function(){ this.last_pos = pos; pos += 1;});
-    }
+	$("tbody tr").each(function(){ this.last_pos = pos; pos += 1;});
+    };
+
     // Initialise the table
     store_order();
     store_positions();
-    jQuery("#listing-table").tableDnD({
+    $(table).tableDnD({
 	onDragStart: function(table, row){
 	    var copy = $(row).clone();
 	    var copytable = copy.wrap('<table class="listing"><tbody/></table>').parent().parent();
 	    row.dragged = copytable[0];
 	    var tds = $(row).find('td');
 	    copy.css('width', $(row).width());
-	    copytable.css('position', 'absolute');
+	    copytable.css('position', 'fixed');
 	    copytable.css('top', $(row).offset().top);
 	    copy.addClass('dragging');
 	    $(row).parent().parent().before(copytable);
@@ -441,16 +440,16 @@ $(function() {
 	    delete raw_row.dragged;
 	    // Before we do anything, let's lock it down so you can't drag anymore until
 	    // we get a response back from the server.
-	    $("#listing-table tbody tr").addClass('nodrag').css('cursor', '');
+	    $("tbody tr", table).addClass('nodrag').css('cursor', '');
 	    var pos = get_pos(row);
 	    var last_pos = raw_row.last_pos;
 	    args = {
 		item_id: $(row).attr('id').substr('folder-contents-item-'.length),
-		subset_ids: $("#listing-table").data('ploneDnDReorder.subset_ids')
+		subset_ids: $(table).data('ploneDnDReorder.subset_ids')
 	    };
 	    var delta = pos - last_pos;
 	    if(delta == 0){ 
-		$("#listing-table tbody tr").removeClass('nodrag').css('cursor', 'pointer');
+		$("tbody tr", table).removeClass('nodrag').css('cursor', 'pointer');
 		return;
 	    }else{ args['delta:int'] = delta };
 	    encoded = $.param(args);
@@ -462,7 +461,7 @@ $(function() {
 		data: encoded,
 		complete : function(xhr, textStatus) {
 		    if (textStatus === "success" || textStatus === "notmodified") {
-			$("#listing-table tbody tr").removeClass('nodrag').css('cursor', 'pointer');
+			$("tbody tr", table).removeClass('nodrag').css('cursor', 'pointer');
 		    } else {
 			$(row).addClass("error");
 		    }
@@ -473,7 +472,10 @@ $(function() {
 	},
 	onDragClass: 'dragindicator'
     });
-    jQuery("#listing-table td.draggable").addClass('draggingHook').html('⣿');
-});
+    $("td.draggable", table).addClass('draggingHook').html('⣿');
+}); })(jQuery);
+};
 
-})(jQuery);
+jQuery.fn.extend({
+    ploneDnD : ploneDnD
+});
