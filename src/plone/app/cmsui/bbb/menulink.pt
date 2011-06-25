@@ -3,7 +3,9 @@
 <!-- TODO: Improve the placement and appearance of this.
            See http://projects.plone.org/browse/NEWUI-12
   -->
-<iframe id="plone-cmsui-menu" src="" tal:attributes="src view/getLink"></iframe>
+<iframe id="plone-cmsui-menu"
+        src=""
+        tal:attributes="src view/getLink"></iframe>
 <div id="plone-cmsui-trigger" style="display:none;">
   <!-- diazo prepend rule -->
   <a id="cmsui-menu-link" href="" tal:attributes="href view/getLink">Manage page</a>
@@ -21,7 +23,7 @@
           left: 0;
           top: 0;
           width: 100%;
-          height: 0;
+          height: 150;
           z-index: 9999;
       }
   </style>
