@@ -108,17 +108,17 @@ function eraseCookie(name) {
             var bottom_height = $('#toolbar-bottom').outerHeight();
             toolbar.addClass('large').removeClass('small');
             height = toolbar.outerHeight();            
-            iframe.animate({'height': height}, 1000);
             $('#toolbar-bottom').css('top', -bottom_height);
-            $('#toolbar-bottom').animate({'top': 0}, 1000);
             parent_body.animate({'margin-top': height}, 1000);
+            $('#toolbar-bottom').animate({'top': 0}, 1000);
+            iframe.animate({'height': height}, 1000);
             createCookie('__plone_menu', 'large');
             createCookie('__plone_height', height);
             return false;
         });
         $('#manage-page-close').click(function () {
             var bottom_height = $('#toolbar-bottom').outerHeight();
-            height = toolbar.outerHeight() - bottom_height;
+            height = toolbar.outerHeight() - bottom_height + 1;
             iframe.animate({'height': height}, 1000);
             parent_body.animate({'margin-top': height}, 1000, function () {
                 toolbar.addClass('small').removeClass('large');
