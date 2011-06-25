@@ -74,10 +74,9 @@ class WorkflowPanel(form.Form):
         expiration_date = data.get('expiration_date', None)
         
         self._editContent(self.context, effective_date, expiration_date)
-        
         if workflow_action is not None:
             self.context.portal_workflow.doActionFor(self.context, workflow_action, comment=data.get('comment', ''))
-            return "Complete"
+         
         self.request.response.redirect(self.context.absolute_url())
 
     @button.buttonAndHandler(u'Cancel')
