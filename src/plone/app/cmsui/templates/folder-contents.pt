@@ -9,7 +9,8 @@
 
 <metal:content-core fill-slot="body">
   <div id="content">
-  <div class="structure-slider" style="width: 100%;">
+  <div id="structure-dialog">
+  <div class="structure-slider" style="width: 100%; position: relative; top: 0;">
 
   <h1 class="documentFirstHeading" tal:content="view/title"> 
     Title
@@ -196,52 +197,13 @@
       <div tal:replace="structure view/batching" tal:condition="not:view/show_all"/>
       
       <input tal:replace="structure context/@@authenticator/authenticator" />
+
     </form>
 
   </div>
   </div>
-
-<script type="text/javascript">
-jQuery(function($) {
-  var current_location = '';
-  
-  var slideTo = function(href, dir) {
-    var $slider = $('.structure-slider');
-    var width = $slider.outerWidth();
-    
-    $('body').css('overflow', 'hidden');
-    $('#content').css({position: 'relative'});
-    $slider.css('position', 'relative').animate({'left': (dir=='left')?-width:width}, 200, null, function() {$slider.detach();});
-    $('<div class="structure-slider" style="width: 100%"><' + '/div>')
-        .appendTo($('#content'))
-        .load(href + ' .structure-slider>*')
-        .css({position: 'absolute', left: (dir=='left'?width:-width), top: 0})
-        .animate({'left': 0}, 200, function() {$('body').css('overflow', 'auto');});
-        
-    current_location = href;
-  }
-  
-  $('a.link-child').live('click', function(e) {
-    e.preventDefault();
-    var href = $(this).attr('href');
-    slideTo(href, 'left');
-    history.pushState(href, null, location.href);
-  });
-
-  $('a.link-parent').live('click', function(e) {
-    e.preventDefault();
-    var href = $(this).attr('href');
-    slideTo(href, 'right');
-    history.pushState(href, null, location.href);
-  });
-  
-  $(window).bind('popstate', function(e) {
-    var href = e.originalEvent.state;
-    slideTo(href, (current_location.length > href.length ? 'right' : 'left'));
-  });
-  history.replaceState(location.href, null, location.href);
-});
-</script>
+  <br style="clear: both;" />
+  </div>
 
 </metal:content-core>
 </body>
