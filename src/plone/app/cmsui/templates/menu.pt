@@ -99,7 +99,12 @@
 
             <!-- Links tangentially related to the current document -->
             <ul id="folder-actions">
-                <li id="folder-add_content"><a href="#">Add Content</a></li>
+                <li id="folder-add_content">
+                    <a class="overlayLink" href="" 
+                       tal:attributes="href string:${view/baseURL}/@@cmsui-add-new">
+                    Add Content
+                    </a>
+                </li>
             </ul>
         </div>
 
