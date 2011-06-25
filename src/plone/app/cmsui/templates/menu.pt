@@ -33,9 +33,6 @@
 <body tal:define="isRTL portal_state/is_rtl"
     tal:attributes="dir python:isRTL and 'rtl' or 'ltr'">
 
-<div id="visual-portal-wrapper">
-
-
 <section id="toolbar">
 
     <div class="container clearfix">
@@ -117,8 +114,5 @@
 
 </section>
 
-<div class="visualClear"></div>
-
-</div>
 </body>
 </html>
