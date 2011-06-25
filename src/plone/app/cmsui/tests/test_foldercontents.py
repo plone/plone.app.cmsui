@@ -24,7 +24,7 @@ class TestFolderContents(unittest.TestCase):
 
     def test_not_visible_to_anon(self):
         browser = Browser(self.layer['app'])
-        browser.open('http://nohost/plone/cmsui-folder-contents')
+        browser.open('http://nohost/plone/cmsui-structure')
         self.assertTrue('Log in' in browser.contents)
 
     def test_bbb_view(self):
@@ -36,11 +36,11 @@ class TestFolderContents(unittest.TestCase):
         browser_login(self.portal, self.browser)
         
         # empty folder
-        self.browser.open('http://nohost/plone/empty-folder/@@folder_contents')
+        self.browser.open('http://nohost/plone/empty-folder/cmsui-structure')
         self.assertFalse('foldercontents-title-column' in self.browser.contents)
 
         # non-empty folder
-        self.browser.open('http://nohost/plone/@@folder_contents')
+        self.browser.open('http://nohost/plone/cmsui-structure')
         self.assertTrue('foldercontents-title-column' in self.browser.contents)
 
 """

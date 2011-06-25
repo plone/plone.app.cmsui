@@ -25,11 +25,11 @@ jq(function(){
 
   <nav id="portal-breadcrumbs">
       <ul>
-          <li id='path-home'><a tal:attributes="href view/@@plone_portal_state/navigation_root_url">Home</a></li
+          <li id='path-home'><a class="link-parent" tal:attributes="href string:${view/@@plone_portal_state/navigation_root_url}/cmsui-structure">Home</a></li
           ><li tal:repeat="crumb view/breadcrumbs"
           ><a class="link-parent"
               tal:condition="not:repeat/crumb/end"
-              tal:attributes="href string:${crumb/absolute_url}/cmsui-folder-contents;"
+              tal:attributes="href string:${crumb/absolute_url}/cmsui-structure;"
               tal:content="crumb/Title">Item</a
           ><span tal:condition="repeat/crumb/end" class="current"
                  tal:content="crumb/Title">Item</span
