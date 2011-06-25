@@ -34,7 +34,7 @@ html {
     color: @baseFontColor;
     position: fixed;
     z-index: 10000;
-    border-bottom: 2px solid darken(@ploneColor, 20%);
+    border-bottom: 1px solid darken(@ploneColor, 20%);
 	
 	&:after {
 	    /*
@@ -91,8 +91,11 @@ html {
 	
 	.container:last-of-type {
 	    margin-top: 0;
+	    margin-bottom: 0;
 	    padding-top: @verticalSpace;
+	    padding-bottom: @verticalSpace;
 	    border-top: 1px solid lighten(@ploneColor, 5%);
+        border-bottom: 1px solid darken(@ploneColor, 20%);
 	    
 		#document-info,
 		#folder-actions {
@@ -117,6 +120,10 @@ html {
 			}
 		}
 	}
+}
+
+.small #toolbar-bottom {
+    display: none;
 }
 
 #toggle-toolbar {
