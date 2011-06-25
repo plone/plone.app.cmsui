@@ -10,6 +10,9 @@
     <script type="text/javascript" src="++resource++plone.app.cmsui/js/libs/jquery.js"></script>
     <script type="text/javascript" src="++resource++plone.app.cmsui/js/dragdropreorder.js"></script>
 </metal:block>
+<metal:block fill-slot="style_slot">
+  <link rel="stylesheet" type="text/css" href="++resource++plone.app.cmsui/css/structure.css" />
+</metal:block>
 </head>
 
 <body>

@@ -72,7 +72,13 @@
         template="templates/folder-contents.pt"
         permission="plone.ViewCMSUI"
         />
-
+    <browser:page
+        name="folder_moveitem"
+        for="*"
+        class=".foldercontents.MoveItem"
+        permission="plone.ViewCMSUI"
+        layer=".interfaces.ICMSUILayer"
+        />
     <!-- Static resources -->
 
     <browser:resourceDirectory

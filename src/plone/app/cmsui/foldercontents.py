@@ -341,3 +341,26 @@ class FolderContents(BrowserView):
 
     def quote_plus(self, string):
         return urllib.quote_plus(string)
+
+
+class MoveItem(BrowserView):
+    """
+    Pretty much straigh copy of the folder_moveitem.py script
+    so we can eventually remove the bloody thing.
+    """
+    def __call__(self, item_id, delta, subset_ids=None):
+        try:
+            delta = int(delta)
+            if subset_ids is not None:
+                position_id = [(self.context.getObjectPosition(id), id) for id in subset_ids]
+                position_id.sort()
+                if subset_ids != [id for position, id in position_id]:
+                    raise ValueError("Client/server ordering mismatch.")
+                self.context.moveObjectsByDelta(item_id, delta, subset_ids)
+        except ValueError as e:
+            self.context.REQUEST.response.setStatus('BadRequest')
+            return str(e)
+
+        plone_utils = getToolByName(self.context, 'plone_utils')
+        plone_utils.reindexOnReorder(self.context)
+        return "<done />"

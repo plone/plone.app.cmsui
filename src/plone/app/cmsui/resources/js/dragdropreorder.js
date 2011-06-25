@@ -85,91 +85,91 @@ jQuery.tableDnD = {
     mouseOffset: null,
     /** Remember the old value of Y so that we don't do too much processing */
     oldY: 0,
-
+    
     /** Actually build the structure */
     build: function(options) {
         // Set up the defaults if any
-
+	
         this.each(function() {
             // This is bound to each matching table, set up the defaults and override with user options
             this.tableDnDConfig = jQuery.extend({
                 onDragStyle: null,
                 onDropStyle: null,
-				// Add in the default class for whileDragging
-				onDragClass: "tDnD_whileDrag",
+		// Add in the default class for whileDragging
+		onDragClass: "tDnD_whileDrag",
                 onDrop: null,
                 onDragStart: null,
                 scrollAmount: 5,
-				serializeRegexp: /[^\-]*$/, // The regular expression to use to trim row IDs
-				serializeParamName: null, // If you want to specify another parameter name instead of the table ID
+		serializeRegexp: /[^\-]*$/, // The regular expression to use to trim row IDs
+		serializeParamName: null, // If you want to specify another parameter name instead of the table ID
                 dragHandle: null // If you give the name of a class here, then only Cells with this class will be draggable
             }, options || {});
             // Now make the rows draggable
             jQuery.tableDnD.makeDraggable(this);
         });
-
+	
         // Now we need to capture the mouse up and mouse move event
         // We can use bind so that we don't interfere with other event handlers
         jQuery(document)
             .bind('mousemove', jQuery.tableDnD.mousemove)
             .bind('mouseup', jQuery.tableDnD.mouseup);
-
+	
         // Don't break the chain
         return this;
     },
-
+    
     /** This function makes all the rows on the table draggable apart from those marked as "NoDrag" */
     makeDraggable: function(table) {
         var config = table.tableDnDConfig;
-		if (table.tableDnDConfig.dragHandle) {
-			// We only need to add the event to the specified cells
-			var cells = jQuery("td."+table.tableDnDConfig.dragHandle, table);
-			cells.each(function() {
-				// The cell is bound to "this"
-                jQuery(this).mousedown(function(ev) {
-                    jQuery.tableDnD.dragObject = this.parentNode;
-                    jQuery.tableDnD.currentTable = table;
-                    jQuery.tableDnD.mouseOffset = jQuery.tableDnD.getMouseOffset(this, ev);
-                    if (config.onDragStart) {
-                        // Call the onDrop method if there is one
-                        config.onDragStart(table, this);
+	if (table.tableDnDConfig.dragHandle) {
+	    // We only need to add the event to the specified cells
+	    var cells = jQuery("td."+table.tableDnDConfig.dragHandle, table);
+	    cells.each(function() {
+		// The cell is bound to "this"
+		jQuery(this).mousedown(function(ev) {
+		    jQuery.tableDnD.dragObject = this.parentNode;
+		    jQuery.tableDnD.currentTable = table;
+		    jQuery.tableDnD.mouseOffset = jQuery.tableDnD.getMouseOffset(this, ev);
+		    if (config.onDragStart) {
+			// Call the onDrop method if there is one
+			config.onDragStart(table, this);
                     }
                     return false;
-                });
-			})
-		} else {
-			// For backwards compatibility, we add the event to the whole row
-	        var rows = jQuery("tr", table); // get all the rows as a wrapped set
-	        rows.each(function() {
-				// Iterate through each row, the row is bound to "this"
-				var row = jQuery(this);
-				if (! row.hasClass("nodrag")) {
-	                row.mousedown(function(ev) {
-	                    if (ev.target.tagName == "TD") {
-	                        jQuery.tableDnD.dragObject = this;
-	                        jQuery.tableDnD.currentTable = table;
-	                        jQuery.tableDnD.mouseOffset = jQuery.tableDnD.getMouseOffset(this, ev);
-	                        if (config.onDragStart) {
-	                            // Call the onDrop method if there is one
-	                            config.onDragStart(table, this);
-	                        }
-	                        return false;
+		});
+            });
+        } else {
+            // For backwards compatibility, we add the event to the whole row
+            var rows = jQuery("tr", table); // get all the rows as a wrapped set
+            rows.each(function() {
+                // Iterate through each row, the row is bound to "this"
+                var row = jQuery(this);
+                row.mousedown(function(ev) {
+                    if (!$(this).hasClass("nodrag")) {
+			if (ev.target.tagName == "TD") {
+	                    jQuery.tableDnD.dragObject = this;
+	                    jQuery.tableDnD.currentTable = table;
+	                    jQuery.tableDnD.mouseOffset = jQuery.tableDnD.getMouseOffset(this, ev);
+	                    if (config.onDragStart) {
+				// Call the onDrop method if there is one
+				config.onDragStart(table, this);
 	                    }
-	                }).css("cursor", "move"); // Store the tableDnD object
-				}
-			});
-		}
-	},
-
-	updateTables: function() {
-		this.each(function() {
-			// this is now bound to each matching table
-			if (this.tableDnDConfig) {
-				jQuery.tableDnD.makeDraggable(this);
+	                    return false;
 			}
-		})
-	},
+		    }
+	        }).css("cursor", "move"); // Store the tableDnD object
+	    });
+	}
+    },
 
+    updateTables: function() {
+	this.each(function() {
+	    // this is now bound to each matching table
+	    if (this.tableDnDConfig) {
+		jQuery.tableDnD.makeDraggable(this);
+	    }
+	});
+    },
+    
     /** Get the mouse coordinates from the event (allowing for browser differences) */
     mouseCoords: function(ev){
         if(ev.pageX || ev.pageY){
@@ -180,7 +180,7 @@ jQuery.tableDnD = {
             y:ev.clientY + document.body.scrollTop  - document.body.clientTop
         };
     },
-
+    
     /** Given a target element and a mouse event, get the mouse offset from that element.
         To do this we need the element's position and the mouse position */
     getMouseOffset: function(target, ev) {
@@ -394,25 +394,47 @@ $(function() {
 	    pos += 1;
 	}
     }
-	    
+    
+    var store_order = function(){
+	$("#listing-table").data('ploneDnDReorder.subset_ids', $.map(
+            $("#listing-table tr.draggable"),
+            function(elem) {
+		return $(elem).attr('id').substr('folder-contents-item-'.length);
+	    }));
+    }
     // Initialise the table
     var pos = 0;
     $("#listing-table tbody tr").each(function(){ this.last_pos = pos; pos += 1;});
+    store_order();
     jQuery("#listing-table").tableDnD({
 	onDrop: function(table, row) {
+	    // Before we do anything, let's lock it down so you can't drag anymore until
+	    // we get a response back from the server.
+	    $("#listing-table tbody tr").addClass('nodrag').css('cursor', '');
 	    var pos = get_pos(row);
 	    var last_pos = row.last_pos;
 	    args = {
 		item_id: $(row).attr('id').substr('folder-contents-item-'.length),
+		subset_ids: $("#listing-table").data('ploneDnDReorder.subset_ids')
 	    }
 	    args['delta:int'] = pos - last_pos;
-	    encoded = $.param(args)
+	    encoded = $.param(args);
+	    // Convert jQuery's name[]=1&name[]=2 to Zope's name:list=1&name:list=2
+	    encoded = $.param(args).replace(/%5B%5D=/g, '%3Alist=');
 	    $.ajax({
 		type: 'POST',
 		url: $('#folder-structure-form #base-url').val() + '/folder_moveitem',
-		data: encoded
+		data: encoded,
+		complete : function(xhr, textStatus) {
+		    if (textStatus === "success" || textStatus === "notmodified") {
+			$("#listing-table tbody tr").removeClass('nodrag').css('cursor', '')
+		    } else {
+			$(row).addClass("error");
+		    }
+		}
 	    });
 	    row.last_pos = pos;
+	    store_order();
 	},
 	onDragClass : 'dragindicator'
     });
