@@ -37,7 +37,7 @@
 
 <section id="toolbar">
 
-    <div class="container clearfix">
+    <div id="toolbar-top" class="container clearfix">
 
         <!-- Breadcrumbs -->
         <nav id="portal-breadcrumbs" class="grid_7 ">
@@ -66,7 +66,7 @@
         </ul>
     </div>
 
-    <div class="container clearfix">
+    <div id="toolbar-bottom" class="container clearfix">
 
         <!-- Information about the current document -->
         <div class="grid_10">
