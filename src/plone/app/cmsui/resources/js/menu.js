@@ -58,6 +58,9 @@ function eraseCookie(name) {
         $('a.overlayLink').prepOverlay({
             subtype: 'ajax',
             filter: common_content_filter,
+            // Add this to a link or button to make it close the overlay e.g.
+            // on cancel without reloading the page
+            closeselector: '.overlayCloseAction',
             config: { 
                 top: 150,
                 onBeforeLoad: function (e) { 
@@ -100,5 +103,30 @@ function eraseCookie(name) {
             parent_body.animate({'margin-top': toolbar.outerHeight()}, 1000);
         }
         createCookie('__plone_height', $('#toolbar').outerHeight());
+
+        $('#manage-page-open').click(function () {
+            var bottom_height = $('#toolbar-bottom').outerHeight();
+            toolbar.addClass('large').removeClass('small');
+            height = toolbar.outerHeight();            
+            iframe.animate({'height': height}, 1000);
+            $('#toolbar-bottom').css('top', -bottom_height);
+            $('#toolbar-bottom').animate({'top': 0}, 1000);
+            parent_body.animate({'margin-top': height}, 1000);
+            createCookie('__plone_menu', 'large');
+            createCookie('__plone_height', height);
+            return false;
+        });
+        $('#manage-page-close').click(function () {
+            var bottom_height = $('#toolbar-bottom').outerHeight();
+            height = toolbar.outerHeight() - bottom_height;
+            iframe.animate({'height': height}, 1000);
+            parent_body.animate({'margin-top': height}, 1000, function () {
+                toolbar.addClass('small').removeClass('large');
+            });
+            $('#toolbar-bottom').animate({'top': -bottom_height}, 1000);
+            createCookie('__plone_menu', 'small');
+            createCookie('__plone_height', height);
+            return false;
+        });
     });
 }(jQuery));

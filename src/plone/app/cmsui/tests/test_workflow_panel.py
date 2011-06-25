@@ -161,3 +161,31 @@ class TestWorkflowPanel(unittest.TestCase):
         self.assertEqual("publish", document.workflow_history['plone_workflow'][-1]['action'])
         self.assertEqual("published", portal.portal_workflow.getInfoFor(document, "review_state"))
         self.assertEqual(DateTime(next_year), document.getRawExpirationDate())
+
+    def test_can_enter_expiration_date_without_transaction(self):
+        browser = Browser(self.layer['app'])
+        portal = self.layer['portal']
+        setRoles(portal, TEST_USER_ID, ('Member', 'Manager'))
+        document_id = portal.invokeFactory("Document", "expiration_date_without_transition_doc", title="Workflow note")
+        document = portal[document_id]
+        transaction.commit()
+        
+        browser_login(portal, browser)
+        browser.open(document.absolute_url())
+        browser.getLink("Manage page").click()
+        browser.getLink("Public draft").click()
+        
+        # Don't select any workflow action, but set date
+        next_year = datetime.now() + timedelta(365)
+        next_year = next_year - timedelta(seconds=next_year.second,
+                                        microseconds=next_year.microsecond)
+        browser.getControl(name="form.widgets.expiration_date-day").value = str(next_year.day)
+        browser.getControl(name="form.widgets.expiration_date-month").value = [str(next_year.month)]
+        browser.getControl(name="form.widgets.expiration_date-year").value = str(next_year.year)
+        browser.getControl(name="form.widgets.expiration_date-hour").value = str(next_year.hour)
+        browser.getControl(name="form.widgets.expiration_date-min").value = str(next_year.minute)
+        browser.getControl("Save").click()
+        
+        # Still draft, but expiration date set
+        self.assertEqual("visible", portal.portal_workflow.getInfoFor(document, "review_state"))
+        self.assertEqual(DateTime(next_year), document.getRawExpirationDate())

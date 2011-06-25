@@ -60,7 +60,6 @@
         name="cmsui-workflow-panel"
         for="*"
         class=".workflowpanel.WorkflowPanel"
-        template="templates/workflow-panel.pt"
         permission="plone.ViewCMSUI"
         />
 
@@ -96,6 +95,16 @@
         name="cmsui-file-upload-form"
         for="*"
         class=".addmenu.FileUploadFormView"
+        permission="plone.ViewCMSUI"
+        />
+
+    <!-- Lock info overlay -->
+
+    <browser:page
+        name="cmsui-lock-info"
+        for="*"
+        class=".lockinfo.LockInfo"
+        template="templates/lockinfo.pt"
         permission="plone.ViewCMSUI"
         />
 

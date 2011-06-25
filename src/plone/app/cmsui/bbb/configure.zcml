@@ -53,6 +53,15 @@
         permission="zope.Public"
         />
     
+    <browser:viewlet
+        name="plone.lockinfo"
+        for="plone.locking.interfaces.ITTWLockable"
+        layer="..interfaces.ICMSUILayer"
+        manager="plone.app.layout.viewlets.interfaces.IAboveContent"
+        class=".nullviewlet.NullViewlet"
+        permission="zope.Public"
+        />
+    
     <cmf:registerDirectory name="skins"
         directory="skins"
         recursive="true" />
