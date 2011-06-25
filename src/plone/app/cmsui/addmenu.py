@@ -53,10 +53,8 @@ class AddNewContentForm(form.Form):
 
         # create the object
         container.invokeFactory(data['type_name'], id=id, title=title)
-        # redirect to immediate_view
         
         self.request.response.redirect("%s/edit" % container[id].absolute_url())
-        # open edit overlay    
 
 AddNewContentView = wrap_form(AddNewContentForm)
 
@@ -69,6 +67,7 @@ class AddMenu(BrowserView):
         # Disable theming
         self.request.response.setHeader('X-Theme-Disabled', 'True')
         
+        # Get this of types addable here, by this user.
         factoriesMenu = getUtility(IBrowserMenu, name='plone_contentmenu_factory', context=self.context)
         self.addable_types = factoriesMenu.getMenuItems(self.context, self.request)
 
@@ -80,10 +79,5 @@ class AddMenu(BrowserView):
         
         self.allowedTypes = factories_view.addable_types()
         
-        
         return self.index()
 
-
-        
-        
-        
