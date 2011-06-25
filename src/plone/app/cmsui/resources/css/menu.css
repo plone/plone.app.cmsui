@@ -99,6 +99,7 @@ html{overflow-y:visible;}
 #toolbar .container:last-of-type span#avail-languages{font-size:10.068px;font-family:Verdana,sans-serif;}
 #toolbar .container:last-of-type #folder-actions{margin-left:4%;}
 #toolbar .container:last-of-type #site-setup{text-align:right;}#toolbar .container:last-of-type #site-setup a{display:inline-block;padding-top:27.333333333333332px;text-align:center;}
+#manage-page-close,#manage-page-open{margin-left:24px;}
 .small #toolbar-bottom{display:none;}
 #toolbar.small #toolbar-top{border-bottom:2px solid #1b3d5b;}
 #toolbar.large #toolbar-bottom{border-bottom:2px solid #1b3d5b;}
