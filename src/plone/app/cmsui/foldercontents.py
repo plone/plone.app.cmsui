@@ -115,6 +115,7 @@ class FolderContents(BrowserView):
         portal_workflow = getToolByName(context, 'portal_workflow')
         portal_properties = getToolByName(context, 'portal_properties')
         portal_types = getToolByName(context, 'portal_types')
+        portal_membership = getToolByName(context, 'portal_membership')
         site_properties = portal_properties.site_properties
 
         use_view_action = site_properties.getProperty('typesUseViewActionInListings', ())
@@ -161,6 +162,10 @@ class FolderContents(BrowserView):
                                                     context=self.request),
                                           safe_unicode(obj.Description))
 
+            creator = obj.Creator
+            memberInfo = portal_membership.getMemberInfo(creator)
+            creator = memberInfo.get('fullname', '') or creator
+
             modified = plone_view.toLocalizedTime(
                 obj.ModificationDate, long_format=1)
 
@@ -183,6 +188,7 @@ class FolderContents(BrowserView):
                 path = path,
                 title_or_id = safe_unicode(pretty_title_or_id(plone_utils, obj)),
                 obj_type = obj_type,
+                creator = creator,
                 modified = modified,
                 icon = icon.html_tag(),
                 type_class = type_class,

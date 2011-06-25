@@ -87,6 +87,9 @@
           <th class="nosort column"
               id="foldercontents-title-column">&nbsp;<tal:title i18n:translate="listingheader_title"
 								>Title</tal:title>&nbsp;</th>
+					<th class="nosort column"
+					    id="foldercontents-creator-column">&nbsp;<tal:responsible i18n:translate="listingheader_creator"
+					    >Responsible</tal:responsible>&nbsp;</th>
           <th class="nosort column"
               id="foldercontents-modified-column">&nbsp;<tal:modified i18n:translate="listingheader_modified"
 								      >Modified</tal:modified>&nbsp;</th>
@@ -153,6 +156,8 @@
 			tal:condition="item/is_expired|nothing"
 			i18n:translate="time_expired">expired</span>
 		</td>
+		
+		<td tal:content="item/creator" />
 		
 		<td tal:content="item/modified"
                     tal:attributes="class item/state_class|nothing">
