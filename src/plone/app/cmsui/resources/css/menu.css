@@ -92,9 +92,9 @@ html{overflow-y:visible;}
 #toolbar{margin:10px auto;width:100%;background:#2c6596;background-image:-moz-linear-gradient(top, #2c6596, #3272aa);background-image:-ms-linear-gradient(top, #2c6596, #3272aa);background-image:-o-linear-gradient(top, #2c6596, #3272aa);background-image:-webkit-gradient(linear, left top, left bottom, from(#2c6596), to(#3272aa));background-image:-webkit-linear-gradient(top, #2c6596, #3272aa);background-image:linear-gradient(top, #2c6596, #3272aa);-webkit-box-shadow:0 2px 5px rgba(0, 0, 0, 0.5);-moz-box-shadow:0 2px 5px rgba(0, 0, 0, 0.5);box-shadow:0 2px 5px rgba(0, 0, 0, 0.5);margin-top:0;padding-top:5px;color:#ffffff;position:fixed;z-index:10000;}#toolbar:after{content:" ";display:block;height:2px;background:#1b3d5b;}
 #toolbar ul{float:none;clear:both;list-style:none;margin:0;padding:0;}#toolbar ul>*{display:inline;}#toolbar ul>*>*{float:none;display:inline-block;padding:2.5px 1%;}
 #toolbar a{color:#ffffff;text-decoration:none;}
-#toolbar .container:first-of-type{margin-top:0;margin-bottom:0;padding-bottom:10px;padding-top:10px;line-height:2em;border-bottom:1px solid #153047;}#toolbar .container:first-of-type #portal-logo img{width:100%;}
-#toolbar .container:first-of-type #portal-breadcrumbs{line-height:2em;}#toolbar .container:first-of-type #portal-breadcrumbs a{display:inline-block;padding:0;}#toolbar .container:first-of-type #portal-breadcrumbs a:after{content:"\25BA";display:inline-block;margin-left:0.5em;margin-right:0.5em;}
-#toolbar .container:first-of-type #portal-breadcrumbs li#path-home a{background:transparent url(../images/plone_logo.png) 50% 50% no-repeat;width:95px;height:24px;position:relative;top:-0.3em;}
+#toolbar .container:first-of-type{margin-top:0;margin-bottom:0;padding-bottom:5px;padding-top:5px;line-height:1em;border-bottom:1px solid #153047;}#toolbar .container:first-of-type #portal-logo img{width:100%;}
+#toolbar .container:first-of-type #portal-breadcrumbs{line-height:1em;}#toolbar .container:first-of-type #portal-breadcrumbs a{display:inline-block;padding:0;}#toolbar .container:first-of-type #portal-breadcrumbs a:after{content:"\25BA";display:inline-block;margin-left:0.5em;margin-right:0.5em;}
+#toolbar .container:first-of-type #portal-breadcrumbs li#path-home a{display:block;}
 #toolbar .container:first-of-type #portal-breadcrumbs li#path-home:after{content:"\25BA";display:inline-block;margin-left:0.5em;margin-right:0.5em;}
 #toolbar .container:first-of-type #portal-breadcrumbs span.current{padding:0;}
 #toolbar .container:first-of-type #personal-tools{text-align:right;}
