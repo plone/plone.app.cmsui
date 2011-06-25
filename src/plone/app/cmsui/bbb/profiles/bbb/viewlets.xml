@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<object>
+ <order manager="plone.portaltop" skinname="Sunburst Theme">
+  <viewlet name="plone.cmsui.menulink"/>
+  <viewlet name="plone.header"/>
+ </order>
+</object>
