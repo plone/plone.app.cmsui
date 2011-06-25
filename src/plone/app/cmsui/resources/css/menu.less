@@ -15,8 +15,8 @@
 
 @linkColor: #fff;
 @verticalSpace: 10px;
-
-@ploneColor: #329FD7;
+@ploneColorOld: #329FD7;
+@ploneColor: #3272aa;
 
 @import "mixins.less";
 @import "960gs.less";
@@ -27,8 +27,8 @@ html {
 }
 #toolbar {
 	.container();
-	.css3_linear_gradient(darken(@ploneColor, 20%), @ploneColor);
-	.css3_box_shadow(0 2px 12px rgba(0,0,0,0.5));
+	.css3_linear_gradient(darken(@ploneColor, 5%), @ploneColor);
+	.css3_box_shadow(0 2px 5px rgba(0,0,0,0.5));
 	margin-top: 0;
 	padding-top: @verticalSpace/2;
     color: @baseFontColor;
@@ -55,9 +55,9 @@ html {
 	.container:first-of-type {
 	    margin-top: 0;
 	    margin-bottom: 0;
-	    padding-bottom: @verticalSpace;
-	    padding-top: @verticalSpace;	    
-	    line-height: 2em;
+	    padding-bottom: @verticalSpace/2;
+	    padding-top: @verticalSpace/2;	    
+	    line-height: 1em;
 	    border-bottom: 1px solid darken(@ploneColor, 25%);
 
     	#portal-logo {
@@ -66,7 +66,7 @@ html {
 			}
 		}
 		#portal-breadcrumbs {
-			line-height: 2em;
+			line-height: 1em;
 		    a {
 				display: inline-block;
 				padding: 0;
@@ -79,11 +79,13 @@ html {
 			}
 			li#path-home {
 			    a {
-				    background: transparent url(../images/plone_logo.png) 50% 50% no-repeat;
+			        display:block;
+				    /*background: transparent url(../images/plone_logo.png) 50% 50% no-repeat;
 				    width: 95px;
 				    height: 24px;
 				    position: relative;
 				    top: -0.3em;
+				    */
 				}
 				&:after {
 				    content: "\25BA";
@@ -174,7 +176,7 @@ html {
     background: transparent url('../icons/Folder.png') 50% 0 no-repeat;    
 }
 #folder-add_content a {
-    background: transparent url('../icons/Folder_Add.png') 50% 0 no-repeat;
+    background: transparent url('../icons/Add.png') 50% 0 no-repeat;
 }
 
 #site-setup a {
