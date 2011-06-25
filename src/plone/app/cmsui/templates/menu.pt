@@ -94,7 +94,17 @@
                     ><a class="overlayLink"
                         tal:attributes="href view/editLink"
                         i18n:translate="cmsui_edit">Edit</a></li
-                ><li id="document-settings"><a href="#">Settings</a></li>
+                ><li tal:condition="python:view.settingsActions()"
+                     id="document-settings"
+                    ><a class="dropdownLink" href="#">More&hellip;</a
+                    ><ul class="dropdownItems"
+                        ><li tal:repeat="action view/settingsActions"
+                        ><a class="overlayLink"
+                            tal:content="action/title"
+                            tal:attributes="href action/url;
+                                            style string:background: url(${action/icon});;" /></li
+                    ></ul></li
+                >
             </ul>
 
             <!-- Links tangentially related to the current document -->
