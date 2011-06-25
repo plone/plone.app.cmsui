@@ -109,7 +109,7 @@ html{overflow-y:visible;}
 #document-author a{background:transparent url('../icons/Person.png') 50% 0 no-repeat;}
 #document-settings a{background:transparent url('../icons/List.png') 50% 0 no-repeat;}
 #document-edit a{background:transparent url('../icons/Edit.png') 50% 0 no-repeat;}
-#folder-contents a{background:transparent url('../icons/Folder.png') 50% 0 no-repeat;}
+#structure a{background:transparent url('../icons/Folder.png') 50% 0 no-repeat;}
 #folder-add_content a{background:transparent url('../icons/Add.png') 50% 0 no-repeat;}
 #site-setup a{background:transparent url('../icons/Wrench_Screwdriver.png') 50% 0 no-repeat;}
 #exposeMask{position:fixed !important;}

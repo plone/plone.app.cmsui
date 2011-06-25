@@ -15,16 +15,13 @@ from zope.i18nmessageid import MessageFactory
 from plone.app.content.batching import Batch
 from zope.cachedescriptors.property import Lazy as lazy_property
 from plone.registry.interfaces import IRegistry
-from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
 _ = MessageFactory('plone')
 
 
-class FolderContents(BrowserView):
+class StructureView(BrowserView):
     """Folder contents overlay
     """
-
-    batching = ViewPageTemplateFile('templates/folder-listing-batch.pt')
 
     def __call__(self, contentFilter={}):
         # Disable theming
@@ -33,7 +30,7 @@ class FolderContents(BrowserView):
 
         registry = getUtility(IRegistry)
 
-        self.pagesize = registry.get('plone.app.cmsui.interfaces.ICMSUISettings.folder_contents_batch_size', 20)
+        self.pagesize = registry.get('plone.app.cmsui.interfaces.ICMSUISettings.folder_contents_batch_size', 30)
         self.show_all = self.request.get('show_all', '').lower() == 'true'
 
         selection = self.request.get('select')
@@ -165,7 +162,7 @@ class FolderContents(BrowserView):
             if obj.portal_type in use_view_action:
                 view_url = url + '/view'
             elif obj.is_folderish:
-                view_url = url + "/cmsui-folder-contents"
+                view_url = url + "/cmsui-structure"
             else:
                 view_url = url
 
@@ -313,7 +310,7 @@ class FolderContents(BrowserView):
 
     @lazy_property
     def view_url(self):
-        return self.context.absolute_url() + '/cmsui-folder-contents'
+        return self.context.absolute_url() + '/cmsui-structure'
 
     @property
     def selectall_url(self):

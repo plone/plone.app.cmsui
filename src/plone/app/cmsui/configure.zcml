@@ -76,16 +76,16 @@
 
     <!-- Folder contents overlay -->
     <browser:page
-        name="cmsui-folder-contents"
+        name="cmsui-structure"
         for="*"
-        class=".foldercontents.FolderContents"
-        template="templates/folder-contents.pt"
+        class=".structure.StructureView"
+        template="templates/structure.pt"
         permission="plone.ViewCMSUI"
         />
     <browser:page
         name="folder_moveitem"
         for="*"
-        class=".foldercontents.MoveItem"
+        class=".structure.MoveItem"
         permission="plone.ViewCMSUI"
         layer=".interfaces.ICMSUILayer"
         />

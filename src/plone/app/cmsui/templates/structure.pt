@@ -35,12 +35,11 @@ jq(function(){
        class="link-parent"
        tal:define="parent_url view/parent_url"
        tal:condition="parent_url"
-       tal:attributes="href string:${parent_url}/@@cmsui-folder-contents"
+       tal:attributes="href string:${parent_url}/@@cmsui-structure"
        i18n:translate="go_to_parent_url">
       Up one level
     </a>
 
-    <div tal:replace="structure view/batching" tal:condition="not:view/show_all"/>
     <form name="folderContentsForm"
           method="post"
           action="folder_object"
@@ -49,7 +48,6 @@ jq(function(){
 
       <input type="hidden" id="base-url" name="base-url" tal:attributes="value context/absolute_url" />
 
-      <div tal:replace="structure view/batching" tal:condition="not:view/show_all"/>
       <table class="listing"
              id="listing-table"
              summary="Content listing"
@@ -190,7 +188,7 @@ jq(function(){
             </tr>
             <tr tal:condition="view/show_all">
               <th colspan="6" class="nosort">
-		<a tal:attributes="href string:${context/absolute_url}/@@cmsui-folder-contents"
+		<a tal:attributes="href string:${context/absolute_url}/@@cmsui-structure"
                    i18n:translate="label_show_batched"
                    id="foldercontents-show-batched">Show batched</a>
               </th>
@@ -207,7 +205,6 @@ jq(function(){
                i18n:attributes="value"
                tal:attributes="value button/title; name button/url; class button/cssclass|nothing" />
       </tal:buttons>
-      <div tal:replace="structure view/batching" tal:condition="not:view/show_all"/>
       
       <input tal:replace="structure context/@@authenticator/authenticator" />
 

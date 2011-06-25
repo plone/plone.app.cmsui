@@ -41,7 +41,7 @@ function contractMenu(offset) {
         // iframe.height($('#visual-portal-wrapper').outerHeight());
         // ------ Structure dialog navigation -------
         
-        var overlay_location = $('#folder-contents a').attr('href');
+        var overlay_location = $('#structure a').attr('href');
         window.parent.history.replaceState({structure_href: overlay_location}, null, window.parent.location.href);
 
         var slideTo = function(href, dir) {

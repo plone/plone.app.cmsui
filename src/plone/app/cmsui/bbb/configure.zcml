@@ -48,8 +48,8 @@
         name="folder_contents"
         for="*"
         layer="..interfaces.ICMSUILayer"
-        class="..foldercontents.FolderContents"
-        template="../templates/folder-contents.pt"
+        class="..structure.StructureView"
+        template="../templates/structure.pt"
         permission="plone.ViewCMSUI"
         />
 
