@@ -87,8 +87,10 @@ class AddMenu(BrowserView):
                                            name='breadcrumbs_view')
         self.breadcrumbs = breadcrumbs_view.breadcrumbs()
         
-        self.form = AddForm(self.context, self.request)
-        self.form.update()
+        factories_view = getMultiAdapter((self.context, self.request), name='folder_factories')
+        
+        self.allowedTypes = factories_view.addable_types()
+        
         
         return self.index()
 
