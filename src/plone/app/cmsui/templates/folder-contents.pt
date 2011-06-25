@@ -36,7 +36,6 @@
       </ul>
   </nav>
 
-    <div tal:replace="structure view/batching" tal:condition="not:view/show_all"/>
     <form name="folderContentsForm"
           method="post"
           action="folder_object"
@@ -45,7 +44,6 @@
 
       <input type="hidden" id="base-url" name="base-url" tal:attributes="value context/absolute_url" />
 
-      <div tal:replace="structure view/batching" tal:condition="not:view/show_all"/>
       <table class="listing"
              style="width: 100%;"
              id="listing-table"
@@ -200,7 +198,6 @@
                i18n:attributes="value"
                tal:attributes="value button/title; name button/url; class button/cssclass|nothing" />
       </tal:buttons>
-      <div tal:replace="structure view/batching" tal:condition="not:view/show_all"/>
       
       <input tal:replace="structure context/@@authenticator/authenticator" />
 

@@ -15,7 +15,6 @@ from zope.i18nmessageid import MessageFactory
 from plone.app.content.batching import Batch
 from zope.cachedescriptors.property import Lazy as lazy_property
 from plone.registry.interfaces import IRegistry
-from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
 _ = MessageFactory('plone')
 
@@ -24,8 +23,6 @@ class FolderContents(BrowserView):
     """Folder contents overlay
     """
 
-    batching = ViewPageTemplateFile('templates/folder-listing-batch.pt')
-
     def __call__(self, contentFilter={}):
         # Disable theming
         self.contentFilter = contentFilter
@@ -33,7 +30,7 @@ class FolderContents(BrowserView):
 
         registry = getUtility(IRegistry)
 
-        self.pagesize = registry.get('plone.app.cmsui.interfaces.ICMSUISettings.folder_contents_batch_size', 20)
+        self.pagesize = registry.get('plone.app.cmsui.interfaces.ICMSUISettings.folder_contents_batch_size', 50)
         self.show_all = self.request.get('show_all', '').lower() == 'true'
 
         selection = self.request.get('select')
