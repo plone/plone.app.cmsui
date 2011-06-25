@@ -29,6 +29,7 @@ setup(name='plone.app.cmsui',
           'plone.app.registry',
           'Products.CMFPlone',
           'plone.namedfile[blobs]',
+          'plone.formwidget.namedfile',
       ],
       extras_require={
         'test': ['plone.app.testing'],
