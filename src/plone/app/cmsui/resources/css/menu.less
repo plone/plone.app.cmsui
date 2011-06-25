@@ -27,10 +27,8 @@ html {
 }
 #toolbar {
 	.container();
-	.css3_linear_gradient(darken(@ploneColor, 5%), @ploneColor);
 	.css3_box_shadow(0 2px 5px rgba(0,0,0,0.5));
 	margin-top: 0;
-	padding-top: @verticalSpace/2;
     color: @baseFontColor;
     position: fixed;
     z-index: 10000;
@@ -59,9 +57,10 @@ html {
 	    margin-top: 0;
 	    margin-bottom: 0;
 	    padding-bottom: @verticalSpace/2;
-	    padding-top: @verticalSpace/2;	    
+	    padding-top: @verticalSpace;
 	    line-height: 1em;
 	    border-bottom: 1px solid darken(@ploneColor, 25%);
+	    .css3_linear_gradient(@ploneColor, darken(@ploneColor, 5%));
 
 		#portal-breadcrumbs {
 			line-height: 1em;
@@ -96,6 +95,9 @@ html {
 	    padding-bottom: @verticalSpace;
 	    border-top: 1px solid lighten(@ploneColor, 5%);
         border-bottom: 1px solid darken(@ploneColor, 20%);
+	    .css3_linear_gradient(darken(@ploneColor, 5%), @ploneColor);
+        position: relative;
+        z-index: -1;
 	    
 		#document-info,
 		#folder-actions {
