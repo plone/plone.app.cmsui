@@ -79,11 +79,13 @@ function eraseCookie(name) {
     $(window).load(function () {
         var menu_state = readCookie('__plone_menu'),
             iframe = $('#plone-cmsui-menu', window.parent.document),
+            parent_body = $('body', window.parent.document),
             toolbar = $('#toolbar'),
             height;
         if (menu_state === 'small' || menu_state === 'large') {
             toolbar.addClass(menu_state);
             iframe.height(toolbar.outerHeight());
+            parent_body.css('margin-top', toolbar.outerHeight());
             iframe.animate({'opacity': 1}, 300);
         } else {
             createCookie('__plone_menu', 'small');
@@ -95,7 +97,7 @@ function eraseCookie(name) {
                 'height': height
                 })
             iframe.animate({'top': 0}, 1000);
-            $('body', window.parent.document).animate({'margin-top': toolbar.outerHeight()}, 1000);
+            parent_body.animate({'margin-top': toolbar.outerHeight()}, 1000);
         }
         createCookie('__plone_height', $('#toolbar').outerHeight());
     });
