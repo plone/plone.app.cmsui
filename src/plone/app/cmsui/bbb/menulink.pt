@@ -3,4 +3,28 @@
 <!-- TODO: Improve the placement and appearance of this.
            See http://projects.plone.org/browse/NEWUI-12
   -->
-<a id="cmsui-menu-link" href="@@cmsui-menu">Manage page</a>
+<iframe id="plone-cmsui-menu"
+        src=""
+        tal:attributes="src view/getLink"></iframe>
+<div id="plone-cmsui-trigger" style="display:none;">
+  <!-- diazo prepend rule -->
+  <a id="cmsui-menu-link" href="" tal:attributes="href view/getLink">Manage page</a>
+  <script type="text/javascript">
+    // create the iframe
+  </script>
+  <style type="text/css">
+      #plone-cmsui-menu {    
+          margin: 0;
+          padding: 0;
+          border: 0;
+          outline: 0;
+          background: transparent;
+          position: fixed;
+          left: 0;
+          top: 0;
+          width: 100%;
+          height: 150;
+          z-index: 9999;
+      }
+  </style>
+</div>

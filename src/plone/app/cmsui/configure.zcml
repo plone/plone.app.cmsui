@@ -24,6 +24,16 @@
         for="Products.CMFPlone.interfaces.IPloneSiteRoot"
         provides="Products.GenericSetup.interfaces.EXTENSION"
         />
+    
+    <!-- BBB profile -->
+    <gs:registerProfile
+        name="z_bbb"
+        title="CMS User Interface - BBB registrations"
+        description="Performs backwards compatibility migrations"
+        directory="bbb/profiles/bbb"
+        for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
+        provides="Products.GenericSetup.interfaces.EXTENSION"
+        />
 
     <!-- Views -->
 
@@ -34,7 +44,7 @@
         template="templates/menu.pt"
         permission="plone.ViewCMSUI"
         />
-    
+
     <browser:page
         name="cmsui-overlay-container"
         for="*"
@@ -43,8 +53,19 @@
         permission="plone.ViewCMSUI"
         />
 
-    <!-- Display menu overlay -->
+    <!-- Workflow overlay -->
     
+    <browser:page
+        name="cmsui-workflow-panel"
+        for="*"
+        class=".workflowpanel.WorkflowPanel"
+        template="templates/workflow-panel.pt"
+        permission="plone.ViewCMSUI"
+        />
+
+
+    <!-- Display menu overlay -->
+
     <browser:page
         name="cmsui-display-options"
         for="*"
@@ -71,7 +92,7 @@
         name="plone.app.cmsui"
         directory="resources"
         />
-    
+
     <!-- Control panel -->
 
     <browser:page

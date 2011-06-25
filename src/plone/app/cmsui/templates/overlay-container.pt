@@ -28,11 +28,20 @@
         <base tal:attributes="href plone_view/renderBase" /><!--[if lt IE 7]></base><![endif]-->
     </metal:baseslot>
 
+    <tal:resourceregistries>
+      <tal:styles replace="structure provider:plone.resourceregistries.styles" />
+      <tal:styles replace="structure provider:plone.resourceregistries.kineticstylesheets" />
+      <tal:scripts replace="structure provider:plone.resourceregistries.scripts" />
+    </tal:resourceregistries>
+
     <tal:comment replace="nothing"> 
         Various slots where you can insert elements in the header from a template.
+        
+        These will then be discarded when included as an overlay ;)
     </tal:comment>
     <metal:topslot define-slot="top_slot" />
     <metal:headslot define-slot="head_slot" />
+    <link rel="stylesheet" href="++resource++plone.app.cmsui/css/gridless.css" />
     <metal:styleslot define-slot="style_slot" />
     <metal:javascriptslot define-slot="javascript_head_slot" />
 

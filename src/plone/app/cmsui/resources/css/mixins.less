@@ -1,0 +1,59 @@
+.css3_border_radius( @radius: 3px ) {
+    -webkit-border-radius: @radius;
+    -moz-border-radius: @radius;
+    border-radius: @radius;
+    -webkit-background-clip: padding-box;
+}
+
+.css3_box_shadow( @shadow ) {
+    -webkit-box-shadow: @shadow;
+       -moz-box-shadow: @shadow; 
+            box-shadow: @shadow;
+}
+
+.css3_linear_gradient( 
+    @begin: black, 
+    @end: white
+) {
+    background:  @begin;
+    background-image: -moz-linear-gradient(top, @begin, @end); /* FF3.6 */
+    background-image: -ms-linear-gradient(top, @begin, @end); /* IE10 */
+    background-image: -o-linear-gradient(top, @begin, @end); /* Opera 11.10+ */
+    background-image: -webkit-gradient(linear, left top, left bottom, from(@begin), to(@end)); /* Saf4+, Chrome */
+    background-image: -webkit-linear-gradient(top, @begin, @end); /* Chrome 10+, Saf5.1+ */
+    background-image: linear-gradient(top, @begin, @end);
+}
+
+.css3_box_radial_gradient(@color1: #E0E0E0, 
+                          @color2: lighten(#E0E0E0, 20%)
+) {
+    background-color: @color1;
+    background-image : -moz-radial-gradient(center 45deg, circle closest-corner, @color2 0%, @color1 150%);
+    background-image : -webkit-gradient(radial, 50% 50%, 0, 50% 50%, 800, from(@color2), to(@color1));
+    background-image : -webkit-radial-gradient(center 45deg, circle closest-corner, @color2 0%, @color1 150%);    
+    background-image : radial-gradient(center 45deg, circle closest-corner, @color2 0%, @color1 150%);
+}
+
+/* Horizontal lists */
+.horList (@float: none) {
+    float: @float;
+    clear: both;
+    list-style: none;
+    > * {
+        display: inline;
+        > * {
+            float:@float;
+            display: inline-block;
+            padding: @verticalSpace/4 @horizontalSpace/2;
+        }
+    }
+}
+
+.noBulletsList {
+    list-style: none;
+    list-style-image: none;
+    li {
+        list-style: none;
+        list-style-image: none;
+    }
+}

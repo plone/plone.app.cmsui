@@ -1,42 +1,119 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
-      xmlns:tal="http://xml.zope.org/namespaces/tal"
-      xmlns:metal="http://xml.zope.org/namespaces/metal"
-      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
-      lang="en"
-      metal:use-macro="context/@@cmsui-overlay-container/macros/master"
-      i18n:domain="plone">
-
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      tal:define="portal_state context/@@plone_portal_state;
+          context_state context/@@plone_context_state;
+          plone_view context/@@plone;
+          lang portal_state/language;
+          portal_url portal_state/portal_url;
+          checkPermission nocall: context/portal_membership/checkPermission"
+      tal:attributes="lang lang;">
 <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <!-- Forces IE8+ into newest rendering engine even if on an intranet. This has to be defined before any script/style tags. -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" /> 
 
-<metal:block fill-slot="javascript_head_slot">
+    <base tal:attributes="href plone_view/renderBase" target="_parent" /><!--[if lt IE 7]></base><![endif]-->
 
     <!-- TODO: These should probably be managed by the resource registries.
                See http://projects.plone.org/browse/NEWUI-83
     -->
 
-    <script type="text/javascript" src="jquery.js"></script>
-    <script type="text/javascript" src="++resource++plone.app.cmsui/menu.js"></script>
+    <tal:resourceregistries>
+      <tal:styles replace="structure provider:plone.resourceregistries.styles" />
+      <tal:styles replace="structure provider:plone.resourceregistries.kineticstylesheets" />
+      <tal:scripts replace="structure provider:plone.resourceregistries.scripts" />
+    </tal:resourceregistries>
+    
+    <script type="text/javascript" src="++resource++plone.app.cmsui/js/menu.js"></script>
 
-    <link rel="stylesheet" href="++resource++plone.app.cmsui/menu.css" />
-
-</metal:block>
+    <link rel="stylesheet" href="++resource++plone.app.cmsui/css/boilerplate.css" />
+    <link rel="stylesheet" href="++resource++plone.app.cmsui/css/menu.css" />
 
 </head>
+<body tal:define="isRTL portal_state/is_rtl"
+    tal:attributes="dir python:isRTL and 'rtl' or 'ltr'">
 
-<body>
+<div id="visual-portal-wrapper">
 
-<metal:content-core fill-slot="content">
 
-    <div id="cmsui-menu-panel">
-        
-        <!-- TODO: Put toolbar elements here -->
-        
-        <a class="overlayLink" href="@@cmsui-display-options">Display options</a>
-        <a class="overlayLink" href="@@cmsui-add-new">Add new</a>
-        
+<section id="toolbar">
+
+    <div class="container clearfix">
+
+        <!-- Breadcrumbs -->
+        <nav id="portal-breadcrumbs" class="grid_7 ">
+            <ul>
+                <li id='path-home'>
+                    <a tal:attributes="href view/portalState/navigation_root_url" class="ir">Home</a></li>
+                <li tal:repeat="crumb view/breadcrumbs">
+                    <a tal:condition="not:repeat/crumb/end"
+                       tal:attributes="href crumb/absolute_url;"
+                       tal:content="crumb/Title">Item</a>
+                    <span tal:condition="repeat/crumb/end" class="current" tal:content="crumb/Title">Item</span>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Personal links -->
+        <div class="grid_5">
+            <ul id="personal-tools">
+                <li id="cmsui-logged-in-as" i18n:translate="cmsui_logged_in_as">
+                    <a class="overlayLink" tal:attributes="href view/userHomeLinkURL">
+                        Logged in as <span i18n:name="name" tal:replace="view/userName" />
+                    </a>
+                </li>
+                <li class="overlayLink" tal:repeat="action view/personalActions" tal:attributes="id string:cmsui-personallink-${action/id}">
+                    <a class="overlayLink" tal:attributes="href action/url" tal:content="action/title" />
+                </li>
+            </ul>
+        </div>
     </div>
 
-</metal:content-core>
+    <div class="container clearfix">
 
+        <!-- Information about the current document -->
+        <div class="grid_10">
+            <ul id="document-info">
+                <li id="folder-contents"><a href="#"
+                    ><span i18n:translate="cmsui_contents" tal:omit-tag="">Structure</span
+                    ><tal:block condition="python:(view.contextState.is_structural_folder() or view.contextState.is_default_page()) and view.itemsInFolder() is not None"> (<span tal:replace="view/itemsInFolder">12</span>)</tal:block
+                    ></a></li>
+                <li tal:condition="python:view.modificationDate()"
+                    id="document-history"
+                    ><a class="overlayLink" href="#" tal:content="view/modificationDate">June 23, 2011</a></li>
+                <li tal:condition="python:view.authorName()"
+                    id="document-author"
+                    ><a class="overlayLink" href="#" tal:content="view/authorName">John Doe</a></li>
+                <li tal:condition="python:view.workflowState()"
+                    id="document-workflow_state"
+                    ><a class="overlayLink"
+                        tal:attributes="href string:${view/baseURL}/@@cmsui-workflow-panel"
+                        tal:content="view/workflowState">Draft</a></li
+                ><li tal:condition="python:view.editLink()"
+                    id="document-edit"
+                    ><a class="overlayLink"
+                        tal:attributes="href view/editLink"
+                        i18n:translate="cmsui_edit">Edit</a></li
+                ><li id="document-settings"><a href="#">Settings</a></li>
+            </ul>
+
+            <!-- Links tangentially related to the current document -->
+            <ul id="folder-actions">
+                <li id="folder-add_content"><a href="#">Add Content</a></li>
+            </ul>
+        </div>
+
+        <aside class="grid_2" id="site-setup">
+            <a class="overlayLink"
+                tal:attributes="href string:${view/portalState/navigation_root_url}/@@overview-controlpanel"
+                i18n:translate="cmsui_site_configuration">Site configuration</a>
+        </aside>
+    </div>
+
+</section>
+
+<div class="visualClear"></div>
+
+</div>
 </body>
 </html>
