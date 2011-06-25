@@ -37,7 +37,8 @@ function contractMenu(offset) {
             } 
         });
 
-        // iframe.height($('#visual-portal-wrapper').outerHeight());
-
+    });
+    $(window).load(function () {
+        $('#plone-cmsui-menu', window.parent.document).animate({opacity: 1}, 300);
     });
 }(jQuery));
