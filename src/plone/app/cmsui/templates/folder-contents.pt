@@ -9,12 +9,13 @@
 
 <metal:content-core fill-slot="body">
   <div id="content">
+  <div class="structure-slider" style="width: 100%;">
 
   <h1 class="documentFirstHeading" tal:content="view/title"> 
     Title
   </h1>
   
-  <div class="documentDescription" tal:content="context/Description" tal:condition="context/Description"> 
+  <div class="documentDescription" tal:content="context/Description" tal:condition="context/Description">
     Description
   </div>
   
@@ -35,6 +36,7 @@
 
       <div tal:replace="structure view/batching" tal:condition="not:view/show_all"/>
       <table class="listing"
+             style="width: 100%;"
              id="listing-table"
              summary="Content listing"
              i18n:attributes="summary summary_content_listing;"
@@ -134,7 +136,7 @@
                   <img tal:replace="structure item/icon|nothing" />
                   <a href="#" tal:attributes="href string:${item/view_url};
                                               title item/url_href_title|nothing;
-                                              class string: ${item/state_class|python:''} ${item/type_class|python:''};">
+                                              class string:link-child ${item/state_class|python:''} ${item/type_class|python:''};">
                     <strong tal:omit-tag="not: item/is_browser_default|nothing"
                             tal:content="title_or_id"/>
                   </a>
@@ -196,8 +198,53 @@
       <input tal:replace="structure context/@@authenticator/authenticator" />
     </form>
 
-
   </div>
+  </div>
+
+<script type="text/javascript">
+jQuery(function($) {
+  $('a.link-child').live('click', function(e) {
+    e.preventDefault();
+    var $a = $(this);
+    var href = $a.attr('href');
+    var $slider = $('.structure-slider');
+    var width = $slider.outerWidth();
+    
+    $('body').css('overflow', 'hidden');
+    $('#content').css({position: 'relative'});
+    $slider.css('position', 'relative').animate({'left': -width}, 200, null, function() {$slider.detach();});
+    $('<div class="structure-slider" style="width: 100%"><' + '/div>')
+        .appendTo($('#content'))
+        .load(href + ' .structure-slider>*')
+        .css({position: 'absolute', left: width, top: 0})
+        .animate({'left': 0}, 200, function() {$('body').css('overflow', 'auto');});
+    history.pushState(null, null, href);
+  });
+
+  $('a.link-parent').live('click', function(e) {
+    e.preventDefault();
+    var $a = $(this);
+    var href = $a.attr('href');
+    var $slider = $('.structure-slider');
+    var width = $slider.outerWidth();
+    
+    $('body').css('overflow', 'hidden');
+    $('#content').css({position: 'relative'});
+    $slider.css('position', 'relative').animate({'left': width}, 200, null, function() {$slider.detach();});
+    $('<div class="structure-slider" style="width: 100%;"><' + '/div>')
+        .appendTo($('#content'))
+        .load(href + ' .structure-slider>*')
+        .css({position: 'absolute', left: -width, top: 0})
+        .animate({'left': 0}, 200, function() {$('body').css('overflow', 'auto');});
+    history.pushState(null, null, href);
+  });
+  
+  $(window).bind('popstate', function(e) {
+    location.href = location.href;
+  });
+});
+</script>
+
 </metal:content-core>
 </body>
 </html>
