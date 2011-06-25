@@ -23,7 +23,7 @@
         </div>
     
         <dl>
-            <a tal:repeat="type view/allowedTypes"
+            <a class="overlayLink" tal:repeat="type view/allowedTypes"
                tal:attributes="href type/action">
                 <dt tal:content="type/title"
                     tal:attributes="class string:contenttype-${type/extra/id}"></dt>
