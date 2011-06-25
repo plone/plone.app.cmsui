@@ -9,6 +9,7 @@ from zope.interface import implements
 from zope.publisher.browser import BrowserView
 from zope.schema.interfaces import IVocabularyFactory
 from zope.schema.vocabulary import SimpleVocabulary, SimpleTerm
+from zope.container.interfaces import INameChooser
 
 
 class AddableTypesVocabulary(object):
@@ -47,20 +48,25 @@ class AddForm(form.Form):
         data, errors = self.extractData()
         if errors:
             return
-        # invoke factory
-        title = data['title']
-        # title-to-id
-        util = queryUtility(IIDNormalizer)
         
-        # from zope.container.interfaces import INameChooser
-        # chooser = INameChooser(self.context)
-        # chooser.chooseName(None, item)
+        title = data['title']
+        
+        # Generate a name based on the title..
+        util = queryUtility(IIDNormalizer)
         id = util.normalize(title)
+        
+        # Context may not be a container, get one.
+        context_state = getMultiAdapter((self.context, self.request), name="plone_context_state")
+        container = context_state.folder()
+        
+        # Make sure our chosen id is unique, iterate until we get one that is.
+        chooser = INameChooser(container)
+        id = chooser._findUniqueName(id, None)
+
         # create the object
-        self.context.invokeFactory(data['content_type'], id=id, title=title)
+        container.invokeFactory(data['content_type'], id=id, title=title)
         # redirect to immediate_view
-        # obj =
-        self.request.response.redirect("%s/edit" % self.context[id].absolute_url())
+        self.request.response.redirect("%s/edit" % container[id].absolute_url())
         # open edit overlay    
 
 
