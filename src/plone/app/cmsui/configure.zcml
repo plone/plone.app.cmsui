@@ -85,18 +85,12 @@
         permission="plone.ViewCMSUI"
         />
 
-    <utility
-      component=".addmenu.AddableTypesVocabularyFactory"
-      name="plone.app.cmsui.AddableContentTypes"
-      />
-
-  <z3c:widgetTemplate
-       template="templates/add-menu-typeselect.pt"
-       view=".addmenu.AddForm"
-       mode="input"
-       layer="z3c.form.interfaces.IFormLayer"
-       widget="z3c.form.interfaces.IRadioWidget"
-       />
+    <browser:page
+        name="cmsui-add-new-form"
+        for="*"
+        class=".addmenu.AddNewContentForm"
+        permission="plone.ViewCMSUI"
+        />
 
     <!-- Static resources -->
 

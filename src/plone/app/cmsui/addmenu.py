@@ -1,8 +1,7 @@
 from plone.app.content.browser.folderfactories import _allowedTypes
+from plone.app.z3cform.layout import wrap_form
 from plone.i18n.normalizer.interfaces import IIDNormalizer
-from plone.z3cform.interfaces import IWrappedForm
 from z3c.form import button, form, field
-from z3c.form.browser.radio import RadioFieldWidget
 from zope import interface, schema
 from zope.app.publisher.interfaces.browser import IBrowserMenu
 from zope.component import getUtility, queryUtility, getMultiAdapter
@@ -30,20 +29,17 @@ class AddableTypesVocabulary(object):
 AddableTypesVocabularyFactory = AddableTypesVocabulary()
 
 
-class IAddMenu(interface.Interface):
+class IAddNewContent(interface.Interface):
 
     title = schema.TextLine(title=u"Title")
-    content_type = schema.Choice(title=u"Type", vocabulary=u"plone.app.cmsui.AddableContentTypes")
+    content_type = schema.TextLine(title=u"Type")
 
 
-class AddForm(form.Form):
-    implements(IWrappedForm)
+class AddNewContentForm(form.Form):
     
-    fields = field.Fields(IAddMenu)
+    fields = field.Fields(IAddNewContent)
     ignoreContext = True # don't use context to get widget data
     label = "Add content"
-
-    fields['content_type'].widgetFactory = RadioFieldWidget
     
     @button.buttonAndHandler(u'Add content')
     def handleApply(self, action):
@@ -70,6 +66,8 @@ class AddForm(form.Form):
         # redirect to immediate_view
         self.request.response.redirect("%s/edit" % container[id].absolute_url())
         # open edit overlay    
+
+AddNewContentView = wrap_form(AddNewContentForm)
 
 
 class AddMenu(BrowserView):
