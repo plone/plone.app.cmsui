@@ -19,12 +19,13 @@
 
 <metal:content-core fill-slot="body">
   <div id="content">
+  <div class="structure-slider" style="width: 100%;">
 
   <h1 class="documentFirstHeading" tal:content="view/title"> 
     Title
   </h1>
   
-  <div class="documentDescription" tal:content="context/Description" tal:condition="context/Description"> 
+  <div class="documentDescription" tal:content="context/Description" tal:condition="context/Description">
     Description
   </div>
   
@@ -48,6 +49,7 @@
 
       <div tal:replace="structure view/batching" tal:condition="not:view/show_all"/>
       <table class="listing"
+             style="width: 100%;"
              id="listing-table"
              summary="Content listing"
              i18n:attributes="summary summary_content_listing;"
@@ -147,7 +149,7 @@
                   <img tal:replace="structure item/icon|nothing" />
                   <a href="#" tal:attributes="href string:${item/view_url};
                                               title item/url_href_title|nothing;
-                                              class string: ${item/state_class|python:''} ${item/type_class|python:''};">
+                                              class string:link-child ${item/state_class|python:''} ${item/type_class|python:''};">
                     <strong tal:omit-tag="not: item/is_browser_default|nothing"
                             tal:content="title_or_id"/>
                   </a>
@@ -209,8 +211,51 @@
       <input tal:replace="structure context/@@authenticator/authenticator" />
     </form>
 
-
   </div>
+  </div>
+
+<script type="text/javascript">
+jQuery(function($) {
+  var current_location = '';
+  
+  var slideTo = function(href, dir) {
+    var $slider = $('.structure-slider');
+    var width = $slider.outerWidth();
+    
+    $('body').css('overflow', 'hidden');
+    $('#content').css({position: 'relative'});
+    $slider.css('position', 'relative').animate({'left': (dir=='left')?-width:width}, 200, null, function() {$slider.detach();});
+    $('<div class="structure-slider" style="width: 100%"><' + '/div>')
+        .appendTo($('#content'))
+        .load(href + ' .structure-slider>*')
+        .css({position: 'absolute', left: (dir=='left'?width:-width), top: 0})
+        .animate({'left': 0}, 200, function() {$('body').css('overflow', 'auto');});
+        
+    current_location = href;
+  }
+  
+  $('a.link-child').live('click', function(e) {
+    e.preventDefault();
+    var href = $(this).attr('href');
+    slideTo(href, 'left');
+    history.pushState(href, null, location.href);
+  });
+
+  $('a.link-parent').live('click', function(e) {
+    e.preventDefault();
+    var href = $(this).attr('href');
+    slideTo(href, 'right');
+    history.pushState(href, null, location.href);
+  });
+  
+  $(window).bind('popstate', function(e) {
+    var href = e.originalEvent.state;
+    slideTo(href, (current_location.length > href.length ? 'right' : 'left'));
+  });
+  history.replaceState(location.href, null, location.href);
+});
+</script>
+
 </metal:content-core>
 </body>
 </html>
