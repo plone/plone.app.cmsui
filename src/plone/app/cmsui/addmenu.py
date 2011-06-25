@@ -88,7 +88,7 @@ class FileUploadForm(form.Form):
 
         # create the object
         container.invokeFactory('File', id=id, title=title)
-        container[id].setFile(data['file']self.data)
+        container[id].setFile(data['file'].data)
         
         self.request.response.redirect("%s" % container[id].absolute_url())
 
