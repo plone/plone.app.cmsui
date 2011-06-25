@@ -28,6 +28,8 @@
 
     <link rel="stylesheet" href="++resource++plone.app.cmsui/css/boilerplate.css" />
     <link rel="stylesheet" href="++resource++plone.app.cmsui/css/menu.css" />
+    <link rel="stylesheet" href="++resource++plone.app.cmsui/css/authoring.css" />
+
 
 </head>
 <body tal:define="isRTL portal_state/is_rtl"
