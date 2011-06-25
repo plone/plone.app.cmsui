@@ -2,3 +2,7 @@ table.listing tbody tr.odd.error td, tr.error {
     background-color: #FFDDCC;
     border: 2px dashed red;
 }
+
+tr.dragging{ outline: 2px solid #FFD700; border-bottom:none; }
+tr.dragging td{ border-bottom: none }
+tr.dragindicator{ outline: none;}

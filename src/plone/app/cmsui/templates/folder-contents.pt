@@ -49,7 +49,6 @@
 
       <div tal:replace="structure view/batching" tal:condition="not:view/show_all"/>
       <table class="listing"
-             style="width: 100%;"
              id="listing-table"
              summary="Content listing"
              i18n:attributes="summary summary_content_listing;"
@@ -255,7 +254,6 @@ jQuery(function($) {
   history.replaceState(location.href, null, location.href);
 });
 </script>
-
 </metal:content-core>
 </body>
 </html>
