@@ -37,10 +37,10 @@
 
 <section id="toolbar">
 
-    <div class="container clearfix">
+    <div id="toolbar-top" class="container clearfix">
 
         <!-- Breadcrumbs -->
-        <nav id="portal-breadcrumbs" class="grid_7 ">
+        <nav id="portal-breadcrumbs" class="grid_5 ">
             <ul>
                 <li id='path-home'>
                     <a tal:attributes="href view/portalState/navigation_root_url">Home</a></li>
@@ -52,6 +52,11 @@
                 </li>
             </ul>
         </nav>
+
+        <div id="manage-page" class="grid_2">
+          <a href="#" id="manage-page-open">Make me bigger</a>
+          <a href="#" id="manage-page-close">Make me smaller</a>
+        </div>
 
         <!-- Personal links -->
         <ul id="personal-tools" class="grid_5">
@@ -66,7 +71,7 @@
         </ul>
     </div>
 
-    <div class="container clearfix">
+    <div id="toolbar-bottom" class="container clearfix">
 
         <!-- Information about the current document -->
         <div class="grid_10">
@@ -97,10 +102,12 @@
                         ><span class="" tal:attributes="class string:state-${view/contextState/workflow_state}"
                           tal:content="view/workflowState">Draft</span></a></li>
                 <li tal:condition="python:view.editLink()"
-                    id="document-edit">
+                    tal:attributes="id python:view.contextState.is_locked() and 'document-edit-locked' or 'document-edit';">
                     <a class="overlayLink"
-                        tal:attributes="href view/editLink"
-                        i18n:translate="cmsui_edit">Edit</a>
+                        tal:attributes="href string:${view/editLink}">
+                        <span tal:condition="not:view/contextState/is_locked" i18n:translate="cmsiu_edit" tal:omit-tag="">Edit</span>
+                        <span tal:condition="view/contextState/is_locked" i18n:translate="cmsiu_locked" tal:omit-tag="">Locked</span>
+                    </a>
                 </li>
                 <li tal:condition="python:view.settingsActions()"
                      id="document-settings">

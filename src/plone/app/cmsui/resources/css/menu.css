@@ -457,7 +457,7 @@ html {
   color: #ffffff;
   position: fixed;
   z-index: 10000;
-  border-bottom: 2px solid #1b3d5b;
+  border-bottom: 1px solid #1b3d5b;
 }
 #toolbar:after {
   /*
@@ -519,8 +519,11 @@ html {
 }
 #toolbar .container:last-of-type {
   margin-top: 0;
+  margin-bottom: 0;
   padding-top: 10px;
+  padding-bottom: 10px;
   border-top: 1px solid #387fbe;
+  border-bottom: 1px solid #1b3d5b;
 }
 #toolbar .container:last-of-type #document-info, #toolbar .container:last-of-type #folder-actions {
   display: inline;
@@ -543,6 +546,15 @@ html {
   display: inline-block;
   padding-top: 27.333333333333332px;
   text-align: center;
+}
+.small #toolbar-bottom {
+  display: none;
+}
+.small #manage-page-close {
+  display: none;
+}
+.large #manage-page-open {
+  display: none;
 }
 #toggle-toolbar {
   background: #3272aa;
@@ -581,6 +593,12 @@ html {
 		}*/
 
 }
+#toolbar a {
+  opacity: 0.95;
+}
+#toolbar a:hover {
+  opacity: 1;
+}
 /* @group Icons */
 #document-workflow_state a {
   background: transparent url('../icons/Action.png') 50% 0 no-repeat;
@@ -599,6 +617,9 @@ html {
 }
 #document-edit a {
   background: transparent url('../icons/Edit.png') 50% 0 no-repeat;
+}
+#document-edit-locked a {
+  background: transparent url('../icons/Lock.png') 50% 0 no-repeat;
 }
 #folder-contents a {
   background: transparent url('../icons/Folder.png') 50% 0 no-repeat;
