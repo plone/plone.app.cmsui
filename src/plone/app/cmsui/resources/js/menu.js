@@ -21,7 +21,7 @@ function openLinksInOverlay() {
         var url = $(this).attr("href");
         $(".pb-ajax").load(url + ' ' + common_content_filter);
         return false;
-    })
+    });
 }
 
 (function ($) {
