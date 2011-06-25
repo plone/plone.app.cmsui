@@ -618,4 +618,7 @@ html {
 #site-setup a {
   background: transparent url('../icons/Wrench_Screwdriver.png') 50% 0 no-repeat;
 }
-/* @end */
+/* @end *//* Evil hacks to make the overlays work */
+#exposeMask {
+  position: fixed !important;
+}

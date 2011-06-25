@@ -12,7 +12,7 @@
     <!-- Forces IE8+ into newest rendering engine even if on an intranet. This has to be defined before any script/style tags. -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge" /> 
 
-    <base tal:attributes="href plone_view/renderBase" /><!--[if lt IE 7]></base><![endif]-->
+    <base tal:attributes="href plone_view/renderBase" target="_parent" /><!--[if lt IE 7]></base><![endif]-->
 
     <!-- TODO: These should probably be managed by the resource registries.
                See http://projects.plone.org/browse/NEWUI-83
