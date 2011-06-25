@@ -5,6 +5,13 @@
       lang="en"
       metal:use-macro="context/@@cmsui-overlay-container/macros/master"
       i18n:domain="plone">
+<head>
+<metal:block fill-slot="javascript_head_slot">
+    <script type="text/javascript" src="++resource++plone.app.cmsui/js/libs/jquery.js"></script>
+    <script type="text/javascript" src="++resource++plone.app.cmsui/js/dragdropreorder.js"></script>
+</metal:block>
+</head>
+
 <body>
 
 <metal:content-core fill-slot="body">
@@ -30,7 +37,10 @@
     <form name="folderContentsForm"
           method="post"
           action="folder_object"
+	  id="folder-structure-form"
           tal:attributes="action context/absolute_url">
+
+      <input type="hidden" id="base-url" name="base-url" tal:attributes="value context/absolute_url" />
 
       <div tal:replace="structure view/batching" tal:condition="not:view/show_all"/>
       <table class="listing"
@@ -66,7 +76,7 @@
         </tr>
 
         <tr>
-          <th class="nosort column" id="foldercontents-order-column"
+          <th class="nosort column sorter" id="foldercontents-order-column"
               tal:condition="view/show_sort_column">
           </th>
           <th class="nosort" id="foldercontents-select-column">&nbsp;</th>
@@ -111,7 +121,7 @@
                 </a>
 		  </tal:block>
 		</td>
-		<td class="notDraggable">
+		<td>
                   <input type="checkbox"
 			 class="noborder"
 			 name="paths:list" id="#"

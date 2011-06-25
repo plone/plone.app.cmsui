@@ -413,9 +413,10 @@ $(function() {
 		data: encoded
 	    });
 	    row.last_pos = pos;
-	}
+	},
+	onDragClass : 'dragindicator'
     });
-    jQuery("#listing-table .sorter").hide();
+    jQuery("#listing-table td.draggable").addClass('draggingHook').html('⣿');
 });
 
 })(jQuery);
