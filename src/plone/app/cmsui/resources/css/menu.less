@@ -31,6 +31,9 @@ html {
 	.css3_box_shadow(0 2px 12px rgba(0,0,0,0.5));
 	margin-top: 0;
 	padding-top: @verticalSpace/2;
+    color: @baseFontColor;
+    position: fixed;
+    z-index: 10000;
 	
 	&:after {
 	    content: " ";
@@ -179,3 +182,8 @@ html {
 }
 
 /* @end */	    
+
+/* Evil hacks to make the overlays work */
+#exposeMask {
+    position: fixed !important;
+}

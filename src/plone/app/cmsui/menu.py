@@ -111,3 +111,7 @@ class Menu(BrowserView):
             return None
         
         return len(folder)
+    
+    @memoize
+    def baseURL(self):
+        return self.context.absolute_url()

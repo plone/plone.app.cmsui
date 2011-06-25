@@ -297,7 +297,7 @@ body {
   font-size: 12px;
   line-height: 1.5em;
   font-family: Arial, "Helvetica Neue", Helvetica, Verdana, sans-serif;
-  color: #ffffff;
+  background: transparent;
 }
 h1,
 h2,
@@ -454,6 +454,9 @@ html {
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
   margin-top: 0;
   padding-top: 5px;
+  color: #ffffff;
+  position: fixed;
+  z-index: 10000;
 }
 #toolbar:after {
   content: " ";
@@ -615,4 +618,7 @@ html {
 #site-setup a {
   background: transparent url('../icons/Wrench_Screwdriver.png') 50% 0 no-repeat;
 }
-/* @end */
+/* @end *//* Evil hacks to make the overlays work */
+#exposeMask {
+  position: fixed !important;
+}
