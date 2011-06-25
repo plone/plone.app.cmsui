@@ -56,13 +56,13 @@ AddNewContentView = wrap_form(AddNewContentForm)
 
 
 class IFileUploadForm(interface.Interface):
-    file = schema.NamedFile(title=u"File")
+    file = NamedFile(title=u"File")
 
 class FileUploadForm(form.Form):
-    fields = field.Fields(IAddNewContent)
+    fields = field.Fields(IFileUploadForm)
     ignoreContext = True # don't use context to get widget data
     label = "Add content"
-
+    
     @button.buttonAndHandler(u'Upload content')
     def handleApply(self, action):
         data, errors = self.extractData()
