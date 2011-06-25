@@ -67,17 +67,33 @@ class WorkflowPanel(form.Form):
             self.status = self.formErrorsMessage
             return
         
+        # Context might be temporary
+        real_context = self.context.portal_factory.doCreate(self.context)
+        
+        # Read form
         workflow_action = data.get('workflow_action', '')
         effective_date = data.get('effective_date', None)
-        if workflow_action and not effective_date and self.context.EffectiveDate()=='None':
+        if workflow_action and not effective_date and real_context.EffectiveDate()=='None':
             effective_date=DateTime()
         expiration_date = data.get('expiration_date', None)
         
-        self._editContent(self.context, effective_date, expiration_date)
+        # Try editing content, might not be able to yet
+        retryContentEdit = False
+        try:
+            self._editContent(real_context, effective_date, expiration_date)
+        except Unauthorized:
+            retryContentEdit = True
+        
         if workflow_action is not None:
-            self.context.portal_workflow.doActionFor(self.context, workflow_action, comment=data.get('comment', ''))
-         
-        self.request.response.redirect(self.context.absolute_url())
+            postwf_context = real_context.portal_workflow.doActionFor(self.context,
+                             workflow_action, comment=data.get('comment', ''))
+        if postwf_context is None: postwf_context = real_context
+        
+        # Retry if need be
+        if retryContentEdit:
+            self._editContent(postwf_context, effective_date, expiration_date)
+        
+        self.request.response.redirect(postwf_context.absolute_url())
 
     @button.buttonAndHandler(u'Cancel')
     def cancel(self, action):
