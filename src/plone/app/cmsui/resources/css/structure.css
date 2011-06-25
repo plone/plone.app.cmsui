@@ -22,11 +22,16 @@ table.listing tbody tr.odd.error td, tr.error {
     display: inline-block;
 }
 
-#structure-dialog #portal-breadcrumbs a:after {
+#structure-dialog #portal-breadcrumbs span.crumb a:after {
     content: "►";
     margin-left: 0.5em;
     margin-right: 0.5em;
 }
+
+#structure-dialog #portal-breadcrumbs li span.current{
+   font-size: 160%;
+}
+
 
 tr.dragging{ outline: 2px solid #FFD700; border-bottom:none; }
 tr.dragging td{ border-bottom: none }
