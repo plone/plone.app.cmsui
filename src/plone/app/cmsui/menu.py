@@ -149,7 +149,7 @@ class Menu(BrowserView):
             return None
         
         if self.contextState.is_locked():
-            return self.context.absolute_url() + "/@@cmsui-locked"
+            return self.context.absolute_url() + "/@@cmsui-lock-info"
         
         objectActions = self.contextState.actions('object')
         for action in objectActions:

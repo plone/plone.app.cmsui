@@ -92,6 +92,16 @@
         permission="plone.ViewCMSUI"
         />
 
+    <!-- Lock info overlay -->
+
+    <browser:page
+        name="cmsui-lock-info"
+        for="*"
+        class=".lockinfo.LockInfo"
+        template="templates/lockinfo.pt"
+        permission="plone.ViewCMSUI"
+        />
+
     <!-- Static resources -->
 
     <browser:resourceDirectory
