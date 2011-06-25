@@ -16,7 +16,6 @@ class WorkflowPanel(BrowserView):
             action = self.request.form.get('workflow_action', None)
             if action is not None:
                 self.context.portal_workflow.doActionFor(self.context, action, comment=self.request.form.get('comment', ''))
-                return "Complete"
         self.request.RESPONSE.redirect(self.context.absolute_url())
     
     def getTransitions(self):
