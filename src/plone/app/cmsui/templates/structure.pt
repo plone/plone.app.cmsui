@@ -39,6 +39,7 @@ jq(function(){
 
     <form name="folderContentsForm"
           method="post"
+          class="overlayForm"
           action="folder_object"
 	  id="folder-structure-form"
           tal:attributes="action context/absolute_url">
