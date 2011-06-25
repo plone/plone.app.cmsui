@@ -581,6 +581,12 @@ html {
 		}*/
 
 }
+#toolbar a {
+  opacity: 0.95;
+}
+#toolbar a:hover {
+  opacity: 1;
+}
 /* @group Icons */
 #document-workflow_state a {
   background: transparent url('../icons/Action.png') 50% 0 no-repeat;
