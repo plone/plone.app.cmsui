@@ -86,7 +86,7 @@
         />
 
     <browser:page
-        name="cmsui-add-new-content"
+        name="cmsui-add-content-form"
         for="*"
         class=".addmenu.AddNewContentForm"
         permission="plone.ViewCMSUI"
