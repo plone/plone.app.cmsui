@@ -432,37 +432,41 @@ html {
 #toolbar {
   margin: 10px auto;
   width: 100%;
-  background: #1b6388;
-  background-image: -moz-linear-gradient(top, #1b6388, #329fd7);
+  background: #2c6596;
+  background-image: -moz-linear-gradient(top, #2c6596, #3272aa);
   /* FF3.6 */
 
-  background-image: -ms-linear-gradient(top, #1b6388, #329fd7);
+  background-image: -ms-linear-gradient(top, #2c6596, #3272aa);
   /* IE10 */
 
-  background-image: -o-linear-gradient(top, #1b6388, #329fd7);
+  background-image: -o-linear-gradient(top, #2c6596, #3272aa);
   /* Opera 11.10+ */
 
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#1b6388), to(#329fd7));
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#2c6596), to(#3272aa));
   /* Saf4+, Chrome */
 
-  background-image: -webkit-linear-gradient(top, #1b6388, #329fd7);
+  background-image: -webkit-linear-gradient(top, #2c6596, #3272aa);
   /* Chrome 10+, Saf5.1+ */
 
-  background-image: linear-gradient(top, #1b6388, #329fd7);
-  -webkit-box-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+  background-image: linear-gradient(top, #2c6596, #3272aa);
+  -webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
   margin-top: 0;
   padding-top: 5px;
   color: #ffffff;
   position: fixed;
   z-index: 10000;
+  border-bottom: 2px solid #1b3d5b;
 }
 #toolbar:after {
-  content: " ";
-  display: block;
-  height: 2px;
-  background: #1b6388;
+  /*
+	    content: " ";
+	    display: block;
+	    height: 2px;
+	    background: darken(@ploneColor, 20%);
+        */
+
 }
 #toolbar ul {
   float: none;
@@ -486,36 +490,23 @@ html {
 #toolbar .container:first-of-type {
   margin-top: 0;
   margin-bottom: 0;
-  padding-bottom: 10px;
-  padding-top: 10px;
-  line-height: 2em;
-  border-bottom: 1px solid #165473;
-}
-#toolbar .container:first-of-type #portal-logo img {
-  width: 100%;
+  padding-bottom: 5px;
+  padding-top: 5px;
+  line-height: 1em;
+  border-bottom: 1px solid #153047;
 }
 #toolbar .container:first-of-type #portal-breadcrumbs {
-  line-height: 2em;
+  line-height: 1em;
+  margin-left: 0.5em;
+  margin-top: 0.5em;
+  padding-left: 10px;
 }
 #toolbar .container:first-of-type #portal-breadcrumbs a {
   display: inline-block;
   padding: 0;
 }
 #toolbar .container:first-of-type #portal-breadcrumbs a:after {
-  content: "\25BA";
-  display: inline-block;
-  margin-left: 0.5em;
-  margin-right: 0.5em;
-}
-#toolbar .container:first-of-type #portal-breadcrumbs li#path-home a {
-  background: transparent url(../images/plone_logo.png) 50% 50% no-repeat;
-  width: 95px;
-  height: 24px;
-  position: relative;
-  top: -0.3em;
-}
-#toolbar .container:first-of-type #portal-breadcrumbs li#path-home:after {
-  content: "\25BA";
+  content: "/";
   display: inline-block;
   margin-left: 0.5em;
   margin-right: 0.5em;
@@ -529,7 +520,7 @@ html {
 #toolbar .container:last-of-type {
   margin-top: 0;
   padding-top: 10px;
-  border-top: 1px solid #47a9db;
+  border-top: 1px solid #387fbe;
 }
 #toolbar .container:last-of-type #document-info, #toolbar .container:last-of-type #folder-actions {
   display: inline;
@@ -554,34 +545,34 @@ html {
   text-align: center;
 }
 #toggle-toolbar {
-  background: #329fd7;
+  background: #3272aa;
   height: 10px;
   text-align: right;
 }
 #toggle-toolbar a {
   display: inline-block;
-  background: #329fd7;
-  background-image: -moz-linear-gradient(top, #329fd7, #1b6388);
+  background: #3272aa;
+  background-image: -moz-linear-gradient(top, #3272aa, #1b3d5b);
   /* FF3.6 */
 
-  background-image: -ms-linear-gradient(top, #329fd7, #1b6388);
+  background-image: -ms-linear-gradient(top, #3272aa, #1b3d5b);
   /* IE10 */
 
-  background-image: -o-linear-gradient(top, #329fd7, #1b6388);
+  background-image: -o-linear-gradient(top, #3272aa, #1b3d5b);
   /* Opera 11.10+ */
 
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#329fd7), to(#1b6388));
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#3272aa), to(#1b3d5b));
   /* Saf4+, Chrome */
 
-  background-image: -webkit-linear-gradient(top, #329fd7, #1b6388);
+  background-image: -webkit-linear-gradient(top, #3272aa, #1b3d5b);
   /* Chrome 10+, Saf5.1+ */
 
-  background-image: linear-gradient(top, #329fd7, #1b6388);
+  background-image: linear-gradient(top, #3272aa, #1b3d5b);
   -webkit-border-radius: 0 0 5px 5px;
   -moz-border-radius: 0 0 5px 5px;
   border-radius: 0 0 5px 5px;
   -webkit-background-clip: padding-box;
-  border: 1px #12445e;
+  border: 1px #0f2334;
   /*span {
 			display: inline-block;
 			height: 30px;
@@ -613,7 +604,7 @@ html {
   background: transparent url('../icons/Folder.png') 50% 0 no-repeat;
 }
 #folder-add_content a {
-  background: transparent url('../icons/Folder_Add.png') 50% 0 no-repeat;
+  background: transparent url('../icons/Add.png') 50% 0 no-repeat;
 }
 #site-setup a {
   background: transparent url('../icons/Wrench_Screwdriver.png') 50% 0 no-repeat;

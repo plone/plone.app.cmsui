@@ -3,26 +3,49 @@
 <!-- TODO: Improve the placement and appearance of this.
            See http://projects.plone.org/browse/NEWUI-12
   -->
-<iframe id="plone-cmsui-menu" src="" tal:attributes="src view/getLink"></iframe>
-<div id="plone-cmsui-trigger" style="display:none;">
+<div id="plone-cmsui-trigger">
   <!-- diazo prepend rule -->
-  <a id="cmsui-menu-link" href="" tal:attributes="href view/getLink">Manage page</a>
   <script type="text/javascript">
-    // create the iframe
+      (function () {
+          document.getElementById('plone-cmsui-trigger').style.display = 'none';
+      }());
   </script>
+  <a id="plone-cmsui-menu-link" href="" tal:attributes="href view/getLink">Manage page</a>
   <style type="text/css">
-      #plone-cmsui-menu {    
+      iframe#plone-cmsui-menu {    
           margin: 0;
           padding: 0;
           border: 0;
           outline: 0;
           background: transparent;
           position: fixed;
+          opacity: 0;
           left: 0;
           top: 0;
           width: 100%;
-          height: 0;
           z-index: 9999;
+          -webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+          -moz-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
       }
   </style>
+  <script type="text/javascript">
+      (function () {
+          var iframe = document.createElement('iframe'),
+              link = document.getElementById('plone-cmsui-menu-link'),
+              height_cookie = document.cookie.match(/__plone_height=([^;]*)/),
+              height = height_cookie ? height_cookie[1] : '116';
+          if (iframe.allowTransparency !== undefined) {
+              iframe.allowTransparency = 'true';
+          }
+          iframe.src = link.href;
+          iframe.id = 'plone-cmsui-menu';
+          iframe.style.height = height + 'px';
+          document.body.insertBefore(iframe, document.body.childNodes[0])
+          iframe.appendChild(link.cloneNode('true'));
+          if (height) {
+            document.body.style.marginTop = height + 'px';
+          }
+       }());
+  </script>
 </div>
