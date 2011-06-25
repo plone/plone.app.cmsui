@@ -1,3 +1,6 @@
+from datetime import datetime
+from DateTime import DateTime
+
 from Products.CMFCore.utils import getToolByName
 from zope.publisher.browser import BrowserView
 from plone.app.cmsui.interfaces import _
@@ -15,7 +18,7 @@ class WorkflowActionsSourceBinder(object):
     def __call__(self, context):
         wft = getToolByName(context, 'portal_workflow')
         return vocabulary.SimpleVocabulary([
-            vocabulary.SimpleVocabulary.createTerm(t['id'],t['id'],t['title'])
+            vocabulary.SimpleVocabulary.createTerm(t['id'],t['id'],t['name'])
             for t in wft.getTransitionsFor(context)
         ])
 
@@ -35,6 +38,20 @@ class IWorkflowPanel(Interface):
                                    "items are selected, this comment will be attached to all of them."),
         required= False,
         )
+    effective_date = schema.Datetime(
+        title = _(u'label_effective_date', u'Publishing Date'),
+        description = _(u'help_effective_date',
+                          default=u"If this date is in the future, the content will "
+                                   "not show up in listings and searches until this date."),
+        required = False
+        )
+    expiration_date = schema.Datetime(
+        title = _(u'label_expiration_date', u'Expiration Date'),
+        description = _(u'help_expiration_date',
+                              default=u"When this date is reached, the content will no"
+                                       "longer be visible in listings and searches."),
+        required = False
+        )
 
 class WorkflowPanel(form.Form):
     """Shows a panel with the adanced workflow options
@@ -50,12 +67,47 @@ class WorkflowPanel(form.Form):
             self.status = self.formErrorsMessage
             return
         
+        # Context might be temporary
+        real_context = self.context.portal_factory.doCreate(self.context)
+        
+        # Read form
         workflow_action = data.get('workflow_action', '')
+        effective_date = data.get('effective_date', None)
+        if workflow_action and not effective_date and real_context.EffectiveDate()=='None':
+            effective_date=DateTime()
+        expiration_date = data.get('expiration_date', None)
+        
+        # Try editing content, might not be able to yet
+        retryContentEdit = False
+        try:
+            self._editContent(real_context, effective_date, expiration_date)
+        except Unauthorized:
+            retryContentEdit = True
+        
+        postwf_context = None
         if workflow_action is not None:
-            self.context.portal_workflow.doActionFor(self.context, workflow_action, comment=data.get('comment', ''))
-            return "Complete"
-        self.request.response.redirect(self.context.absolute_url())
+            postwf_context = real_context.portal_workflow.doActionFor(self.context,
+                             workflow_action, comment=data.get('comment', ''))
+        if postwf_context is None: postwf_context = real_context
+        
+        # Retry if need be
+        if retryContentEdit:
+            self._editContent(postwf_context, effective_date, expiration_date)
+        
+        self.request.response.redirect(postwf_context.absolute_url())
 
     @button.buttonAndHandler(u'Cancel')
     def cancel(self, action):
         self.request.response.redirect(self.context.absolute_url())
+
+    def _editContent(self, context, effective, expiry):
+        kwargs = {}
+        if isinstance(effective, datetime):
+            kwargs['effective_date'] = DateTime(effective)
+        elif effective and (isinstance(effective, DateTime) or len(effective) > 5): # may contain the year
+            kwargs['effective_date'] = effective
+        if isinstance(expiry, datetime):
+            kwargs['expiration_date'] = DateTime(expiry)
+        elif expiry and (isinstance(expiry, DateTime) or len(expiry) > 5): # may contain the year
+            kwargs['expiration_date'] = expiry
+        context.plone_utils.contentEdit(context, **kwargs)

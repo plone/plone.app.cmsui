@@ -60,7 +60,6 @@
         name="cmsui-workflow-panel"
         for="*"
         class=".workflowpanel.WorkflowPanel"
-        template="templates/workflow-panel.pt"
         permission="plone.ViewCMSUI"
         />
 

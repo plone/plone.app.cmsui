@@ -457,12 +457,16 @@ html {
   color: #ffffff;
   position: fixed;
   z-index: 10000;
+  border-bottom: 1px solid #1b3d5b;
 }
 #toolbar:after {
-  content: " ";
-  display: block;
-  height: 2px;
-  background: #1b3d5b;
+  /*
+	    content: " ";
+	    display: block;
+	    height: 2px;
+	    background: darken(@ploneColor, 20%);
+        */
+
 }
 #toolbar ul {
   float: none;
@@ -491,34 +495,18 @@ html {
   line-height: 1em;
   border-bottom: 1px solid #153047;
 }
-#toolbar .container:first-of-type #portal-logo img {
-  width: 100%;
-}
 #toolbar .container:first-of-type #portal-breadcrumbs {
   line-height: 1em;
+  margin-left: 0.5em;
+  margin-top: 0.5em;
+  padding-left: 10px;
 }
 #toolbar .container:first-of-type #portal-breadcrumbs a {
   display: inline-block;
   padding: 0;
 }
 #toolbar .container:first-of-type #portal-breadcrumbs a:after {
-  content: "\25BA";
-  display: inline-block;
-  margin-left: 0.5em;
-  margin-right: 0.5em;
-}
-#toolbar .container:first-of-type #portal-breadcrumbs li#path-home a {
-  display: block;
-  /*background: transparent url(../images/plone_logo.png) 50% 50% no-repeat;
-				    width: 95px;
-				    height: 24px;
-				    position: relative;
-				    top: -0.3em;
-				    */
-
-}
-#toolbar .container:first-of-type #portal-breadcrumbs li#path-home:after {
-  content: "\25BA";
+  content: "/";
   display: inline-block;
   margin-left: 0.5em;
   margin-right: 0.5em;
@@ -531,8 +519,11 @@ html {
 }
 #toolbar .container:last-of-type {
   margin-top: 0;
+  margin-bottom: 0;
   padding-top: 10px;
+  padding-bottom: 10px;
   border-top: 1px solid #387fbe;
+  border-bottom: 1px solid #1b3d5b;
 }
 #toolbar .container:last-of-type #document-info, #toolbar .container:last-of-type #folder-actions {
   display: inline;
@@ -555,6 +546,15 @@ html {
   display: inline-block;
   padding-top: 27.333333333333332px;
   text-align: center;
+}
+.small #toolbar-bottom {
+  display: none;
+}
+.small #manage-page-close {
+  display: none;
+}
+.large #manage-page-open {
+  display: none;
 }
 #toggle-toolbar {
   background: #3272aa;
@@ -592,6 +592,12 @@ html {
 			background: transparent url('../images/pointer_down.png') 50% 50% no-repeat;		    
 		}*/
 
+}
+#toolbar a {
+  opacity: 0.95;
+}
+#toolbar a:hover {
+  opacity: 1;
 }
 /* @group Icons */
 #document-workflow_state a {
