@@ -24,7 +24,7 @@ class TestWorkflowPanel(unittest.TestCase):
         
         # raises exception if not present
         browser.getLink("Workflow actions").click()
-        self.assertIn("Workflow panel", browser.contents)
+        self.assertIn("form.widgets.workflow_action", browser.contents) #TODO: Should have something less magical to check for
     
     def test_available_workflow_transition_shown_in_workflow_panel(self):
         browser = Browser(self.layer['app'])
@@ -48,15 +48,12 @@ class TestWorkflowPanel(unittest.TestCase):
         # later
         self.assertEqual(sorted(['submit', 'hide', 'publish']), sorted(transition_ids))
         
-        workflow_actions = browser.getControl(name="workflow_action")
-        submit_control = workflow_actions.getControl(value="submit")
-        hide_control = workflow_actions.getControl(value="hide")
-        publish_control = workflow_actions.getControl(value="publish")
-        
-        # Ugly, but it will do
-        self.assertEqual('Member submits content for publication', submit_control.mech_item.attrs['title'])
-        self.assertEqual('Member makes content private', hide_control.mech_item.attrs['title'])
-        self.assertEqual('Reviewer publishes content', publish_control.mech_item.attrs['title'])
+        # Make sure we have both labels and values for all possible workflow actions
+        workflow_actions = browser.getControl(name="form.widgets.workflow_action:list")
+        self.assertEqual(len(workflow_actions.mech_control.items),3)
+        self.assertEqual(workflow_actions.getControl(label='Member submits content for publication').optionValue, 'submit')
+        self.assertEqual(workflow_actions.getControl(label='Member makes content private').optionValue, 'hide')
+        self.assertEqual(workflow_actions.getControl(label='Reviewer publishes content').optionValue, 'publish')
     
     def test_choosing_transition_transitions_content(self):
         browser = Browser(self.layer['app'])
@@ -70,7 +67,7 @@ class TestWorkflowPanel(unittest.TestCase):
         browser.open(document.absolute_url())
         browser.getLink("Manage page").click()
         browser.getLink("Workflow actions").click()
-        workflow_actions = browser.getControl(name="workflow_action")
+        workflow_actions = browser.getControl(name="form.widgets.workflow_action:list")
         workflow_actions.getControl(value="publish").click()
         browser.getControl("Save").click()
         
@@ -88,10 +85,10 @@ class TestWorkflowPanel(unittest.TestCase):
         browser.open(document.absolute_url())
         browser.getLink("Manage page").click()
         browser.getLink("Workflow actions").click()
-        workflow_actions = browser.getControl(name="workflow_action")
+        workflow_actions = browser.getControl(name="form.widgets.workflow_action:list")
         workflow_actions.getControl(value="publish").click()
         # We set up a comment this time
-        browser.getControl(name="comment").value = "wibble fkjwel"
+        browser.getControl(name="form.widgets.comment").value = "wibble fkjwel"
         browser.getControl("Save").click()
         
         # and it shows up in the workflow history

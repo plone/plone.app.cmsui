@@ -25,6 +25,16 @@
         for="Products.CMFPlone.interfaces.IPloneSiteRoot"
         provides="Products.GenericSetup.interfaces.EXTENSION"
         />
+    
+    <!-- BBB profile -->
+    <gs:registerProfile
+        name="z_bbb"
+        title="CMS User Interface - BBB registrations"
+        description="Performs backwards compatibility migrations"
+        directory="bbb/profiles/bbb"
+        for="Products.CMFPlone.interfaces.IMigratingPloneSiteRoot"
+        provides="Products.GenericSetup.interfaces.EXTENSION"
+        />
 
     <!-- Views -->
 
