@@ -31,6 +31,9 @@ html {
 	.css3_box_shadow(0 2px 12px rgba(0,0,0,0.5));
 	margin-top: 0;
 	padding-top: @verticalSpace/2;
+    color: @baseFontColor;
+    position: fixed;
+    z-index: 10000;
 	
 	&:after {
 	    content: " ";
@@ -148,13 +151,13 @@ html {
 
 /* @group Icons */
 
-#document-workflow_state_draft a {
+#document-workflow_state a {
     background: transparent url('../icons/Action.png') 50% 0 no-repeat;
 }
 #document-language a {
     background: transparent url('../icons/Globe_Alt.png') 50% 0 no-repeat;
 }
-#document-creation_date a {
+#document-history a {
     background: transparent url('../icons/Clock.png') 50% 0 no-repeat;
 }
 #document-author a {
@@ -179,3 +182,8 @@ html {
 }
 
 /* @end */	    
+
+/* Evil hacks to make the overlays work */
+#exposeMask {
+    position: fixed !important;
+}

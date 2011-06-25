@@ -12,7 +12,7 @@
     <!-- Forces IE8+ into newest rendering engine even if on an intranet. This has to be defined before any script/style tags. -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge" /> 
 
-    <base tal:attributes="href plone_view/renderBase" /><!--[if lt IE 7]></base><![endif]-->
+    <base tal:attributes="href plone_view/renderBase" target="_parent" /><!--[if lt IE 7]></base><![endif]-->
 
     <!-- TODO: These should probably be managed by the resource registries.
                See http://projects.plone.org/browse/NEWUI-83
@@ -41,28 +41,31 @@
 
     <div class="container clearfix">
 
-        <!-- Plone log -->
-        <!-- <div class="grid_1">
-            <img src="images/plone_logo.png" id="portal-logo" alt="Plone logo" />
-        </div> -->
-
         <!-- Breadcrumbs -->
         <nav id="portal-breadcrumbs" class="grid_7 ">
             <ul>
-                <li id='path-home'><a href="#"  class="ir">Home</a></li><li
-                ><a href="#">Products</a></li
-                ><li><a href="#">XYZ</a></li
-                ><li><span class="current">Features</span></li>
+                <li id='path-home'><a tal:attributes="href view/portalState/navigation_root_url" class="ir">Home</a></li
+                ><li tal:repeat="crumb view/breadcrumbs"
+                ><a tal:condition="not:repeat/crumb/end"
+                    tal:attributes="href crumb/absolute_url;"
+                    tal:content="crumb/Title">Item</a
+                ><span tal:condition="repeat/crumb/end" class="current"
+                       tal:content="crumb/Title">Item</span
+                ></li>
             </ul>
         </nav>
 
         <!-- Personal links -->
         <div class="grid_5">
             <ul id="personal-tools">
-                <li><a href="#">My Preferences</a></li>
-                <li><a href="#">My Dashboard</a></li>
-                <li><a href="#">Logged in as John Doe</a></li>
-                <li><a href="#">Log out</a></li>
+                <li id="cmsui-logged-in-as" i18n:translate="cmsui_logged_in_as">
+                    <a tal:attributes="href view/userHomeLinkURL">
+                        Logged in as <span i18n:name="name" tal:replace="view/userName" />
+                    </a>
+                </li>
+                <li tal:repeat="action view/personalActions" tal:attributes="id string:cmsui-personallink-${action/id}">
+                    <a tal:attributes="href action/url" tal:content="action/title" />
+                </li>
             </ul>
         </div>
     </div>
@@ -72,25 +75,32 @@
         <!-- Information about the current document -->
         <div class="grid_10">
             <ul id="document-info">
-                <li id="document-creation_date"><a href="#">June 23, 2011</a></li>
-                <li id="document-author"><a href="#">John Doe</a></li>
-                <li id="document-workflow_state_draft"><a class="overlayLink" href="" 
-                    tal:attributes="href string:${view/baseURL}/@@cmsui-workflow-panel">Workflow actions</a></li>
-                <li id="document-language"><a href="#">English
-                    <span id="avail-languages">(+de, es)</span></a></li>
+                <li tal:condition="python:view.modificationDate()"
+                    id="document-history"><a href="#" tal:content="view/modificationDate">June 23, 2011</a></li>
+                <li tal:condition="python:view.authorName()"
+                    id="document-author"><a href="#" tal:content="view/authorName">John Doe</a></li>
+                <li tal:condition="python:view.workflowState()"
+                    id="document-workflow_state"
+                    ><a tal:attributes="href string:${view/baseURL}/@@cmsui-workflow-panel"
+                        tal:content="view/workflowState">Draft</a></li>
                 <li id="document-edit"><a href="#">Edit</a></li>
                 <li id="document-settings"><a href="#">Settings</a></li>
             </ul>
 
             <!-- Links tangentially related to the current document -->
             <ul id="folder-actions">
-                <li id="folder-contents"><a class="overlayLink" tal:attributes="href string:${folder/absolute_url}/cmsui-folder-contents">Contents</a></li>
+                <li id="folder-contents"><a href="#" class="overlayLink" tal:attributes="href string:${folder/absolute_url}/cmsui-folder-contents"
+                    ><span i18n:translate="cmsui_contents" tal:omit-tag="">Structure</span
+                    ><tal:block condition="python:(view.contextState.is_structural_folder() or view.contextState.is_default_page()) and view.itemsInFolder() is not None"> (<span tal:replace="view/itemsInFolder">12</span>)</tal:block
+                    ></a></li>
                 <li id="folder-add_content"><a href="#">Add Content</a></li>
             </ul>
         </div>
 
         <aside class="grid_2" id="site-setup">
-            <a href="#">Site configuration</a>
+            <a
+                tal:attributes="href string:${view/portalState/navigation_root_url}/@@overview-controlpanel"
+                i18n:translate="cmsui_site_configuration">Site configuration</a>
         </aside>
     </div>
 
