@@ -83,8 +83,10 @@
                 <li tal:condition="python:view.workflowState()"
                     id="document-workflow_state"
                     ><a class="overlayLink"
+                        id="plone-contentmenu-workflow"
                         tal:attributes="href string:${view/baseURL}/@@cmsui-workflow-panel"
-                        tal:content="view/workflowState">Draft</a></li>
+                        ><span class="" tal:attributes="class string:state-${view/contextState/workflow_state}"
+                          tal:content="view/workflowState">Draft</span></a></li>
                 <li id="document-edit"
                     ><a class="overlayLink" href="#">Edit</a></li>
                 <li id="document-settings"><a href="#">Settings</a></li>
