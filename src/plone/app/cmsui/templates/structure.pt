@@ -52,7 +52,7 @@ jq(function(){
              tal:condition="view/folderitems">
 	<thead>
           <tr tal:condition="python: not view.selectcurrentbatch">
-            <th colspan="6" class="nosort"><span i18n:translate="label_select" tal:omit-tag="">Select:</span> <a i18n:translate="label_all" tal:attributes="href view/selectscreen_url" id="foldercontents-selectall">All</a></th>
+            <th colspan="6" class="nosort"><span i18n:translate="label_select" tal:omit-tag="">Select:</span> <a i18n:translate="label_all" tal:attributes="href view/selectscreen_url" id="foldercontents-selectall" class="overlayLink">All</a></th>
           </tr>
           <tr tal:condition="view/show_select_all_items">
             <th colspan="6" class="nosort">
@@ -61,7 +61,7 @@ jq(function(){
 		page are selected. 
               </span>
               <a tal:attributes="href view/selectall_url" 
-		 id="foldercontents-selectall-completebatch"
+		 id="foldercontents-selectall-completebatch" class="overlayLink"
 		 i18n:translate="tableheading_select_all_items">Select all 
 		<tal:block replace="view/batch/size" i18n:name="count"/> items in this folder.</a>
             </th>
@@ -73,7 +73,7 @@ jq(function(){
 		are selected. 
               </span>
 	      <a tal:attributes="href view/selectnone_url"  i18n:translate="tableheading_clear_selection"
-               id="foldercontents-clearselection">Clear selection</a>
+               id="foldercontents-clearselection" class="overlayLink">Clear selection</a>
           </th>
         </tr>
 
@@ -109,7 +109,8 @@ jq(function(){
 		<td tal:condition="view/show_sort_column" class="draggable">
 		  <tal:block tal:define="quoted_id item/quoted_id|python: view.quote_plus(id);">
                     <a href=""
-                   title="Move item up"
+                       title="Move item up"
+                       class="overlayLink"
                        i18n:attributes="title title_move_item_up;"
                        tal:attributes="href string:${context/absolute_url}/folder_position?position=up&amp;id=${quoted_id}">
                       &#9650;
@@ -117,6 +118,7 @@ jq(function(){
                     &nbsp;
                     <a href=""
                        title="Move item down"
+                       class="overlayLink"
                        i18n:attributes="title title_move_item_down;"
                        tal:attributes="href string:${context/absolute_url}/folder_position?position=down&amp;id=${quoted_id}">
                       &#9660;
@@ -176,14 +178,14 @@ jq(function(){
               <th colspan="6" class="nosort">
 		<a tal:attributes="href view/show_all_url"
                    i18n:translate="label_show_all"
-                   id="foldercontents-show-all">Show all items</a>
+                   id="foldercontents-show-all" class="overlayLink">Show all items</a>
               </th>
             </tr>
             <tr tal:condition="view/show_all">
               <th colspan="6" class="nosort">
 		<a tal:attributes="href string:${context/absolute_url}/@@cmsui-structure"
                    i18n:translate="label_show_batched"
-                   id="foldercontents-show-batched">Show batched</a>
+                   id="foldercontents-show-batched" class="overlayLink">Show batched</a>
               </th>
             </tr>
           </tfoot>
