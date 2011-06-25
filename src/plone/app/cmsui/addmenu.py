@@ -60,9 +60,7 @@ class AddForm(form.Form):
         self.context.invokeFactory(data['content_type'], id=id, title=title)
         # redirect to immediate_view
         # obj =
-        iview = self.context.portal_types[data['content_type']].immediate_view
-        
-        # self.request.response.redirect(self.context[id][iview].absolute_url())
+        self.request.response.redirect("%s/edit" % self.context[id].absolute_url())
         # open edit overlay    
 
 
