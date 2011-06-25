@@ -43,7 +43,7 @@
     <div id="toolbar-top" class="container clearfix">
 
         <!-- Breadcrumbs -->
-        <nav id="portal-breadcrumbs" class="grid_5 ">
+        <nav id="portal-breadcrumbs" class="grid_6">
             <ul>
                 <li id='path-home'>
                     <a tal:attributes="href view/portalState/navigation_root_url">Home</a></li>
@@ -56,13 +56,8 @@
             </ul>
         </nav>
 
-        <div id="manage-page" class="grid_2">
-          <a href="#" id="manage-page-open">Make me bigger</a>
-          <a href="#" id="manage-page-close">Make me smaller</a>
-        </div>
-
         <!-- Personal links -->
-        <ul id="personal-tools" class="grid_5">
+        <ul id="personal-tools" class="grid_6">
             <li id="cmsui-logged-in-as" i18n:translate="cmsui_logged_in_as">
                 <a class="overlayLink" tal:attributes="href view/userHomeLinkURL">
                     Logged in as <span i18n:name="name" tal:replace="view/userName" />
@@ -70,6 +65,10 @@
             </li>
             <li class="overlayLink" tal:repeat="action view/personalActions" tal:attributes="id string:cmsui-personallink-${action/id}">
                 <a class="overlayLink" tal:attributes="href action/url" tal:content="action/title" />
+            </li>
+            <li>
+                <a href="#" id="manage-page-open">Edit content ▼</a>
+                <a href="#" id="manage-page-close">Hide edit bar ▲</a>
             </li>
         </ul>
     </div>

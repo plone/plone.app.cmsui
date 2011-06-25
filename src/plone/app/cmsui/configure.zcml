@@ -108,6 +108,13 @@
         permission="plone.ViewCMSUI"
         />
 
+    <browser:page
+        name="cmsui-file-upload-form"
+        for="*"
+        class=".addmenu.FileUploadFormView"
+        permission="plone.ViewCMSUI"
+        />
+
     <!-- Lock info overlay -->
 
     <browser:page
