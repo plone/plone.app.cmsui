@@ -26,31 +26,40 @@ jq(function(){
   <div id="structure-dialog">
   <div class="structure-slider">
 
-  <nav id="portal-breadcrumbs">
+    <nav id="portal-breadcrumbs">
       <ul>
-          <li id='path-home'>
-	    <span class="crumb">
-	      <a class="link-parent" tal:attributes="href string:${view/@@plone_portal_state/navigation_root_url}/cmsui-structure">
-		Home
-	      </a>
+        <li id='path-home'>
+	  <span class="crumb">
+	    <a class="link-parent" tal:attributes="href string:${view/@@plone_portal_state/navigation_root_url}/cmsui-structure">
+	      Home
+	    </a>
+	  </span>
+	</li>
+	<li tal:repeat="crumb view/breadcrumbs">
+	  <span class="crumb" tal:condition="not:repeat/crumb/end">
+	    <a class="link-parent"
+	       tal:attributes="href string:${crumb/absolute_url}/cmsui-structure;"
+	       tal:content="crumb/Title">Item</a>
 	    </span>
-	  </li>
-	  <li tal:repeat="crumb view/breadcrumbs">
-	    <span class="crumb" tal:condition="not:repeat/crumb/end">
-	      <a class="link-parent"
-		 tal:attributes="href string:${crumb/absolute_url}/cmsui-structure;"
-		 tal:content="crumb/Title">Item</a>
-	    </span>
-	    <span tal:condition="repeat/crumb/end" class="current"
-                  tal:content="crumb/Title">
-	      Item
-	    </span>
-	    <span class="actions">
-	      (<a href="#" class="overlayLink" tal:attributes="href string:${context/absolute_url}/edit">edit</a>, <a href="#" tal:attributes="href string:${context/absolute_url}/view">view</a>)
-	    </span>
-	  </li>
+	  <span tal:condition="repeat/crumb/end" class="current"
+                tal:content="crumb/Title">
+	    Item
+	  </span>
+	  <span class="actions">
+	    (<a href="#" class="overlayLink" tal:attributes="href string:${context/absolute_url}/edit">edit</a>, <a href="#" tal:attributes="href string:${context/absolute_url}/view">view</a>)
+	  </span>
+	</li>
       </ul>
-  </nav>
+    </nav>
+    <form id="item-actions-menu">
+      <fieldset>
+	<legend>on <tal:name tal:replace="context_state/object_title" /></legend>
+	<input type="button" name="move" class="first" value="move" />
+	<input type="button" name="duplicate" value="duplicate" />
+	<input type="button" name="rename" value="rename" />
+	<input type="button" class="last" name="delete" value="delete" />
+      </fieldset>
+    </form>
 
     <form name="folderContentsForm"
           method="post"

@@ -36,3 +36,47 @@ table.listing tbody tr.odd.error td, tr.error {
 tr.dragging{ outline: 2px solid #FFD700; border-bottom:none; }
 tr.dragging td{ border-bottom: none }
 tr.dragindicator{ outline: none;}
+
+
+div.overlay table.listing *{ 
+   font-size: 100%; 
+}
+
+div.overlay #item-actions-menu{
+   float:right;
+}
+
+div.overlay #item-actions-menu fieldset{
+   border: 1px solid black;
+   text-transform: none;
+   margin: 5px;
+}
+
+div.overlay #item-actions-menu fieldset input{
+   margin: 7px 0;
+   padding: 4px;
+   display: block;
+   float:left;
+   border: none;
+   border-right: 1px solid black;
+   background-color: gray;
+   font-size: 160%;
+   outline: none;
+}
+
+div.overlay #item-actions-menu fieldset input:hover{
+   background-color: white;
+}
+
+div.overlay #item-actions-menu fieldset input.last{
+   border-right:none;
+   margin-right:10px;
+}
+
+div.overlay #item-actions-menu fieldset input.first{
+   margin-left:10px;
+}
+
+div.overlay #item-actions-menu fieldset legend{
+   text-transform: none;
+}
