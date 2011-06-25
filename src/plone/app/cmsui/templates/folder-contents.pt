@@ -19,7 +19,8 @@
 
 <metal:content-core fill-slot="body">
   <div id="content">
-  <div class="structure-slider" style="width: 100%;">
+  <div id="structure-dialog">
+  <div class="structure-slider">
 
   <h1 class="documentFirstHeading" tal:content="view/title"> 
     Title
@@ -208,11 +209,11 @@
       <div tal:replace="structure view/batching" tal:condition="not:view/show_all"/>
       
       <input tal:replace="structure context/@@authenticator/authenticator" />
+
     </form>
 
   </div>
   </div>
-
 <script type="text/javascript">
 jQuery(function($) {
   var current_location = '';
@@ -254,6 +255,8 @@ jQuery(function($) {
   history.replaceState(location.href, null, location.href);
 });
 </script>
+  <br style="clear: both;" />
+  </div>
 </metal:content-core>
 </body>
 </html>
