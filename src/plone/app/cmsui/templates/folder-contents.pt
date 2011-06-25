@@ -203,45 +203,43 @@
 
 <script type="text/javascript">
 jQuery(function($) {
-  $('a.link-child').live('click', function(e) {
-    e.preventDefault();
-    var $a = $(this);
-    var href = $a.attr('href');
+  var current_location = '';
+  
+  var slideTo = function(href, dir) {
     var $slider = $('.structure-slider');
     var width = $slider.outerWidth();
     
     $('body').css('overflow', 'hidden');
     $('#content').css({position: 'relative'});
-    $slider.css('position', 'relative').animate({'left': -width}, 200, null, function() {$slider.detach();});
+    $slider.css('position', 'relative').animate({'left': (dir=='left')?-width:width}, 200, null, function() {$slider.detach();});
     $('<div class="structure-slider" style="width: 100%"><' + '/div>')
         .appendTo($('#content'))
         .load(href + ' .structure-slider>*')
-        .css({position: 'absolute', left: width, top: 0})
+        .css({position: 'absolute', left: (dir=='left'?width:-width), top: 0})
         .animate({'left': 0}, 200, function() {$('body').css('overflow', 'auto');});
-    history.pushState(null, null, href);
+        
+    current_location = href;
+  }
+  
+  $('a.link-child').live('click', function(e) {
+    e.preventDefault();
+    var href = $(this).attr('href');
+    slideTo(href, 'left');
+    history.pushState(href, null, location.href);
   });
 
   $('a.link-parent').live('click', function(e) {
     e.preventDefault();
-    var $a = $(this);
-    var href = $a.attr('href');
-    var $slider = $('.structure-slider');
-    var width = $slider.outerWidth();
-    
-    $('body').css('overflow', 'hidden');
-    $('#content').css({position: 'relative'});
-    $slider.css('position', 'relative').animate({'left': width}, 200, null, function() {$slider.detach();});
-    $('<div class="structure-slider" style="width: 100%;"><' + '/div>')
-        .appendTo($('#content'))
-        .load(href + ' .structure-slider>*')
-        .css({position: 'absolute', left: -width, top: 0})
-        .animate({'left': 0}, 200, function() {$('body').css('overflow', 'auto');});
-    history.pushState(null, null, href);
+    var href = $(this).attr('href');
+    slideTo(href, 'right');
+    history.pushState(href, null, location.href);
   });
   
   $(window).bind('popstate', function(e) {
-    location.href = location.href;
+    var href = e.originalEvent.state;
+    slideTo(href, (current_location.length > href.length ? 'right' : 'left'));
   });
+  history.replaceState(location.href, null, location.href);
 });
 </script>
 
