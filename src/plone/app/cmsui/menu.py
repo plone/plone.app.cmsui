@@ -101,7 +101,13 @@ class Menu(BrowserView):
     def authorName(self):
         """Get the full name of the author
         """
-        acl_users, owner = self.context.getOwnerTuple()
+        
+        owner = None
+        if hasattr(aq_base(self.context), 'Creator'):
+            owner = self.context.Creator()
+        if owner is None:
+            acl_users, owner = self.context.getOwnerTuple()
+        
         membership = self.tools.membership()
         memberInfo = membership.getMemberInfo(owner)
         return memberInfo.get('fullname', '') or owner
@@ -136,12 +142,20 @@ class Menu(BrowserView):
 
     @memoize
     def editLink(self):
-        """Get the URL of the edit action
+        """Get the URL of the edit action - taking locking into account
         """
+        
+        if not self.securityManager.checkPermission('Modify portal content', self.context):
+            return None
+        
+        if self.contextState.is_locked():
+            return self.context.absolute_url() + "/@@cmsui-lock-info"
+        
         objectActions = self.contextState.actions('object')
         for action in objectActions:
             if action['id'] == self.EDIT_ACTION_ID:
-                return action['url']
+                return "%s?last_referer=%s" % (action['url'], self.context.absolute_url())
+        
         return None
     
     @memoize

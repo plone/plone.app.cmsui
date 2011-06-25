@@ -58,6 +58,9 @@ function eraseCookie(name) {
         $('a.overlayLink').prepOverlay({
             subtype: 'ajax',
             filter: common_content_filter,
+            // Add this to a link or button to make it close the overlay e.g.
+            // on cancel without reloading the page
+            closeselector: '.overlayCloseAction',
             config: { 
                 top: 150,
                 onBeforeLoad: function (e) { 
