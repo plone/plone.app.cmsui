@@ -30,7 +30,8 @@
     <link rel="stylesheet" href="++resource++plone.app.cmsui/css/authoring.css" />
     <link rel="stylesheet" href="++resource++plone.app.cmsui/css/sprites.css" />
     <link rel="stylesheet" href="++resource++plone.app.cmsui/css/menu.css" />    
-    <link rel="stylesheet" href="++resource++plone.app.cmsui/css/notify.css" />    
+    <link rel="stylesheet" href="++resource++plone.app.cmsui/css/notify.css" />
+    <link rel="stylesheet" href="member.css" />
 
 </head>
 <body tal:define="isRTL portal_state/is_rtl"
@@ -91,9 +92,10 @@
                 <li tal:condition="python:view.workflowState()"
                     id="document-workflow_state">
                     <a class="overlayLink"
+                        id="plone-contentmenu-workflow"
                         tal:attributes="href string:${view/baseURL}/@@cmsui-workflow-panel"
-                        tal:content="view/workflowState">Draft</a>
-                </li>
+                        ><span class="" tal:attributes="class string:state-${view/contextState/workflow_state}"
+                          tal:content="view/workflowState">Draft</span></a></li>
                 <li tal:condition="python:view.editLink()"
                     tal:attributes="id python:view.contextState.is_locked() and 'document-edit-locked' or 'document-edit';">
                     <a class="overlayLink"
