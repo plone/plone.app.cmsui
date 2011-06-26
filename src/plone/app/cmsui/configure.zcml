@@ -155,7 +155,6 @@
 <browser:page
     for="*"
     name="quick_upload_file"
-    attribute="quick_upload_file"
     class=".quick_upload.QuickUploadFile"
     permission="cmf.AddPortalContent"/> 
 
