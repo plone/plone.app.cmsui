@@ -15,7 +15,7 @@
 
       <h2 class="pannelHeader"
           tal:content="view/header_upload">
-        Files Quick Upload
+        Quick Upload Files
       </h2>
 
       <label i18n:translate="label_choose_your_files"
