@@ -146,9 +146,4 @@ class AddMenu(BrowserView):
            return '%s/@@quick_upload' %folder_url
 
     def getDataForUploadUrl(self):
-        data_url = ''
-        # if self.data.upload_portal_type != 'auto' :
-        #     data_url+= 'typeupload=%s&' % self.data.upload_portal_type      
-        # if self.data.upload_media_type :
-        #     data_url+= 'mediaupload=%s' % self.data.upload_media_type  
         return 'data_url'
