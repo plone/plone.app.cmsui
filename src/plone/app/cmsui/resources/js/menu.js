@@ -102,7 +102,6 @@ function eraseCookie(name) {
                 },
                 onLoad: function (e) {
                     loadUploader();
-                    $("#listing-table").ploneDnD();
                     showMessagesFromOverlay();
                     $(window).trigger('onLoadOverlay', [this, e]);
                     return true; 

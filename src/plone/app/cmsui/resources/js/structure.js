@@ -44,16 +44,16 @@ jQuery(function ($) {
         window.parent.history.pushState({structure_href: href}, null, window.parent.location.href);
     });
 
+    $(window).bind(['onStructureEndSlideTo', 'onEndLoadOverlay', 'onLoadOverlay'], function(){
+	$("table.orderable").ploneDnD();
+    });
+
     // update current folder after back/forward history navigation
     window.parent.addEventListener('popstate', function(e) {
         if (e.state != null && e.state.structure_href !== undefined) {
             var href = e.state.structure_href;
             slideTo(href, (overlay_location.length > href.length ? 'right' : 'left'));
         }
-    });
-
-    $(window).bind(['onStructureEndSlideTo', 'onEndLoadOverlay', 'onLoadOverlay'], function(){
-	$("table.orderable").ploneDnD();
     });
 
 });
