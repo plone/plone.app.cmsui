@@ -104,7 +104,7 @@ XHR_UPLOAD_JS = """
             simUploadLimit: %(ul_sim_upload_limit)s,
             template: '<div class="qq-uploader">' +
                       '<div class="qq-upload-drop-area"><span>%(ul_draganddrop_text)s</span></div>' +
-                      '<div class="qq-upload-button">%(ul_button_text)s</div>' +
+                      '<div class="qq-upload-button"><label for="file-upload">%(ul_button_text)s</label></div>' +
                       '<ul class="qq-upload-list"></ul>' + 
                       '</div>',
             fileTemplate: '<li>' +

@@ -16,6 +16,7 @@
     text-shadow: 0 -1px 0 #214a6f;    
 }
 
+.qq-upload-button label { margin-right: 1em; }
 .qq-upload-button input[type="file"],
 .qq-upload-button input[type="file"]:hover {cursor: pointer !important;}
 .qq-upload-button-hover {background:#5a98ce;cursor: pointer !important;}
