@@ -1,7 +1,3 @@
-# code taken from collective.uploadify
-# for the flashupload
-# with many ameliorations
-
 import os
 import mimetypes
 import random
@@ -246,8 +242,6 @@ class QuickUploadInit(BrowserView):
         request = self.request
         session = request.get('SESSION', {})
         portal_url = getToolByName(context, 'portal_url')()    
-        # use a ticket for authentication (used for flashupload only)
-        ticket = context.restrictedTraverse('@@quickupload_ticket')()
         
         settings = dict(
             ticket                 = ticket,
@@ -303,93 +297,16 @@ class QuickUploadInit(BrowserView):
         self.uploader_id = for_id
         settings = self.upload_settings()
         return XHR_UPLOAD_JS % settings   
-        
 
-class QuickUploadAuthenticate(BrowserView):
-    """
-    base view for quick upload authentication
-    ticket is used only with flash upload
-    nothing is done with xhr upload.
-    Note : we don't use the collective.uploadify method
-    for authentication because sending cookie in all requests
-    is not secure.
-    """
-    def __init__(self, context, request):        
-        self.context = context
-        self.request = request     
-        portal = getUtility(IPloneSiteRoot)
-        # self.qup_prefs = IQuickUploadControlPanel(portal)
-        self.use_flashupload = self.qup_prefs.use_flashupload
-            
-    def _auth_with_ticket (self):
-        """
-        with flashupload authentication is done using a ticket
-        """
-        
-        context = aq_inner(self.context)
-        request = self.request
-        url = context.absolute_url()
 
-        ticket = getDataFromAllRequests(request, 'ticket')  
-        if ticket is None:
-            raise Unauthorized('No ticket specified')        
-        
-        # logger.info('Authenticate using ticket, the ticket is "%s"' % str(ticket)) 
-        username = ticketmod.ticketOwner(url, ticket)
-        if username is None:
-            # logger.info('Ticket "%s" was invalidated, cannot be used '
-            # 'any more.' % str(ticket))
-            raise Unauthorized('Ticket is not valid')
-
-        self.old_sm = SecurityManagement.getSecurityManager()
-        user = find_user(context, username)
-        SecurityManagement.newSecurityManager(self.request, user)
-        # logger.info('Switched to user "%s"' % username)   
-
-        
-class QuickUploadFile(QuickUploadAuthenticate):
+class QuickUploadFile(BrowserView):
     """ Upload a file
     """  
     
     def __call__(self):
         """
         """        
-        if self.use_flashupload :
-            return self.flash_upload_file()  
         return self.quick_upload_file()
-                            
-    def flash_upload_file(self) :
-        
-        context = aq_inner(self.context)
-        request = self.request        
-        self._auth_with_ticket()         
-            
-        file_name = request.form.get("Filename", "")
-        file_data = request.form.get("Filedata", None)
-        content_type = mimetypes.guess_type(file_name)[0]
-        portal_type = request.form.get('typeupload', '')
-        title =  request.form.get("title", None)
-        description =  request.form.get("description", None)
-        
-        if not portal_type :
-            ctr = getToolByName(context, 'content_type_registry')
-            portal_type = ctr.findTypeName(file_name.lower(), content_type, '') or 'File'
-        
-        if file_data:
-            factory = IQuickUploadFileFactory(context)
-            # logger.info("uploading file with flash: filename=%s, title=%s, description=%s, content_type=%s, portal_type=%s" % \
-            # (file_name, title, description, content_type, portal_type))                             
-            
-            try :
-                f = factory(file_name, title, description, content_type, file_data, portal_type)
-            except :
-                # XXX todo : improve errors handlers for flashupload
-                raise
-            if f['success'] is not None :
-                o = f['success']
-                # logger.info("file url: %s" % o.absolute_url())
-                SecurityManagement.setSecurityManager(self.old_sm)   
-                return o.absolute_url()         
 
     def quick_upload_file(self) :
         
