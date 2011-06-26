@@ -78,7 +78,6 @@ function eraseCookie(name) {
                 },
                 onLoad: function (e) {
                     loadUploader();
-                    $("#listing-table").ploneDnD();
                     $('.overlay-ajax .portalMessage').each(function () {
                         var type,
                             portal_message = $(this);
