@@ -14,7 +14,8 @@
     <div tal:define="uploader_id view/uploader_id">
       <h3>Upload Files</h3>
       <label i18n:translate="label_choose_your_files"
-             id="label-upload">Choose your files : </label>    
+             id="label-upload"
+             for="file">Choose one or more files to upload:</label>    
       <!-- uploader comes here -->
       <div id="uploader"
            class="main-uploader"
