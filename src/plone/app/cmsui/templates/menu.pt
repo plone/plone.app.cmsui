@@ -24,13 +24,11 @@
     </tal:resourceregistries>
     
     <script type="text/javascript" src="++resource++plone.app.cmsui/js/menu.js"></script>
-    <script type="text/javascript" src="++resource++plone.app.cmsui/js/plone.notify.js"></script>
 
     <link rel="stylesheet" href="++resource++plone.app.cmsui/css/boilerplate.css" />
     <link rel="stylesheet" href="++resource++plone.app.cmsui/css/authoring.css" />
     <link rel="stylesheet" href="++resource++plone.app.cmsui/css/sprites.css" />
     <link rel="stylesheet" href="++resource++plone.app.cmsui/css/menu.css" />    
-    <link rel="stylesheet" href="++resource++plone.app.cmsui/css/notify.css" />
     <link rel="stylesheet" href="member.css" />
 
 </head>

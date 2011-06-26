@@ -43,7 +43,7 @@
               iframe.allowTransparency = 'true';
           }
           iframe.src = link.href;
-          iframe.id = 'plone-cmsui-menu';
+          iframe.id = iframe.name = 'plone-cmsui-menu';
           iframe.style.height = height + 'px';
           document.body.insertBefore(iframe, document.body.childNodes[0])
           iframe.appendChild(link.cloneNode('true'));

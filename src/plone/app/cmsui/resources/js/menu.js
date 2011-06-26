@@ -77,8 +77,6 @@ function eraseCookie(name) {
                 }
             }
         });
-
-        $('.portalMessage:visible').addClass('showNotify').hide();
     });
     $(window).load(function () {
         var menu_state = readCookie('__plone_menu'),
@@ -86,6 +84,9 @@ function eraseCookie(name) {
             parent_body = $('body', window.parent.document),
             toolbar = $('#toolbar'),
             height;
+
+        $('.portalMessage:visible').addClass('showNotify').hide();
+
         if (menu_state === 'small' || menu_state === 'large') {
             toolbar.addClass(menu_state);
             iframe.height(toolbar.outerHeight());
@@ -101,8 +102,8 @@ function eraseCookie(name) {
                             'id': 'plone-cmsui-notifications'
                         })
                         .css({
-                            'top': toolbar.outerHeight() + 10,
-                            'right': '10px',
+                            'top': toolbar.outerHeight(),
+                            'right': 0,
                             'margin': 0,
                             'padding': 0,
                             'border': 0,
@@ -111,8 +112,8 @@ function eraseCookie(name) {
                             'position': 'fixed',
                             '_position': 'absolute',
                             '_top': 'expression(eval((document.body.scrollTop)?document.body.scrollTop:document.documentElement.scrollTop))',
-                            'width': '300px',
-                            'height': 0,
+                            'width': '320px',
+                            'height': '0px',
                             'z-index': 11000
                         })
                 );

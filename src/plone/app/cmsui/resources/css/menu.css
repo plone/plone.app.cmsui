@@ -117,4 +117,5 @@ html{overflow-y:visible;}
 #folder-contents a{background:transparent url('../icons/Folder.png') 50% 0 no-repeat;}
 #folder-add_content a{background:transparent url('../icons/Add.png') 50% 0 no-repeat;}
 #site-setup a{background:transparent url('../icons/Wrench_Screwdriver.png') 50% 0 no-repeat;}
+.portalMessage{position:absolute;left:-10000px;}
 #exposeMask{position:fixed !important;}
