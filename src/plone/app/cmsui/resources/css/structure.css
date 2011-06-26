@@ -109,7 +109,7 @@ div.structure-slider {
 }
 
 div#structure-dialog .link-parent {
-    display: block;
+    display: inline;
 }
 
 table.listing tbody tr.odd.error td, tr.error {
@@ -122,7 +122,7 @@ table.listing tbody tr.odd.error td, tr.error {
     display: inline-block;
 }
 
-#structure-dialog #portal-breadcrumbs span.crumb a:after {
+#structure-dialog #portal-breadcrumbs span.crumb:after {
     content: "/";
     margin-left: 0.5em;
     margin-right: 0.5em;
