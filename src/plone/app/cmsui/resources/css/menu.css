@@ -439,9 +439,6 @@ html {
   color: #ffffff;
   position: fixed;
   z-index: 10000;
-  /* top part of the toolbar */
-  /* bottom part of the toolbar */
-
 }
 #toolbar:after {
   /*
@@ -452,21 +449,6 @@ html {
         */
 
 }
-#toolbar ul {
-  float: none;
-  clear: both;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-#toolbar ul > * {
-  display: inline;
-}
-#toolbar ul > * > * {
-  float: none;
-  display: inline-block;
-  padding: 2.5px 1%;
-}
 #toolbar a {
   color: #ffffff;
   text-decoration: none;
@@ -474,6 +456,22 @@ html {
 }
 #toolbar a:hover {
   opacity: 1;
+}
+#toolbar ul {
+  list-style: none;
+  list-style-image: none;
+  padding: 0;
+}
+#toolbar ul li {
+  list-style: none;
+  list-style-image: none;
+}
+#toolbar ul li {
+  display: inline;
+}
+#toolbar ul li a {
+  display: inline-block;
+  padding: 2.5px 1%;
 }
 #toolbar .container:first-of-type {
   margin-top: 0;

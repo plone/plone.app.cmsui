@@ -41,22 +41,27 @@ html {
 	    background: darken(@ploneColor, 20%);
         */
 	}
-	
-	ul {
-	    .horList();
-	    margin: 0;
-	    padding: 0;
-	}
 	a {
 	    color: @linkColor;
 	    text-decoration: none;
-		opacity: .95;	    
+	    opacity: .95;
 		&:hover {
-		    opacity: 1;
-	    }		
+			opacity: 1;
+		}	    
 	}
 	
-	/* top part of the toolbar */		
+	ul {
+	    .noBulletsList();
+	    padding: 0;
+	    li {
+		    display: inline;
+		    a {
+			    display: inline-block;
+	            padding: @verticalSpace/4 @horizontalSpace/2;
+			}
+		}
+	}
+		
 	.container:first-of-type {
 	    margin-top: 0;
 	    margin-bottom: 0;
@@ -92,8 +97,6 @@ html {
 		}
 	}
 	
-	
-	/* bottom part of the toolbar */
 	.container:last-of-type {
 	    margin-top: 0;
 	    margin-bottom: 0;
@@ -171,6 +174,7 @@ html {
 		}*/
 	}
 }
+
 
 
 /* @group Icons */
