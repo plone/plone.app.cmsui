@@ -41,37 +41,6 @@ def getDataFromAllRequests(request, dataitem) :
         # try to get data from QueryString
         data = decodeQueryString(request.get('QUERY_STRING','')).get(dataitem)
     return data    
-    
-def find_user(context, userid):
-    """Walk up all of the possible acl_users to find the user with the
-    given userid.
-    """
-
-    track = set()
-
-    acl_users = aq_inner(getToolByName(context, 'acl_users'))
-    path = '/'.join(acl_users.getPhysicalPath())
-    # logger.debug('Visited acl_users "%s"' % path)
-    track.add(path)
-
-    user = acl_users.getUserById(userid)
-    while user is None and acl_users is not None:
-        context = aq_parent(aq_parent(aq_inner(acl_users)))
-        acl_users = aq_inner(getToolByName(context, 'acl_users'))
-        if acl_users is not None:
-            path = '/'.join(acl_users.getPhysicalPath())
-            # logger.debug('Visited acl_users "%s"' % path)
-            if path in track:
-                # logger.warn('Tried searching an already visited acl_users, '
-                            # '"%s".  All visited are: %r' % (path, list(track)))
-                break
-            track.add(path)
-            user = acl_users.getUserById(userid)
-
-    if user is not None:
-        user = user.__of__(acl_users)
-
-    return user
 
 def _listTypesForInterface(context, interface):
     """
