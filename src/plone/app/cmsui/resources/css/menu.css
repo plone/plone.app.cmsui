@@ -524,6 +524,7 @@ html {
   border-radius: 20px;
   -webkit-background-clip: padding-box;
   padding: 5px 2%;
+  text-shadow: 0 -1px 0 #214a6f;
 }
 #toolbar .container:first-of-type #personal-tools a:hover {
   background: #1b3d5b;
