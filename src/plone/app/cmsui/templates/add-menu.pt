@@ -22,7 +22,7 @@
         </div>
 
         <div class="row">
-            <div class="cell width-1:3 position-0">
+            <div class="grid_5">
                 <dl>
                     <a class="overlayLink" tal:repeat="type view/allowedTypes"
                        tal:attributes="href type/action">
@@ -32,12 +32,12 @@
                     </a>
                 </dl>
             </div>
-            <div class="cell width:2:3 position-1:3">
+            <div class="grid_7">
 
                 <!--
                     TODO We need a non-JS fallback
                 -->
-
+                ***
                 <div class="uploaderContainer">
                     <input type="hidden" 
                            name="uploadUrl"
