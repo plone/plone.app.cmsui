@@ -44,6 +44,15 @@
         permission="zope.Public"
         />
     
+    <browser:page
+        name="folder_contents"
+        for="*"
+        layer="..interfaces.ICMSUILayer"
+        class="..structure.StructureView"
+        template="../templates/structure.pt"
+        permission="plone.ViewCMSUI"
+        />
+
     <browser:viewlet
         name="plone.personal_bar"
         for="*"

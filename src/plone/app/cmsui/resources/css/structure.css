@@ -1,0 +1,241 @@
+table.listing,
+table.plain {
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+
+table.invisible td,
+table.invisible th,
+table.plain td,
+table.plain th,
+table.listing td,
+table.listing th {
+    padding: 0.5em 1em;
+    vertical-align: top;
+}
+table.plain th,
+table.plain td {
+    border: 1px solid #ddd;
+}
+
+table.listing td.listingCheckbox,
+table.listing th.listingCheckbox {
+    text-align: center;
+}
+
+
+table.listing {
+    border-left: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+}
+table.listing .top {
+    border-left: 1px solid #ddd;
+    border-top: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+}
+table.listing th {
+    text-align: left;
+    color: #666;
+    border: 0.1em solid #e7e7e7;
+    border-style: solid solid none;
+    background: #ddd;
+}
+table.listing tr.odd th {
+    border: 0.1em solid #fff;
+    border-style: solid solid none none;
+}
+table.listing tbody th {
+    font-weight: bold;
+}
+table.listing tbody tr {
+    text-align:left;
+}
+table.listing tbody tr.odd {
+    background: #eee;
+}
+table.listing tbody tr td {
+    background: transparent;
+}
+table.listing tbody tr.odd td {
+    background: #eee;
+}
+table.listing td {
+    border-right: 1px solid #ddd;
+}
+table.listing a {
+    border: none;
+    display: inline-block;
+    border-bottom: none !important;
+}
+
+table.listing td.draggable {
+    text-shadow: White 1px 1px 1px;
+    background: #ddd !important;
+    border-bottom: 1px solid white;
+    padding: 0.4em 0.4em 0 0.5em;
+}
+
+.hiddenStructure {
+    background: none repeat scroll 0 0 transparent;
+    border: medium none;
+    display: block;
+    height: 0.1em;
+    margin: -0.1em 0 0 -0.1em;
+    overflow: hidden;
+    padding: 0;
+    width: 1px;
+}
+
+#portal-breadcrumbs {
+    font-size: 80%;
+    margin-bottom: 1em;
+    margin-left: 0.25em;
+}
+#portal-breadcrumbs a {
+    border-bottom: none;
+    display: inline-block;
+}
+
+
+
+div#structure-dialog {
+    position: relative;
+    overflow: hidden;
+    min-height: 400px;
+}
+
+div.structure-slider {
+    width: 100%;
+}
+
+div#structure-dialog .link-parent {
+    display: inline;
+}
+
+table.listing tbody tr.odd.error td, tr.error {
+    background-color: #FFDDCC;
+    border: 2px dashed red;
+}
+
+#structure-dialog #portal-breadcrumbs li {
+    font-size: 180%;
+    display: inline-block;
+}
+
+#structure-dialog #portal-breadcrumbs span.crumb:after {
+    content: "/";
+    margin-left: 0.5em;
+    margin-right: 0.5em;
+}
+
+#content a:link {
+    color: #205C90;
+}
+
+#structure-dialog #portal-breadcrumbs li span.current{
+   font-size: 160%;
+}
+
+
+tr.dragging{ outline: 2px solid #FFD700; border-bottom:none; }
+tr.dragging td{ border-bottom: none }
+tr.dragindicator{ outline: none;}
+
+div.overlay table.listing th.numitems{
+   text-align: right;
+}
+
+div.overlay table.listing *{ 
+   font-size: 100%; 
+}
+
+div.overlay table.listing{
+   min-width: 700px;
+   border-left:none;
+   border-bottom: none;
+}
+
+div.overlay #item-actions-menu{
+   float:right;
+}
+
+div.overlay #item-actions-menu fieldset{
+   border: 1px solid black;
+   text-transform: none;
+   margin: 5px;
+}
+
+div.overlay #item-actions-menu fieldset a{
+   margin: 2px 0 9px;
+   padding: 4px;
+   display: block;
+   float:left;
+   color: #205C90;
+   border: none;
+   border: 2px solid #444444;
+   border-bottom: 2px solid #444444 !important;
+   border-left: none;
+   background-color: #DDDDDD;
+   font-size: 160%;
+   outline: none;
+}
+
+div.overlay #item-actions-menu fieldset a:hover{
+   background-color: #EEEEEE;
+}
+
+div.overlay #item-actions-menu fieldset a.last{
+   margin-right:10px;
+}
+
+div.overlay #item-actions-menu fieldset a.first{
+   margin-left:10px;
+   border-left: 2px solid #444444;
+}
+
+div.overlay #item-actions-menu fieldset legend{
+   text-transform: none;
+   padding: 0 4px;
+}
+
+div.overlay table.listing tr#meta-actions{
+
+}
+
+div.overlay table.listing tr.hide-table th, div.overlay table.listing tr.hide-table td{
+   background: transparent;
+   border:none;
+}
+
+div.overlay table.listing tfoot{
+   border-top: 1px solid #DDDDDD;
+}
+
+div.overlay table.listing #batch-actions input{
+   font-size: 110%;
+}
+
+div.overlay table.listing #meta-info{
+   background-color: #EEEEEE;
+   vertical-align: middle;
+}
+
+div.overlay table.listing #meta-actions ul{
+   margin:0;
+   padding:0;
+}
+
+div.overlay table.listing #meta-actions ul li{
+   display: list-item;
+   padding-left: 5px;
+   line-height: 110%;
+   list-style: none;
+}
+
+div.overlay table.listing #meta-actions ul li .title{
+
+}
+
+div.overlay table.listing #meta-actions ul li .info{
+
+}
