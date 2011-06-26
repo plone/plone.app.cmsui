@@ -57,6 +57,7 @@
 
         <div class="grid_7">
             <!-- Personal links -->
+            <!-- In the flexible grid, when inside a cell we get 12 cells to use again. -->
             <ul id="personal-tools" class="alpha grid_10">
                 <li id="cmsui-logged-in-as" i18n:translate="cmsui_logged_in_as"><a
                     class="overlayLink" tal:attributes="href view/userHomeLinkURL">Logged in as <span
