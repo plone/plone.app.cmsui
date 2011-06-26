@@ -112,7 +112,7 @@ div#structure-dialog .link-parent {
     display: inline;
 }
 
-table.listing tbody tr.odd.error td, tr.error {
+#structure-dialog table.listing tbody tr.error {
     background-color: #FFDDCC;
     border: 2px dashed red;
 }
@@ -128,7 +128,7 @@ table.listing tbody tr.odd.error td, tr.error {
     margin-right: 0.5em;
 }
 
-#overlay-content a:link {
+#structure-dialog  a:link {
     color: #205C90;
 }
 
@@ -137,35 +137,35 @@ table.listing tbody tr.odd.error td, tr.error {
 }
 
 
-tr.dragging{ outline: 2px solid #FFD700; border-bottom:none; }
-tr.dragging td{ border-bottom: none }
-tr.dragindicator{ outline: none;}
+#structure-dialog tr.dragging{ outline: 2px solid #FFD700; border-bottom:none; }
+#structure-dialog tr.dragging td{ border-bottom: none }
+#structure-dialog tr.dragindicator{ outline: none;}
 
-div.overlay table.listing th.numitems{
+#structure-dialog table.listing th.numitems{
    text-align: right;
 }
 
-div.overlay table.listing *{ 
+#structure-dialog table.listing *{ 
    font-size: 100%; 
 }
 
-div.overlay table.listing{
+#structure-dialog table.listing{
    min-width: 700px;
    border-left:none;
    border-bottom: none;
 }
 
-div.overlay #item-actions-menu{
+#structure-dialog #item-actions-menu{
    float:right;
 }
 
-div.overlay #item-actions-menu fieldset{
+#structure-dialog #item-actions-menu fieldset{
    border: 1px solid black;
    text-transform: none;
    margin: 5px;
 }
 
-div.overlay #item-actions-menu fieldset a{
+#structure-dialog #item-actions-menu fieldset a{
    margin: 2px 0 9px;
    padding: 4px;
    display: block;
@@ -180,62 +180,62 @@ div.overlay #item-actions-menu fieldset a{
    outline: none;
 }
 
-div.overlay #item-actions-menu fieldset a:hover{
+#structure-dialog #item-actions-menu fieldset a:hover{
    background-color: #EEEEEE;
 }
 
-div.overlay #item-actions-menu fieldset a.last{
+#structure-dialog #item-actions-menu fieldset a.last{
    margin-right:10px;
 }
 
-div.overlay #item-actions-menu fieldset a.first{
+#structure-dialog #item-actions-menu fieldset a.first{
    margin-left:10px;
    border-left: 2px solid #444444;
 }
 
-div.overlay #item-actions-menu fieldset legend{
+#structure-dialog #item-actions-menu fieldset legend{
    text-transform: none;
    padding: 0 4px;
 }
 
-div.overlay table.listing tr#meta-actions{
+#structure-dialog table.listing tr#meta-actions{
 
 }
 
-div.overlay table.listing tr.hide-table th, div.overlay table.listing tr.hide-table td{
+#structure-dialog table.listing tr.hide-table th, #structure-dialog table.listing tr.hide-table td{
    background: transparent;
    border:none;
 }
 
-div.overlay table.listing tfoot{
+#structure-dialog table.listing tfoot{
    border-top: 1px solid #DDDDDD;
 }
 
-div.overlay table.listing #batch-actions input{
+#structure-dialog table.listing #batch-actions input{
    font-size: 110%;
 }
 
-div.overlay table.listing #meta-info{
+#structure-dialog table.listing #meta-info{
    background-color: #EEEEEE;
    vertical-align: middle;
 }
 
-div.overlay table.listing #meta-actions ul{
+#structure-dialog table.listing #meta-actions ul{
    margin:0;
    padding:0;
 }
 
-div.overlay table.listing #meta-actions ul li{
+#structure-dialog table.listing #meta-actions ul li{
    display: list-item;
    padding-left: 5px;
    line-height: 110%;
    list-style: none;
 }
 
-div.overlay table.listing #meta-actions ul li .title{
+#structure-dialog table.listing #meta-actions ul li .title{
 
 }
 
-div.overlay table.listing #meta-actions ul li .info{
+#structure-dialog table.listing #meta-actions ul li .info{
 
 }

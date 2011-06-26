@@ -46,13 +46,14 @@ function eraseCookie(name) {
 (function ($) {
     // jquery method to load an overlay
     $.fn.loadOverlay = function(href, data, callback) {
+        $(window).trigger('onStartLoadOverlay', [this, href, data]);
         var $overlay = this.closest('.pb-ajax');
         this.load(href, data, function() {
-	    $("#listing-table").ploneDnD(); // need to initialize again...
             if (callback != undefined) {
                 callback.apply(this, arguments);
             }
             $overlay[0].handle_load_inside_overlay.apply(this, arguments);
+            $(window).trigger('onEndLoadOverlay', [this, href, data]);
         });
         return this;
     }
@@ -72,21 +73,41 @@ function eraseCookie(name) {
                 top: 130,
                 onBeforeLoad: function (e) { 
                     offset = expandMenu();
+                    $(window).trigger('onBeforeOverlay', [this, e]);
                     return true; 
                 },
                 onLoad: function (e) {
                     loadUploader();
                     $("#listing-table").ploneDnD();
+                    $('.overlay-ajax .portalMessage').each(function () {
+                        var type,
+                            portal_message = $(this);
+                        if (portal_message.hasClass('info')) {
+                            type = 'info';
+                        } else if (portal_message.hasClass('warning')) {
+                            type = 'warning';
+                        } else if (portal_message.hasClass('error')) {
+                            type = 'error';
+                        }
+                        window.parent.frames['plone-cmsui-notifications'].$.plone.notify({
+                            'title': portal_message.children('dt').html(),
+                            'message': portal_message.children('dd').html(),
+                            'type': type
+                        });
+                    });
+                    $(window).trigger('onLoadOverlay', [this, e]);
                     return true; 
                 }, 
                 onClose: function (e) { 
                     contractMenu(offset);
+                    $(window).trigger('onCloseOverlay', [this, e]);
                     return true; 
                 }
             } 
         });
         
         $("a.overlayLink").live('click', function(){
+            $(window).trigger('onOverlayLinkClicked', [this]);
             var url = $(this).attr("href");
             $(this).closest('.pb-ajax').loadOverlay(url + ' ' + common_content_filter);
             return false;
@@ -122,11 +143,11 @@ function eraseCookie(name) {
                     $(window.parent.document.createElement("iframe"))
                         .attr({
                             'src': '@@cmsui-notifications',
-                            'id': 'plone-cmsui-notifications'
+                            'id': 'plone-cmsui-notifications',
+                            'name': 'plone-cmsui-notifications'
                         })
                         .css({
                             'top': toolbar.outerHeight(),
-                            'right': 0,
                             'margin': 0,
                             'padding': 0,
                             'border': 0,
@@ -157,6 +178,7 @@ function eraseCookie(name) {
         createCookie('__plone_height', $('#toolbar').outerHeight());
 
         $('#manage-page-open').click(function () {
+            $(window).trigger('onManagePageOpening', [this]);
             var bottom_height = $('#toolbar-bottom').outerHeight();
             toolbar.addClass('large').removeClass('small');
             height = toolbar.outerHeight();            
@@ -166,9 +188,11 @@ function eraseCookie(name) {
             iframe.stop().animate({'height': height}, 500);
             createCookie('__plone_menu', 'large');
             createCookie('__plone_height', height);
+            $(window).trigger('onManagePageOpened', [this]);
             return false;
         });
         $('#manage-page-close').click(function () {
+            $(window).trigger('onManagePageClosing', [this]);
             var bottom_height = $('#toolbar-bottom').outerHeight();
             height = toolbar.outerHeight() - bottom_height + 1;
             iframe.stop().animate({'height': height}, 500);
@@ -178,6 +202,7 @@ function eraseCookie(name) {
             $('#toolbar-bottom').stop().animate({'top': -bottom_height}, 500);
             createCookie('__plone_menu', 'small');
             createCookie('__plone_height', height);
+            $(window).trigger('onManagePageClosed', [this]);
             return false;
         });
     });

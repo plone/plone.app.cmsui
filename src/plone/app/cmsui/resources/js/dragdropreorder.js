@@ -272,7 +272,9 @@ jQuery.tableDnD = {
             if (currentRow) {
                 // TODO worry about what happens when there are multiple TBODIES
                 if (movingDown && jQuery.tableDnD.dragObject != currentRow) {
-                    jQuery.tableDnD.dragObject.parentNode.insertBefore(jQuery.tableDnD.dragObject, currentRow.nextSibling);
+		    try{
+			jQuery.tableDnD.dragObject.parentNode.insertBefore(jQuery.tableDnD.dragObject, currentRow.nextSibling);
+		    }catch(e){}
                 } else if (!movingDown && jQuery.tableDnD.dragObject != currentRow) {
 		    try{
 			jQuery.tableDnD.dragObject.parentNode.insertBefore(jQuery.tableDnD.dragObject, currentRow);
@@ -414,8 +416,9 @@ var table = this;
     store_positions();
     $(table).tableDnD({
 	onDragStart: function(table, row){
+	    $('table.listing.dragcopy').remove();
 	    var copy = $(row).clone();
-	    var copytable = copy.wrap('<table class="listing"><tbody/></table>').parent().parent();
+	    var copytable = copy.wrap('<table class="listing dragcopy"><tbody/></table>').parent().parent();
 	    row.dragged = copytable[0];
 	    var tds = $(row).find('td');
 	    copy.css('width', $(row).width());
@@ -436,7 +439,7 @@ var table = this;
 	onDrop: function(table, row) {
 	    var raw_row = $(row)[0]
 	    var row = $(raw_row);
-	    $(raw_row.dragged).remove();
+	    $('table.listing.dragcopy').remove();
 	    delete raw_row.dragged;
 	    // Before we do anything, let's lock it down so you can't drag anymore until
 	    // we get a response back from the server.

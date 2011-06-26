@@ -13,6 +13,8 @@ jQuery(function ($) {
         var $slider = $('.structure-slider');
         var width = $slider.outerWidth();
 
+	$(window).trigger('onStructureStartSlideTo', [this, $slider, href, dir]);
+
         $('#structure-dialog').css({height: $slider.outerHeight()});
         $('<div class="structure-slider" style="width: 100%"><' + '/div>')
             .prependTo($('#structure-dialog'))
@@ -21,7 +23,7 @@ jQuery(function ($) {
             .animate({'left': 0}, 200, function() {$('.structure-slider').css('position', 'static'); $('#structure-dialog').css('height', 'auto');});
         $slider.css('position', 'relative').animate({'left': (dir=='left')?-width:width}, 200, null, function(){
             $slider.remove();
-            $("#listing-table").ploneDnD();
+	    $(window).trigger('onStructureEndSlideTo', [this, $slider, href, dir]);
         });
         overlay_location = href;
     }
@@ -48,6 +50,10 @@ jQuery(function ($) {
             var href = e.state.structure_href;
             slideTo(href, (overlay_location.length > href.length ? 'right' : 'left'));
         }
+    });
+
+    $(window).bind(['onStructureEndSlideTo', 'onEndLoadOverlay', 'onLoadOverlay'], function(){
+	$("table.orderable").ploneDnD();
     });
 
 });
