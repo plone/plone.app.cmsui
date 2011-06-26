@@ -37,7 +37,7 @@
             <!--
                 TODO We need a non-JS fallback
             -->
-            ***
+
             <div class="uploaderContainer">
                 <input type="hidden" 
                        name="uploadUrl"
