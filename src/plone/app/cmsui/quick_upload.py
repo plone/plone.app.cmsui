@@ -258,10 +258,6 @@ class QuickUploadFile(BrowserView):
     def __call__(self):
         """
         """        
-        return self.quick_upload_file()
-
-    def quick_upload_file(self) :
-        
         context = aq_inner(self.context)
         request = self.request
         response = request.RESPONSE      
@@ -298,6 +294,7 @@ class QuickUploadFile(BrowserView):
             upload_with = "CLASSIC FORM POST"
             # we must test the file size in this case (no client test)
 
+        # TODO Just change the id, instead of blocking the upload.
         if not self._check_file_id(file_name) :
             # logger.info("The file id for %s always exist, upload rejected" % file_name)
             return json.dumps({u'error': u'serverErrorAlwaysExist'})
