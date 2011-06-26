@@ -292,14 +292,6 @@ class StructureView(BrowserView):
     # options
     _select_all = False
 
-    def _get_select_all(self):
-        return self._select_all
-
-    def _set_select_all(self, value):
-        self._select_all = bool(value)
-
-    selectall = property(_get_select_all, _set_select_all)
-
     @property
     def show_select_all_items(self):
         return not self.selectall
