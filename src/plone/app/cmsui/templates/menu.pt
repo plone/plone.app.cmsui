@@ -10,7 +10,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <!-- Forces IE8+ into newest rendering engine even if on an intranet. This has to be defined before any script/style tags. -->
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" /> 
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
     <base tal:attributes="href plone_view/renderBase" target="_parent" /><!--[if lt IE 7]></base><![endif]-->
 
@@ -22,14 +22,14 @@
       <tal:styles replace="structure provider:plone.resourceregistries.kineticstylesheets" />
       <tal:scripts replace="structure provider:plone.resourceregistries.scripts" />
     </tal:resourceregistries>
-    
+
     <script type="text/javascript" src="++resource++plone.app.cmsui/js/menu.js"></script>
     <script type="text/javascript" src="++resource++plone.app.cmsui/js/plone.notify.js"></script>
 
     <link rel="stylesheet" href="++resource++plone.app.cmsui/css/boilerplate.css" />
     <link rel="stylesheet" href="++resource++plone.app.cmsui/css/authoring.css" />
     <link rel="stylesheet" href="++resource++plone.app.cmsui/css/sprites.css" />
-    <link rel="stylesheet" href="++resource++plone.app.cmsui/css/menu.css" />    
+    <link rel="stylesheet" href="++resource++plone.app.cmsui/css/menu.css" />
     <link rel="stylesheet" href="++resource++plone.app.cmsui/css/notify.css" />
     <link rel="stylesheet" href="member.css" />
 
