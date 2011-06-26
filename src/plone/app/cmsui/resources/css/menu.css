@@ -719,6 +719,9 @@ button:hover {
 #overlay-content {
   padding: 1em 2em;
 }
+#overlay-content h2.pannelHeader {
+  margin-top: 0;
+}
 #overlay-content dl dt {
   font-size: 16.296px;
 }
