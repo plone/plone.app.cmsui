@@ -62,7 +62,7 @@ function eraseCookie(name) {
             // on cancel without reloading the page
             closeselector: '.overlayCloseAction',
             config: { 
-                top: 120,
+                top: 130,
                 onBeforeLoad: function (e) { 
                     offset = expandMenu();
                     return true; 
