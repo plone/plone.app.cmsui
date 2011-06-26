@@ -77,6 +77,22 @@ function eraseCookie(name) {
                 onLoad: function (e) {
                     loadUploader();
                     $("#listing-table").ploneDnD();
+                    $('.overlay-ajax .portalMessage').each(function () {
+                        var type,
+                            portal_message = $(this);
+                        if (portal_message.hasClass('info')) {
+                            type = 'info';
+                        } else if (portal_message.hasClass('warning')) {
+                            type = 'warning';
+                        } else if (portal_message.hasClass('error')) {
+                            type = 'error';
+                        }
+                        window.parent.frames['plone-cmsui-notifications'].$.plone.notify({
+                            'title': portal_message.children('dt').html(),
+                            'message': portal_message.children('dd').html(),
+                            'type': type
+                        });
+                    });
                     return true; 
                 }, 
                 onClose: function (e) { 
@@ -122,11 +138,11 @@ function eraseCookie(name) {
                     $(window.parent.document.createElement("iframe"))
                         .attr({
                             'src': '@@cmsui-notifications',
-                            'id': 'plone-cmsui-notifications'
+                            'id': 'plone-cmsui-notifications',
+                            'name': 'plone-cmsui-notifications'
                         })
                         .css({
                             'top': toolbar.outerHeight(),
-                            'right': 0,
                             'margin': 0,
                             'padding': 0,
                             'border': 0,
