@@ -1,11 +1,10 @@
 import mimetypes
 import random
 import urllib
-from Acquisition import aq_inner, aq_parent
+from Acquisition import aq_inner
 from AccessControl import SecurityManagement
 from ZPublisher.HTTPRequest import HTTPRequest
 
-from zope.security.interfaces import Unauthorized
 from interfaces import IQuickUploadFileFactory
 from zope.component import getUtility
 
@@ -18,7 +17,6 @@ from plone.i18n.normalizer.interfaces import IIDNormalizer
 
 # from collective.quickupload import siteMessageFactory as _
 # from collective.quickupload import logger
-# from collective.quickupload.browser.quickupload_settings import IQuickUploadControlPanel
 
 import json
 
