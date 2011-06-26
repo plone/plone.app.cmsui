@@ -17,7 +17,6 @@ from Products.ATContentTypes.interfaces import IImageContent
 from zope.app.container.interfaces import INameChooser
 from plone.i18n.normalizer.interfaces import IIDNormalizer
 
-import ticket as ticketmod
 # from collective.quickupload import siteMessageFactory as _
 # from collective.quickupload import logger
 # from collective.quickupload.browser.quickupload_settings import IQuickUploadControlPanel
@@ -230,11 +229,8 @@ class QuickUploadInit(BrowserView):
         request = self.request
         session = request.get('SESSION', {})
         portal_url = getToolByName(context, 'portal_url')()    
-        # use a ticket for authentication (used for flashupload only)
-        ticket = context.restrictedTraverse('@@quickupload_ticket')()
         
         settings = dict(
-            ticket                 = ticket,
             portal_url             = portal_url,
             typeupload             = '',
             context_url            = context.absolute_url(),

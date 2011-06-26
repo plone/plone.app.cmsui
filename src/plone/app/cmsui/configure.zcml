@@ -152,29 +152,12 @@
     class=".quick_upload.QuickUploadInit"
     permission="cmf.AddPortalContent"/>      
 
-<!-- Quick upload file Views
-     we use permission zope.Public 
-     on flash_upload_file
-     because authentication is done
-     using a ticket -->   
-         
 <browser:page
     for="*"
     name="quick_upload_file"
     attribute="quick_upload_file"
     class=".quick_upload.QuickUploadFile"
     permission="cmf.AddPortalContent"/> 
-         
-<!-- ticket view which generate a ticket for each user/folder absolute url
-     used only when no user cookie is available (not standard authentification) -->
-
-<browser:page
-    for=".interfaces.IQuickUploadCapable"
-    name="quickupload_ticket"
-    class=".ticket.TicketView"
-    permission="cmf.AddPortalContent"
-    />
-
 
 
 </configure>
