@@ -186,105 +186,7 @@ XHR_UPLOAD_JS = """
     jQuery(document).ready(createUploader_%(ul_id)s); 
 """        
 
-FLASH_UPLOAD_JS = """
-    var fillTitles = %(ul_fill_titles)s;
-    var fillDescriptions = %(ul_fill_descriptions)s;
-    var autoUpload = %(ul_auto_upload)s;
-    clearQueue_%(ul_id)s = function() {
-        jQuery('#%(ul_id)s').uploadifyClearQueue();
-    }
-    addUploadifyFields_%(ul_id)s = function(event, data ) {
-        if ((fillTitles || fillDescriptions) && !autoUpload)  {
-            var labelfiletitle = jQuery('#uploadify_label_file_title').val();
-            var labelfiledescription = jQuery('#uploadify_label_file_description').val();
-            jQuery('#%(ul_id)sQueue .uploadifyQueueItem').each(function() {
-                ID = jQuery(this).attr('id').replace('%(ul_id)s','');
-                if (!jQuery('.uploadField' ,this).length) {
-                  jQuery('.cancel' ,this).after('\
-                          <input type="hidden" \
-                                 class="file_id_field" \
-                                 name="file_id" \
-                                 value ="'  + ID + '" /> \
-                  ');            
-                  if (fillDescriptions) jQuery('.cancel' ,this).after('\
-                      <div class="uploadField">\
-                          <label>' + labelfiledescription + ' : </label> \
-                          <textarea rows="2" \
-                                 class="file_description_field" \
-                                 id="description_' + ID + '" \
-                                 name="description" \
-                                 value="" />\
-                      </div>\
-                  ');            
-                  if (fillTitles) jQuery('.cancel' ,this).after('\
-                      <div class="uploadField">\
-                          <label>' + labelfiletitle + ' : </label> \
-                          <input type="text" \
-                                 class="file_title_field" \
-                                 id="title_' + ID + '" \
-                                 name="title" \
-                                 value="" />\
-                      </div>\
-                  ');            
-                }
-            });
-        }
-        if (!autoUpload) return showButtons_%(ul_id)s();
-        return 'ok';
-    }
-    showButtons_%(ul_id)s = function() {
-        if (jQuery('#%(ul_id)sQueue .uploadifyQueueItem').length) {
-            jQuery('.uploadifybuttons').show();
-            return 'ok';
-        }
-        return false;
-    }
-    sendDataAndUpload_%(ul_id)s = function() {
-        QueueItems = jQuery('#%(ul_id)sQueue .uploadifyQueueItem');
-        nbItems = QueueItems.length;
-        QueueItems.each(function(i){
-            filesData = {};
-            ID = jQuery('.file_id_field',this).val();
-            if (fillTitles && !autoUpload) {
-                filesData['title'] = jQuery('.file_title_field',this).val();
-            }
-            if (fillDescriptions && !autoUpload) {
-                filesData['description'] = jQuery('.file_description_field',this).val();
-            }
-            jQuery('#%(ul_id)s').uploadifySettings('scriptData', filesData);     
-            jQuery('#%(ul_id)s').uploadifyUpload(ID);       
-        })
-    }
-    onAllUploadsComplete_%(ul_id)s = function(event, data){
-        if (!data.errors) {
-           Browser.onUploadComplete();
-        }
-        else {
-           msg= data.filesUploaded + '%(ul_msg_some_sucess)s' + data.errors + '%(ul_msg_some_errors)s';
-           alert(msg);
-        }
-    }
-    jQuery(document).ready(function() {
-        jQuery('#%(ul_id)s').uploadify({
-            'uploader'      : '%(portal_url)s/++resource++quickupload_static/uploader.swf',
-            'script'        : '%(context_url)s/@@flash_upload_file',
-            'cancelImg'     : '%(portal_url)s/++resource++quickupload_static/cancel.png',
-            'folder'        : '%(physical_path)s',
-            'onAllComplete' : onAllUploadsComplete_%(ul_id)s,
-            'auto'          : autoUpload,
-            'multi'         : true,
-            'simUploadLimit': %(ul_sim_upload_limit)s,
-            'sizeLimit'     : '%(ul_size_limit)s',
-            'fileDesc'      : '%(ul_file_description)s',
-            'fileExt'       : '%(ul_file_extensions)s',
-            'buttonText'    : '%(ul_button_text)s',
-            'scriptAccess'  : 'sameDomain',
-            'hideButton'    : false,
-            'onSelectOnce'  : addUploadifyFields_%(ul_id)s,
-            'scriptData'    : {'ticket' : '%(ticket)s', 'typeupload' : '%(typeupload)s'}
-        });
-    });
-"""
+
 
         
 class QuickUploadInit(BrowserView):
@@ -400,8 +302,6 @@ class QuickUploadInit(BrowserView):
     def __call__(self, for_id="uploader"):
         self.uploader_id = for_id
         settings = self.upload_settings()
-        if self.qup_prefs.use_flashupload :
-            return FLASH_UPLOAD_JS % settings     
         return XHR_UPLOAD_JS % settings   
         
 
