@@ -16,6 +16,25 @@ function contractMenu(offset) {
     $('#plone-cmsui-menu', window.parent.document).css('height', $('#toolbar').outerHeight());
 }
 
+function showMessagesFromOverlay() {
+    $('.overlay .portalMessage').each(function () {
+        var type,
+            portal_message = $(this);
+        if (portal_message.hasClass('info')) {
+            type = 'info';
+        } else if (portal_message.hasClass('warning')) {
+            type = 'warning';
+        } else if (portal_message.hasClass('error')) {
+            type = 'error';
+        }
+        window.parent.frames['plone-cmsui-notifications'].$.plone.notify({
+            'title': portal_message.children('dt').html(),
+            'message': portal_message.children('dd').html(),
+            'type': type
+        });
+    });
+}
+
 // http://www.quirksmode.org/js/cookies.html
 function createCookie(name, value, days) {
     var expires = "";
@@ -79,22 +98,7 @@ function eraseCookie(name) {
                 onLoad: function (e) {
                     loadUploader();
                     $("#listing-table").ploneDnD();
-                    $('.overlay-ajax .portalMessage').each(function () {
-                        var type,
-                            portal_message = $(this);
-                        if (portal_message.hasClass('info')) {
-                            type = 'info';
-                        } else if (portal_message.hasClass('warning')) {
-                            type = 'warning';
-                        } else if (portal_message.hasClass('error')) {
-                            type = 'error';
-                        }
-                        window.parent.frames['plone-cmsui-notifications'].$.plone.notify({
-                            'title': portal_message.children('dt').html(),
-                            'message': portal_message.children('dd').html(),
-                            'type': type
-                        });
-                    });
+                    showMessagesFromOverlay();
                     $(window).trigger('onLoadOverlay', [this, e]);
                     return true; 
                 }, 
@@ -161,7 +165,7 @@ function eraseCookie(name) {
                             'z-index': 11000
                         })
                 );
-           });
+            });
         } else {
             createCookie('__plone_menu', 'small');
             toolbar
