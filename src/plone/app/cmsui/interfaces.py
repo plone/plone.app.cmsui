@@ -11,3 +11,16 @@ class ICMSUISettings(Interface):
 class ICMSUILayer(Interface):
     """Browser layer used to indicate that plone.app.cmsui is installed
     """
+
+# TODO Stolen from collective.quickupload, refactor
+from zope.interface import Interface
+from zope.filerepresentation.interfaces import IFileFactory
+
+class IQuickUploadCapable(Interface):
+    """Any container/object which supports quick uploading
+    """
+
+class IQuickUploadFileFactory(IFileFactory):
+    """used for QuickUploadFileFactory
+    """
+
