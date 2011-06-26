@@ -38,8 +38,9 @@ function createCookie(name, value, days) {
 function readCookie(name) {
     var nameEQ = name + "=";
     var ca = document.cookie.split(';');
-    for (var i=0; i<ca.length; i++) {
-        var c = ca[i];
+    var c;
+    for (i=0; i<ca.length; i++) {
+        c = ca[i];
         while (c.charAt(0)===' ') { c = c.substring(1, c.length); }
         if (c.indexOf(nameEQ) === 0) { return c.substring(nameEQ.length, c.length); }
     }
@@ -99,7 +100,7 @@ function eraseCookie(name) {
                 'opacity': 1,
                 'top': -height,
                 'height': height
-                })
+                });
             iframe.animate({'top': 0}, 1000);
             parent_body.animate({'margin-top': toolbar.outerHeight()}, 1000);
         }
