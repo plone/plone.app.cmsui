@@ -15,12 +15,6 @@ class Menu(BrowserView):
     EXCLUDED_ACTION_IDS = ('view', 'edit',)
     DEFAULT_ACTION_ICON = '/++resource++plone.app.cmsui/icons/List.png'
 
-    def __init__(self, context, request):
-        super(Menu, self).__init__(context, request)
-        self.contextState = getMultiAdapter((self.context, self.request), name=u'plone_context_state')
-        self.portalState = getMultiAdapter((self.context, self.request), name=u'plone_portal_state')
-        self.tools = getMultiAdapter((self.context, self.request), name=u'plone_tools')
-
     def __call__(self):
         # Disable theming
         self.request.response.setHeader('X-Theme-Disabled', 'True')
@@ -28,12 +22,23 @@ class Menu(BrowserView):
         # Commonly useful variables
         self.securityManager = getSecurityManager()
         self.anonymous = self.portalState.anonymous()
+        self.tools = getMultiAdapter((self.context, self.request), name=u'plone_tools')
         
         # Render the template
         return self.index()
 
     # Personal actions
-    
+
+    @property
+    @memoize
+    def contextState(self):
+        return getMultiAdapter((self.context, self.request), name=u'plone_context_state')
+
+    @property
+    @memoize
+    def portalState(self):
+        return getMultiAdapter((self.context, self.request), name=u'plone_portal_state')
+
     @memoize
     def personalActions(self):
         """Get the personal actions

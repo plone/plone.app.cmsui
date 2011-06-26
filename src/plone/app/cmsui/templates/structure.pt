@@ -22,7 +22,9 @@ jq(function(){
   <div id="content" tal:define="context_state context/@@plone_context_state;
 				folderish python:(context_state.is_structural_folder() or context_state.is_default_page());
 				batch view/batch;
-				num_items context/@@cmsui-menu/itemsInFolder">
+				num_items context/@@cmsui-menu/itemsInFolder;
+				orderable view/orderable;
+				cols python: orderable and 7 or 6;">
   <div id="structure-dialog">
   <div class="structure-slider">
 
@@ -65,7 +67,8 @@ jq(function(){
       <table class="listing"
              id="listing-table"
              summary="Content listing"
-             i18n:attributes="summary summary_content_listing;">
+             i18n:attributes="summary summary_content_listing;"
+	     tal:attributes="class python: orderable and 'listing orderable' or 'listing'">
 	<thead>
 	  <tr id="meta-actions" class="hide-table">
 	    <th colspan="3" id="meta-info">
@@ -77,7 +80,7 @@ jq(function(){
 		</tal:info>
 	      </ul>
 	    </th>
-	    <th colspan="4">
+	    <th colspan="4" tal:attributes="colspan python: cols-3">
 	      <div id="item-actions-menu">
 		<fieldset>
 		  <legend>Actions for "<tal:name tal:replace="context_state/object_title" />"</legend>
@@ -91,7 +94,7 @@ jq(function(){
 	    </th>
 	  </tr>
           <tr class="hide-table" tal:condition="view/folderitems">
-	    <th colspan="4" class="nosort">
+	    <th colspan="4" class="nosort" tal:attributes="colspan python: cols-3">
 	      <a tal:attributes="href view/selectall_url" tal:condition="not: view/selectall"
 		 id="foldercontents-selectall-completebatch" class="overlayLink"
 		 i18n:translate="tableheading_select_all_items">Select all 
@@ -208,7 +211,7 @@ jq(function(){
       </tbody>
         <tfoot tal:condition="view/folderitems">
 	  <tr class="numitems hide-table">
-	    <th colspan="4" id="batch-actions">
+	    <th colspan="4" id="batch-actions" tal:attributes="colspan python: cols-3">
 	      <tal:buttons tal:repeat="button view/buttons">
 		<input class="context"
 		       type="submit"
