@@ -19,7 +19,6 @@
     -->
 
     <tal:resourceregistries>
-      <!-- <tal:styles replace="structure provider:plone.resourceregistries.styles" /> -->
       <tal:styles replace="structure provider:plone.resourceregistries.kineticstylesheets" />
       <tal:scripts replace="structure provider:plone.resourceregistries.scripts" />
     </tal:resourceregistries>
@@ -55,18 +54,12 @@
 
         <!-- Personal links -->
         <ul id="personal-tools" class="grid_6">
-            <li id="cmsui-logged-in-as" i18n:translate="cmsui_logged_in_as">
-                <a class="overlayLink" tal:attributes="href view/userHomeLinkURL">
-                    Logged in as <span i18n:name="name" tal:replace="view/userName" />
-                </a>
-            </li>
-            <li class="overlayLink" tal:repeat="action view/personalActions" tal:attributes="id string:cmsui-personallink-${action/id}">
-                <a class="overlayLink" tal:attributes="href action/url" tal:content="action/title" />
-            </li>
-            <li>
-                <a href="#" id="manage-page-open">Edit content ▼</a>
-                <a href="#" id="manage-page-close">Hide edit bar ▲</a>
-            </li>
+            <li id="cmsui-logged-in-as" i18n:translate="cmsui_logged_in_as"><a
+                class="overlayLink" tal:attributes="href view/userHomeLinkURL">Logged in as <span
+                i18n:name="name" tal:replace="view/userName" /></a></li><li
+            class="overlayLink" tal:repeat="action view/personalActions" tal:attributes="id string:cmsui-personallink-${action/id}"><a
+            class="overlayLink" tal:attributes="href action/url" tal:content="action/title" /></li><li
+            ><a href="#" id="manage-page-open">Edit content ▼</a><a href="#" id="manage-page-close">Hide edit bar ▲</a></li>
         </ul>
     </div>
 
