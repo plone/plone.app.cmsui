@@ -14,7 +14,7 @@ div.overlay {
 
 div.overlay-iframe,
 div.overlay-ajax {
-    width: 60%;
+    width: 90%;
     min-height: 100px;
     z-index: 99; /* overlays should be above everything */
 }
@@ -26,7 +26,9 @@ div.overlay-iframe {
 /* default close button positioned on upper-left corner */
 div.overlaybg div.close,
 div.overlay div.close {
-    background-image: url(pb_close.png);
+    background-image: url(++resource++plone.app.cmsui/icons/black/24/delete.png);
+    background-position: 4px 4px;
+    background-repeat: no-repeat;
     position: absolute;
     left: -14px;
     top: -14px;
@@ -37,6 +39,7 @@ div.overlay div.close {
 
 .pb-ajax {
     overflow-y: auto;
+    margin-bottom: 2em;
 }
 
 .pb-ajax, .pb-image {
