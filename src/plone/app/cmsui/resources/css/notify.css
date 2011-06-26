@@ -1,0 +1,116 @@
+/* @group Notifications */
+
+.notifications {
+    display: block;
+    top: 10px;
+    right: 10px;
+    position: fixed;
+    _position: absolute;
+    _top: expression(eval((document.body.scrollTop)?document.body.scrollTop:document.documentElement.scrollTop));
+    z-index: 11000;
+    font-family:"Lucida Grande",Lucida,Verdana,sans-serif;
+    font-size: 12px;
+}
+
+.notification {
+    width: 300px;
+    position: absolute;
+    right: 0px;
+}
+
+.notification-header {
+    background-image: url(++resource++plone.app.cmsui/images/notify.png);
+    background-position: 0px 0px;
+    width: 300px;
+    height: 10px;
+}
+
+.notification:hover .notification-header {
+    background-image: url(++resource++plone.app.cmsui/images/notify.png);
+    background-position: 0px -10px;
+}
+
+.notification-footer {
+    background-image: url(++resource++plone.app.cmsui/images/notify.png);
+    background-position: -300px 0px;
+    width: 300px;
+    height: 10px;
+}
+
+.notification:hover .notification-footer {
+    background-image: url(++resource++plone.app.cmsui/images/notify.png);
+    background-position: -300px -10px;
+}
+
+.notification-content {
+    background-image: url(++resource++plone.app.cmsui/images/notify.png);
+    background-position: -600px 0px;
+    width: 300px;
+    position: relative;
+}
+
+.notification:hover .notification-content {
+    background-image: url(++resource++plone.app.cmsui/images/notify.png);
+    background-position: -900px 0px;
+}
+
+.notification-close {
+    position: absolute;
+    top: -6px;
+    left: auto;
+    right: 3px;
+    width: 30px;
+    height: 30px;
+    background-image: url(++resource++plone.app.cmsui/images/window.png);
+    background-position: -12px 0px;
+    cursor: pointer;
+    z-index: 1101;
+    display: none;
+}
+
+.notification:hover .notification-close {
+    display: block;
+}
+
+.notification-type {
+    width: 32px;
+    height: 32px;
+    position: absolute;
+    left: 10px;
+    top: 0px;
+    background-position: left top;
+    background-repeat: no-repeat;
+}
+
+.notification-type-error {
+    background-image: url(++resource++plone.app.cmsui/images/notify.png);
+    background-position: -1200px 0px;
+}
+
+.notification-type-warning {
+    background-image: url(++resource++plone.app.cmsui/images/notify.png);
+    background-position: -1232px 0px;
+}
+
+.notification-type-info {
+    background-image: url(++resource++plone.app.cmsui/images/notify.png);
+    background-position: -1264px 0px;
+}
+
+.notification-text {
+    width: 240px;
+    position: relative;
+    margin-left: 60px;
+}
+
+.notification-title {
+    color: #FFF;
+    font-weight: bold;
+    margin-bottom: 6px;
+}
+
+.notification-message {
+    color: #FFF;
+}
+
+/* @end */
