@@ -50,8 +50,13 @@ html {
 	a {
 	    color: @linkColor;
 	    text-decoration: none;
+		opacity: .95;	    
+		&:hover {
+		    opacity: 1;
+	    }		
 	}
-		
+	
+	/* top part of the toolbar */		
 	.container:first-of-type {
 	    margin-top: 0;
 	    margin-bottom: 0;
@@ -87,6 +92,8 @@ html {
 		}
 	}
 	
+	
+	/* bottom part of the toolbar */
 	.container:last-of-type {
 	    margin-top: 0;
 	    margin-bottom: 0;
@@ -163,15 +170,6 @@ html {
 			background: transparent url('../images/pointer_down.png') 50% 50% no-repeat;		    
 		}*/
 	}
-}
-
-
-#toolbar a {
-    opacity: .95
-}
-
-#toolbar a:hover {
-    opacity: 1;
 }
 
 
