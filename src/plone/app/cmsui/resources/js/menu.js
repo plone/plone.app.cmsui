@@ -268,6 +268,7 @@ PloneQuickUpload.sendDataAndUpload = function(uploader, domelement, typeupload) 
     var handler = uploader._handler;
     var files = handler._files;
     var missing = 0;
+    jQuery('.uploadifybuttons', jQuery(domelement).parent()).find('input').attr({disabled: 'disabled', opacity: 0.8});
     for ( var id = 0; id < files.length; id++ ) {
         if (files[id]) {
             var fileContainer = jQuery('.qq-upload-list li', domelement)[id-missing];
@@ -284,7 +285,9 @@ PloneQuickUpload.sendDataAndUpload = function(uploader, domelement, typeupload) 
         // if file is null for any reason jq block is no more here
         else missing++;
     }
-}    
+    jQuery('.uploadifybuttons', jQuery(domelement).parent()).hide();
+    jQuery('.uploadifybuttons', jQuery(domelement).parent()).find('input').removeAttr('disabled').attr('opacity', 1);
+}
 PloneQuickUpload.onAllUploadsComplete = function(){
     Browser.onUploadComplete();
 }
@@ -298,8 +301,9 @@ PloneQuickUpload.clearQueue = function(uploader, domelement) {
         jQuery('.qq-upload-list li', domelement).remove();
         handler._files = [];
         if (typeof handler._inputs != 'undefined') handler._inputs = {};
-    }    
-}    
+    }
+    jQuery('.uploadifybuttons', jQuery(domelement).parent()).hide();
+}
 PloneQuickUpload.onUploadComplete = function(uploader, domelement, id, fileName, responseJSON) {
     var uploadList = jQuery('.qq-upload-list', domelement);
     if (responseJSON.success) {        

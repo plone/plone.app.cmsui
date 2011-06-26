@@ -20,10 +20,12 @@
 
       <label i18n:translate="label_choose_your_files"
              id="label-upload">Choose your files : </label>
+
       <!-- uploader comes here -->
       <div id="uploader"
            class="main-uploader"
            tal:attributes="id uploader_id"></div>
+
       <!-- upload button -->
       <input type="hidden"
              id="uploadify_label_file_title"
@@ -33,7 +35,8 @@
              id="uploadify_label_file_description"
              i18n:domain="plone"
              i18n:attributes="value Description" />
-      <div class="uploadifybuttons">
+
+      <div class="uploadifybuttons" style="display:none">
         <input type="button" 
                id="uploadify-upload"
                class="context uploadifybutton"
@@ -45,9 +48,9 @@
                class="context uploadifybutton"
                value="Clear Queue"
                i18n:attributes="value label_clear_queue"
-               tal:attributes="onclick string:clearQueue_${uploader_id}()" /> 
+               tal:attributes="onclick string:clearQueue_${uploader_id}()" />
       </div>
-    </div>        
+    </div>
     <!-- uploadify javascript -->
     <script type="text/javascript"
             tal:content="structure view/script_content">
