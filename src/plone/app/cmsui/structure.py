@@ -94,10 +94,11 @@ class StructureView(BrowserView):
     def breadcrumbs(self):
         breadcrumbsView = getMultiAdapter((self.context, self.request), name='breadcrumbs_view')
         breadcrumbs = list(breadcrumbsView.breadcrumbs())
-        if self.context_state.is_default_page() and breadcrumbs:
+        if self.context_state.is_default_page():
             # then we need to mess with the breadcrumbs a bit.
             parent = aq_parent(aq_inner(self.context))
-            breadcrumbs[-1] = {'absolute_url' : parent.absolute_url(), 'Title': parent.Title()}
+            if breadcrumbs:
+                breadcrumbs[-1] = {'absolute_url' : parent.absolute_url(), 'Title': parent.Title()}
             breadcrumbs.append({'absolute_url' : self.context.absolute_url(), 'Title': self.context.Title()})
         return breadcrumbs
 
