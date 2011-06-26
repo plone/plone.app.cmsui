@@ -28,6 +28,10 @@ jQuery(function ($) {
         overlay_location = href;
     }
 
+    $(window).bind('onStructureEndSlideTo', function(){ $("table.orderable").ploneDnD(); });
+    $(window).bind('onEndLoadOverlay', function(){ $("table.orderable").ploneDnD(); });
+    $(window).bind('onLoadOverlay', function(){ $("table.orderable").ploneDnD(); });
+
     // trigger navigation into child folders
     $('#structure-dialog a.link-child').live('click', function(e) {
         e.preventDefault();
@@ -42,10 +46,6 @@ jQuery(function ($) {
         var href = $(this).attr('href');
         slideTo(href, 'right');
         window.parent.history.pushState({structure_href: href}, null, window.parent.location.href);
-    });
-
-    $(window).bind(['onStructureEndSlideTo', 'onEndLoadOverlay', 'onLoadOverlay'], function(){
-	$("table.orderable").ploneDnD();
     });
 
     // update current folder after back/forward history navigation

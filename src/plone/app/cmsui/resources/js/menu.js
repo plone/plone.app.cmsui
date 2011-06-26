@@ -108,7 +108,8 @@ function eraseCookie(name) {
                 }
             } 
         });
-        
+	$(window).bind('onFormOverlayLoadFailure', function(){ console.log("lkdslldk"); });
+
         $("a.overlayLink").live('click', function(){
             $(window).trigger('onOverlayLinkClicked', [this]);
             var url = $(this).attr("href");
