@@ -92,23 +92,31 @@ function eraseCookie(name) {
             parent_body.css('margin-top', toolbar.outerHeight());
             toolbar.animate({'opacity': 1}, 300, function () {
                 iframe.css('background', 'transparent');
-                $('.showNotify').each(function () {
-                    var type,
-                        portal_message = $(this);
-                    if (portal_message.hasClass('info')) {
-                        type = 'info';
-                    } else if (portal_message.hasClass('warning')) {
-                        type = 'warning';
-                    } else if (portal_message.hasClass('error')) {
-                        type = 'error';
-                    }
-                    $.plone.notify({
-                        'title': portal_message.children('dt').html(),
-                        'message': portal_message.children('dd').html(),
-                        'type': type
-                    });
-                });
-            });
+
+                // Append iframe to the document
+                parent_body.append(
+                    $(window.parent.document.createElement("iframe"))
+                        .attr({
+                            'src': '@@cmsui-notifications',
+                            'id': 'plone-cmsui-notifications'
+                        })
+                        .css({
+                            'top': toolbar.outerHeight() + 10,
+                            'right': '10px',
+                            'margin': 0,
+                            'padding': 0,
+                            'border': 0,
+                            'outline': 0,
+                            'background': 'transparent',
+                            'position': 'fixed',
+                            '_position': 'absolute',
+                            '_top': 'expression(eval((document.body.scrollTop)?document.body.scrollTop:document.documentElement.scrollTop))',
+                            'width': '300px',
+                            'height': 0,
+                            'z-index': 11000
+                        })
+                );
+           });
         } else {
             createCookie('__plone_menu', 'small');
             toolbar
@@ -123,8 +131,6 @@ function eraseCookie(name) {
             parent_body.animate({'margin-top': toolbar.outerHeight()}, 1000);
         }
         createCookie('__plone_height', $('#toolbar').outerHeight());
-
-        $.plone.initNotify();
 
         $('#manage-page-open').click(function () {
             var bottom_height = $('#toolbar-bottom').outerHeight();
@@ -152,10 +158,6 @@ function eraseCookie(name) {
         });
 
         $('#folder-contents a').click(function () {
-            $.plone.notify({
-                'title': 'test',
-                'message': 'some message'
-            });
             return false;
         });
     });

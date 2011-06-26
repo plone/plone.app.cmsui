@@ -202,4 +202,30 @@ immed: true, strict: true, maxlen: 80, maxerr: 9999 */
                 })
             );
     };
+
+    // Init Deco on load
+    $(window).load(function () {
+
+        // Init notification
+        $.plone.initNotify();
+
+        // Show first notifications
+        $('.showNotify').each(function () {
+            var type,
+                portal_message = $(this);
+            if (portal_message.hasClass('info')) {
+                type = 'info';
+            } else if (portal_message.hasClass('warning')) {
+                type = 'warning';
+            } else if (portal_message.hasClass('error')) {
+                type = 'error';
+            }
+            $.plone.notify.show({
+                'title': portal_message.children('dt').html(),
+                'message': portal_message.children('dd').html(),
+                'type': type
+            });
+        });
+    });
+
 }(jQuery));
