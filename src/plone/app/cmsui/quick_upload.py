@@ -14,7 +14,6 @@ from Products.CMFCore.utils import getToolByName
 from Products.Five.browser import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile 
 from Products.ATContentTypes.interfaces import IImageContent
-from Products.CMFPlone.interfaces import IPloneSiteRoot
 from zope.app.container.interfaces import INameChooser
 from plone.i18n.normalizer.interfaces import IIDNormalizer
 
@@ -183,12 +182,6 @@ XHR_UPLOAD_JS = """
 class QuickUploadInit(BrowserView):
     """ Initialize uploadify js
     """
-
-    def __init__(self, context, request):
-        super(QuickUploadInit, self).__init__(context, request)
-        self.context = aq_inner(context)
-        portal = getUtility(IPloneSiteRoot)
-        # self.qup_prefs = IQuickUploadControlPanel(portal)
 
     def ul_content_types_infos (self, mediaupload):
         """
