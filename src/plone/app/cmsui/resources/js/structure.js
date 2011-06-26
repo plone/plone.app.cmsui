@@ -21,7 +21,7 @@ jQuery(function ($) {
             .animate({'left': 0}, 200, function() {$('.structure-slider').css('position', 'static'); $('#structure-dialog').css('height', 'auto');});
         $slider.css('position', 'relative').animate({'left': (dir=='left')?-width:width}, 200, null, function(){
             $slider.remove();
-            $("#listing-table").ploneDnD();
+            $("table.orderable").ploneDnD();
         });
         overlay_location = href;
     }

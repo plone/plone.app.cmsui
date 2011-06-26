@@ -8,13 +8,13 @@ from AccessControl import Unauthorized
 from Products.ATContentTypes.interface import IATTopic
 from zope.i18n import translate
 import urllib
-from OFS.interfaces import IOrderedContainer
 from Products.CMFPlone.utils import safe_unicode
 from plone.memoize import instance
 from zope.i18nmessageid import MessageFactory
 from plone.app.content.batching import Batch
 from zope.cachedescriptors.property import Lazy as lazy_property
 from plone.registry.interfaces import IRegistry
+from plone.folder.interfaces import IOrderableFolder, IExplicitOrdering
 
 _ = MessageFactory('plone')
 
@@ -206,10 +206,15 @@ class StructureView(BrowserView):
         return results
 
     @property
+    @instance.memoize
     def orderable(self):
         """
         """
-        return IOrderedContainer.providedBy(aq_inner(self.context))
+        context = aq_inner(self.context)
+        if not IOrderableFolder.providedBy(context):
+            return False
+        ordering = context.getOrdering()
+        return IExplicitOrdering.providedBy(ordering)
 
     @property
     def show_sort_column(self):
@@ -359,7 +364,14 @@ class MoveItem(BrowserView):
     so we can eventually remove the bloody thing.
     """
     def __call__(self, item_id, delta, subset_ids=None):
+        context = aq_inner(self.context)
         try:
+            if not IOrderableFolder.providedBy(context):
+                raise ValueError("Not ordered folder.")
+            ordering = context.getOrdering()
+            if not IExplicitOrdering.providedBy(ordering):
+                raise ValueError("Folder not explicitly orderable.")
+
             delta = int(delta)
             if subset_ids is not None:
                 position_id = [(self.context.getObjectPosition(id), id) for id in subset_ids]
