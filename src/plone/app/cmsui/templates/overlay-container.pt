@@ -60,7 +60,7 @@
                     Status message
                 </div>
 
-                <div id="overlay-content">
+                <section id="overlay-content">
                     <metal:slot define-slot="body">
 
                         <metal:header define-slot="header" tal:content="nothing">
@@ -71,7 +71,7 @@
                             Body
                         </metal:bodytext>
                     </metal:slot>
-                </div>
+                </section>
 
             </div>
         </metal:block>
