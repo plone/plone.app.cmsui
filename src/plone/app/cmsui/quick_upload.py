@@ -1,4 +1,3 @@
-import os
 import mimetypes
 import random
 import urllib
