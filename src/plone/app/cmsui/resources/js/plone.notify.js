@@ -89,7 +89,7 @@ immed: true, strict: true, maxlen: 80, maxerr: 9999 */
         }, options);
 
         // Check if title or message is empty
-        if (title === "" || message === "") {
+        if (options.title === "" || options.message === "") {
             return;
         }
 
