@@ -6,11 +6,11 @@
 @totalCell: @totalWidth / @columns;
 @columnWidth: @totalCell - (@horizontalSpace * 2);
 
-@baseFontFamily: Arial, "Helvetica Neue", Helvetica, Verdana, sans-serif;
+@baseFontFamily: "Helvetica Neue", Helvetica, Arial, Verdana, sans-serif;
 @baseFontSize: 12px;
 @baseFontColor: #fff;
 
-@headersFontFamily: 'Arial Black', sans-serif;
+@headersFontFamily: "Helvetica Neue", Helvetica, Arial, Verdana, sans-serif;
 @smallestBaseFont: Verdana, sans-serif;
 
 @linkColor: #fff;
@@ -24,6 +24,22 @@
 
 html {
     overflow-y: visible;
+}
+a.button,
+input[type=button],
+input[type=submit],
+button {
+	display: inline-block;
+	border: 1px solid darken(@ploneColor, 10%);
+	background: @ploneColor;
+	padding: 0.8em 1em;
+	.css3_border_radius(5px);
+	color: #fff;
+	text-shadow: 0 -1px 0 darken(@ploneColor, 15%);
+	
+	&:hover {
+	    background: lighten(@ploneColor, 15%);
+	}
 }
 #toolbar {
 	.container();
@@ -239,3 +255,25 @@ html {
 #exposeMask {
     position: fixed !important;
 }
+
+/* @group Overlays */
+
+#overlay-content {
+	padding: 1em 2em;
+	h2.pannelHeader {
+	    margin-top: 0;
+	}
+	dl {
+		dt {
+		    .larger();
+		}
+	    dd {
+			margin-left: 20px;
+			margin-bottom: @verticalSpace;
+		}
+	}
+}
+
+/* @end */
+
+
