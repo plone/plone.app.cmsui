@@ -50,10 +50,4 @@ jQuery(function ($) {
         }
     });
 
-    // keep links in overlay
-    $('#structure-dialog th a').live('click', function(e) {
-        e.preventDefault();
-        $('#structure-dialog').load($(this).attr('href'));
-    });
-
 });

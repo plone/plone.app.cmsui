@@ -61,6 +61,7 @@ function eraseCookie(name) {
             // Add this to a link or button to make it close the overlay e.g.
             // on cancel without reloading the page
             closeselector: '.overlayCloseAction',
+            formselector: 'form.overlayForm',
             config: { 
                 top: 150,
                 onBeforeLoad: function (e) { 
