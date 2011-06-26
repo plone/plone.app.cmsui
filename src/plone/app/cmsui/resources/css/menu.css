@@ -429,6 +429,27 @@ footer {
 html {
   overflow-y: visible;
 }
+a.button,
+input[type=button],
+input[type=submit],
+button {
+  display: inline-block;
+  border: 1px solid #265883;
+  background: #3272aa;
+  padding: 0.8em 1em;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  -webkit-background-clip: padding-box;
+  color: #fff;
+  text-shadow: 0 -1px 0 #214a6f;
+}
+a.button:hover,
+input[type=button]:hover,
+input[type=submit]:hover,
+button:hover {
+  background: #5a98ce;
+}
 #toolbar {
   margin: 10px auto;
   width: 100%;
