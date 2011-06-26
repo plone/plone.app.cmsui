@@ -119,12 +119,9 @@ class StructureView(BrowserView):
         plone_view = getMultiAdapter((context, self.request), name=u'plone')
         plone_layout = getMultiAdapter((context, self.request), name=u'plone_layout')
         portal_workflow = getToolByName(context, 'portal_workflow')
-        portal_properties = getToolByName(context, 'portal_properties')
         portal_types = getToolByName(context, 'portal_types')
         portal_membership = getToolByName(context, 'portal_membership')
-        site_properties = portal_properties.site_properties
 
-        use_view_action = site_properties.getProperty('typesUseViewActionInListings', ())
         browser_default = plone_utils.browserDefault(context)
 
         contentsMethod = self.contentsMethod()
@@ -213,7 +210,11 @@ class StructureView(BrowserView):
         """
         context = aq_inner(self.context)
         if not IOrderableFolder.providedBy(context):
-            return False
+            if hasattr(context, 'moveObjectsByDelta'):
+                # for instance, plone site root does not use plone.folder
+                return True
+            else:
+                return False
         ordering = context.getOrdering()
         return IExplicitOrdering.providedBy(ordering)
 
