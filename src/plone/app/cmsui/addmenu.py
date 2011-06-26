@@ -91,7 +91,7 @@ class FileUploadForm(form.Form):
         container.invokeFactory('File', id=id, title=title)
         container[id].setFile(data['file'].data)
         
-        self.request.response.redirect("%s" % container[id].absolute_url())
+        self.request.response.redirect("%s/view" % container[id].absolute_url())
 
 FileUploadFormView = wrap_form(FileUploadForm)
 

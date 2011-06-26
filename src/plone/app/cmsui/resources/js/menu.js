@@ -67,7 +67,7 @@ function eraseCookie(name) {
             closeselector: '.overlayCloseAction',
             formselector: 'form.overlayForm',
             config: { 
-                top: 150,
+                top: 130,
                 onBeforeLoad: function (e) { 
                     offset = expandMenu();
                     $("#listing-table").ploneDnD();
@@ -86,6 +86,7 @@ function eraseCookie(name) {
             return false;
         });
 
+        $('.portalMessage:visible').addClass('showNotify').hide();
     });
     $(window).load(function () {
         var menu_state = readCookie('__plone_menu'),
@@ -97,13 +98,40 @@ function eraseCookie(name) {
             toolbar.addClass(menu_state);
             iframe.height(toolbar.outerHeight());
             parent_body.css('margin-top', toolbar.outerHeight());
-            iframe.animate({'opacity': 1}, 300);
+            toolbar.animate({'opacity': 1}, 300, function () {
+                iframe.css('background', 'transparent');
+
+                // Append iframe to the document
+                parent_body.append(
+                    $(window.parent.document.createElement("iframe"))
+                        .attr({
+                            'src': '@@cmsui-notifications',
+                            'id': 'plone-cmsui-notifications'
+                        })
+                        .css({
+                            'top': toolbar.outerHeight() + 10,
+                            'right': '10px',
+                            'margin': 0,
+                            'padding': 0,
+                            'border': 0,
+                            'outline': 0,
+                            'background': 'transparent',
+                            'position': 'fixed',
+                            '_position': 'absolute',
+                            '_top': 'expression(eval((document.body.scrollTop)?document.body.scrollTop:document.documentElement.scrollTop))',
+                            'width': '300px',
+                            'height': 0,
+                            'z-index': 11000
+                        })
+                );
+           });
         } else {
             createCookie('__plone_menu', 'small');
-            toolbar.addClass('small');
+            toolbar
+                .addClass('small')
+                .css('opacity', 1);
             height = toolbar.outerHeight();            
             iframe.css({
-                'opacity': 1,
                 'top': -height,
                 'height': height
                 })
@@ -134,6 +162,10 @@ function eraseCookie(name) {
             $('#toolbar-bottom').animate({'top': -bottom_height}, 500);
             createCookie('__plone_menu', 'small');
             createCookie('__plone_height', height);
+            return false;
+        });
+
+        $('#folder-contents a').click(function () {
             return false;
         });
     });

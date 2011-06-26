@@ -75,10 +75,6 @@
             <metal:block define-slot="content">
                 <div metal:define-macro="content">
 
-                    <div metal:use-macro="context/global_statusmessage/macros/portal_message">
-                     Status message
-                    </div>
-
                     <metal:slot define-slot="body">
                         <div id="content">
 

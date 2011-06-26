@@ -17,11 +17,10 @@
           padding: 0;
           border: 0;
           outline: 0;
-          background: transparent;
+          background: #3272aa;
           position: fixed;
           _position: absolute;
           _top: expression(eval((document.body.scrollTop)?document.body.scrollTop:document.documentElement.scrollTop));
-          opacity: 0;
           left: 0;
           top: 0;
           width: 100%;
