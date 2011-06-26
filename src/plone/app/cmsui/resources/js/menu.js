@@ -89,8 +89,6 @@ function eraseCookie(name) {
             $(this).closest('.pb-ajax').loadOverlay(url + ' ' + common_content_filter);
             return false;
         });
-
-        $('.portalMessage:visible').addClass('showNotify').hide();
     });
     $(window).load(function () {
         var menu_state = readCookie('__plone_menu'),
@@ -98,6 +96,9 @@ function eraseCookie(name) {
             parent_body = $('body', window.parent.document),
             toolbar = $('#toolbar'),
             height;
+
+        $('.portalMessage:visible').addClass('showNotify').hide();
+
         if (menu_state === 'small' || menu_state === 'large') {
             toolbar.addClass(menu_state);
             iframe.height(toolbar.outerHeight());
@@ -113,8 +114,8 @@ function eraseCookie(name) {
                             'id': 'plone-cmsui-notifications'
                         })
                         .css({
-                            'top': toolbar.outerHeight() + 10,
-                            'right': '10px',
+                            'top': toolbar.outerHeight(),
+                            'right': 0,
                             'margin': 0,
                             'padding': 0,
                             'border': 0,
@@ -123,8 +124,8 @@ function eraseCookie(name) {
                             'position': 'fixed',
                             '_position': 'absolute',
                             '_top': 'expression(eval((document.body.scrollTop)?document.body.scrollTop:document.documentElement.scrollTop))',
-                            'width': '300px',
-                            'height': 0,
+                            'width': '320px',
+                            'height': '0px',
                             'z-index': 11000
                         })
                 );
@@ -149,9 +150,9 @@ function eraseCookie(name) {
             toolbar.addClass('large').removeClass('small');
             height = toolbar.outerHeight();            
             $('#toolbar-bottom').css('top', -bottom_height);
-            parent_body.animate({'margin-top': height}, 500);
-            $('#toolbar-bottom').animate({'top': 0}, 500);
-            iframe.animate({'height': height}, 500);
+            parent_body.stop().animate({'margin-top': height}, 500);
+            $('#toolbar-bottom').stop().animate({'top': 0}, 500);
+            iframe.stop().animate({'height': height}, 500);
             createCookie('__plone_menu', 'large');
             createCookie('__plone_height', height);
             return false;
@@ -159,11 +160,11 @@ function eraseCookie(name) {
         $('#manage-page-close').click(function () {
             var bottom_height = $('#toolbar-bottom').outerHeight();
             height = toolbar.outerHeight() - bottom_height + 1;
-            iframe.animate({'height': height}, 500);
-            parent_body.animate({'margin-top': height}, 500, function () {
+            iframe.stop().animate({'height': height}, 500);
+            parent_body.stop().animate({'margin-top': height}, 500, function () {
                 toolbar.addClass('small').removeClass('large');
             });
-            $('#toolbar-bottom').animate({'top': -bottom_height}, 500);
+            $('#toolbar-bottom').stop().animate({'top': -bottom_height}, 500);
             createCookie('__plone_menu', 'small');
             createCookie('__plone_height', height);
             return false;
