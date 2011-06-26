@@ -230,6 +230,8 @@ class QuickUploadInit(BrowserView):
         request = self.request
         session = request.get('SESSION', {})
         portal_url = getToolByName(context, 'portal_url')()    
+        # use a ticket for authentication (used for flashupload only)
+        ticket = context.restrictedTraverse('@@quickupload_ticket')()
         
         settings = dict(
             ticket                 = ticket,
