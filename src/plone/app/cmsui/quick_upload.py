@@ -297,10 +297,6 @@ class QuickUploadFile(BrowserView):
             file_name = filename.split("\\")[-1]  
             upload_with = "CLASSIC FORM POST"
             # we must test the file size in this case (no client test)
-            if not self._check_file_size(file_data) :
-                # logger.info("Test file size : the file %s is too big, upload rejected" % file_name) 
-                return json.dumps({u'error': u'sizeError'})
-
 
         if not self._check_file_id(file_name) :
             # logger.info("The file id for %s always exist, upload rejected" % file_name)
@@ -342,9 +338,6 @@ class QuickUploadFile(BrowserView):
             msg = {u'error': u'emptyError'}
             
         return json.dumps(msg)          
-        
-    def _check_file_size(self, data):
-        return 1
     
     def _check_file_id(self, id):
         context = aq_inner(self.context)
