@@ -30,7 +30,8 @@
     <link rel="stylesheet" href="++resource++plone.app.cmsui/css/authoring.css" />
     <link rel="stylesheet" href="++resource++plone.app.cmsui/css/sprites.css" />
     <link rel="stylesheet" href="++resource++plone.app.cmsui/css/menu.css" />    
-    <link rel="stylesheet" href="++resource++plone.app.cmsui/css/notify.css" />    
+    <link rel="stylesheet" href="++resource++plone.app.cmsui/css/notify.css" />
+    <link rel="stylesheet" href="member.css" />
 
 </head>
 <body tal:define="isRTL portal_state/is_rtl"
