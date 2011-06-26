@@ -23,8 +23,8 @@ from zope.app.container.interfaces import INameChooser
 from plone.i18n.normalizer.interfaces import IIDNormalizer
 
 import ticket as ticketmod
-from collective.quickupload import siteMessageFactory as _
-from collective.quickupload import logger
+# from collective.quickupload import siteMessageFactory as _
+# from collective.quickupload import logger
 from collective.quickupload.browser.quickupload_settings import IQuickUploadControlPanel
 
 try :
@@ -63,7 +63,7 @@ def find_user(context, userid):
 
     acl_users = aq_inner(getToolByName(context, 'acl_users'))
     path = '/'.join(acl_users.getPhysicalPath())
-    logger.debug('Visited acl_users "%s"' % path)
+    # logger.debug('Visited acl_users "%s"' % path)
     track.add(path)
 
     user = acl_users.getUserById(userid)
@@ -72,10 +72,10 @@ def find_user(context, userid):
         acl_users = aq_inner(getToolByName(context, 'acl_users'))
         if acl_users is not None:
             path = '/'.join(acl_users.getPhysicalPath())
-            logger.debug('Visited acl_users "%s"' % path)
+            # logger.debug('Visited acl_users "%s"' % path)
             if path in track:
-                logger.warn('Tried searching an already visited acl_users, '
-                            '"%s".  All visited are: %r' % (path, list(track)))
+                # logger.warn('Tried searching an already visited acl_users, '
+                            # '"%s".  All visited are: %r' % (path, list(track)))
                 break
             track.add(path)
             user = acl_users.getUserById(userid)
@@ -124,10 +124,10 @@ class QuickUploadView(BrowserView):
         if '*.' in medialabel :
             medialabel = ''
         if not medialabel :
-            return _('Files Quick Upload')
+            return 'Files Quick Upload'
         if medialabel == 'image' :
-            return _('Images Quick Upload')
-        return _('%s Quick Upload' %medialabel.capitalize())
+            return 'Images Quick Upload'
+        return '%s Quick Upload' %medialabel.capitalize()
     
     def _uploader_id(self) :
         return 'uploader%s' %str(random.random()).replace('.','')
@@ -441,17 +441,17 @@ class QuickUploadAuthenticate(BrowserView):
         if ticket is None:
             raise Unauthorized('No ticket specified')        
         
-        logger.info('Authenticate using ticket, the ticket is "%s"' % str(ticket)) 
+        # logger.info('Authenticate using ticket, the ticket is "%s"' % str(ticket)) 
         username = ticketmod.ticketOwner(url, ticket)
         if username is None:
-            logger.info('Ticket "%s" was invalidated, cannot be used '
-                        'any more.' % str(ticket))
+            # logger.info('Ticket "%s" was invalidated, cannot be used '
+            # 'any more.' % str(ticket))
             raise Unauthorized('Ticket is not valid')
 
         self.old_sm = SecurityManagement.getSecurityManager()
         user = find_user(context, username)
         SecurityManagement.newSecurityManager(self.request, user)
-        logger.info('Switched to user "%s"' % username)   
+        # logger.info('Switched to user "%s"' % username)   
 
         
 class QuickUploadFile(QuickUploadAuthenticate):
@@ -484,8 +484,8 @@ class QuickUploadFile(QuickUploadAuthenticate):
         
         if file_data:
             factory = IQuickUploadFileFactory(context)
-            logger.info("uploading file with flash: filename=%s, title=%s, description=%s, content_type=%s, portal_type=%s" % \
-                    (file_name, title, description, content_type, portal_type))                             
+            # logger.info("uploading file with flash: filename=%s, title=%s, description=%s, content_type=%s, portal_type=%s" % \
+            # (file_name, title, description, content_type, portal_type))                             
             
             try :
                 f = factory(file_name, title, description, content_type, file_data, portal_type)
@@ -494,7 +494,7 @@ class QuickUploadFile(QuickUploadAuthenticate):
                 raise
             if f['success'] is not None :
                 o = f['success']
-                logger.info("file url: %s" % o.absolute_url())
+                # logger.info("file url: %s" % o.absolute_url())
                 SecurityManagement.setSecurityManager(self.old_sm)   
                 return o.absolute_url()         
 
@@ -520,13 +520,13 @@ class QuickUploadFile(QuickUploadAuthenticate):
                 file.seek(0)
             except AttributeError :
                 # in case of cancel during xhr upload
-                logger.info("Upload of %s has been aborted" %file_name)
+                # logger.info("Upload of %s has been aborted" %file_name)
                 # not really useful here since the upload block
                 # is removed by "cancel" action, but
                 # could be useful if someone change the js behavior
                 return  json.dumps({u'error': u'emptyError'})
             except :
-                logger.info("Error when trying to read the file %s in request"  %file_name)
+                # logger.info("Error when trying to read the file %s in request"  %file_name)
                 return json.dumps({u'error': u'serverError'})
         else :
             # using classic form post method (MSIE<=8)
@@ -536,12 +536,12 @@ class QuickUploadFile(QuickUploadAuthenticate):
             upload_with = "CLASSIC FORM POST"
             # we must test the file size in this case (no client test)
             if not self._check_file_size(file_data) :
-                logger.info("Test file size : the file %s is too big, upload rejected" % file_name) 
+                # logger.info("Test file size : the file %s is too big, upload rejected" % file_name) 
                 return json.dumps({u'error': u'sizeError'})
 
 
         if not self._check_file_id(file_name) :
-            logger.info("The file id for %s always exist, upload rejected" % file_name)
+            # logger.info("The file id for %s always exist, upload rejected" % file_name)
             return json.dumps({u'error': u'serverErrorAlwaysExist'})
 
         content_type = mimetypes.guess_type(file_name)[0]
@@ -562,8 +562,8 @@ class QuickUploadFile(QuickUploadAuthenticate):
         
         if file_data:
             factory = IQuickUploadFileFactory(context)
-            logger.info("uploading file with %s : filename=%s, title=%s, description=%s, content_type=%s, portal_type=%s" % \
-                    (upload_with, file_name, title, description, content_type, portal_type))                             
+            # logger.info("uploading file with %s : filename=%s, title=%s, description=%s, content_type=%s, portal_type=%s" % \
+            # (upload_with, file_name, title, description, content_type, portal_type))                             
             
             try :
                 f = factory(file_name, title, description, content_type, file_data, portal_type)
@@ -572,7 +572,7 @@ class QuickUploadFile(QuickUploadAuthenticate):
             
             if f['success'] is not None :
                 o = f['success']
-                logger.info("file url: %s" % o.absolute_url()) 
+                # logger.info("file url: %s" % o.absolute_url()) 
                 msg = {u'success': True}
             else :
                 msg = {u'error': f['error']}
