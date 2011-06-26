@@ -30,7 +30,6 @@ setup(name='plone.app.cmsui',
           'Products.CMFPlone',
           'plone.namedfile[blobs]',
           'plone.formwidget.namedfile',
-          'collective.quickupload',
       ],
       extras_require={
         'test': ['plone.app.testing'],
