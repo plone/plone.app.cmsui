@@ -238,9 +238,9 @@ class QuickUploadInit(BrowserView):
             context_url            = context.absolute_url(),
             physical_path          = "/".join(context.getPhysicalPath()),
             ul_id                  = self.uploader_id,
-            ul_fill_titles         = 'true'
-            ul_fill_descriptions   = 'true'
-            ul_auto_upload         = 'true'
+            ul_fill_titles         = 'true',
+            ul_fill_descriptions   = 'true',
+            ul_auto_upload         = 'true',
             ul_size_limit          = '',
             ul_xhr_size_limit      = '0',
             ul_sim_upload_limit    = '',
