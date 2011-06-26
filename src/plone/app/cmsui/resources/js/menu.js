@@ -75,7 +75,6 @@ function eraseCookie(name) {
                     return true; 
                 },
                 onLoad: function (e) {
-                    openLinksInOverlay();
                     loadUploader();
                     $("#listing-table").ploneDnD();
                     return true; 

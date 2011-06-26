@@ -28,6 +28,7 @@
     <script type="text/javascript" src="++resource++plone.app.cmsui/js/libs/fileuploader.js"></script>
     <script type="text/javascript" src="@@quick_upload_init"></script>
     <script type="text/javascript" src="++resource++plone.app.cmsui/js/dragdropreorder.js"></script>
+    <script type="text/javascript" src="++resource++plone.app.cmsui/js/structure.js"></script>
 
     <link rel="stylesheet" href="++resource++plone.app.cmsui/css/boilerplate.css" />
     <link rel="stylesheet" href="++resource++plone.app.cmsui/css/authoring.css" />
