@@ -8,7 +8,7 @@
 <body>
 
     <metal:content-core fill-slot="body">
-      <div id="content">
+      <div id="overlay-content">
         <h1 class="documentFirstHeading" i18n:translate="heading_add_new_item">Add content</h1>
 
         <div>

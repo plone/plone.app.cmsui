@@ -61,7 +61,7 @@
                 </div>
 
                 <metal:slot define-slot="body">
-                    <div id="content">
+                    <div id="overlay-content">
 
                         <metal:header define-slot="header" tal:content="nothing">
                             Visual Header

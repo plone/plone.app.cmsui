@@ -128,7 +128,7 @@ table.listing tbody tr.odd.error td, tr.error {
     margin-right: 0.5em;
 }
 
-#content a:link {
+#overlay-content a:link {
     color: #205C90;
 }
 

@@ -19,7 +19,7 @@ jq(function(){
 <body>
 
 <metal:content-core fill-slot="body">
-  <div id="content" tal:define="context_state context/@@plone_context_state;
+  <div id="overlay-content" tal:define="context_state context/@@plone_context_state;
 				folderish python:(context_state.is_structural_folder() or context_state.is_default_page());
 				batch view/batch;
 				num_items context/@@cmsui-menu/itemsInFolder">
