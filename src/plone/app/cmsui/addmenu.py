@@ -97,7 +97,10 @@ class FileUploadForm(form.Form):
         typeName = 'Image' if typeName == 'Image' else 'File'
 
         # create the object
-        container.invokeFactory(typeName, id=id, title=title, file=data['file'].data)
+        container.invokeFactory(typeName, 
+                                id=id,
+                                title=title,
+                                file=data['file'].data)
 
         # Redirect to the view page.
         self.request.response.redirect("%s/view" % container[id].absolute_url())
