@@ -27,7 +27,7 @@
   <div id="structure-dialog">
   <div class="structure-slider">
 
-    <nav id="portal-breadcrumbs">
+    <nav id="overlay-breadcrumbs">
       <ul>
         <li id='path-home'>
       <span class="crumb">
