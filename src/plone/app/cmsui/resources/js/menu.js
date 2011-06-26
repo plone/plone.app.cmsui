@@ -16,14 +16,6 @@ function contractMenu(offset) {
     $('#plone-cmsui-menu', window.parent.document).css('height', $('#toolbar').outerHeight());
 }
 
-function openLinksInOverlay() {
-    $("a.overlayLink").live('click', function(){
-        var url = $(this).attr("href");
-        $(".pb-ajax").load(url + ' ' + common_content_filter);
-        return false;
-    });
-}
-
 // http://www.quirksmode.org/js/cookies.html
 function createCookie(name, value, days) {
     var expires = "";
@@ -51,6 +43,18 @@ function eraseCookie(name) {
 }
 
 (function ($) {
+    // jquery method to load an overlay
+    $.fn.loadOverlay = function(href, data, callback) {
+        var $overlay = this.closest('.pb-ajax');
+        this.load(href, data, function() {
+            if (callback != undefined) {
+                callback.apply(this, arguments);
+            }
+            $overlay[0].handle_load_inside_overlay.apply(this, arguments);
+        });
+        return this;
+    }
+    
     $().ready(function () {
         var iframe = $('#plone-cmsui-menu', window.parent.document);
         var offset;
@@ -69,15 +73,17 @@ function eraseCookie(name) {
                     $("#listing-table").ploneDnD();
                     return true; 
                 },
-                onLoad: function (e) {
-                    openLinksInOverlay();
-                    return true; 
-                }, 
                 onClose: function (e) { 
                     contractMenu(offset);
                     return true; 
                 }
             } 
+        });
+        
+        $("a.overlayLink").live('click', function(){
+            var url = $(this).attr("href");
+            $(this).closest('.pb-ajax').loadOverlay(url + ' ' + common_content_filter);
+            return false;
         });
 
     });
