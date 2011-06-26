@@ -23,10 +23,11 @@ class Menu(BrowserView):
         # Set the CMSUI skin so that we get the correct resources
         # self.context.changeSkin(self.SKIN_NAME, self.request)
         
-        # Commonly useful variables
         self.contextState = getMultiAdapter((self.context, self.request), name=u'plone_context_state')
         self.portalState = getMultiAdapter((self.context, self.request), name=u'plone_portal_state')
         self.tools = getMultiAdapter((self.context, self.request), name=u'plone_tools')
+        
+        # Commonly useful variables
         self.securityManager = getSecurityManager()
         self.anonymous = self.portalState.anonymous()
         

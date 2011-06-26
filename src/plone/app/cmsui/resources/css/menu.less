@@ -70,13 +70,10 @@ html {
 
 		#portal-breadcrumbs {
 			line-height: 1em;
-			margin-left: 0.5em;
-			margin-top: 0.5em;
-	        padding-left: @verticalSpace;
 			
 		    a {
 				display: inline-block;
-				padding: 0;
+				padding: @verticalSpace/2 0;
 				&:after {
 				    content: "/";
 				    display: inline-block;
@@ -91,11 +88,28 @@ html {
 		}
 		#personal-tools {
 		    text-align: right;
-		    width: @totalCell * 6 - @horizontalSpace - 1%;
+		    width: @totalCell * 5 - @horizontalSpace - 1%;
 			a {
 				border: 1px solid transparent;
 				.css3_border_radius(20px);
 				padding: @verticalSpace/2 @horizontalSpace;
+				text-shadow: 0 -1px 0 darken(@ploneColor, 15%);	
+				&:hover {
+					.css3_linear_gradient(darken(@ploneColor, 20%), @ploneColor);
+					border-bottom-color: darken(@ploneColor, 5%);
+					border-right-color: darken(@ploneColor, 5%);
+					border-top-color: @ploneColor;
+					border-left-color: @ploneColor;					
+				}				    
+			}		    
+		}
+		div:last-child {
+		    text-align: right;
+		    padding: @verticalSpace/2 0;
+			a {
+				border: 1px solid transparent;
+				.css3_border_radius(20px);
+				padding: @verticalSpace/2 5.21327%;
 				text-shadow: 0 -1px 0 darken(@ploneColor, 15%);	
 				&:hover {
 					.css3_linear_gradient(darken(@ploneColor, 20%), @ploneColor);
@@ -212,7 +226,7 @@ html {
     background: transparent url('../icons/Lock.png') 50% 0 no-repeat;
 }
 
-#folder-contents a {
+#structure a {
     background: transparent url('../icons/Folder.png') 50% 0 no-repeat;    
 }
 #folder-add_content a {
