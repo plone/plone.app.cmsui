@@ -74,6 +74,7 @@ class FileUploadForm(form.Form):
         data, errors = self.extractData()
         if errors:
             return
+            
         # Context may not be a container, get one.
         context_state = getMultiAdapter((self.context, self.request), name="plone_context_state")
         container = context_state.folder()
