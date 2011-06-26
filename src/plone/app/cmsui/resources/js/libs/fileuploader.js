@@ -503,13 +503,13 @@ qq.UploadButton = function(o){
     this._element = this._options.element;
     
     // make button suitable container for input
-    qq.css(this._element, {
-        position: 'relative',
-        overflow: 'hidden',
-        // Make sure browse button is in the right side
-        // in Internet Explorer
-        direction: 'ltr'
-    });   
+    // qq.css(this._element, {
+    //     position: 'relative',
+    //     overflow: 'hidden',
+    //     // Make sure browse button is in the right side
+    //     // in Internet Explorer
+    //     direction: 'ltr'
+    // });   
     
     this._input = this._createInput();
 };
@@ -538,22 +538,22 @@ qq.UploadButton.prototype = {
         input.setAttribute("type", "file");
         input.setAttribute("name", this._options.name);
         
-        qq.css(input, {
-            position: 'absolute',
-            // in Opera only 'browse' button
-            // is clickable and it is located at
-            // the right side of the input
-            right: 0,
-            top: 0,
-            fontFamily: 'Arial',
-            // if larger button becomes visible (filter is not applied in IE8 on SOME PCs)
-            // probably related to http://social.msdn.microsoft.com/forums/en-US/iewebdevelopment/thread/29d0b0e7-4326-4b3e-823c-51420d4cf253
-            fontSize: '243px',
-            margin: 0,
-            padding: 0,
-            cursor: 'pointer',
-            opacity: 0
-        });
+        // qq.css(input, {
+        //     position: 'absolute',
+        //     // in Opera only 'browse' button
+        //     // is clickable and it is located at
+        //     // the right side of the input
+        //     right: 0,
+        //     top: 0,
+        //     fontFamily: 'Arial',
+        //     // if larger button becomes visible (filter is not applied in IE8 on SOME PCs)
+        //     // probably related to http://social.msdn.microsoft.com/forums/en-US/iewebdevelopment/thread/29d0b0e7-4326-4b3e-823c-51420d4cf253
+        //     fontSize: '243px',
+        //     margin: 0,
+        //     padding: 0,
+        //     cursor: 'pointer',
+        //     opacity: 0
+        // });
         
         this._element.appendChild(input);
 
