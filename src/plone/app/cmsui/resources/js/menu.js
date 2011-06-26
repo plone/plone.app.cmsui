@@ -16,14 +16,6 @@ function contractMenu(offset) {
     $('#plone-cmsui-menu', window.parent.document).css('height', $('#toolbar').outerHeight());
 }
 
-function openLinksInOverlay() {
-    $("a.overlayLink").live('click', function(){
-        var url = $(this).attr("href");
-        $(".pb-ajax").load(url + ' ' + common_content_filter);
-        return false;
-    });
-}
-
 // http://www.quirksmode.org/js/cookies.html
 function createCookie(name, value, days) {
     var expires = "";
@@ -51,6 +43,19 @@ function eraseCookie(name) {
 }
 
 (function ($) {
+    // jquery method to load an overlay
+    $.fn.loadOverlay = function(href, data, callback) {
+        var $overlay = this.closest('.pb-ajax');
+        this.load(href, data, function() {
+	    $("#listing-table").ploneDnD(); // need to initialize again...
+            if (callback != undefined) {
+                callback.apply(this, arguments);
+            }
+            $overlay[0].handle_load_inside_overlay.apply(this, arguments);
+        });
+        return this;
+    }
+    
     $().ready(function () {
         var iframe = $('#plone-cmsui-menu', window.parent.document);
         var offset;
@@ -61,6 +66,7 @@ function eraseCookie(name) {
             // Add this to a link or button to make it close the overlay e.g.
             // on cancel without reloading the page
             closeselector: '.overlayCloseAction',
+            formselector: 'form.overlayForm',
             config: { 
                 top: 130,
                 onBeforeLoad: function (e) { 
@@ -68,14 +74,20 @@ function eraseCookie(name) {
                     return true; 
                 },
                 onLoad: function (e) {
-                    openLinksInOverlay();
+		    $("#listing-table").ploneDnD();
                     return true; 
                 }, 
                 onClose: function (e) { 
                     contractMenu(offset);
                     return true; 
                 }
-            }
+            } 
+        });
+        
+        $("a.overlayLink").live('click', function(){
+            var url = $(this).attr("href");
+            $(this).closest('.pb-ajax').loadOverlay(url + ' ' + common_content_filter);
+            return false;
         });
     });
     $(window).load(function () {
@@ -138,9 +150,9 @@ function eraseCookie(name) {
             toolbar.addClass('large').removeClass('small');
             height = toolbar.outerHeight();            
             $('#toolbar-bottom').css('top', -bottom_height);
-            parent_body.animate({'margin-top': height}, 500);
-            $('#toolbar-bottom').animate({'top': 0}, 500);
-            iframe.animate({'height': height}, 500);
+            parent_body.stop().animate({'margin-top': height}, 500);
+            $('#toolbar-bottom').stop().animate({'top': 0}, 500);
+            iframe.stop().animate({'height': height}, 500);
             createCookie('__plone_menu', 'large');
             createCookie('__plone_height', height);
             return false;
@@ -148,11 +160,11 @@ function eraseCookie(name) {
         $('#manage-page-close').click(function () {
             var bottom_height = $('#toolbar-bottom').outerHeight();
             height = toolbar.outerHeight() - bottom_height + 1;
-            iframe.animate({'height': height}, 500);
-            parent_body.animate({'margin-top': height}, 500, function () {
+            iframe.stop().animate({'height': height}, 500);
+            parent_body.stop().animate({'margin-top': height}, 500, function () {
                 toolbar.addClass('small').removeClass('large');
             });
-            $('#toolbar-bottom').animate({'top': -bottom_height}, 500);
+            $('#toolbar-bottom').stop().animate({'top': -bottom_height}, 500);
             createCookie('__plone_menu', 'small');
             createCookie('__plone_height', height);
             return false;
