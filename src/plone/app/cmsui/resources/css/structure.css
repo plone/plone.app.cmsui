@@ -112,7 +112,7 @@ div#structure-dialog .link-parent {
     display: inline;
 }
 
-table.listing tbody tr.odd.error td, tr.error {
+table.listing tbody tr.error {
     background-color: #FFDDCC;
     border: 2px dashed red;
 }
