@@ -35,8 +35,8 @@ from Products.Archetypes.event import ObjectInitializedEvent
 from Products.CMFPlone import utils as ploneutils
 from Products.CMFCore import utils as cmfutils
 
-from collective.quickupload import logger
-from collective.quickupload.browser.interfaces import (
+# from collective.quickupload import logger
+from plone.app.cmsui.interfaces import (
     IQuickUploadCapable, IQuickUploadFileFactory)
 
 
@@ -87,7 +87,7 @@ class QuickUploadCapableFileFactory(object):
                 error = u'serverErrorZODBConflict'
             except Exception, e:
                 error = u'serverError'
-                logger.exception(e)
+                # logger.exception(e)
 
             if not error :
                 obj = getattr(context, newid)
@@ -108,10 +108,10 @@ class QuickUploadCapableFileFactory(object):
                     else :
                         # some products remove the 'primary' attribute on ATFile or ATImage (which is very bad)
                         error = u'serverError'
-                        logger.info("An error happens : impossible to get the primary field for file %s, rawdata can't be created" %obj.absolute_url())
+                        # logger.info("An error happens : impossible to get the primary field for file %s, rawdata can't be created" %obj.absolute_url())
                 else:
                     error = u'serverError'
-                    logger.info("An error happens with setId from filename, the file has been created with a bad id, can't find %s" %newid)
+                    # logger.info("An error happens with setId from filename, the file has been created with a bad id, can't find %s" %newid)
             transaction.commit()
             upload_lock.release()
 

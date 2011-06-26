@@ -11,7 +11,7 @@ import AccessControl
 
 ticketCache = RAMCache()
 
-from collective.quickupload import logger
+# from collective.quickupload import logger
 
 
 def issueTicket(ident):
@@ -84,10 +84,10 @@ class TicketView(object):
         response.setHeader('Pragma', 'no-ache')
         response.setHeader('Expires', 'Mon, 26 Jul 1997 05:00:00 GMT')
 
-        logger.debug('Getting ready to issue new ticket')
+        # logger.debug('Getting ready to issue new ticket')
         context = aq_inner(self.context)
         url = context.absolute_url()
         ticket = issueTicket(url)
-        logger.debug('Issued ticket "%s" for url: %s' % (str(ticket), url))
+        # logger.debug('Issued ticket "%s" for url: %s' % (str(ticket), url))
 
         return ticket
