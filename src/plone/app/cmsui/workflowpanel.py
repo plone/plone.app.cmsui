@@ -20,12 +20,6 @@ class WorkflowActionsSourceBinder(object):
         self.request.response.setHeader('X-Theme-Disabled', 'True')
         if self.request.method == "GET":
             return self.index()
-        else:
-            if not 'form.button.folderPublish' in self.request.form:
-                return self.request.RESPONSE.redirect(self.context.absolute_url())
-            action = self.request.form.get('workflow_action', None)
-            if action is not None:
-                self.context.portal_workflow.doActionFor(self.context, action, comment=self.request.form.get('comment', ''))
         self.request.RESPONSE.redirect(self.context.absolute_url())
     
     def getTransitions(self):
@@ -103,7 +97,6 @@ class WorkflowPanel(form.Form):
         
         postwf_context = None
         if workflow_action is not None:
-            self.context.portal_workflow.doActionFor(self.context, workflow_action, comment=data.get('comment', ''))
             postwf_context = real_context.portal_workflow.doActionFor(self.context,
                              workflow_action, comment=data.get('comment', ''))
         if postwf_context is None: postwf_context = real_context
