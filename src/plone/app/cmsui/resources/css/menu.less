@@ -27,15 +27,12 @@ html {
 }
 #toolbar {
 	.container();
-	.css3_linear_gradient(darken(@ploneColor, 5%), @ploneColor);
 	.css3_box_shadow(0 2px 5px rgba(0,0,0,0.5));
 	margin-top: 0;
-	padding-top: @verticalSpace/2;
     color: @baseFontColor;
     position: fixed;
     z-index: 10000;
-    border-bottom: 1px solid darken(@ploneColor, 20%);
-	
+
 	&:after {
 	    /*
 	    content: " ";
@@ -44,24 +41,31 @@ html {
 	    background: darken(@ploneColor, 20%);
         */
 	}
-	
-	ul {
-	    .horList();
-	    margin: 0;
-	    padding: 0;
-	}
 	a {
 	    color: @linkColor;
-	    text-decoration: none;
+	    text-decoration: none;    
+	}
+	
+	ul {
+	    .noBulletsList();
+	    padding: 0;
+	    li {
+		    display: inline;
+		    a {
+			    display: inline-block;
+	            padding: @verticalSpace/4 @horizontalSpace/2;
+			}
+		}
 	}
 		
 	.container:first-of-type {
 	    margin-top: 0;
 	    margin-bottom: 0;
 	    padding-bottom: @verticalSpace/2;
-	    padding-top: @verticalSpace/2;	    
+	    padding-top: @verticalSpace;
 	    line-height: 1em;
 	    border-bottom: 1px solid darken(@ploneColor, 25%);
+	    .css3_linear_gradient(@ploneColor, darken(@ploneColor, 5%));
 
 		#portal-breadcrumbs {
 			line-height: 1em;
@@ -86,6 +90,20 @@ html {
 		}
 		#personal-tools {
 		    text-align: right;
+		    width: @totalCell * 6 - @horizontalSpace - 1%;
+			a {
+				border: 1px solid transparent;
+				.css3_border_radius(20px);
+				padding: @verticalSpace/2 @horizontalSpace;
+				text-shadow: 0 -1px 0 darken(@ploneColor, 15%);	
+				&:hover {
+					.css3_linear_gradient(darken(@ploneColor, 20%), @ploneColor);
+					border-bottom-color: darken(@ploneColor, 5%);
+					border-right-color: darken(@ploneColor, 5%);
+					border-top-color: @ploneColor;
+					border-left-color: @ploneColor;					
+				}				    
+			}		    
 		}
 	}
 	
@@ -96,6 +114,9 @@ html {
 	    padding-bottom: @verticalSpace;
 	    border-top: 1px solid lighten(@ploneColor, 5%);
         border-bottom: 1px solid darken(@ploneColor, 20%);
+	    .css3_linear_gradient(darken(@ploneColor, 5%), @ploneColor);
+        position: relative;
+        z-index: -1;
 	    
 		#document-info,
 		#folder-actions {
@@ -122,8 +143,20 @@ html {
 	}
 }
 
+#manage-page-close,
+#manage-page-open {
+    margin-left: 24px;
+}
 .small #toolbar-bottom {
     display: none;
+}
+
+#toolbar.small #toolbar-top {
+    border-bottom: 2px solid darken(@ploneColor, 20%);
+}
+
+#toolbar.large #toolbar-bottom {
+    border-bottom: 2px solid darken(@ploneColor, 20%);
 }
 
 .small #manage-page-close {
@@ -152,14 +185,6 @@ html {
 	}
 }
 
-
-#toolbar a {
-    opacity: .95
-}
-
-#toolbar a:hover {
-    opacity: 1;
-}
 
 
 /* @group Icons */

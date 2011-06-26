@@ -1,16 +1,15 @@
-from plone.app.content.browser.folderfactories import _allowedTypes
 from plone.app.z3cform.layout import wrap_form
 from plone.i18n.normalizer.interfaces import IIDNormalizer
+from plone.namedfile.field import NamedFile
+from plone.z3cform.interfaces import IWrappedForm
 from z3c.form import button, form, field
+from z3c.form.interfaces import HIDDEN_MODE
 from zope import interface, schema
 from zope.app.publisher.interfaces.browser import IBrowserMenu
 from zope.component import getUtility, queryUtility, getMultiAdapter
 from zope.container.interfaces import INameChooser
 from zope.interface import implements
 from zope.publisher.browser import BrowserView
-from zope.schema.interfaces import IVocabularyFactory
-from zope.schema.vocabulary import SimpleVocabulary, SimpleTerm
-from z3c.form.interfaces import HIDDEN_MODE
 
 
 class IAddNewContent(interface.Interface):
@@ -53,12 +52,47 @@ class AddNewContentForm(form.Form):
 
         # create the object
         container.invokeFactory(data['type_name'], id=id, title=title)
-        # redirect to immediate_view
         
         self.request.response.redirect("%s/edit" % container[id].absolute_url())
-        # open edit overlay    
 
 AddNewContentView = wrap_form(AddNewContentForm)
+
+
+class IFileUploadForm(interface.Interface):
+    file = NamedFile(title=u"File")
+
+class FileUploadForm(form.Form):
+    implements(IWrappedForm)
+    
+    fields = field.Fields(IFileUploadForm)
+    ignoreContext = True # don't use context to get widget data
+    label = "Add content"
+    
+    @button.buttonAndHandler(u'Upload content')
+    def handleApply(self, action):
+        data, errors = self.extractData()
+        if errors:
+            return
+        # Context may not be a container, get one.
+        context_state = getMultiAdapter((self.context, self.request), name="plone_context_state")
+        container = context_state.folder()
+
+        title = data['file'].filename
+        # Generate a name based on the title..
+        util = queryUtility(IIDNormalizer)
+        id = util.normalize(title)
+        
+        # Make sure our chosen id is unique, iterate until we get one that is.
+        chooser = INameChooser(container)
+        id = chooser._findUniqueName(id, None)
+
+        # create the object
+        container.invokeFactory('File', id=id, title=title)
+        container[id].setFile(data['file'].data)
+        
+        self.request.response.redirect("%s/view" % container[id].absolute_url())
+
+FileUploadFormView = wrap_form(FileUploadForm)
 
 
 class AddMenu(BrowserView):
@@ -69,6 +103,7 @@ class AddMenu(BrowserView):
         # Disable theming
         self.request.response.setHeader('X-Theme-Disabled', 'True')
         
+        # Get this of types addable here, by this user.
         factoriesMenu = getUtility(IBrowserMenu, name='plone_contentmenu_factory', context=self.context)
         self.addable_types = factoriesMenu.getMenuItems(self.context, self.request)
 
@@ -80,10 +115,8 @@ class AddMenu(BrowserView):
         
         self.allowedTypes = factories_view.addable_types()
         
+        self.uploadForm = FileUploadForm(self.context, self.request)
+        self.uploadForm.update()
         
         return self.index()
 
-
-        
-        
-        

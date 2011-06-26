@@ -21,7 +21,7 @@ function openLinksInOverlay() {
         var url = $(this).attr("href");
         $(".pb-ajax").load(url + ' ' + common_content_filter);
         return false;
-    })
+    });
 }
 
 // http://www.quirksmode.org/js/cookies.html
@@ -62,7 +62,7 @@ function eraseCookie(name) {
             // on cancel without reloading the page
             closeselector: '.overlayCloseAction',
             config: { 
-                top: 150,
+                top: 130,
                 onBeforeLoad: function (e) { 
                     offset = expandMenu();
                     return true; 
@@ -103,5 +103,40 @@ function eraseCookie(name) {
             parent_body.animate({'margin-top': toolbar.outerHeight()}, 1000);
         }
         createCookie('__plone_height', $('#toolbar').outerHeight());
+
+        $.plone.initNotify();
+
+        $('#manage-page-open').click(function () {
+            var bottom_height = $('#toolbar-bottom').outerHeight();
+            toolbar.addClass('large').removeClass('small');
+            height = toolbar.outerHeight();            
+            $('#toolbar-bottom').css('top', -bottom_height);
+            parent_body.animate({'margin-top': height}, 500);
+            $('#toolbar-bottom').animate({'top': 0}, 500);
+            iframe.animate({'height': height}, 500);
+            createCookie('__plone_menu', 'large');
+            createCookie('__plone_height', height);
+            return false;
+        });
+        $('#manage-page-close').click(function () {
+            var bottom_height = $('#toolbar-bottom').outerHeight();
+            height = toolbar.outerHeight() - bottom_height + 1;
+            iframe.animate({'height': height}, 500);
+            parent_body.animate({'margin-top': height}, 500, function () {
+                toolbar.addClass('small').removeClass('large');
+            });
+            $('#toolbar-bottom').animate({'top': -bottom_height}, 500);
+            createCookie('__plone_menu', 'small');
+            createCookie('__plone_height', height);
+            return false;
+        });
+
+        $('#folder-contents a').click(function () {
+            $.plone.notify({
+                'title': 'test',
+                'message': 'some message'
+            });
+            return false;
+        });
     });
 }(jQuery));
