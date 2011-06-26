@@ -98,7 +98,6 @@ class FileUploadForm(form.Form):
 
         # create the object
         container.invokeFactory(typeName, id=id, title=title, file=data['file'].data)
-        import pdb; pdb.set_trace( )
         self.request.response.redirect("%s/view" % container[id].absolute_url())
 
 FileUploadFormView = wrap_form(FileUploadForm)
