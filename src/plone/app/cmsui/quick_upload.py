@@ -25,10 +25,10 @@ import json
 def decodeQueryString(QueryString):
   """decode *QueryString* into a dictionary, as ZPublisher would do"""
   r= HTTPRequest(None,
-		 {'QUERY_STRING' : QueryString,
-		  'SERVER_URL' : '',
-		  },
-		 None,1)
+         {'QUERY_STRING' : QueryString,
+          'SERVER_URL' : '',
+          },
+         None,1)
   r.processInputs()
   return r.form 
 
