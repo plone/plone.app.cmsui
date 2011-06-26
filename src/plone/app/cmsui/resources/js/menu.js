@@ -110,7 +110,7 @@ function eraseCookie(name) {
                 iframe.css('background', 'transparent');
 
                 // Check if an overlay should be opened
-                var url = window.parent.document.location.href.match(/#(.*)$/);
+                var url = window.parent.document.location.href.match(/#!\/menu\/(.*)$/);
                 if (url) {
                     var button = $('#' + url[1] + ' > a');
                     if (button.length !== 0) {
