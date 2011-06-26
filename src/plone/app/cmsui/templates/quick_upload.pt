@@ -14,7 +14,7 @@
     <div tal:define="uploader_id view/uploader_id">
       <h4 class="pannelHeader"
           tal:content="view/header_upload">
-        Files Quick Upload
+        Upload Files
       </h4>
       <label i18n:translate="label_choose_your_files"
              id="label-upload">Choose your files : </label>    
