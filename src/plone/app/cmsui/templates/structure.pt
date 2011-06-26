@@ -9,48 +9,47 @@
 <tal:js metal:fill-slot="javascript_head_slot">
 <script type="text/javascript" src="++resource++plone.app.cmsui/js/dragdropreorder.js"></script>
 <script type="text/javascript">
-jq(function(){
-  jQuery("#listing-table").ploneDnD();
-});
+    jq(function(){
+      jQuery("#listing-table").ploneDnD();
+    });
 </script>
 </tal:js>
 </head>
 
 <body>
 
-<metal:content-core fill-slot="body">
-  <div id="content" tal:define="context_state context/@@plone_context_state;
-				folderish python:(context_state.is_structural_folder() or context_state.is_default_page());
-				batch view/batch;
-				num_items context/@@cmsui-menu/itemsInFolder;
-				orderable view/orderable;
-				cols python: orderable and 7 or 6;">
+<metal:content-core fill-slot="body"
+                    tal:define="context_state context/@@plone_context_state;
+                                folderish python:(context_state.is_structural_folder() or context_state.is_default_page());
+                                batch view/batch;
+                                num_items context/@@cmsui-menu/itemsInFolder">
+
   <div id="structure-dialog">
   <div class="structure-slider">
 
-    <nav id="portal-breadcrumbs">
+    <nav id="overlay-breadcrumbs">
       <ul>
         <li id='path-home'>
-	  <span class="crumb">
-	    <a class="link-parent" tal:attributes="href string:${view/@@plone_portal_state/navigation_root_url}/cmsui-structure">
-	      Home
-	    </a>
-	  </span>
-	</li>
-	<li tal:repeat="crumb view/breadcrumbs">
-	  <span class="crumb" tal:condition="not:repeat/crumb/end">
-	    <a class="link-parent"
-	       tal:attributes="href string:${crumb/absolute_url}/cmsui-structure;"
-	       tal:content="crumb/Title">Item</a>
-	    </span>
-	  <span tal:condition="repeat/crumb/end" class="current"
+      <span class="crumb">
+        <a class="link-parent" tal:attributes="href string:${view/@@plone_portal_state/navigation_root_url}/cmsui-structure">
+          Home
+        </a>
+      </span>
+    </li>
+    <li tal:repeat="crumb view/breadcrumbs">
+      <span class="crumb" tal:condition="not:repeat/crumb/end">
+        <a class="link-parent"
+           tal:attributes="href string:${crumb/absolute_url}/cmsui-structure;"
+           tal:content="crumb/Title">Item</a>
+        </span>
+      <span tal:condition="repeat/crumb/end" class="current"
                 tal:content="crumb/Title">
-	    Item
-	  </span>
-	  <span class="actions" tal:condition="repeat/crumb/end">
-	    (<a href="#" class="overlayLink" tal:attributes="href string:${context/absolute_url}/edit">edit</a>, <a href="#" tal:attributes="href string:${context/absolute_url}/view">view</a>)
-	  </span>
-	</li>
+        Item
+      </span>
+      <span class="actions" tal:condition="repeat/crumb/end">
+        (<a href="#" class="overlayLink" tal:attributes="href string:${context/absolute_url}/edit">edit</a>, <a href="#" tal:attributes="href string:${context/absolute_url}/view">view</a>)
+      </span>
+    </li>
       </ul>
     </nav>
 
@@ -58,7 +57,7 @@ jq(function(){
           method="post"
           class="overlayForm"
           action="folder_object"
-	  id="folder-structure-form"
+      id="folder-structure-form"
           tal:attributes="action context/absolute_url">
 
       <input type="hidden" id="base-url" name="base-url" tal:attributes="value context/absolute_url" />
@@ -103,16 +102,16 @@ jq(function(){
 		All <tal:block replace="num_items" i18n:name="count"/> items on this
 		page are selected. <a tal:attributes="href string:${context/absolute_url}/@@cmsui-structure" class="overlayLink">De-select all.</a>
               </span>
-	    </th>
-	    <th colspan="3" class="nosort numitems">
-	      <tal:folder tal:condition="python: folderish and num_items != batch.items_on_page">
-		<span tal:replace="context_state/object_title" /> contains <span tal:replace="num_items" /> items
-		(<a class="overlayLink" href="#" tal:attributes="href view/show_all_url">show all</a>)
-	      </tal:folder>
-	      <tal:block tal:condition="python: folderish and num_items == batch.items_on_page">
-		Showing all items.
-	      </tal:block>
-	    </th>
+        </th>
+        <th colspan="3" class="nosort numitems">
+          <tal:folder tal:condition="python: folderish and num_items != batch.items_on_page">
+        <span tal:replace="context_state/object_title" /> contains <span tal:replace="num_items" /> items
+        (<a class="overlayLink" href="#" tal:attributes="href view/show_all_url">show all</a>)
+          </tal:folder>
+          <tal:block tal:condition="python: folderish and num_items == batch.items_on_page">
+        Showing all items.
+          </tal:block>
+        </th>
           </tr>
 
         <tr tal:condition="view/folderitems">
@@ -122,29 +121,29 @@ jq(function(){
           <th class="nosort" id="foldercontents-select-column">&nbsp;</th>
           <th class="nosort column"
               id="foldercontents-title-column">&nbsp;<tal:title i18n:translate="listingheader_title"
-								>Title</tal:title>&nbsp;</th>
-					<th class="nosort column"
-					    id="foldercontents-creator-column">&nbsp;<tal:responsible i18n:translate="listingheader_creator"
-					    >Responsible</tal:responsible>&nbsp;</th>
+                                >Title</tal:title>&nbsp;</th>
+                    <th class="nosort column"
+                        id="foldercontents-creator-column">&nbsp;<tal:responsible i18n:translate="listingheader_creator"
+                        >Responsible</tal:responsible>&nbsp;</th>
           <th class="nosort column"
               id="foldercontents-modified-column">&nbsp;<tal:modified i18n:translate="listingheader_modified"
-								      >Modified</tal:modified>&nbsp;</th>
+                                      >Modified</tal:modified>&nbsp;</th>
           <th class="nosort column"
               id="foldercontents-status-column">&nbsp;<tal:state i18n:translate="listingheader_status"
-								 >State</tal:state>&nbsp;</th>
+                                 >State</tal:state>&nbsp;</th>
         </tr>
-	</thead>
-	
+    </thead>
+    
       <tbody tal:condition="batch">
-	<tal:items tal:repeat="item batch">
-	  <tr  tal:define="id item/id|item/getId;
-			   title item/title|item/Title|item/title_or_id;
-			   title_or_id python:title or id;"
-	       tal:attributes="class item/table_row_class;
-			       id string:folder-contents-item-${id};">
-	    
-	   <td tal:condition="view/show_sort_column" class="draggable">
-	     <tal:block tal:define="quoted_id item/quoted_id|python: view.quote_plus(id);">
+    <tal:items tal:repeat="item batch">
+      <tr  tal:define="id item/id|item/getId;
+               title item/title|item/Title|item/title_or_id;
+               title_or_id python:title or id;"
+           tal:attributes="class item/table_row_class;
+                   id string:folder-contents-item-${id};">
+        
+       <td tal:condition="view/show_sort_column" class="draggable">
+         <tal:block tal:define="quoted_id item/quoted_id|python: view.quote_plus(id);">
                <a href=""
                   title="Move item up"
                   class="overlayLink"
@@ -160,27 +159,27 @@ jq(function(){
                   tal:attributes="href string:${context/absolute_url}/folder_position?position=down&amp;id=${quoted_id}">
                  &#9660;
                </a>
-	     </tal:block>
-	   </td>
-	   <td>
+         </tal:block>
+       </td>
+       <td>
              <input type="checkbox"
-		    class="noborder"
-		    name="paths:list" id="#"
-		    value="#"
-		    tal:attributes="value   item/path|id;
-				    id      string:cb_${id};
-				    checked item/checked;
-				    alt     python:view.msg_select_item(item);
-				    title   python:view.msg_select_item(item)" />
+            class="noborder"
+            name="paths:list" id="#"
+            value="#"
+            tal:attributes="value   item/path|id;
+                    id      string:cb_${id};
+                    checked item/checked;
+                    alt     python:view.msg_select_item(item);
+                    title   python:view.msg_select_item(item)" />
              <input type="hidden" name="selected_obj_paths:list" value="#"
-		    tal:attributes="value item/path|id" />
+            tal:attributes="value item/path|id" />
              <label tal:content="title_or_id"
-		    tal:attributes="for string:cb_${id}" 
-		    class="hiddenStructure">
+            tal:attributes="for string:cb_${id}" 
+            class="hiddenStructure">
                Item Title
              </label>
-	   </td>
-	   <td>
+       </td>
+       <td>
              <img tal:replace="structure item/icon|nothing" />
              <a href="#" tal:attributes="href string:${item/view_url};
                                          title item/url_href_title|nothing;
@@ -188,24 +187,24 @@ jq(function(){
                <strong tal:omit-tag="not: item/is_browser_default|nothing"
                        tal:content="title_or_id"/>
              </a>
-	     
+         
              <span class="state-expired"
-		   tal:condition="item/is_expired|nothing"
-		   i18n:translate="time_expired">expired</span>
-	   </td>
-		
-	   <td tal:content="item/creator" />
-	   <td tal:content="item/modified"
+           tal:condition="item/is_expired|nothing"
+           i18n:translate="time_expired">expired</span>
+       </td>
+        
+       <td tal:content="item/creator" />
+       <td tal:content="item/modified"
                tal:attributes="class item/state_class|nothing">
              08/19/2001 03:01 AM
-	   </td>
-	   <td>
+       </td>
+       <td>
              <span i18n:translate=""
-		   tal:condition="item/state_title|nothing"
-		   tal:content="item/state_title"
-		   tal:attributes="class item/state_class|nothing" />
+           tal:condition="item/state_title|nothing"
+           tal:content="item/state_title"
+           tal:attributes="class item/state_class|nothing" />
              <span tal:condition="not: item/state_title|nothing">&nbsp;</span>
-	   </td>
+       </td>
           </tr>
         </tal:items>
       </tbody>
@@ -240,7 +239,7 @@ jq(function(){
   </div>
   </div>
   <br style="clear: both;" />
-  </div>
+
 </metal:content-core>
 </body>
 </html>

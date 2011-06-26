@@ -86,12 +86,12 @@ table.listing td.draggable {
     width: 1px;
 }
 
-#structure-dialog #portal-breadcrumbs {
+#overlay-breadcrumbs {
     font-size: 80%;
     margin-bottom: 1em;
     margin-left: 0.25em;
 }
-#structure-dialog #portal-breadcrumbs a {
+#overlay-breadcrumbs a {
     border-bottom: none;
     display: inline-block;
 }
@@ -117,12 +117,12 @@ div#structure-dialog .link-parent {
     border: 2px dashed red;
 }
 
-#structure-dialog #portal-breadcrumbs li {
+#structure-dialog #overlay-breadcrumbs li {
     font-size: 180%;
     display: inline-block;
 }
 
-#structure-dialog #portal-breadcrumbs span.crumb:after {
+#structure-dialog #overlay-breadcrumbs span.crumb:after {
     content: "/";
     margin-left: 0.5em;
     margin-right: 0.5em;
@@ -132,7 +132,7 @@ div#structure-dialog .link-parent {
     color: #205C90;
 }
 
-#structure-dialog #portal-breadcrumbs li span.current{
+#structure-dialog #overlay-breadcrumbs li span.current{
    font-size: 160%;
 }
 
