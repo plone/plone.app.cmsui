@@ -78,6 +78,7 @@ function eraseCookie(name) {
             }
         });
 
+        $('.portalMessage:visible').addClass('showNotify').hide();
     });
     $(window).load(function () {
         var menu_state = readCookie('__plone_menu'),
@@ -89,8 +90,9 @@ function eraseCookie(name) {
             toolbar.addClass(menu_state);
             iframe.height(toolbar.outerHeight());
             parent_body.css('margin-top', toolbar.outerHeight());
-            iframe.animate({'opacity': 1}, 300, function () {
-                $('.portalMessage:visible').each(function () {
+            toolbar.animate({'opacity': 1}, 300, function () {
+                iframe.css('background', 'transparent');
+                $('.showNotify').each(function () {
                     var type,
                         portal_message = $(this);
                     if (portal_message.hasClass('info')) {
@@ -109,10 +111,11 @@ function eraseCookie(name) {
             });
         } else {
             createCookie('__plone_menu', 'small');
-            toolbar.addClass('small');
+            toolbar
+                .addClass('small')
+                .css('opacity', 1);
             height = toolbar.outerHeight();            
             iframe.css({
-                'opacity': 1,
                 'top': -height,
                 'height': height
                 })

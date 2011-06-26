@@ -89,7 +89,7 @@ fieldset .fieldRequired,fieldset .required{font-size:10.068px;font-family:Verdan
 header{margin-bottom:20px;}
 footer{margin-top:20px;margin-bottom:10px;}
 html{overflow-y:visible;}
-#toolbar{margin:10px auto;width:100%;-webkit-box-shadow:0 2px 5px rgba(0, 0, 0, 0.5);-moz-box-shadow:0 2px 5px rgba(0, 0, 0, 0.5);box-shadow:0 2px 5px rgba(0, 0, 0, 0.5);margin-top:0;color:#ffffff;position:fixed;z-index:10000;}#toolbar:after{}
+#toolbar{margin:10px auto;width:100%;-webkit-box-shadow:0 2px 5px rgba(0, 0, 0, 0.5);-moz-box-shadow:0 2px 5px rgba(0, 0, 0, 0.5);box-shadow:0 2px 5px rgba(0, 0, 0, 0.5);margin-top:0;color:#ffffff;position:fixed;z-index:10000;opacity:0;}#toolbar:after{}
 #toolbar a{color:#ffffff;text-decoration:none;}
 #toolbar ul{list-style:none;list-style-image:none;padding:0;}#toolbar ul li{list-style:none;list-style-image:none;}
 #toolbar ul li{display:inline;}#toolbar ul li a{display:inline-block;padding:2.5px 1%;}
