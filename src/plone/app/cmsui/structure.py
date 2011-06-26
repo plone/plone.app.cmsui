@@ -93,7 +93,13 @@ class StructureView(BrowserView):
 
     def breadcrumbs(self):
         breadcrumbsView = getMultiAdapter((self.context, self.request), name='breadcrumbs_view')
-        return breadcrumbsView.breadcrumbs()
+        breadcrumbs = list(breadcrumbsView.breadcrumbs())
+        if self.context_state.is_default_page():
+            # then we need to mess with the breadcrumbs a bit.
+            parent = aq_parent(aq_inner(self.context))
+            breadcrumbs[-1] = {'absolute_url' : parent.absolute_url(), 'Title': parent.Title()}
+            breadcrumbs.append({'absolute_url' : self.context.absolute_url(), 'Title': self.context.Title()})
+        return breadcrumbs
 
     def contentsMethod(self):
         context = aq_inner(self.context)
@@ -169,12 +175,7 @@ class StructureView(BrowserView):
                 obj.ModificationDate, long_format=1)
 
             obj_type = obj.Type
-            if obj.portal_type in use_view_action:
-                view_url = url + '/view'
-            elif obj.is_folderish:
-                view_url = url + "/cmsui-structure"
-            else:
-                view_url = url
+            view_url = url + "/cmsui-structure"
 
             is_browser_default = len(browser_default[1]) == 1 and (
                 obj.id == browser_default[1][0])
