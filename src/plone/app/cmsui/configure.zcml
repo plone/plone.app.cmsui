@@ -47,6 +47,13 @@
         />
 
     <browser:page
+        name="cmsui-notifications"
+        for="*"
+        template="templates/notifications.pt"
+        permission="plone.ViewCMSUI"
+        />
+
+    <browser:page
         name="cmsui-overlay-container"
         for="*"
         class=".overlaycontainer.OverlayContainer"

@@ -21,7 +21,6 @@
           position: fixed;
           _position: absolute;
           _top: expression(eval((document.body.scrollTop)?document.body.scrollTop:document.documentElement.scrollTop));
-          opacity: 1;
           left: 0;
           top: 0;
           width: 100%;
