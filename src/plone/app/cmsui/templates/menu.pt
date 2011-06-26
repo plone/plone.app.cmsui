@@ -61,7 +61,7 @@
         <div class="grid_7">
             <!-- Personal links -->
             <!-- In the flexible grid, when inside a cell we get 12 cells to use again. -->
-            <ul id="personal-tools" class="alpha grid_10">
+            <ul id="personal-tools" class="alpha grid_9">
                 <li id="cmsui-logged-in-as" i18n:translate="cmsui_logged_in_as"><a
                     class="overlayLink" tal:attributes="href view/userHomeLinkURL">Logged in as <span
                     i18n:name="name" tal:replace="view/userName" /></a></li><li
@@ -70,7 +70,7 @@
             </ul>
 
             <!-- Edit bar toggle -->
-            <div class="omega grid_2">
+            <div class="omega grid_3">
                 <a href="#" id="manage-page-open">Edit content &#9660;</a>
                 <a href="#" id="manage-page-close">Hide edit bar &#9650;</a>
             </div>
