@@ -23,12 +23,7 @@ import ticket as ticketmod
 # from collective.quickupload import logger
 # from collective.quickupload.browser.quickupload_settings import IQuickUploadControlPanel
 
-try :
-    # python 2.6
-    import json
-except :
-    # plone 3.3
-    import simplejson as json
+import json
 
 def decodeQueryString(QueryString):
   """decode *QueryString* into a dictionary, as ZPublisher would do"""
