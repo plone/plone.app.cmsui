@@ -1,0 +1,18 @@
+<registry>
+    
+    <!-- TODO: Should be in CMFPlone -->
+    
+    <records interface="Products.ResourceRegistries.interfaces.settings.IResourceRegistriesSettings">
+        
+        <value key="resourceBundlesForThemes">
+            <element key="Sunburst Theme">
+                <element>default</element>
+            </element>
+            <element key="CMSUI">
+                <element>cmsui</element>
+            </element>
+        </value>
+        
+    </records>
+    
+</registry>

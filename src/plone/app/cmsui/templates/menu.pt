@@ -19,7 +19,8 @@
     -->
 
     <tal:resourceregistries>
-      <tal:styles replace="structure provider:plone.resourceregistries.kineticstylesheets" />
+      <tal:styles replace="structure provider:plone.resourceregistries.styles" />
+      <tal:kss replace="structure provider:plone.resourceregistries.kineticstylesheets" />
       <tal:scripts replace="structure provider:plone.resourceregistries.scripts" />
     </tal:resourceregistries>
     

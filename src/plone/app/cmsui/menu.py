@@ -14,10 +14,13 @@ class Menu(BrowserView):
     EDIT_ACTION_ID = 'edit'
     EXCLUDED_ACTION_IDS = ('view', 'edit',)
     DEFAULT_ACTION_ICON = '/++resource++plone.app.cmsui/icons/List.png'
+    SKIN_NAME = "CMSUI"
     
     def __call__(self):
         # Disable theming
         self.request.response.setHeader('X-Theme-Disabled', 'True')
+        
+        self.context.changeSkin(self.SKIN_NAME)
         
         # Commonly useful variables
         self.contextState = getMultiAdapter((self.context, self.request), name=u'plone_context_state')
