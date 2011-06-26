@@ -716,6 +716,9 @@ button:hover {
   position: fixed !important;
 }
 /* @group Overlays */
+#overlay-content {
+  padding: 1em 2em;
+}
 #overlay-content dl dt {
   font-size: 16.296px;
 }

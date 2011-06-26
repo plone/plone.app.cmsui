@@ -51,8 +51,10 @@ div.overlay div.close {
 }
 
 .pb-ajax > div {
-    width: 92%;
-    padding: 1em;
+    /* WTF? */
+    /* width: 92%; */
+    width: 100%;
+    padding: 1em 0; /* we let grid put proper paddings/margins */
 }
 
 .pb-ajax .documentActions {display:none}
