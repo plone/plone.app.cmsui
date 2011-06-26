@@ -77,38 +77,26 @@ jq(function(){
              tal:condition="view/folderitems">
 	<thead>
           <tr>
-            <th colspan="3" class="nosort">
-	      <a tal:attributes="href view/selectscreen_url" id="foldercontents-selectall" class="overlayLink">select all</a>
-	    </th>
-	    <th colspan="3" class="nosort" class="numitems">
-	      <tal:folder tal:condition="python: folderish and num_items != len(batch)">
-		<span tal:replace="context_state/object_title" /> contains <span tal:replace="num_items" /> items
-		(<a href="#">show all</a>)
-	      </tal:folder>						
-	    </th>
-          </tr>
-          <tr tal:condition="view/show_select_all_items">
-            <th colspan="6" class="nosort">
-              <span tal:omit-tag="" i18n:translate="tableheading_all_items_selected">
-		All <tal:block replace="python: view.batch.items_on_page" i18n:name="count"/> items on this
-		page are selected. 
-              </span>
-              <a tal:attributes="href view/selectall_url" 
+	    <th colspan="4" class="nosort">
+	      <a tal:attributes="href view/selectall_url" tal:condition="not: view/selectall"
 		 id="foldercontents-selectall-completebatch" class="overlayLink"
 		 i18n:translate="tableheading_select_all_items">Select all 
-		<tal:block replace="view/batch/size" i18n:name="count"/> items in this folder.</a>
-            </th>
-          </tr>
-          <tr tal:condition="view/selectall">
-            <th colspan="6" class="nosort">
-              <span tal:omit-tag="" i18n:translate="tableheading_all_items_selected_in_folder">
-		All <tal:block replace="view/batch/size" i18n:name="count"/> items in this folder
-		are selected. 
+		<tal:block replace="num_items" i18n:name="count"/> items in this folder.</a>
+	      <span tal:omit-tag="" i18n:translate="tableheading_all_items_selected" tal:condition="view/selectall">
+		All <tal:block replace="num_items" i18n:name="count"/> items on this
+		page are selected. 
               </span>
-	      <a tal:attributes="href view/selectnone_url"  i18n:translate="tableheading_clear_selection"
-               id="foldercontents-clearselection" class="overlayLink">Clear selection</a>
-          </th>
-        </tr>
+	    </th>
+	    <th colspan="3" class="nosort numitems">
+	      <tal:folder tal:condition="python: folderish and num_items != batch.items_on_page">
+		<span tal:replace="context_state/object_title" /> contains <span tal:replace="num_items" /> items
+		(<a class="overlayLink" href="#" tal:attributes="href view/show_all_url">show all</a>)
+	      </tal:folder>
+	      <tal:block tal:condition="python: folderish and num_items == batch.items_on_page">
+		Showing all items
+	      </tal:block>
+	    </th>
+          </tr>
 
         <tr>
           <th class="nosort column sorter" id="foldercontents-order-column"
@@ -130,9 +118,9 @@ jq(function(){
         </tr>
 	</thead>
 	
-	<metal:block tal:condition="view/batch">
+	<metal:block tal:condition="batch">
           <tbody>
-            <tal:items tal:repeat="item view/batch">
+            <tal:items tal:repeat="item batch">
 	      <tr  tal:define="id item/id|item/getId;
                                title item/title|item/Title|item/title_or_id;
                                title_or_id python:title or id;"

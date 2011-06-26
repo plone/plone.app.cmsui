@@ -37,6 +37,9 @@ tr.dragging{ outline: 2px solid #FFD700; border-bottom:none; }
 tr.dragging td{ border-bottom: none }
 tr.dragindicator{ outline: none;}
 
+div.overlay table.listing th.numitems{
+   text-align: right;
+}
 
 div.overlay table.listing *{ 
    font-size: 100%; 

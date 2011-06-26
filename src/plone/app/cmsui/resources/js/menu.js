@@ -19,7 +19,9 @@ function contractMenu(offset) {
 function openLinksInOverlay() {
     $("a.overlayLink").live('click', function(){
         var url = $(this).attr("href");
-        $(".pb-ajax").load(url + ' ' + common_content_filter);
+        $(".pb-ajax").load(url + ' ' + common_content_filter, function(){
+	    $("#listing-table").ploneDnD();
+	});
         return false;
     });
 }
@@ -66,11 +68,11 @@ function eraseCookie(name) {
                 top: 150,
                 onBeforeLoad: function (e) { 
                     offset = expandMenu();
-                    $("#listing-table").ploneDnD();
                     return true; 
                 },
                 onLoad: function (e) {
                     openLinksInOverlay();
+		    $("#listing-table").ploneDnD();
                     return true; 
                 }, 
                 onClose: function (e) { 

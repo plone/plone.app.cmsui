@@ -34,11 +34,10 @@ class StructureView(BrowserView):
         self.show_all = self.request.get('show_all', '').lower() == 'true'
 
         selection = self.request.get('select')
-        if selection == 'screen':
-            self.selectcurrentbatch=True
-        elif selection == 'all':
+        if selection == 'all':
             self.selectall = True
-
+        else:
+            self.selectall = False
 
         self.pagenumber =  int(self.request.get('pagenumber', 1))
 
@@ -264,11 +263,8 @@ class StructureView(BrowserView):
         return len(self.folderitems) <= self.pagesize
 
     def set_checked(self, item):
-        selected = self.selected(item)
-        item['checked'] = selected and 'checked' or None
+        item['checked'] = self.selectall and 'checked' or None
         item['table_row_class'] = item.get('table_row_class', '')
-        if selected:
-            item['table_row_class'] += ' selected'
 
     @property
     @instance.memoize
@@ -291,28 +287,13 @@ class StructureView(BrowserView):
     selectall = property(_get_select_all, _set_select_all)
 
     # options
-    _selectcurrentbatch = False
     _select_all = False
-
-    def _get_select_currentbatch(self):
-        return self._selectcurrentbatch
-
-    def _set_select_currentbatch(self, value):
-        self._selectcurrentbatch = value
-        if self._selectcurrentbatch and self.show_all or (
-            len(self.folderitems) <= self.pagesize):
-            self.selectall = True
-
-    selectcurrentbatch = property(_get_select_currentbatch,
-                                  _set_select_currentbatch)
 
     def _get_select_all(self):
         return self._select_all
 
     def _set_select_all(self, value):
         self._select_all = bool(value)
-        if self._select_all:
-            self._selectcurrentbatch = True
 
     selectall = property(_get_select_all, _set_select_all)
 
@@ -334,10 +315,6 @@ class StructureView(BrowserView):
         return self.selectnone_url+'&select=all'
 
     @property
-    def selectscreen_url(self):
-        return self.selectnone_url+'&select=screen'
-
-    @property
     def selectnone_url(self):
         base = self.view_url + '?pagenumber=%s' % (self.pagenumber)
         if self.show_all:
@@ -347,11 +324,6 @@ class StructureView(BrowserView):
     @property
     def show_all_url(self):
         return self.view_url + '?show_all=true'
-
-    def selected(self, item):
-        if self.selectcurrentbatch:
-            return True
-        return False
 
     def quote_plus(self, string):
         return urllib.quote_plus(string)
