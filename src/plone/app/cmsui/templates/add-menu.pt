@@ -7,31 +7,37 @@
       i18n:domain="plone">
 <body>
 
-    <metal:content-core fill-slot="body">
-      <div id="content">
-        <h1 class="documentFirstHeading" i18n:translate="heading_add_new_item">Add content</h1>
-
-        <div>
-            Adding content to
-            <a tal:attributes="href portal_state/navigation_root_url">Home</a>
-            <tal:children tal:repeat="crumb view/breadcrumbs">
-                &rsaquo;
-                <a tal:content="crumb/Title"
-                   tal:attributes="href crumb/absolute_url" />
-            </tal:children>
-        </div>
-
+<metal:content-core fill-slot="body">
+        <header>
+            <h1 class="documentFirstHeading" i18n:translate="heading_add_new_item">Add content</h1>
+            <p id="overlay-breadcrumbs">
+                Adding content to
+                <a tal:attributes="href portal_state/navigation_root_url">Home</a>
+                <tal:children tal:repeat="crumb view/breadcrumbs">
+                    &rsaquo;
+                    <a tal:content="crumb/Title"
+                       tal:attributes="href crumb/absolute_url" />
+                </tal:children>
+            </p>
+        </header>
 
         <div class="grid_5">
             <dl>
-                <a class="overlayLink" tal:repeat="type view/allowedTypes"
-                   tal:attributes="href type/action">
-                    <dt tal:content="type/title"
-                        tal:attributes="class string:contenttype-${type/extra/id}"></dt>
-                    <dd tal:content="type/description"></dd>
-                </a>
+                <tal:items repeat="type view/allowedTypes">
+                    <dt tal:attributes="class string:contenttype-${type/extra/id}">
+                        <a class="overlayLink" tal:attributes="href type/action"
+                           tal:content="type/title">
+                            Title
+                        </a>
+                    </dt>
+
+                    <dd tal:content="type/description">
+                        Description
+                    </dd>
+                </tal:items>
             </dl>
         </div>
+
         <div class="grid_7">
 
             <!--
@@ -46,11 +52,9 @@
                 <input type="hidden" 
                        name="uploadData"
                        class="uploadData"
-                       tal:attributes="value view/getDataForUploadUrl" />               
+                       tal:attributes="value view/getDataForUploadUrl" />
             </div>
         </div>
-      </div> 
-    
 </metal:content-core>
 
 </body>
