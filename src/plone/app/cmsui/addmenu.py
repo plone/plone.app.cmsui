@@ -106,8 +106,6 @@ class FileUploadForm(form.Form):
         # Redirect to the view page.
         self.request.response.redirect("%s/view" % container[id].absolute_url())
 
-FileUploadFormView = wrap_form(FileUploadForm)
-
 
 class AddMenu(BrowserView):
     """Add menu overlay
