@@ -60,8 +60,8 @@
                     Status message
                 </div>
 
-                <metal:slot define-slot="body">
-                    <div id="overlay-content">
+                <div id="overlay-content">
+                    <metal:slot define-slot="body">
 
                         <metal:header define-slot="header" tal:content="nothing">
                             Visual Header
@@ -70,8 +70,8 @@
                         <metal:bodytext define-slot="main" tal:content="nothing">
                             Body
                         </metal:bodytext>
-                    </div>
-                </metal:slot>
+                    </metal:slot>
+                </div>
 
             </div>
         </metal:block>
