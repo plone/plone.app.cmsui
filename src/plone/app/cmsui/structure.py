@@ -34,13 +34,14 @@ class StructureView(BrowserView):
         self.show_all = self.request.get('show_all', '').lower() == 'true'
 
         selection = self.request.get('select')
-        if selection == 'screen':
-            self.selectcurrentbatch=True
-        elif selection == 'all':
+        if selection == 'all':
             self.selectall = True
-
+        else:
+            self.selectall = False
 
         self.pagenumber =  int(self.request.get('pagenumber', 1))
+
+        self.context_state = getMultiAdapter((self.context, self.request), name=u'plone_context_state')
 
         return self.index()
 
@@ -92,7 +93,13 @@ class StructureView(BrowserView):
 
     def breadcrumbs(self):
         breadcrumbsView = getMultiAdapter((self.context, self.request), name='breadcrumbs_view')
-        return breadcrumbsView.breadcrumbs()
+        breadcrumbs = list(breadcrumbsView.breadcrumbs())
+        if self.context_state.is_default_page():
+            # then we need to mess with the breadcrumbs a bit.
+            parent = aq_parent(aq_inner(self.context))
+            breadcrumbs[-1] = {'absolute_url' : parent.absolute_url(), 'Title': parent.Title()}
+            breadcrumbs.append({'absolute_url' : self.context.absolute_url(), 'Title': self.context.Title()})
+        return breadcrumbs
 
     def contentsMethod(self):
         context = aq_inner(self.context)
@@ -168,12 +175,7 @@ class StructureView(BrowserView):
                 obj.ModificationDate, long_format=1)
 
             obj_type = obj.Type
-            if obj.portal_type in use_view_action:
-                view_url = url + '/view'
-            elif obj.is_folderish:
-                view_url = url + "/cmsui-structure"
-            else:
-                view_url = url
+            view_url = url + "/cmsui-structure"
 
             is_browser_default = len(browser_default[1]) == 1 and (
                 obj.id == browser_default[1][0])
@@ -264,11 +266,8 @@ class StructureView(BrowserView):
         return len(self.folderitems) <= self.pagesize
 
     def set_checked(self, item):
-        selected = self.selected(item)
-        item['checked'] = selected and 'checked' or None
+        item['checked'] = self.selectall and 'checked' or None
         item['table_row_class'] = item.get('table_row_class', '')
-        if selected:
-            item['table_row_class'] += ' selected'
 
     @property
     @instance.memoize
@@ -291,28 +290,13 @@ class StructureView(BrowserView):
     selectall = property(_get_select_all, _set_select_all)
 
     # options
-    _selectcurrentbatch = False
     _select_all = False
-
-    def _get_select_currentbatch(self):
-        return self._selectcurrentbatch
-
-    def _set_select_currentbatch(self, value):
-        self._selectcurrentbatch = value
-        if self._selectcurrentbatch and self.show_all or (
-            len(self.folderitems) <= self.pagesize):
-            self.selectall = True
-
-    selectcurrentbatch = property(_get_select_currentbatch,
-                                  _set_select_currentbatch)
 
     def _get_select_all(self):
         return self._select_all
 
     def _set_select_all(self, value):
         self._select_all = bool(value)
-        if self._select_all:
-            self._selectcurrentbatch = True
 
     selectall = property(_get_select_all, _set_select_all)
 
@@ -334,10 +318,6 @@ class StructureView(BrowserView):
         return self.selectnone_url+'&select=all'
 
     @property
-    def selectscreen_url(self):
-        return self.selectnone_url+'&select=screen'
-
-    @property
     def selectnone_url(self):
         base = self.view_url + '?pagenumber=%s' % (self.pagenumber)
         if self.show_all:
@@ -348,14 +328,38 @@ class StructureView(BrowserView):
     def show_all_url(self):
         return self.view_url + '?show_all=true'
 
-    def selected(self, item):
-        if self.selectcurrentbatch:
-            return True
-        return False
-
     def quote_plus(self, string):
         return urllib.quote_plus(string)
 
+
+    @instance.memoize
+    def object_buttons(self):
+        """Get the personal actions
+        """
+        
+        actions = []
+        for action in self.context_state.actions('object_buttons'):
+            actions.append({
+                'id': action['id'],
+                'url': action['url'],
+                'title': action['title'],
+                'description': action['description'],
+            })
+        
+        return actions
+
+    def object_info(self):
+        info = []
+        pt = getToolByName(self.context, 'portal_types')
+        fti = pt.listTypeTitles().get(self.context.portal_type, 'unknown')
+        info.append({'name' : 'Kind', 'info' : fti.title})
+        info.extend([
+                {'name' : 'Created', 'info' : self.context.created()},
+                {'name' : 'Modified', 'info' : self.context.modified()},
+                {'name' : 'Owner', 'info' : self.context.getOwner()},
+                ])
+        return info
+        
 
 class MoveItem(BrowserView):
     """

@@ -47,6 +47,7 @@ function eraseCookie(name) {
     $.fn.loadOverlay = function(href, data, callback) {
         var $overlay = this.closest('.pb-ajax');
         this.load(href, data, function() {
+	    $("#listing-table").ploneDnD(); // need to initialize again...
             if (callback != undefined) {
                 callback.apply(this, arguments);
             }
@@ -70,9 +71,12 @@ function eraseCookie(name) {
                 top: 130,
                 onBeforeLoad: function (e) { 
                     offset = expandMenu();
-                    $("#listing-table").ploneDnD();
                     return true; 
                 },
+                onLoad: function (e) {
+		    $("#listing-table").ploneDnD();
+                    return true; 
+                }, 
                 onClose: function (e) { 
                     contractMenu(offset);
                     return true; 
