@@ -20,7 +20,8 @@ class Menu(BrowserView):
         # Disable theming
         self.request.response.setHeader('X-Theme-Disabled', 'True')
         
-        self.context.changeSkin(self.SKIN_NAME)
+        # Set the CMSUI skin so that we get the correct resources
+        # self.context.changeSkin(self.SKIN_NAME, self.request)
         
         # Commonly useful variables
         self.contextState = getMultiAdapter((self.context, self.request), name=u'plone_context_state')
