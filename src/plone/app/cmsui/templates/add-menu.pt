@@ -47,7 +47,7 @@
                            name="uploadData"
                            class="uploadData"
                            tal:attributes="value view/getDataForUploadUrl" />               
-                </div
+                </div>
 
             </div>
         </div>
