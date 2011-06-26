@@ -13,16 +13,16 @@
     tal:attributes="lang lang;">
 
 <head>
-    
+
     <!-- TODO: Manage overlay resources and shared elements here.
                See http://projects.plone.org/browse/NEWUI-83 and
                    http://projects.plone.org/browse/NEWUI-86
-      -->    
-    
+      -->
+
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
     <!-- Forces IE8+ into newest rendering engine even if on an intranet. This has to be defined before any script/style tags. -->
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" /> 
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
     <metal:baseslot define-slot="base">
         <base tal:attributes="href plone_view/renderBase" /><!--[if lt IE 7]></base><![endif]-->
@@ -34,9 +34,9 @@
       <tal:scripts replace="structure provider:plone.resourceregistries.scripts" />
     </tal:resourceregistries>
 
-    <tal:comment replace="nothing"> 
+    <tal:comment replace="nothing">
         Various slots where you can insert elements in the header from a template.
-        
+
         These will then be discarded when included as an overlay ;)
     </tal:comment>
     <metal:topslot define-slot="top_slot" />
