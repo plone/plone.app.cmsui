@@ -192,7 +192,7 @@ class QuickUploadInit(BrowserView):
             ul_size_limit          = '1',
             ul_xhr_size_limit      = '0',
             ul_sim_upload_limit    = '1',
-            ul_button_text         = self._utranslate(u'Browse'),
+            ul_button_text         = self._utranslate(u'Choose one or more files to upload:'),
             ul_draganddrop_text    = self._utranslate(u'Drag and drop files to upload'),
             ul_msg_all_sucess      = self._utranslate( u'All files uploaded with success.'),
             ul_msg_some_sucess     = self._utranslate( u' files uploaded with success, '),
@@ -206,7 +206,7 @@ class QuickUploadInit(BrowserView):
             ul_error_bad_ext       = self._utranslate( u"This file has invalid extension :"),
             ul_error_onlyallowed   = self._utranslate( u"Only allowed :"),
             ul_error_no_permission = self._utranslate( u"You don't have permission to add this content in this place."),
-            ul_error_always_exists = self._utranslate( u"This file always exists with the same name on server :"),
+            ul_error_always_exists = self._utranslate( u"This file already exists with the same name on server :"),
             ul_error_zodb_conflict = self._utranslate( u"A data base conflict error happened when uploading this file :"),
             ul_error_server        = self._utranslate( u"Server error, please contact support and/or try again."),
         )        
