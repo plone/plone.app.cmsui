@@ -2,5 +2,6 @@
     <version>1</version>
     <dependencies>
         <dependency>profile-plone.app.cmsui:z_bbb</dependency>
+        <dependency>profile-collective.quickupload:default</dependency>
     </dependencies>
 </metadata>
