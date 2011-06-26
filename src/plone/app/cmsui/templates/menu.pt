@@ -25,17 +25,15 @@
     </tal:resourceregistries>
 
     <script type="text/javascript" src="++resource++plone.app.cmsui/js/menu.js"></script>
+    <script type="text/javascript" src="++resource++plone.app.cmsui/js/libs/fileuploader.js"></script>
+    <script type="text/javascript" src="@@quick_upload_init"></script>
     <script type="text/javascript" src="++resource++plone.app.cmsui/js/dragdropreorder.js"></script>
-    <script type="text/javascript" src="++resource++plone.app.cmsui/js/structure.js"></script>
-
-    <script type="text/javascript" src="++resource++plone.app.cmsui/js/plone.notify.js"></script>
 
     <link rel="stylesheet" href="++resource++plone.app.cmsui/css/boilerplate.css" />
     <link rel="stylesheet" href="++resource++plone.app.cmsui/css/authoring.css" />
     <link rel="stylesheet" href="++resource++plone.app.cmsui/css/sprites.css" />
-    <link rel="stylesheet" href="++resource++plone.app.cmsui/css/menu.css" />
-    <link rel="stylesheet" href="++resource++plone.app.cmsui/css/notify.css" />
-    <link rel="stylesheet" href="++resource++plone.app.cmsui/css/structure.css" />
+    <link rel="stylesheet" href="++resource++plone.app.cmsui/css/menu.css" />    
+    <link rel="stylesheet" href="++resource++plone.app.cmsui/css/fileuploader.css" />
     <link rel="stylesheet" href="member.css" />
 
 </head>
@@ -61,19 +59,22 @@
             </ul>
         </nav>
 
-        <!-- Personal links -->
-        <ul id="personal-tools" class="grid_5">
-            <li id="cmsui-logged-in-as" i18n:translate="cmsui_logged_in_as"><a
-                class="overlayLink" tal:attributes="href view/userHomeLinkURL">Logged in as <span
-                i18n:name="name" tal:replace="view/userName" /></a></li><li
-            class="overlayLink" tal:repeat="action view/personalActions" tal:attributes="id string:cmsui-personallink-${action/id}"><a
-            class="overlayLink" tal:attributes="href action/url" tal:content="action/title" /></li>
-        </ul>
+        <div class="grid_7">
+            <!-- Personal links -->
+            <!-- In the flexible grid, when inside a cell we get 12 cells to use again. -->
+            <ul id="personal-tools" class="alpha grid_9">
+                <li id="cmsui-logged-in-as" i18n:translate="cmsui_logged_in_as"><a
+                    class="overlayLink" tal:attributes="href view/userHomeLinkURL">Logged in as <span
+                    i18n:name="name" tal:replace="view/userName" /></a></li><li
+                class="overlayLink" tal:repeat="action view/personalActions" tal:attributes="id string:cmsui-personallink-${action/id}"><a
+                class="overlayLink" tal:attributes="href action/url" tal:content="action/title" /></li>
+            </ul>
 
-        <!-- Edit bar toggle -->
-        <div class="grid_2">
-            <a href="#" id="manage-page-open">Edit content &#9660;</a>
-            <a href="#" id="manage-page-close">Hide edit bar &#9650;</a>
+            <!-- Edit bar toggle -->
+            <div class="omega grid_3">
+                <a href="#" id="manage-page-open">Edit content &#9660;</a>
+                <a href="#" id="manage-page-close">Hide edit bar &#9650;</a>
+            </div>
         </div>
     </div>
 
@@ -132,7 +133,7 @@
             <ul id="folder-actions">
                 <li id="folder-add_content">
                     <a class="overlayLink" href="" 
-                       tal:attributes="href string:${view/baseURL}/@@cmsui-add-content">
+                       tal:attributes="href string:${plone_view/getCurrentFolderUrl}/@@cmsui-add-content">
                     Add Content
                     </a>
                 </li>

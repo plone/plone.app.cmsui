@@ -30,8 +30,9 @@ function createCookie(name, value, days) {
 function readCookie(name) {
     var nameEQ = name + "=";
     var ca = document.cookie.split(';');
-    for (var i=0; i<ca.length; i++) {
-        var c = ca[i];
+    var c;
+    for (i=0; i<ca.length; i++) {
+        c = ca[i];
         while (c.charAt(0)===' ') { c = c.substring(1, c.length); }
         if (c.indexOf(nameEQ) === 0) { return c.substring(nameEQ.length, c.length); }
     }
@@ -74,7 +75,8 @@ function eraseCookie(name) {
                     return true; 
                 },
                 onLoad: function (e) {
-		    $("#listing-table").ploneDnD();
+                    loadUploader();
+                    $("#listing-table").ploneDnD();
                     return true; 
                 }, 
                 onClose: function (e) { 
@@ -89,8 +91,6 @@ function eraseCookie(name) {
             $(this).closest('.pb-ajax').loadOverlay(url + ' ' + common_content_filter);
             return false;
         });
-
-        $('.portalMessage:visible').addClass('showNotify').hide();
     });
     $(window).load(function () {
         var menu_state = readCookie('__plone_menu'),
@@ -98,12 +98,24 @@ function eraseCookie(name) {
             parent_body = $('body', window.parent.document),
             toolbar = $('#toolbar'),
             height;
+
+        $('.portalMessage:visible').addClass('showNotify').hide();
+
         if (menu_state === 'small' || menu_state === 'large') {
             toolbar.addClass(menu_state);
             iframe.height(toolbar.outerHeight());
             parent_body.css('margin-top', toolbar.outerHeight());
             toolbar.animate({'opacity': 1}, 300, function () {
                 iframe.css('background', 'transparent');
+
+                // Check if an overlay should be opened
+                var url = window.parent.document.location.href.match(/#!\/menu\/(.*)$/);
+                if (url) {
+                    var button = $('#' + url[1] + ' > a');
+                    if (button.length !== 0) {
+                        button.click();
+                    }
+                }
 
                 // Append iframe to the document
                 parent_body.append(
@@ -113,8 +125,8 @@ function eraseCookie(name) {
                             'id': 'plone-cmsui-notifications'
                         })
                         .css({
-                            'top': toolbar.outerHeight() + 10,
-                            'right': '10px',
+                            'top': toolbar.outerHeight(),
+                            'right': 0,
                             'margin': 0,
                             'padding': 0,
                             'border': 0,
@@ -123,8 +135,8 @@ function eraseCookie(name) {
                             'position': 'fixed',
                             '_position': 'absolute',
                             '_top': 'expression(eval((document.body.scrollTop)?document.body.scrollTop:document.documentElement.scrollTop))',
-                            'width': '300px',
-                            'height': 0,
+                            'width': '320px',
+                            'height': '0px',
                             'z-index': 11000
                         })
                 );
@@ -138,7 +150,7 @@ function eraseCookie(name) {
             iframe.css({
                 'top': -height,
                 'height': height
-                })
+                });
             iframe.animate({'top': 0}, 1000);
             parent_body.animate({'margin-top': toolbar.outerHeight()}, 1000);
         }
@@ -168,9 +180,135 @@ function eraseCookie(name) {
             createCookie('__plone_height', height);
             return false;
         });
-
-        $('#folder-contents a').click(function () {
-            return false;
-        });
     });
+    
+    // workaround this MSIE bug :
+    // https://dev.plone.org/plone/ticket/10894
+    if (jQuery.browser.msie) jQuery("#settings").remove();
+    var Browser = {};
+    Browser.onUploadComplete = function() {
+        window.location.reload();
+    }
+    loadUploader = function() {
+        var ulContainer = jQuery('.uploaderContainer');
+        ulContainer.each(function(){
+            var uploadUrl =  jQuery('.uploadUrl', this).val();
+            var uploadData =  jQuery('.uploadData', this).val();
+            var UlDiv = jQuery(this);
+            jQuery.ajax({
+                       type: 'GET',
+                       url: uploadUrl,
+                       data: uploadData,
+                       dataType: 'html',
+                       contentType: 'text/html; charset=utf-8', 
+                       success: function(html) { 
+                          UlDiv.html(html);             
+                       } });    
+        }); 
+    }
+    jQuery(document).ready(loadUploader);    
+    
+    
 }(jQuery));
+
+
+/**
+ *
+ * JQuery Helpers for Plone Quick Upload
+ *   
+ */    
+
+var PloneQuickUpload = {};
+    
+PloneQuickUpload.addUploadFields = function(uploader, domelement, file, id, fillTitles, fillDescriptions) {
+    var blocFile;
+    if (fillTitles || fillDescriptions)  {
+        blocFile = uploader._getItemByFileId(id);
+        if (typeof id == 'string') id = parseInt(id.replace('qq-upload-handler-iframe',''));
+    }
+    if (fillDescriptions)  {
+        var labelfiledescription = jQuery('#uploadify_label_file_description').val();
+        jQuery('.qq-upload-cancel', blocFile).after('\
+                  <div class="uploadField">\
+                      <label>' + labelfiledescription + '&nbsp;:&nbsp;</label> \
+                      <textarea rows="2" \
+                             class="file_description_field" \
+                             id="description_' + id + '" \
+                             name="description" \
+                             value="" />\
+                  </div>\
+                   ')
+    }
+    if (fillTitles)  {
+        var labelfiletitle = jQuery('#uploadify_label_file_title').val();
+        jQuery('.qq-upload-cancel', blocFile).after('\
+                  <div class="uploadField">\
+                      <label>' + labelfiletitle + '&nbsp;:&nbsp;</label> \
+                      <input type="text" \
+                             class="file_title_field" \
+                             id="title_' + id + '" \
+                             name="title" \
+                             value="" />\
+                  </div>\
+                   ')
+    }
+    PloneQuickUpload.showButtons(uploader, domelement);
+}
+
+PloneQuickUpload.showButtons = function(uploader, domelement) {
+    var handler = uploader._handler;
+    if (handler._files.length) {
+        jQuery('.uploadifybuttons', jQuery(domelement).parent()).show();
+        return 'ok';
+    }
+    return false;
+}
+
+PloneQuickUpload.sendDataAndUpload = function(uploader, domelement, typeupload) {
+    var handler = uploader._handler;
+    var files = handler._files;
+    var missing = 0;
+    for ( var id = 0; id < files.length; id++ ) {
+        if (files[id]) {
+            var fileContainer = jQuery('.qq-upload-list li', domelement)[id-missing];
+            var file_title = '';
+            if (fillTitles)  {
+                file_title = jQuery('.file_title_field', fileContainer).val();
+            }
+            var file_description = '';
+            if (fillDescriptions)  {
+                file_description = jQuery('.file_description_field', fileContainer).val();
+            }
+            uploader._queueUpload(id, {'title': file_title, 'description': file_description, 'typeupload' : typeupload});
+        }
+        // if file is null for any reason jq block is no more here
+        else missing++;
+    }
+}    
+PloneQuickUpload.onAllUploadsComplete = function(){
+    Browser.onUploadComplete();
+}
+PloneQuickUpload.clearQueue = function(uploader, domelement) {
+    var handler = uploader._handler;
+    var files = handler._files;
+    for ( var id = 0; id < files.length; id++ ) {
+        if (files[id]) {
+            handler.cancel(id);
+        }
+        jQuery('.qq-upload-list li', domelement).remove();
+        handler._files = [];
+        if (typeof handler._inputs != 'undefined') handler._inputs = {};
+    }    
+}    
+PloneQuickUpload.onUploadComplete = function(uploader, domelement, id, fileName, responseJSON) {
+    var uploadList = jQuery('.qq-upload-list', domelement);
+    if (responseJSON.success) {        
+        window.setTimeout( function() {
+            jQuery(uploader._getItemByFileId(id)).remove();
+            // after the last upload, if no errors, reload the page
+            var newlist = jQuery('li', uploadList);
+            if (! newlist.length) window.setTimeout( PloneQuickUpload.onAllUploadsComplete, 5);       
+        }, 50);
+    }
+    
+}

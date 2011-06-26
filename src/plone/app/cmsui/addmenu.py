@@ -1,3 +1,5 @@
+from Acquisition import aq_inner
+from Products.CMFCore.utils import getToolByName
 from plone.app.z3cform.layout import wrap_form
 from plone.i18n.normalizer.interfaces import IIDNormalizer
 from plone.namedfile.field import NamedFile
@@ -74,6 +76,7 @@ class FileUploadForm(form.Form):
         data, errors = self.extractData()
         if errors:
             return
+            
         # Context may not be a container, get one.
         context_state = getMultiAdapter((self.context, self.request), name="plone_context_state")
         container = context_state.folder()
@@ -87,13 +90,23 @@ class FileUploadForm(form.Form):
         chooser = INameChooser(container)
         id = chooser._findUniqueName(id, None)
 
-        # create the object
-        container.invokeFactory('File', id=id, title=title)
-        container[id].setFile(data['file'].data)
-        
-        self.request.response.redirect("%s/view" % container[id].absolute_url())
+        # Determine the Content Type
+        ct_reg = getToolByName(self.context, 'content_type_registry')
+        typeName = ct_reg.findTypeName(data['file'].filename, 
+                                       data['file'].contentType,
+                                       data['file'].data)
 
-FileUploadFormView = wrap_form(FileUploadForm)
+        # Really, we want Image if it's an image, and File for everything else...
+        typeName = 'Image' if typeName == 'Image' else 'File'
+
+        # create the object
+        container.invokeFactory(typeName, 
+                                id=id,
+                                title=title,
+                                file=data['file'].data)
+
+        # Redirect to the view page.
+        self.request.response.redirect("%s/view" % container[id].absolute_url())
 
 
 class AddMenu(BrowserView):
@@ -119,5 +132,19 @@ class AddMenu(BrowserView):
         self.uploadForm = FileUploadForm(self.context, self.request)
         self.uploadForm.update()
         
+        
         return self.index()
 
+
+    def getUploadUrl(self):
+           """
+           return upload url
+           in current folder
+           """
+           ploneview = getMultiAdapter((self.context, self.request), name="plone")
+           
+           folder_url = ploneview.getCurrentFolderUrl()                      
+           return '%s/@@quick_upload' %folder_url
+
+    def getDataForUploadUrl(self):
+        return 'data_url'
