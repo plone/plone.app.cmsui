@@ -19,6 +19,7 @@
 .contenttype-topic {
     background: no-repeat transparent 0px -1724px url(++resource++plone.app.cmsui/images/contenttypes-sprite.png);
 }
+
 .contenttype-file {
     background: no-repeat transparent 0px -428px url(++resource++plone.app.cmsui/images/contenttypes-sprite.png);
 }

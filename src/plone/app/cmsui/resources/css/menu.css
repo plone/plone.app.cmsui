@@ -694,3 +694,12 @@ html {
 #exposeMask {
   position: fixed !important;
 }
+/* @group Overlays */
+#overlay-content dl dt {
+  font-size: 16.296px;
+}
+#overlay-content dl dd {
+  margin-left: 20px;
+  margin-bottom: 10px;
+}
+/* @end */
