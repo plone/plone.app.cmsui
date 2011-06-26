@@ -152,7 +152,6 @@ class QuickUploadInit(BrowserView):
         mediaupload could be 'image', 'video', 'audio' or any
         extension like '*.doc'
         """
-        context = aq_inner(self.context)
         ext = '*.*;'
         extlist = []
         msg = u'Choose files to upload'
@@ -341,7 +340,7 @@ class QuickUploadFile(BrowserView):
         normalizer = getUtility(IIDNormalizer)
         chooser = INameChooser(context)
         newid = chooser.chooseName(normalizer.normalize(id), context)
-        # consolidation because it's different upon Plone versions     
+        # consolidation because it's different upon Plone versions
         newid = newid.replace('_','-').replace(' ','-').lower()
         if newid in context.objectIds() :
             return 0
@@ -357,7 +356,6 @@ class QuickUploadCheckFile(BrowserView):
         
         context = aq_inner(self.context)
         request = self.request          
-        url = context.absolute_url()       
         
         always_exist = {}
         formdict = request.form
