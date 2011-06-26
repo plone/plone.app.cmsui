@@ -41,6 +41,8 @@ class StructureView(BrowserView):
 
         self.pagenumber =  int(self.request.get('pagenumber', 1))
 
+        self.context_state = getMultiAdapter((self.context, self.request), name=u'plone_context_state')
+
         return self.index()
 
     def title(self):
@@ -328,6 +330,35 @@ class StructureView(BrowserView):
     def quote_plus(self, string):
         return urllib.quote_plus(string)
 
+
+    @instance.memoize
+    def object_buttons(self):
+        """Get the personal actions
+        """
+        
+        actions = []
+        for action in self.context_state.actions('object_buttons'):
+            actions.append({
+                'id': action['id'],
+                'url': action['url'],
+                'title': action['title'],
+                'description': action['description'],
+            })
+        
+        return actions
+
+    def object_info(self):
+        info = []
+        pt = getToolByName(self.context, 'portal_types')
+        fti = pt.listTypeTitles().get(self.context.portal_type, 'unknown')
+        info.append({'name' : 'Kind', 'info' : fti.title})
+        info.extend([
+                {'name' : 'Created', 'info' : self.context.created()},
+                {'name' : 'Modified', 'info' : self.context.modified()},
+                {'name' : 'Owner', 'info' : self.context.getOwner()},
+                ])
+        return info
+        
 
 class MoveItem(BrowserView):
     """
