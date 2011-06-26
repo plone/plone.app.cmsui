@@ -24,6 +24,9 @@
     </tal:resourceregistries>
 
     <script type="text/javascript" src="++resource++plone.app.cmsui/js/menu.js"></script>
+    <script type="text/javascript" src="++resource++plone.app.cmsui/js/dragdropreorder.js"></script>
+    <script type="text/javascript" src="++resource++plone.app.cmsui/js/structure.js"></script>
+
     <script type="text/javascript" src="++resource++plone.app.cmsui/js/plone.notify.js"></script>
 
     <link rel="stylesheet" href="++resource++plone.app.cmsui/css/boilerplate.css" />
@@ -31,13 +34,15 @@
     <link rel="stylesheet" href="++resource++plone.app.cmsui/css/sprites.css" />
     <link rel="stylesheet" href="++resource++plone.app.cmsui/css/menu.css" />
     <link rel="stylesheet" href="++resource++plone.app.cmsui/css/notify.css" />
+    <link rel="stylesheet" href="++resource++plone.app.cmsui/css/structure.css" />
     <link rel="stylesheet" href="member.css" />
 
 </head>
 <body tal:define="isRTL portal_state/is_rtl"
     tal:attributes="dir python:isRTL and 'rtl' or 'ltr'">
 
-<section id="toolbar">
+<section id="toolbar"
+         tal:define="folder context/@@plone_context_state/folder">
 
     <div id="toolbar-top" class="container clearfix">
 
@@ -79,13 +84,11 @@
         <!-- Information about the current document -->
         <div class="grid_10">
             <ul id="document-info">
-                <li id="folder-contents">
-                    <a href="#">
-                        <span i18n:translate="cmsui_contents" tal:omit-tag="">Structure</span>
-                        <tal:block condition="python:(view.contextState.is_structural_folder() or view.contextState.is_default_page()) and view.itemsInFolder() is not None"> (<span tal:replace="view/itemsInFolder">12</span>)</tal:block>
-                    </a>
-                </li>
-                <li tal:condition="python:view.modificationDate()"
+               <li id="structure"><a href="#" class="overlayLink" tal:attributes="href string:${folder/absolute_url}/cmsui-structure"
+                    ><span i18n:translate="cmsui_contents" tal:omit-tag="">Structure</span
+                    ><tal:block condition="python:(view.contextState.is_structural_folder() or view.contextState.is_default_page()) and view.itemsInFolder() is not None"> (<span tal:replace="view/itemsInFolder">12</span>)</tal:block
+                    ></a></li>
+               <li tal:condition="python:view.modificationDate()"
                     id="document-history">
                     <a class="overlayLink"
                        href="#"
