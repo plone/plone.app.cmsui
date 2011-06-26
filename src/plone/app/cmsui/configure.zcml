@@ -142,20 +142,20 @@
 <browser:page
     for=".interfaces.IQuickUploadCapable"
     name="quick_upload"
-    class=".quick_upload.QuickUploadView"
+    class=".fileupload.QuickUploadView"
     permission="cmf.AddPortalContent"/>     
   
 <!-- Quick Upload javascript Init -->
 <browser:page
     for="*"
     name="quick_upload_init"
-    class=".quick_upload.QuickUploadInit"
+    class=".fileupload.QuickUploadInit"
     permission="cmf.AddPortalContent"/>      
 
 <browser:page
     for="*"
     name="quick_upload_file"
-    class=".quick_upload.QuickUploadFile"
+    class=".fileupload.QuickUploadFile"
     permission="cmf.AddPortalContent"/> 
 
 
