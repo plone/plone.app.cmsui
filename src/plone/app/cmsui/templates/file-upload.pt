@@ -12,8 +12,7 @@
 <div class="quick-uploader"
      i18n:domain="collective.quickupload">
     <div tal:define="uploader_id view/uploader_id">
-      <h4 class="pannelHeader"
-          tal:content="view/header_upload">
+      <h4 class="pannelHeader">
         Upload Files
       </h4>
       <label i18n:translate="label_choose_your_files"

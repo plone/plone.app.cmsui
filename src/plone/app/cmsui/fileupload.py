@@ -64,19 +64,6 @@ class QuickUploadView(BrowserView):
     def __call__(self):
         return self.template()
     
-    def header_upload(self) :
-        request = self.request
-        session = request.get('SESSION', {})
-        medialabel = session.get('mediaupload', request.get('mediaupload', 'files'))
-        # to improve
-        if '*.' in medialabel :
-            medialabel = ''
-        if not medialabel :
-            return 'Files Quick Upload'
-        if medialabel == 'image' :
-            return 'Images Quick Upload'
-        return '%s Quick Upload' %medialabel.capitalize()
-    
     def _uploader_id(self) :
         return 'uploader%s' %str(random.random()).replace('.','')
     
