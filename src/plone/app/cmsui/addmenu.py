@@ -1,3 +1,4 @@
+from Acquisition import aq_inner
 from Products.CMFCore.utils import getToolByName
 from plone.app.z3cform.layout import wrap_form
 from plone.i18n.normalizer.interfaces import IIDNormalizer
@@ -130,5 +131,24 @@ class AddMenu(BrowserView):
         self.uploadForm = FileUploadForm(self.context, self.request)
         self.uploadForm.update()
         
+        
         return self.index()
 
+
+    def getUploadUrl(self):
+           """
+           return upload url
+           in current folder
+           """
+           ploneview = getMultiAdapter((self.context, self.request), name="plone")
+           
+           folder_url = ploneview.getCurrentFolderUrl()                      
+           return '%s/@@quick_upload' %folder_url
+
+    def getDataForUploadUrl(self):
+        data_url = ''
+        # if self.data.upload_portal_type != 'auto' :
+        #     data_url+= 'typeupload=%s&' % self.data.upload_portal_type      
+        # if self.data.upload_media_type :
+        #     data_url+= 'mediaupload=%s' % self.data.upload_media_type  
+        return 'data_url'

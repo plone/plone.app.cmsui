@@ -69,6 +69,7 @@ function eraseCookie(name) {
                 },
                 onLoad: function (e) {
                     openLinksInOverlay();
+                    loadUploader();
                     return true; 
                 }, 
                 onClose: function (e) { 
@@ -129,4 +130,32 @@ function eraseCookie(name) {
             return false;
         });
     });
+    
+    // workaround this MSIE bug :
+    // https://dev.plone.org/plone/ticket/10894
+    if (jQuery.browser.msie) jQuery("#settings").remove();
+    var Browser = {};
+    Browser.onUploadComplete = function() {
+        window.location.reload();
+    }
+    loadUploader = function() {
+        var ulContainer = jQuery('.uploaderContainer');
+        ulContainer.each(function(){
+            var uploadUrl =  jQuery('.uploadUrl', this).val();
+            var uploadData =  jQuery('.uploadData', this).val();
+            var UlDiv = jQuery(this);
+            jQuery.ajax({
+                       type: 'GET',
+                       url: uploadUrl,
+                       data: uploadData,
+                       dataType: 'html',
+                       contentType: 'text/html; charset=utf-8', 
+                       success: function(html) { 
+                          UlDiv.html(html);             
+                       } });    
+        }); 
+    }
+    jQuery(document).ready(loadUploader);    
+    
+    
 }(jQuery));
