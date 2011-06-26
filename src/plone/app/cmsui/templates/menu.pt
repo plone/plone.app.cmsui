@@ -55,19 +55,21 @@
             </ul>
         </nav>
 
-        <!-- Personal links -->
-        <ul id="personal-tools" class="grid_5">
-            <li id="cmsui-logged-in-as" i18n:translate="cmsui_logged_in_as"><a
-                class="overlayLink" tal:attributes="href view/userHomeLinkURL">Logged in as <span
-                i18n:name="name" tal:replace="view/userName" /></a></li><li
-            class="overlayLink" tal:repeat="action view/personalActions" tal:attributes="id string:cmsui-personallink-${action/id}"><a
-            class="overlayLink" tal:attributes="href action/url" tal:content="action/title" /></li>
-        </ul>
+        <div class="grid_7">
+            <!-- Personal links -->
+            <ul id="personal-tools" class="alpha grid_10">
+                <li id="cmsui-logged-in-as" i18n:translate="cmsui_logged_in_as"><a
+                    class="overlayLink" tal:attributes="href view/userHomeLinkURL">Logged in as <span
+                    i18n:name="name" tal:replace="view/userName" /></a></li><li
+                class="overlayLink" tal:repeat="action view/personalActions" tal:attributes="id string:cmsui-personallink-${action/id}"><a
+                class="overlayLink" tal:attributes="href action/url" tal:content="action/title" /></li>
+            </ul>
 
-        <!-- Edit bar toggle -->
-        <div class="grid_2">
-            <a href="#" id="manage-page-open">Edit content &#9660;</a>
-            <a href="#" id="manage-page-close">Hide edit bar &#9650;</a>
+            <!-- Edit bar toggle -->
+            <div class="omega grid_2">
+                <a href="#" id="manage-page-open">Edit content &#9660;</a>
+                <a href="#" id="manage-page-close">Hide edit bar &#9650;</a>
+            </div>
         </div>
     </div>
 
