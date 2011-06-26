@@ -14,7 +14,7 @@ div.overlay {
 
 div.overlay-iframe,
 div.overlay-ajax {
-    width: 60%;
+    width: 90%;
     min-height: 100px;
     z-index: 99; /* overlays should be above everything */
 }
@@ -39,6 +39,7 @@ div.overlay div.close {
 
 .pb-ajax {
     overflow-y: auto;
+    margin-bottom: 2em;
 }
 
 .pb-ajax, .pb-image {
