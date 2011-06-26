@@ -124,7 +124,7 @@ jQuery.tableDnD = {
         var config = table.tableDnDConfig;
 	if (table.tableDnDConfig.dragHandle) {
 	    // We only need to add the event to the specified cells
-	    var cells = jQuery("td."+table.tableDnDConfig.dragHandle, table);
+	    var cells = jQuery("tbody td."+table.tableDnDConfig.dragHandle, table);
 	    cells.each(function() {
 		// The cell is bound to "this"
 		jQuery(this).mousedown(function(ev) {
@@ -140,7 +140,7 @@ jQuery.tableDnD = {
             });
         } else {
             // For backwards compatibility, we add the event to the whole row
-            var rows = jQuery("tr", table); // get all the rows as a wrapped set
+            var rows = jQuery("tbody tr", table); // get all the rows as a wrapped set
             rows.each(function() {
                 // Iterate through each row, the row is bound to "this"
                 var row = jQuery(this);

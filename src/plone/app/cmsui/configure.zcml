@@ -44,6 +44,7 @@
         class=".menu.Menu"
         template="templates/menu.pt"
         permission="plone.ViewCMSUI"
+	allowed_attributes="itemsInFolder"
         />
 
     <browser:page

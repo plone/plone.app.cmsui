@@ -19,23 +19,47 @@ jq(function(){
 <body>
 
 <metal:content-core fill-slot="body">
-  <div id="content">
+  <div id="content" tal:define="context_state context/@@plone_context_state;
+				folderish python:(context_state.is_structural_folder() or context_state.is_default_page());
+				batch view/batch;
+				num_items context/@@cmsui-menu/itemsInFolder">
   <div id="structure-dialog">
   <div class="structure-slider">
 
-  <nav id="portal-breadcrumbs">
+    <nav id="portal-breadcrumbs">
       <ul>
-          <li id='path-home'><a class="link-parent" tal:attributes="href string:${view/@@plone_portal_state/navigation_root_url}/cmsui-structure">Home</a></li
-          ><li tal:repeat="crumb view/breadcrumbs"
-          ><a class="link-parent"
-              tal:condition="not:repeat/crumb/end"
-              tal:attributes="href string:${crumb/absolute_url}/cmsui-structure;"
-              tal:content="crumb/Title">Item</a
-          ><span tal:condition="repeat/crumb/end" class="current"
-                 tal:content="crumb/Title">Item</span
-          ></li>
+        <li id='path-home'>
+	  <span class="crumb">
+	    <a class="link-parent" tal:attributes="href string:${view/@@plone_portal_state/navigation_root_url}/cmsui-structure">
+	      Home
+	    </a>
+	  </span>
+	</li>
+	<li tal:repeat="crumb view/breadcrumbs">
+	  <span class="crumb" tal:condition="not:repeat/crumb/end">
+	    <a class="link-parent"
+	       tal:attributes="href string:${crumb/absolute_url}/cmsui-structure;"
+	       tal:content="crumb/Title">Item</a>
+	    </span>
+	  <span tal:condition="repeat/crumb/end" class="current"
+                tal:content="crumb/Title">
+	    Item
+	  </span>
+	  <span class="actions">
+	    (<a href="#" class="overlayLink" tal:attributes="href string:${context/absolute_url}/edit">edit</a>, <a href="#" tal:attributes="href string:${context/absolute_url}/view">view</a>)
+	  </span>
+	</li>
       </ul>
-  </nav>
+    </nav>
+    <form id="item-actions-menu">
+      <fieldset>
+	<legend>on <tal:name tal:replace="context_state/object_title" /></legend>
+	<input type="button" name="move" class="first" value="move" />
+	<input type="button" name="duplicate" value="duplicate" />
+	<input type="button" name="rename" value="rename" />
+	<input type="button" class="last" name="delete" value="delete" />
+      </fieldset>
+    </form>
 
     <form name="folderContentsForm"
           method="post"
@@ -52,13 +76,21 @@ jq(function(){
              i18n:attributes="summary summary_content_listing;"
              tal:condition="view/folderitems">
 	<thead>
-          <tr tal:condition="python: not view.selectcurrentbatch">
-            <th colspan="6" class="nosort"><span i18n:translate="label_select" tal:omit-tag="">Select:</span> <a i18n:translate="label_all" tal:attributes="href view/selectscreen_url" id="foldercontents-selectall" class="overlayLink">All</a></th>
+          <tr>
+            <th colspan="3" class="nosort">
+	      <a tal:attributes="href view/selectscreen_url" id="foldercontents-selectall" class="overlayLink">select all</a>
+	    </th>
+	    <th colspan="3" class="nosort" class="numitems">
+	      <tal:folder tal:condition="python: folderish and num_items != len(batch)">
+		<span tal:replace="context_state/object_title" /> contains <span tal:replace="num_items" /> items
+		(<a href="#">show all</a>)
+	      </tal:folder>						
+	    </th>
           </tr>
           <tr tal:condition="view/show_select_all_items">
             <th colspan="6" class="nosort">
               <span tal:omit-tag="" i18n:translate="tableheading_all_items_selected">
-		All <tal:block replace="view/batch/items_on_page" i18n:name="count"/> items on this
+		All <tal:block replace="python: view.batch.items_on_page" i18n:name="count"/> items on this
 		page are selected. 
               </span>
               <a tal:attributes="href view/selectall_url" 

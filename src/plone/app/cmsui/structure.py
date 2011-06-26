@@ -39,6 +39,7 @@ class StructureView(BrowserView):
         elif selection == 'all':
             self.selectall = True
 
+
         self.pagenumber =  int(self.request.get('pagenumber', 1))
 
         return self.index()
@@ -281,6 +282,14 @@ class StructureView(BrowserView):
         map(self.set_checked, b)
         return b
 
+    def _get_select_all(self):
+        return self._select_all
+
+    def _set_select_all(self, value):
+        self._select_all = bool(value)
+
+    selectall = property(_get_select_all, _set_select_all)
+
     # options
     _selectcurrentbatch = False
     _select_all = False
@@ -309,7 +318,7 @@ class StructureView(BrowserView):
 
     @property
     def show_select_all_items(self):
-        return self.selectcurrentbatch and not self.selectall
+        return not self.selectall
 
     def get_nosort_class(self):
         """
