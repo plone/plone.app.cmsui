@@ -220,9 +220,7 @@ class StructureView(BrowserView):
     def editable(self):
         """
         """
-        context_state = getMultiAdapter((aq_inner(self.context), self.request),
-                                        name=u'plone_context_state')
-        return context_state.is_editable()
+        return self.context_state.is_editable()
 
     @property
     def buttons(self):
