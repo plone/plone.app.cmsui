@@ -16,7 +16,7 @@ jQuery(function ($) {
         $('#structure-dialog').css({height: $slider.outerHeight()});
         $('<div class="structure-slider" style="width: 100%"><' + '/div>')
             .prependTo($('#structure-dialog'))
-            .load(href + ' .structure-slider>*')
+            .loadOverlay(href + ' .structure-slider>*')
             .css({position: 'absolute', left: (dir=='left'?width:-width), top: 0})
             .animate({'left': 0}, 200, function() {$('.structure-slider').css('position', 'static'); $('#structure-dialog').css('height', 'auto');});
         $slider.css('position', 'relative').animate({'left': (dir=='left')?-width:width}, 200, null, function(){

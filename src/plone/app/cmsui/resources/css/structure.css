@@ -1,3 +1,103 @@
+table.listing,
+table.plain {
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+
+table.invisible td,
+table.invisible th,
+table.plain td,
+table.plain th,
+table.listing td,
+table.listing th {
+    padding: 0.5em 1em;
+    vertical-align: top;
+}
+table.plain th,
+table.plain td {
+    border: 1px solid #ddd;
+}
+
+table.listing td.listingCheckbox,
+table.listing th.listingCheckbox {
+    text-align: center;
+}
+
+
+table.listing {
+    border-left: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+}
+table.listing .top {
+    border-left: 1px solid #ddd;
+    border-top: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+}
+table.listing th {
+    text-align: left;
+    color: #666;
+    border: 0.1em solid #e7e7e7;
+    border-style: solid solid none;
+    background: #ddd;
+}
+table.listing tr.odd th {
+    border: 0.1em solid #fff;
+    border-style: solid solid none none;
+}
+table.listing tbody th {
+    font-weight: bold;
+}
+table.listing tbody tr {
+    text-align:left;
+}
+table.listing tbody tr.odd {
+    background: #eee;
+}
+table.listing tbody tr td {
+    background: transparent;
+}
+table.listing tbody tr.odd td {
+    background: #eee;
+}
+table.listing td {
+    border-right: 1px solid #ddd;
+}
+table.listing a {
+    border: none;
+    display: inline-block;
+    border-bottom: none !important;
+}
+
+table.listing td.draggable {
+    text-shadow: White 1px 1px 1px;
+    background: #ddd !important;
+    border-bottom: 1px solid white;
+    padding: 0.4em 0.4em 0 0.5em;
+}
+
+.hiddenStructure {
+    background: none repeat scroll 0 0 transparent;
+    border: medium none;
+    display: block;
+    height: 0.1em;
+    margin: -0.1em 0 0 -0.1em;
+    overflow: hidden;
+    padding: 0;
+    width: 1px;
+}
+
+#portal-breadcrumbs {
+    font-size: 80%;
+    margin-bottom: 1em;
+    margin-left: 0.25em;
+}
+#portal-breadcrumbs a {
+    border-bottom: none;
+    display: inline-block;
+}
+
+
+
 div#structure-dialog {
     position: relative;
     overflow: hidden;
@@ -26,6 +126,10 @@ table.listing tbody tr.odd.error td, tr.error {
     content: "/";
     margin-left: 0.5em;
     margin-right: 0.5em;
+}
+
+#content a:link {
+    color: #205C90;
 }
 
 #structure-dialog #portal-breadcrumbs li span.current{
@@ -125,6 +229,7 @@ div.overlay table.listing #meta-actions ul li{
    display: list-item;
    padding-left: 5px;
    line-height: 110%;
+   list-style: none;
 }
 
 div.overlay table.listing #meta-actions ul li .title{

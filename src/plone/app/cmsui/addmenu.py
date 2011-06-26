@@ -23,6 +23,7 @@ class AddNewContentForm(form.Form):
     fields = field.Fields(IAddNewContent)
     ignoreContext = True # don't use context to get widget data
     label = "Add content"
+    css_class = 'overlayForm'
     
     def update(self):
         tn = self.fields['type_name']
@@ -90,7 +91,7 @@ class FileUploadForm(form.Form):
         container.invokeFactory('File', id=id, title=title)
         container[id].setFile(data['file'].data)
         
-        self.request.response.redirect("%s" % container[id].absolute_url())
+        self.request.response.redirect("%s/view" % container[id].absolute_url())
 
 FileUploadFormView = wrap_form(FileUploadForm)
 

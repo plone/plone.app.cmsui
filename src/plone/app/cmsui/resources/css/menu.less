@@ -32,6 +32,7 @@ html {
     color: @baseFontColor;
     position: fixed;
     z-index: 10000;
+    opacity: 0;
 
 	&:after {
 	    /*
@@ -41,15 +42,21 @@ html {
 	    background: darken(@ploneColor, 20%);
         */
 	}
-	
-	ul {
-	    .horList();
-	    margin: 0;
-	    padding: 0;
-	}
 	a {
 	    color: @linkColor;
-	    text-decoration: none;
+	    text-decoration: none;    
+	}
+	
+	ul {
+	    .noBulletsList();
+	    padding: 0;
+	    li {
+		    display: inline;
+		    a {
+			    display: inline-block;
+	            padding: @verticalSpace/4 @horizontalSpace/2;
+			}
+		}
 	}
 		
 	.container:first-of-type {
@@ -84,6 +91,20 @@ html {
 		}
 		#personal-tools {
 		    text-align: right;
+		    width: @totalCell * 6 - @horizontalSpace - 1%;
+			a {
+				border: 1px solid transparent;
+				.css3_border_radius(20px);
+				padding: @verticalSpace/2 @horizontalSpace;
+				text-shadow: 0 -1px 0 darken(@ploneColor, 15%);	
+				&:hover {
+					.css3_linear_gradient(darken(@ploneColor, 20%), @ploneColor);
+					border-bottom-color: darken(@ploneColor, 5%);
+					border-right-color: darken(@ploneColor, 5%);
+					border-top-color: @ploneColor;
+					border-left-color: @ploneColor;					
+				}				    
+			}		    
 		}
 	}
 	
@@ -165,14 +186,6 @@ html {
 	}
 }
 
-
-#toolbar a {
-    opacity: .95
-}
-
-#toolbar a:hover {
-    opacity: 1;
-}
 
 
 /* @group Icons */
