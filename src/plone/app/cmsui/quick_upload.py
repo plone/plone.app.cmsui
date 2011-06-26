@@ -238,12 +238,12 @@ class QuickUploadInit(BrowserView):
             context_url            = context.absolute_url(),
             physical_path          = "/".join(context.getPhysicalPath()),
             ul_id                  = self.uploader_id,
-            ul_fill_titles         = self.qup_prefs.fill_titles and 'true' or 'false',
-            ul_fill_descriptions         = self.qup_prefs.fill_descriptions and 'true' or 'false',
-            ul_auto_upload         = self.qup_prefs.auto_upload and 'true' or 'false',
-            ul_size_limit          = self.qup_prefs.size_limit and str(self.qup_prefs.size_limit*1024) or '',
-            ul_xhr_size_limit      = self.qup_prefs.size_limit and str(self.qup_prefs.size_limit*1024) or '0',
-            ul_sim_upload_limit    = str(self.qup_prefs.sim_upload_limit),
+            ul_fill_titles         = 'true'
+            ul_fill_descriptions   = 'true'
+            ul_auto_upload         = 'true'
+            ul_size_limit          = '',
+            ul_xhr_size_limit      = '0',
+            ul_sim_upload_limit    = '',
             ul_button_text         = self._utranslate(u'Browse'),
             ul_draganddrop_text    = self._utranslate(u'Drag and drop files to upload'),
             ul_msg_all_sucess      = self._utranslate( u'All files uploaded with success.'),
@@ -380,17 +380,7 @@ class QuickUploadFile(BrowserView):
         return json.dumps(msg)          
         
     def _check_file_size(self, data):
-        max_size = int(self.qup_prefs.size_limit)
-        if not max_size :
-            return 1
-        #file_size = len(data.read()) / 1024
-        data.seek(0, os.SEEK_END)
-        file_size = data.tell() / 1024
-        data.seek(0, os.SEEK_SET )
-        max_size = int(self.qup_prefs.size_limit)
-        if file_size<=max_size:
-            return 1
-        return 0    
+        return 1
     
     def _check_file_id(self, id):
         context = aq_inner(self.context)
