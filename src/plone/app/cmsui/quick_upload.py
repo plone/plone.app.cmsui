@@ -141,11 +141,9 @@ XHR_UPLOAD_JS = """
         });           
     }
     jQuery(document).ready(createUploader_%(ul_id)s); 
-"""        
+"""
 
 
-
-        
 class QuickUploadInit(BrowserView):
     """ Initialize uploadify js
     """
