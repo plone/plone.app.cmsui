@@ -104,6 +104,8 @@ function eraseCookie(name) {
         }
         createCookie('__plone_height', $('#toolbar').outerHeight());
 
+        $.plone.initNotify();
+
         $('#manage-page-open').click(function () {
             var bottom_height = $('#toolbar-bottom').outerHeight();
             toolbar.addClass('large').removeClass('small');
@@ -126,6 +128,14 @@ function eraseCookie(name) {
             $('#toolbar-bottom').animate({'top': -bottom_height}, 500);
             createCookie('__plone_menu', 'small');
             createCookie('__plone_height', height);
+            return false;
+        });
+
+        $('#folder-contents a').click(function () {
+            $.plone.notify({
+                'title': 'test',
+                'message': 'some message'
+            });
             return false;
         });
     });
