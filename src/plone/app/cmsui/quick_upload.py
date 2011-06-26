@@ -55,7 +55,7 @@ class QuickUploadView(BrowserView):
     """ The Quick Upload View
     """
 
-    template = ViewPageTemplateFile("templates/quick_upload.pt")
+    template = ViewPageTemplateFile("templates/file-upload.pt")
 
     def __init__(self, context, request):
         super(QuickUploadView, self).__init__(context, request)
