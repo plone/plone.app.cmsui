@@ -49,7 +49,6 @@ function eraseCookie(name) {
 	$(window).trigger('onStartLoadOverlay', [this, href, data]);
         var $overlay = this.closest('.pb-ajax');
         this.load(href, data, function() {
-	    $("table.orderable").ploneDnD(); // need to initialize again...
             if (callback != undefined) {
                 callback.apply(this, arguments);
             }
