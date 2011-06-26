@@ -69,7 +69,7 @@ immed: true, strict: true, maxlen: 80, maxerr: 9999 */
             .css('height', last_notification.length > 0 ?
                            parseInt(last_notification.css("top"), 10) +
                            last_notification.height() + 10 : 0)
-   }
+    }
 
     /**
      * Display a notification
@@ -87,6 +87,11 @@ immed: true, strict: true, maxlen: 80, maxerr: 9999 */
             fadeSpeed: "slow",
             duration: 3000
         }, options);
+
+        // Check if title or message is empty
+        if (title === "" || message === "") {
+            return;
+        }
 
         // Check if overlay is active
         if ($('.overlay', window.parent.frames['plone-cmsui-menu'].document).length !== 0) {
