@@ -61,7 +61,7 @@
                 </div>
 
                 <div id="content">
-                    <section id="overlay-content">
+                    <section id="overlay-content" class="clearfix">
                         <metal:slot define-slot="body">
 
                             <metal:header define-slot="header" tal:content="nothing">
