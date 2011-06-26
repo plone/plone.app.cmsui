@@ -1,3 +1,4 @@
+from Products.CMFCore.utils import getToolByName
 from plone.app.z3cform.layout import wrap_form
 from plone.i18n.normalizer.interfaces import IIDNormalizer
 from plone.namedfile.field import NamedFile
@@ -86,9 +87,14 @@ class FileUploadForm(form.Form):
         chooser = INameChooser(container)
         id = chooser._findUniqueName(id, None)
 
+        # Determine the Content Type
+        ct_reg = getToolByName(self.context, 'content_type_registry')
+        typeName = ct_reg.findTypeName(data['file'].filename, 
+                                       data['file'].contentType,
+                                       data['file'].data)
+        
         # create the object
-        container.invokeFactory('File', id=id, title=title)
-        container[id].setFile(data['file'].data)
+        container.invokeFactory(typeName, id=id, title=title, file=data['file'].data)
         
         self.request.response.redirect("%s/view" % container[id].absolute_url())
 
