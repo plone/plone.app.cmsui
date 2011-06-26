@@ -25,6 +25,7 @@ class AddNewContentForm(form.Form):
     fields = field.Fields(IAddNewContent)
     ignoreContext = True # don't use context to get widget data
     label = "Add content"
+    css_class = 'overlayForm'
     
     def update(self):
         tn = self.fields['type_name']

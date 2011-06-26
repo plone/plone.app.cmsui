@@ -15,6 +15,17 @@ class WorkflowActionsSourceBinder(object):
     implements(interfaces.IContextSourceBinder)
     """Generates vocabulary for all allowed workflow transitions"""
     
+    def __call__(self):
+        # Disable theming
+        self.request.response.setHeader('X-Theme-Disabled', 'True')
+        if self.request.method == "GET":
+            return self.index()
+        self.request.RESPONSE.redirect(self.context.absolute_url())
+    
+    def getTransitions(self):
+        wft = getToolByName(self.context, 'portal_workflow')
+        return wft.getTransitionsFor(self.context)
+    
     def __call__(self, context):
         wft = getToolByName(context, 'portal_workflow')
         return vocabulary.SimpleVocabulary([
@@ -26,7 +37,7 @@ class IWorkflowPanel(Interface):
     """Form for workflow panel"""
     workflow_action = schema.Choice(
         title = _(u'label_workflow_action', u"Change State"),
-        description = _(u'help_workflow_action', 
+        description = _(u'help_workflow_action',
                           default=u"Select the transition to be used for modifying the items state."),
         source= WorkflowActionsSourceBinder(),
         required= False,

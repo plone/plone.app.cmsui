@@ -10,7 +10,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <!-- Forces IE8+ into newest rendering engine even if on an intranet. This has to be defined before any script/style tags. -->
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" /> 
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
     <base tal:attributes="href plone_view/renderBase" target="_parent" /><!--[if lt IE 7]></base><![endif]-->
 
@@ -22,11 +22,12 @@
       <tal:styles replace="structure provider:plone.resourceregistries.kineticstylesheets" />
       <tal:scripts replace="structure provider:plone.resourceregistries.scripts" />
     </tal:resourceregistries>
-    
+
     <script type="text/javascript" src="++resource++plone.app.cmsui/js/menu.js"></script>
     <script type="text/javascript" src="++resource++plone.app.cmsui/js/plone.notify.js"></script>
     <script type="text/javascript" src="++resource++plone.app.cmsui/js/libs/fileuploader.js"></script>
     <script type="text/javascript" src="@@quick_upload_init"></script>
+    <script type="text/javascript" src="++resource++plone.app.cmsui/js/dragdropreorder.js"></script>
 
     <link rel="stylesheet" href="++resource++plone.app.cmsui/css/boilerplate.css" />
     <link rel="stylesheet" href="++resource++plone.app.cmsui/css/authoring.css" />
@@ -34,17 +35,19 @@
     <link rel="stylesheet" href="++resource++plone.app.cmsui/css/menu.css" />    
     <link rel="stylesheet" href="++resource++plone.app.cmsui/css/notify.css" />    
     <link rel="stylesheet" href="++resource++plone.app.cmsui/css/fileuploader.css" />
+    <link rel="stylesheet" href="member.css" />
 
 </head>
 <body tal:define="isRTL portal_state/is_rtl"
     tal:attributes="dir python:isRTL and 'rtl' or 'ltr'">
 
-<section id="toolbar">
+<section id="toolbar"
+         tal:define="folder context/@@plone_context_state/folder">
 
     <div id="toolbar-top" class="container clearfix">
 
         <!-- Breadcrumbs -->
-        <nav id="portal-breadcrumbs" class="grid_6">
+        <nav id="portal-breadcrumbs" class="grid_5">
             <ul>
                 <li id='path-home'>
                     <a tal:attributes="href view/portalState/navigation_root_url">Home</a></li>
@@ -57,15 +60,23 @@
             </ul>
         </nav>
 
-        <!-- Personal links -->
-        <ul id="personal-tools" class="grid_6">
-            <li id="cmsui-logged-in-as" i18n:translate="cmsui_logged_in_as"><a
-                class="overlayLink" tal:attributes="href view/userHomeLinkURL">Logged in as <span
-                i18n:name="name" tal:replace="view/userName" /></a></li><li
-            class="overlayLink" tal:repeat="action view/personalActions" tal:attributes="id string:cmsui-personallink-${action/id}"><a
-            class="overlayLink" tal:attributes="href action/url" tal:content="action/title" /></li><li
-            ><a href="#" id="manage-page-open">Edit content ▼</a><a href="#" id="manage-page-close">Hide edit bar ▲</a></li>
-        </ul>
+        <div class="grid_7">
+            <!-- Personal links -->
+            <!-- In the flexible grid, when inside a cell we get 12 cells to use again. -->
+            <ul id="personal-tools" class="alpha grid_10">
+                <li id="cmsui-logged-in-as" i18n:translate="cmsui_logged_in_as"><a
+                    class="overlayLink" tal:attributes="href view/userHomeLinkURL">Logged in as <span
+                    i18n:name="name" tal:replace="view/userName" /></a></li><li
+                class="overlayLink" tal:repeat="action view/personalActions" tal:attributes="id string:cmsui-personallink-${action/id}"><a
+                class="overlayLink" tal:attributes="href action/url" tal:content="action/title" /></li>
+            </ul>
+
+            <!-- Edit bar toggle -->
+            <div class="omega grid_2">
+                <a href="#" id="manage-page-open">Edit content &#9660;</a>
+                <a href="#" id="manage-page-close">Hide edit bar &#9650;</a>
+            </div>
+        </div>
     </div>
 
     <div id="toolbar-bottom" class="container clearfix">
@@ -73,13 +84,11 @@
         <!-- Information about the current document -->
         <div class="grid_10">
             <ul id="document-info">
-                <li id="folder-contents">
-                    <a href="#">
-                        <span i18n:translate="cmsui_contents" tal:omit-tag="">Structure</span>
-                        <tal:block condition="python:(view.contextState.is_structural_folder() or view.contextState.is_default_page()) and view.itemsInFolder() is not None"> (<span tal:replace="view/itemsInFolder">12</span>)</tal:block>
-                    </a>
-                </li>
-                <li tal:condition="python:view.modificationDate()"
+               <li id="structure"><a href="#" class="overlayLink" tal:attributes="href string:${folder/absolute_url}/cmsui-structure"
+                    ><span i18n:translate="cmsui_contents" tal:omit-tag="">Structure</span
+                    ><tal:block condition="python:(view.contextState.is_structural_folder() or view.contextState.is_default_page()) and view.itemsInFolder() is not None"> (<span tal:replace="view/itemsInFolder">12</span>)</tal:block
+                    ></a></li>
+               <li tal:condition="python:view.modificationDate()"
                     id="document-history">
                     <a class="overlayLink"
                        href="#"
@@ -94,9 +103,10 @@
                 <li tal:condition="python:view.workflowState()"
                     id="document-workflow_state">
                     <a class="overlayLink"
+                        id="plone-contentmenu-workflow"
                         tal:attributes="href string:${view/baseURL}/@@cmsui-workflow-panel"
-                        tal:content="view/workflowState">Draft</a>
-                </li>
+                        ><span class="" tal:attributes="class string:state-${view/contextState/workflow_state}"
+                          tal:content="view/workflowState">Draft</span></a></li>
                 <li tal:condition="python:view.editLink()"
                     tal:attributes="id python:view.contextState.is_locked() and 'document-edit-locked' or 'document-edit';">
                     <a class="overlayLink"
@@ -139,6 +149,10 @@
     </div>
 
 </section>
+
+<div metal:use-macro="context/global_statusmessage/macros/portal_message">
+  Status message
+</div>
 
 </body>
 </html>

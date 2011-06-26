@@ -57,6 +57,21 @@ immed: true, strict: true, maxlen: 80, maxerr: 9999 */
     };
 
     /**
+     * Set the height of the iframe
+     *
+     * @id setIFrameHeight
+     */
+    function setIFrameHeight() {
+        var last_notification = $(".notifications").children("div:last");
+            
+        // Set iframe height
+        $('#plone-cmsui-notifications', window.parent.document)
+            .css('height', last_notification.length > 0 ?
+                           parseInt(last_notification.css("top"), 10) +
+                           last_notification.height() + 10 : 0)
+   }
+
+    /**
      * Display a notification
      *
      * @id jQuery.plone.notify
@@ -201,5 +216,34 @@ immed: true, strict: true, maxlen: 80, maxerr: 9999 */
                     $(this).data('mouseover', false);
                 })
             );
+
+        // Set iframe height
+        setIFrameHeight();
     };
+
+    // Init Deco on load
+    $(window).load(function () {
+
+        // Init notification
+        $.plone.initNotify();
+
+        // Show first notifications
+        $('.showNotify', window.parent.frames['plone-cmsui-menu'].document).each(function () {
+            var type,
+                portal_message = $(this);
+            if (portal_message.hasClass('info')) {
+                type = 'info';
+            } else if (portal_message.hasClass('warning')) {
+                type = 'warning';
+            } else if (portal_message.hasClass('error')) {
+                type = 'error';
+            }
+            $.plone.notify({
+                'title': portal_message.children('dt').html(),
+                'message': portal_message.children('dd').html(),
+                'type': type
+            });
+        });
+    });
+
 }(jQuery));
