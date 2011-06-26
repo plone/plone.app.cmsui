@@ -22,7 +22,9 @@
                     tal:define="context_state context/@@plone_context_state;
                                 folderish python:(context_state.is_structural_folder() or context_state.is_default_page());
                                 batch view/batch;
-                                num_items context/@@cmsui-menu/itemsInFolder">
+                                num_items context/@@cmsui-menu/itemsInFolder;
+                                orderable view/orderable;
+                                cols python: orderable and 7 or 6;">
 
   <div id="structure-dialog">
   <div class="structure-slider">
