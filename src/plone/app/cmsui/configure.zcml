@@ -137,12 +137,6 @@
   <implements interface=".interfaces.IQuickUploadCapable" />
 </class>       
       
-<!-- resource directory for widget static files -->
-<browser:resourceDirectory
-    name="quickupload_static"
-    directory="static"
-    />  	        
-
 <!-- Quick Upload View -->
      
 <browser:page
@@ -180,11 +174,6 @@
     class=".ticket.TicketView"
     permission="cmf.AddPortalContent"
     />
-
-
-
-
-
 
 
 
