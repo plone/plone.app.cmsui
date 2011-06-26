@@ -106,6 +106,15 @@ function eraseCookie(name) {
             toolbar.animate({'opacity': 1}, 300, function () {
                 iframe.css('background', 'transparent');
 
+                // Check if an overlay should be opened
+                var url = window.parent.document.location.href.match(/#(.*)$/);
+                if (url) {
+                    var button = $('#' + url[1] + ' > a');
+                    if (button.length !== 0) {
+                        button.click();
+                    }
+                }
+
                 // Append iframe to the document
                 parent_body.append(
                     $(window.parent.document.createElement("iframe"))
@@ -167,10 +176,6 @@ function eraseCookie(name) {
             $('#toolbar-bottom').stop().animate({'top': -bottom_height}, 500);
             createCookie('__plone_menu', 'small');
             createCookie('__plone_height', height);
-            return false;
-        });
-
-        $('#folder-contents a').click(function () {
             return false;
         });
     });
