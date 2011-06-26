@@ -9,7 +9,6 @@ div.overlay {
     display: none;
     /* some padding to layout nested elements nicely  */
     margin: 1em;
-    font-size: 80%;
 }
 
 div.overlay-iframe,
