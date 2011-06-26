@@ -519,6 +519,7 @@ html {
 }
 #toolbar .container:first-of-type #personal-tools {
   text-align: right;
+  width: 47%;
 }
 #toolbar .container:last-of-type {
   margin-top: 0;
