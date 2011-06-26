@@ -24,14 +24,17 @@
     </tal:resourceregistries>
 
     <script type="text/javascript" src="++resource++plone.app.cmsui/js/menu.js"></script>
+    <script type="text/javascript" src="++resource++plone.app.cmsui/js/plone.notify.js"></script>
+    <script type="text/javascript" src="++resource++plone.app.cmsui/js/libs/fileuploader.js"></script>
+    <script type="text/javascript" src="@@quick_upload_init"></script>
     <script type="text/javascript" src="++resource++plone.app.cmsui/js/dragdropreorder.js"></script>
-    <script type="text/javascript" src="++resource++plone.app.cmsui/js/structure.js"></script>
 
     <link rel="stylesheet" href="++resource++plone.app.cmsui/css/boilerplate.css" />
     <link rel="stylesheet" href="++resource++plone.app.cmsui/css/authoring.css" />
     <link rel="stylesheet" href="++resource++plone.app.cmsui/css/sprites.css" />
     <link rel="stylesheet" href="++resource++plone.app.cmsui/css/menu.css" />    
-    <link rel="stylesheet" href="++resource++plone.app.cmsui/css/structure.css" />
+    <link rel="stylesheet" href="++resource++plone.app.cmsui/css/notify.css" />    
+    <link rel="stylesheet" href="++resource++plone.app.cmsui/css/fileuploader.css" />
     <link rel="stylesheet" href="member.css" />
 
 </head>
@@ -131,7 +134,7 @@
             <ul id="folder-actions">
                 <li id="folder-add_content">
                     <a class="overlayLink" href="" 
-                       tal:attributes="href string:${view/baseURL}/@@cmsui-add-content">
+                       tal:attributes="href string:${plone_view/getCurrentFolderUrl}/@@cmsui-add-content">
                     Add Content
                     </a>
                 </li>
