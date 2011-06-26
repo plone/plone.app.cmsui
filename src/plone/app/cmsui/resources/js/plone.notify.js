@@ -95,11 +95,9 @@ immed: true, strict: true, maxlen: 80, maxerr: 9999 */
 
         // Check if overlay is active
         if ($('.overlay', window.parent.frames['plone-cmsui-menu'].document).length !== 0) {
-            console.log('overlay');
             $('#plone-cmsui-notifications', window.parent.document)
                 .css('left', $(window.parent.frames['plone-cmsui-menu']).width() - 320);
         } else {
-            console.log('no-overlay');
             $('#plone-cmsui-notifications', window.parent.document)
                 .css('left', $(window.parent).width() - 320);
         }
