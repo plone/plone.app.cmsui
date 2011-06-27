@@ -502,8 +502,7 @@ button:hover {
   -moz-border-radius: 5px;
   border-radius: 5px;
   -webkit-background-clip: padding-box;
-  width: auto;
-  min-width: 200px;
+  width: 300px;
   padding: 10px;
   margin-top: 1em;
 }
