@@ -209,10 +209,7 @@ class QuickUploadFile(BrowserView):
             # upload_with = "CLASSIC FORM POST"
             # we must test the file size in this case (no client test)
         
-        # TODO Just change the id, instead of blocking the upload.
-        if not self._check_file_id(file_name) :
-            # logger.info("The file id for %s always exist, upload rejected" % file_name)
-            return json.dumps({u'error': u'serverErrorAlwaysExist'})
+        file_id = self._get_file_id(file_name)
         
         content_type = mimetypes.guess_type(file_name)[0]
         # sometimes plone mimetypes registry could be more powerful
@@ -236,7 +233,7 @@ class QuickUploadFile(BrowserView):
             # (upload_with, file_name, title, description, content_type, portal_type))
             
             try :
-                f = factory(file_name, title, description, content_type, file_data, portal_type)
+                f = factory(file_id, title, description, content_type, file_data, portal_type)
             except :
                 return json.dumps({u'error': u'serverError'})
             
@@ -251,18 +248,20 @@ class QuickUploadFile(BrowserView):
         
         return json.dumps(msg)
     
-    def _check_file_id(self, id):
+    def _get_file_id(self, id):
         context = aq_inner(self.context)
         charset = context.getCharset()
         id = id.decode(charset)
         normalizer = getUtility(IIDNormalizer)
         chooser = INameChooser(context)
         newid = chooser.chooseName(normalizer.normalize(id), context)
+        # Make sure our chosen id is unique, iterate until we get one that is.
+        chooser = INameChooser(context)
+        newid = chooser._findUniqueName(id, None)
         # consolidation because it's different upon Plone versions
         newid = newid.replace('_','-').replace(' ','-').lower()
-        if newid in context.objectIds() :
-            return 0
-        return 1
+
+        return newid
 
 class QuickUploadCheckFile(BrowserView):
     """
