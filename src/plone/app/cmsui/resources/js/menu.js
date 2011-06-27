@@ -4,18 +4,28 @@
  */
 
 CURRENT_OVERLAY_TRIGGER = null;
+var menu_offset;
+var menu_size = 'menu';
 
 function expandMenu() {
-    var offset = $(window.parent).scrollTop();
+    menu_offset = $(window.parent).scrollTop();
     $('body', window.parent.document).css('overflow', 'hidden');
-    $(window.parent).scrollTop(offset);
+    $(window.parent).scrollTop(menu_offset);
     $('#plone-cmsui-menu', window.parent.document).css('height', '100%');
-    return offset;
+    menu_size = 'full';
 }
-function contractMenu(offset) {
+function contractMenu() {
     $('body', window.parent.document).css('overflow', 'auto');
-    $(window.parent).scrollTop(offset);
+    $(window.parent).scrollTop(menu_offset);
     $('#plone-cmsui-menu', window.parent.document).css('height', $('#toolbar').outerHeight());
+    menu_size = 'menu';
+}
+function toggleMenu() {
+    if (menu_size === 'menu') {
+        expandMenu();
+    } else {
+        contractMenu();
+    }
 }
 
 function showMessagesFromOverlay() {
@@ -89,8 +99,7 @@ function eraseCookie(name) {
     };
 
     $().ready(function () {
-        var iframe = $('#plone-cmsui-menu', window.parent.document),
-            offset;
+        var iframe = $('#plone-cmsui-menu', window.parent.document);
 
         $(document).bind('onFormOverlayLoadSuccess', function () {
             showMessagesFromOverlay();
@@ -107,7 +116,7 @@ function eraseCookie(name) {
                 top: 130,
                 onBeforeLoad: function (e) { 
                     // Close other overlays
-                    offset = expandMenu();
+                    expandMenu();
                     $(document).trigger('onBeforeOverlay', [this, e]);
                     return true; 
                 },
@@ -119,7 +128,7 @@ function eraseCookie(name) {
                 }, 
                 onClose: function (e) { 
                     CURRENT_OVERLAY_TRIGGER = null;
-                    contractMenu(offset);
+                    contractMenu();
                     $(document).trigger('onCloseOverlay', [this, e]);
                     return true; 
                 }
@@ -147,12 +156,12 @@ function eraseCookie(name) {
         $('.dropdownLink').bind('click', function (e) {
             if ($('#plone-cmsui-menu')) {
                 // iframe is collapsed
-                offset = expandMenu();
+                expandMenu();
                 $(this).nextAll('.dropdownItems').slideToggle();
             }
             else {
                 $(this).nextAll('.dropdownItems').slideToggle();
-                contractMenu(offset);
+                contractMenu();
             }
             e.preventDefault();
         });
