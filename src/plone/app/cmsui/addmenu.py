@@ -53,9 +53,12 @@ class AddNewContentForm(form.Form):
         id = chooser._findUniqueName(id, None)
 
         # create the object
-        container.invokeFactory(data['type_name'], id=id, title=title)
-        
-        self.request.response.redirect("%s/edit" % container[id].absolute_url())
+        type_name = data['type_name']
+        container.invokeFactory(type_name, id=id, title=title)
+        if type_name in [u'Folder']:
+            self.request.response.redirect("%s/@@cmsui-structure" % container[id].absolute_url())
+        else:
+            self.request.response.redirect("%s/edit" % container[id].absolute_url())
 
 AddNewContentView = wrap_form(AddNewContentForm)
 
