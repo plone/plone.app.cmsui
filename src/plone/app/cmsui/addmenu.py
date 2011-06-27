@@ -144,14 +144,13 @@ class AddMenu(BrowserView):
         return ('Image' in self.allowedTypes) or ('File' in self.allowedTypes)
 
     def getUploadUrl(self):
-           """
-           return upload url
-           in current folder
-           """
-           ploneview = getMultiAdapter((self.context, self.request), name="plone")
-           
-           folder_url = ploneview.getCurrentFolderUrl()                      
-           return '%s/@@quick_upload' %folder_url
+        """
+        return upload url in current folder
+        """
+        ploneview = getMultiAdapter((self.context, self.request), name="plone")
+
+        folder_url = ploneview.getCurrentFolderUrl()                      
+        return '%s/@@quick_upload' %folder_url
 
     def getDataForUploadUrl(self):
         return 'data_url'
