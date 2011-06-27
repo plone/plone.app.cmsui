@@ -277,7 +277,7 @@ PloneQuickUpload.addUploadFields = function(uploader, domelement, file, id, fill
                              class="file_title_field" \
                              id="title_' + id + '" \
                              name="title" \
-                             value="" />\
+                             value="' + file.fileName + '" />\
                   </div>\
                    ')
     }
