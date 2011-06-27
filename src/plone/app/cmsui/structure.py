@@ -359,7 +359,7 @@ class StructureView(BrowserView):
 
 class MoveItem(BrowserView):
     """
-    Pretty much straigh copy of the folder_moveitem.py script
+    Pretty much straight copy of the folder_moveitem.py script
     so we can eventually remove the bloody thing.
     """
     def __call__(self, item_id, delta, subset_ids=None):
