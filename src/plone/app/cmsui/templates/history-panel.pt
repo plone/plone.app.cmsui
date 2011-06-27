@@ -1,0 +1,68 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="context/@@cmsui-overlay-container/macros/master"
+      i18n:domain="plone">
+
+<head>
+</head>
+
+<body>
+  <metal:main fill-slot="body"
+     tal:define="context_state context/@@plone_context_state">
+
+    <h1 class="documentFirstHeading">History panel</h1>
+
+    <div class="history-timeline cell width-4 position-0"><ul class="history-panel">
+      <li tal:repeat="item view/history_list" tal:attributes="class item/entry_type">
+        <tal:t tal:condition="exists:item/version_id">
+          <a tal:content="item/version_id"
+             tal:attributes="href string:${context/absolute_url}/@@cmsui-history-panel?diff=${item/version_id};
+                             class string:id-container overlayLink ${item/klass};
+                             title string:${item/comment} by ${item/principal} at ${item/timestamp};
+                            "/>
+        </tal:t>
+        <tal:t tal:condition="exists:item/transition">
+          <span class="empty-id-container"></span>
+          <span tal:content="item/transition | item/type"
+             tal:attributes="title string:${item/comment} by ${item/principal} at ${item/timestamp}"/>
+        </tal:t>
+        <br/>
+      </li>
+    </ul></div>
+
+    <div class="history-detail cell width-12 position-4" tal:condition="exists:view/sel_to_version">
+      <h2 tal:content="string:${view/sel_to_version/comment} by ${view/sel_to_version/principal} at ${view/sel_to_version/timestamp}">Comment</h2>
+      <fieldset class="diff" tal:repeat="diff view/history_changes">
+        <legend tal:content="diff/label">Body text</legend>
+
+        <div class="fieldDiff inline-diff" tal:condition="exists:diff/inline_diff"
+             tal:content="structure python:diff.inline_diff()">
+          Inline changes
+        </div>
+
+        <p class="fieldDiff inline-diff" tal:condition="not:exists:diff/inline_diff" i18n:translate="">
+          This field has no inline difference view.
+        </p>
+
+        <div class="fieldDiff code-diff" style="display: none">
+          <pre tal:condition="exists:diff/html_diff" tal:content="structure python:diff.html_diff(wrapcolumn=80)">
+            HTML formatted differences
+          </pre>
+
+          <pre class="fieldDiff code-diff" tal:condition="python:not exists('diff/html_diff') and exists('diff/ndiff')" tal:content="diff/ndiff">
+            ndiff formatted differences
+          </pre>
+          <p class="fieldDiff" tal:condition="python:not exists('diff/html_diff') and not exists('diff/ndiff')">
+            This field has no code difference view.
+          </p>
+        </div>
+      </fieldset>
+    </div>
+
+  </metal:main>
+
+</body>
+</html>

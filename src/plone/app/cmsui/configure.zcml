@@ -62,6 +62,16 @@
         permission="plone.ViewCMSUI"
         />
 
+    <!-- History overlay -->
+    
+    <browser:page
+        name="cmsui-history-panel"
+        for="*"
+        class=".historypanel.HistoryPanel"
+        template="templates/history-panel.pt"
+        permission="plone.ViewCMSUI"
+        />
+
     <!-- Workflow overlay -->
     
     <browser:page
@@ -71,7 +81,6 @@
         template="templates/overlay-form.pt"
         permission="plone.ViewCMSUI"
         />
-
 
     <!-- Display menu overlay -->
 

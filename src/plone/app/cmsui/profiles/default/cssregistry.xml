@@ -7,5 +7,6 @@
     <stylesheet bundle="cmsui" applyPrefix="true" id="++resource++plone.app.cmsui/css/sprites.css"  />
     <stylesheet bundle="cmsui" applyPrefix="true" id="++resource++plone.app.cmsui/css/menu.css"  />
     <stylesheet bundle="cmsui" applyPrefix="true" id="++resource++plone.app.cmsui/css/fileuploader.css"  />
+    <stylesheet bundle="cmsui" applyPrefix="true" id="++resource++plone.app.cmsui/css/history-panel.css"  />
 
 </object>

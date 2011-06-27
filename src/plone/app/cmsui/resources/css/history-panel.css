@@ -1,0 +1,44 @@
+div.history-timeline {
+    border-right: 3px solid #2c6596;
+    overflow:visible;
+    margin-bottom: 20px;
+    width: 2.6em;
+    float: left;
+}
+ul.history-panel {
+    padding: 0 0 0 10px;
+    line-height: 2em;
+    list-style-type: none;
+    width: 15em; /*TODO: Eeeeeu */
+}
+.id-container, .empty-id-container {
+    display: inline-block;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    border: 3px solid #2c6596;
+    text-align: center;
+}
+.id-container {
+    width: 3em;
+    background: #CCC;
+}
+.empty-id-container {
+    vertical-align: top;
+    width: 0.2em;
+    height: 0px;
+    margin: 0.5em 0 0.5em 1.6em;
+}
+.id-container.sel_to {
+    border: 3px solid red;
+    background: yellow;
+}
+.id-container.sel_from {
+    border: 3px solid green;
+}
+ul.history-panel div.timeline {
+    position: absolute
+    border-right: 3px solid #2c6596;
+}
+div.history-detail {
+    margin-left: 16em;
+}
