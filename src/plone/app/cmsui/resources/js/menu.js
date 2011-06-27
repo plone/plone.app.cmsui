@@ -1,4 +1,4 @@
-/*globals window, jQuery*/
+/*globals window, jQuery, $, document, console, common_content_filter*/
 
 /* Code that runs inside the iframe menu
  */
@@ -39,38 +39,44 @@ function showMessagesFromOverlay() {
 
 // http://www.quirksmode.org/js/cookies.html
 function createCookie(name, value, days) {
-    var expires = "";
+    var expires = '', date;
     if (days) {
-        var date = new Date();
-        date.setTime(date.getTime()+(days*24*60*60*1000));
-        expires = "; expires="+date.toGMTString();
+        date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        expires = '; expires=' + date.toGMTString();
     }
-    document.cookie = name+"="+value+expires+"; path=/";
+    document.cookie = name + '=' + value + expires + '; path=/';
 }
 
 function readCookie(name) {
-    var nameEQ = name + "=";
-    var ca = document.cookie.split(';');
-    var c;
-    for (i=0; i<ca.length; i++) {
+    var nameEQ = name + '=',
+        ca = document.cookie.split(';'),
+        c, i;
+    for (i = 0; i < ca.length; i += 1) {
         c = ca[i];
-        while (c.charAt(0)===' ') { c = c.substring(1, c.length); }
-        if (c.indexOf(nameEQ) === 0) { return c.substring(nameEQ.length, c.length); }
+        while (c.charAt(0) === ' ') {
+            c = c.substring(1, c.length);
+        }
+        if (c.indexOf(nameEQ) === 0) {
+            return c.substring(nameEQ.length, c.length);
+        }
     }
     return null;
 }
 
 function eraseCookie(name) {
-    createCookie(name, "", -1);
+    createCookie(name, '', -1);
 }
 
 (function ($) {
+    var Browser = {}, 
+        loadUploader;
     // jquery method to load an overlay
     $.fn.loadOverlay = function(href, data, callback) {
         $(document).trigger('onStartLoadOverlay', [this, href, data]);
         var $overlay = this.closest('.pb-ajax');
-        this.load(href, data, function() {
-            if (callback != undefined) {
+        this.load(href, data, function () {
+            if (callback !== undefined) {
                 callback.apply(this, arguments);
             }
             $overlay[0].handle_load_inside_overlay.apply(this, arguments);
@@ -78,11 +84,11 @@ function eraseCookie(name) {
             $(document).trigger('onEndLoadOverlay', [this, href, data]);
         });
         return this;
-    }
-    
+    };
+
     $().ready(function () {
-        var iframe = $('#plone-cmsui-menu', window.parent.document);
-        var offset;
+        var iframe = $('#plone-cmsui-menu', window.parent.document),
+            offset;
 
         $(document).bind('onFormOverlayLoadSuccess', function () {
             showMessagesFromOverlay();
@@ -96,7 +102,7 @@ function eraseCookie(name) {
             // on cancel without reloading the page
             closeselector: '.overlayCloseAction',
             formselector: 'form.overlayForm',
-            config: { 
+            config: {
                 top: 130,
                 onBeforeLoad: function (e) { 
                     // Close other overlays
@@ -118,7 +124,7 @@ function eraseCookie(name) {
                     $(document).trigger('onCloseOverlay', [this, e]);
                     return true; 
                 }
-            } 
+            }
         });
 
 	$(document).bind('onBeforeAjaxClickHandled', function(event, ele, api, clickevent){
@@ -141,13 +147,17 @@ function eraseCookie(name) {
             $(this).closest('.pb-ajax').loadOverlay(url + ' ' + common_content_filter);
             return false;
         });
+        $('.dropdownLink').bind('click', function (e) {
+            $(this).nextAll('.dropdownItems').slideToggle();
+            e.preventDefault();
+        });
     });
     $(window).load(function () {
         var menu_state = readCookie('__plone_menu'),
             iframe = $('#plone-cmsui-menu', window.parent.document),
             parent_body = $('body', window.parent.document),
             toolbar = $('#toolbar'),
-            height;
+            height, url, button;
 
         $('.portalMessage:visible').addClass('showNotify').hide();
 
@@ -159,9 +169,9 @@ function eraseCookie(name) {
                 iframe.css('background', 'transparent');
 
                 // Check if an overlay should be opened
-                var url = window.parent.document.location.href.match(/#!\/menu\/(.*)$/);
+                url = window.parent.document.location.href.match(/#!\/menu\/(.*)$/);
                 if (url) {
-                    var button = $('#' + url[1] + ' > a');
+                    button = $('#' + url[1] + ' > a');
                     if (button.length !== 0) {
                         button.click();
                     }
@@ -169,26 +179,26 @@ function eraseCookie(name) {
 
                 // Append iframe to the document
                 parent_body.append(
-                    $(window.parent.document.createElement("iframe"))
-                        .attr({
-                            'src': '@@cmsui-notifications',
-                            'id': 'plone-cmsui-notifications',
-                            'name': 'plone-cmsui-notifications'
-                        })
-                        .css({
-                            'top': toolbar.outerHeight(),
-                            'margin': 0,
-                            'padding': 0,
-                            'border': 0,
-                            'outline': 0,
-                            'background': 'transparent',
-                            'position': 'fixed',
-                            '_position': 'absolute',
-                            '_top': 'expression(eval((document.body.scrollTop)?document.body.scrollTop:document.documentElement.scrollTop))',
-                            'width': '320px',
-                            'height': '0px',
-                            'z-index': 11000
-                        })
+                    $(window.parent.document.createElement('iframe'))
+                    .attr({
+                        'src': '@@cmsui-notifications',
+                        'id': 'plone-cmsui-notifications',
+                        'name': 'plone-cmsui-notifications'
+                    })
+                    .css({
+                        'top': toolbar.outerHeight(),
+                        'margin': 0,
+                        'padding': 0,
+                        'border': 0,
+                        'outline': 0,
+                        'background': 'transparent',
+                        'position': 'fixed',
+                        '_position': 'absolute',
+                        '_top': 'expression(eval((document.body.scrollTop)?document.body.scrollTop:document.documentElement.scrollTop))',
+                        'width': '320px',
+                        'height': '0px',
+                        'z-index': 11000
+                    })
                 );
             });
         } else {
@@ -196,11 +206,11 @@ function eraseCookie(name) {
             toolbar
                 .addClass('small')
                 .css('opacity', 1);
-            height = toolbar.outerHeight();            
+            height = toolbar.outerHeight();
             iframe.css({
                 'top': -height,
                 'height': height
-                });
+            });
             iframe.animate({'top': 0}, 1000);
             parent_body.animate({'margin-top': toolbar.outerHeight()}, 1000);
         }
@@ -210,7 +220,7 @@ function eraseCookie(name) {
             $(window).trigger('onManagePageOpening', [this]);
             var bottom_height = $('#toolbar-bottom').outerHeight();
             toolbar.addClass('large').removeClass('small');
-            height = toolbar.outerHeight();            
+            height = toolbar.outerHeight();
             $('#toolbar-bottom').css('top', -bottom_height);
             parent_body.stop().animate({'margin-top': height}, 500);
             $('#toolbar-bottom').stop().animate({'top': 0}, 500);
@@ -235,7 +245,7 @@ function eraseCookie(name) {
             return false;
         });
     });
-    
+
     // workaround this MSIE bug :
     // https://dev.plone.org/plone/ticket/10894
     if (jQuery.browser.msie) jQuery("#settings").remove();
@@ -250,19 +260,20 @@ function eraseCookie(name) {
             var uploadData =  jQuery('.uploadData', this).val();
             var UlDiv = jQuery(this);
             jQuery.ajax({
-                       type: 'GET',
-                       url: uploadUrl,
-                       data: uploadData,
-                       dataType: 'html',
-                       contentType: 'text/html; charset=utf-8', 
-                       success: function(html) { 
-                          UlDiv.html(html);             
-                       } });    
-        }); 
-    }
-    jQuery(document).ready(loadUploader);    
-    
-    
+                type: 'GET',
+                url: uploadUrl,
+                data: uploadData,
+                dataType: 'html',
+                contentType: 'text/html; charset=utf-8',
+                success: function (html) {
+                    UlDiv.html(html);
+                }
+            });
+        });
+    };
+    jQuery(document).ready(loadUploader);
+
+
 }(jQuery));
 
 /**
@@ -279,16 +290,20 @@ $(window).bind('onLoadInsideOverlay', function() {
 /**
  *
  * JQuery Helpers for Plone Quick Upload
- *   
- */    
+ *
+ */
 
 var PloneQuickUpload = {};
-    
-PloneQuickUpload.addUploadFields = function(uploader, domelement, file, id, fillTitles, fillDescriptions) {
-    var blocFile;
-    if (fillTitles || fillDescriptions)  {
+
+PloneQuickUpload.addUploadFields = function (uploader, domelement, file, id, fillTitles, fillDescriptions) {
+    var blocFile, labelfiledescription, labelfiletitle;
+    if (fillTitles || fillDescriptions) {
         blocFile = uploader._getItemByFileId(id);
-        if (typeof id == 'string') id = parseInt(id.replace('qq-upload-handler-iframe',''));
+        if (typeof id === 'string') {
+            // If the string begins with any other value, the radix for
+            // parseInt is 10 (decimal)
+            id = parseInt(id.replace('qq-upload-handler-iframe', ''), 10);
+        }
     }
     if (fillDescriptions)  {
         var labelfiledescription = jQuery('#uploadify_label_file_description').val();
@@ -317,37 +332,40 @@ PloneQuickUpload.addUploadFields = function(uploader, domelement, file, id, fill
                    ')
     }
     PloneQuickUpload.showButtons(uploader, domelement);
-}
+};
 
-PloneQuickUpload.showButtons = function(uploader, domelement) {
+PloneQuickUpload.showButtons = function (uploader, domelement) {
     var handler = uploader._handler;
     if (handler._files.length) {
         jQuery('.uploadifybuttons', jQuery(domelement).parent()).show();
         return 'ok';
     }
     return false;
-}
+};
 
-PloneQuickUpload.sendDataAndUpload = function(uploader, domelement, typeupload) {
-    var handler = uploader._handler;
-    var files = handler._files;
-    var missing = 0;
+PloneQuickUpload.sendDataAndUpload = function (uploader, domelement, typeupload) {
+    var handler = uploader._handler,
+        files = handler._files,
+        missing = 0,
+        id, fileContainer;
     jQuery('.uploadifybuttons', jQuery(domelement).parent()).find('input').attr({disabled: 'disabled', opacity: 0.8});
-    for ( var id = 0; id < files.length; id++ ) {
+    for (id = 0; id < files.length; id += 1) {
         if (files[id]) {
-            var fileContainer = jQuery('.qq-upload-list li', domelement)[id-missing];
-            var file_title = '';
-            if (fillTitles)  {
+            fileContainer = jQuery('.qq-upload-list li', domelement)[id - missing],
+                file_title = '',
+                file_description = '';
+            if (fillTitles) {
                 file_title = jQuery('.file_title_field', fileContainer).val();
             }
-            var file_description = '';
-            if (fillDescriptions)  {
+            if (fillDescriptions) {
                 file_description = jQuery('.file_description_field', fileContainer).val();
             }
             uploader._queueUpload(id, {'title': file_title, 'description': file_description, 'typeupload' : typeupload});
         }
         // if file is null for any reason jq block is no more here
-        else missing++;
+        else {
+            missing += 1;
+        }
     }
     jQuery('.uploadifybuttons', jQuery(domelement).parent()).hide();
     jQuery('.uploadifybuttons', jQuery(domelement).parent()).find('input').removeAttr('disabled').attr('opacity', 1);
@@ -364,19 +382,23 @@ PloneQuickUpload.clearQueue = function(uploader, domelement) {
         }
         jQuery('.qq-upload-list li', domelement).remove();
         handler._files = [];
-        if (typeof handler._inputs != 'undefined') handler._inputs = {};
+        if (typeof handler._inputs !== 'undefined') {
+            handler._inputs = {};
+        }
     }
     jQuery('.uploadifybuttons', jQuery(domelement).parent()).hide();
-}
-PloneQuickUpload.onUploadComplete = function(uploader, domelement, id, fileName, responseJSON) {
+};
+PloneQuickUpload.onUploadComplete = function (uploader, domelement, id, fileName, responseJSON) {
     var uploadList = jQuery('.qq-upload-list', domelement);
-    if (responseJSON.success) {        
-        window.setTimeout( function() {
+    if (responseJSON.success) {
+        window.setTimeout(function () {
             jQuery(uploader._getItemByFileId(id)).remove();
             // after the last upload, if no errors, reload the page
             var newlist = jQuery('li', uploadList);
-            if (! newlist.length) window.setTimeout( PloneQuickUpload.onAllUploadsComplete, 5);       
+            if (! newlist.length) {
+                window.setTimeout(PloneQuickUpload.onAllUploadsComplete, 5);
+            }
         }, 50);
     }
-    
-}
+
+};
