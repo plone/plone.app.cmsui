@@ -119,12 +119,9 @@ class StructureView(BrowserView):
         plone_view = getMultiAdapter((context, self.request), name=u'plone')
         plone_layout = getMultiAdapter((context, self.request), name=u'plone_layout')
         portal_workflow = getToolByName(context, 'portal_workflow')
-        portal_properties = getToolByName(context, 'portal_properties')
         portal_types = getToolByName(context, 'portal_types')
         portal_membership = getToolByName(context, 'portal_membership')
-        site_properties = portal_properties.site_properties
 
-        use_view_action = site_properties.getProperty('typesUseViewActionInListings', ())
         browser_default = plone_utils.browserDefault(context)
 
         contentsMethod = self.contentsMethod()
@@ -213,7 +210,11 @@ class StructureView(BrowserView):
         """
         context = aq_inner(self.context)
         if not IOrderableFolder.providedBy(context):
-            return False
+            if hasattr(context, 'moveObjectsByDelta'):
+                # for instance, plone site root does not use plone.folder
+                return True
+            else:
+                return False
         ordering = context.getOrdering()
         return IExplicitOrdering.providedBy(ordering)
 
@@ -365,11 +366,10 @@ class MoveItem(BrowserView):
     def __call__(self, item_id, delta, subset_ids=None):
         context = aq_inner(self.context)
         try:
-            if not IOrderableFolder.providedBy(context):
+            if not IOrderableFolder.providedBy(context) and \
+                        not hasattr(context, 'moveObjectsByDelta'):
+                # for instance, plone site root does not use plone.folder
                 raise ValueError("Not ordered folder.")
-            ordering = context.getOrdering()
-            if not IExplicitOrdering.providedBy(ordering):
-                raise ValueError("Folder not explicitly orderable.")
 
             delta = int(delta)
             if subset_ids is not None:

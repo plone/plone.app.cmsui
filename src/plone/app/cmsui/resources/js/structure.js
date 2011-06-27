@@ -28,6 +28,10 @@ jQuery(function ($) {
         overlay_location = href;
     }
 
+    $(window).bind('onStructureEndSlideTo', function(){ $("table.orderable").ploneDnD(); });
+    $(window).bind('onEndLoadOverlay', function(){ $("table.orderable").ploneDnD(); });
+    $(window).bind('onLoadOverlay', function(){ $("table.orderable").ploneDnD(); });
+
     // trigger navigation into child folders
     $('#structure-dialog a.link-child').live('click', function(e) {
         e.preventDefault();
@@ -50,10 +54,6 @@ jQuery(function ($) {
             var href = e.state.structure_href;
             slideTo(href, (overlay_location.length > href.length ? 'right' : 'left'));
         }
-    });
-
-    $(window).bind(['onStructureEndSlideTo', 'onEndLoadOverlay', 'onLoadOverlay'], function(){
-	$("table.orderable").ploneDnD();
     });
 
 });
