@@ -68,6 +68,7 @@
         name="cmsui-workflow-panel"
         for="*"
         class=".workflowpanel.WorkflowPanel"
+        template="templates/overlay-form.pt"
         permission="plone.ViewCMSUI"
         />
 
