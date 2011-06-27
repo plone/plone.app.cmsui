@@ -264,6 +264,16 @@ function eraseCookie(name) {
     
 }(jQuery));
 
+/**
+ * Initialize tinymce
+ */
+$(window).bind('onLoadInsideOverlay', function() {
+    $('textarea.mce_editable').each(function() {
+        var config = new TinyMCEConfig($(this).attr('id'));
+        config.init();
+    });
+});
+
 
 /**
  *
