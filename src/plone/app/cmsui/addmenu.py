@@ -1,4 +1,3 @@
-from Acquisition import aq_inner
 from Products.CMFCore.utils import getToolByName
 from plone.app.z3cform.layout import wrap_form
 from plone.i18n.normalizer.interfaces import IIDNormalizer
