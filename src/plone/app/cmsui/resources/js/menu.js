@@ -74,7 +74,7 @@ function eraseCookie(name) {
                 callback.apply(this, arguments);
             }
             $overlay[0].handle_load_inside_overlay.apply(this, arguments);
-	    console.log("cmsui: onEndLoadOverlay");
+      console.log("cmsui: onEndLoadOverlay");
             $(document).trigger('onEndLoadOverlay', [this, href, data]);
         });
         return this;
@@ -101,42 +101,43 @@ function eraseCookie(name) {
                 onBeforeLoad: function (e) { 
                     // Close other overlays
                     offset = expandMenu();
-		    console.log("cmsui: onBeforeLoad overlay");
+        console.log("cmsui: onBeforeLoad overlay");
                     $(document).trigger('onBeforeOverlay', [this, e]);
                     return true; 
                 },
                 onLoad: function (e) {
                     loadUploader();
                     showMessagesFromOverlay();
-		    console.log("cmsui: onLoad overlay");
+        console.log("cmsui: onLoad overlay");
                     $(document).trigger('onLoadOverlay', [this, e]);
                     return true; 
                 }, 
                 onClose: function (e) { 
+        CURRENT_OVERLAY_TRIGGER = null;
                     contractMenu(offset);
-		    console.log("cmsui: onClose overlay");
+        console.log("cmsui: onClose overlay");
                     $(document).trigger('onCloseOverlay', [this, e]);
                     return true; 
                 }
             } 
         });
 
-	$(document).bind('onBeforeAjaxClickHandled', function(event, ele, api, clickevent){
-	    console.log("cmsui: onBeforeAjaxClickHandled");
-	    if(ele == CURRENT_OVERLAY_TRIGGER){
-		return event.preventDefault();
-	    }else{
-		if(CURRENT_OVERLAY_TRIGGER != null){
-		    var overlays = $('div.overlay:visible');
-		    overlays.fadeOut(function(){ $(this).remove(); });
-		}
-		CURRENT_OVERLAY_TRIGGER = ele;
-	    }
-	});
+  $(document).bind('onBeforeAjaxClickHandled', function(event, ele, api, clickevent){
+      console.log("cmsui: onBeforeAjaxClickHandled");
+      if(ele == CURRENT_OVERLAY_TRIGGER){
+    return event.preventDefault();
+      }else{
+    if(CURRENT_OVERLAY_TRIGGER != null){
+        var overlays = $('div.overlay:visible');
+        overlays.fadeOut(function(){ $(this).remove(); });
+    }
+    CURRENT_OVERLAY_TRIGGER = ele;
+      }
+  });
 
         $("a.overlayLink").live('click', function(){
             $(document).trigger('onOverlayLinkClicked', [this]);
-	    console.log("cmsui: overlay link clicked");
+      console.log("cmsui: overlay link clicked");
             var url = $(this).attr("href");
             $(this).closest('.pb-ajax').loadOverlay(url + ' ' + common_content_filter);
             return false;
