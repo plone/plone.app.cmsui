@@ -215,9 +215,9 @@ function eraseCookie(name) {
     // https://dev.plone.org/plone/ticket/10894
     if (jQuery.browser.msie) jQuery("#settings").remove();
     var Browser = {};
-    Browser.onUploadComplete = function() {
-        window.location.reload();
-    }
+    // Browser.onUploadComplete = function() {
+    //     window.location.reload();
+    // }
     loadUploader = function() {
         var ulContainer = jQuery('.uploaderContainer');
         ulContainer.each(function(){
@@ -318,7 +318,7 @@ PloneQuickUpload.sendDataAndUpload = function(uploader, domelement, typeupload) 
     jQuery('.uploadifybuttons', jQuery(domelement).parent()).find('input').removeAttr('disabled').attr('opacity', 1);
 }
 PloneQuickUpload.onAllUploadsComplete = function(){
-    Browser.onUploadComplete();
+    // Browser.onUploadComplete();
 }
 PloneQuickUpload.clearQueue = function(uploader, domelement) {
     var handler = uploader._handler;
