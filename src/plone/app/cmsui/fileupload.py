@@ -2,7 +2,6 @@ import mimetypes
 import random
 import urllib
 from Acquisition import aq_inner
-from AccessControl import SecurityManagement
 from ZPublisher.HTTPRequest import HTTPRequest
 
 from interfaces import IQuickUploadFileFactory
