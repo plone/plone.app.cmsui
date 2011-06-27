@@ -3,6 +3,8 @@
 /* Code that runs inside the iframe menu
  */
 
+CURRENT_OVERLAY_TRIGGER = null;
+
 function expandMenu() {
     var offset = $(window.parent).scrollTop();
     $('body', window.parent.document).css('overflow', 'hidden');
@@ -65,14 +67,15 @@ function eraseCookie(name) {
 (function ($) {
     // jquery method to load an overlay
     $.fn.loadOverlay = function(href, data, callback) {
-        $(window).trigger('onStartLoadOverlay', [this, href, data]);
+        $(document).trigger('onStartLoadOverlay', [this, href, data]);
         var $overlay = this.closest('.pb-ajax');
         this.load(href, data, function() {
             if (callback != undefined) {
                 callback.apply(this, arguments);
             }
             $overlay[0].handle_load_inside_overlay.apply(this, arguments);
-            $(window).trigger('onEndLoadOverlay', [this, href, data]);
+	    console.log("cmsui: onEndLoadOverlay");
+            $(document).trigger('onEndLoadOverlay', [this, href, data]);
         });
         return this;
     }
@@ -81,7 +84,7 @@ function eraseCookie(name) {
         var iframe = $('#plone-cmsui-menu', window.parent.document);
         var offset;
 
-        $(window).bind('onFormOverlayLoadSucces', function () {
+        $(document).bind('onFormOverlayLoadSucces', function () {
             showMessagesFromOverlay();
             console.log('test');
         });
@@ -97,30 +100,43 @@ function eraseCookie(name) {
                 top: 130,
                 onBeforeLoad: function (e) { 
                     // Close other overlays
-                    $('.overlay').overlay().close();
                     offset = expandMenu();
-                    $(window).trigger('onBeforeOverlay', [this, e]);
+		    console.log("cmsui: onBeforeLoad overlay");
+                    $(document).trigger('onBeforeOverlay', [this, e]);
                     return true; 
                 },
                 onLoad: function (e) {
                     loadUploader();
                     showMessagesFromOverlay();
-                    $(window).trigger('onLoadOverlay', [this, e]);
+		    console.log("cmsui: onLoad overlay");
+                    $(document).trigger('onLoadOverlay', [this, e]);
                     return true; 
                 }, 
                 onClose: function (e) { 
-                    if ($('.overlay').length === 0) {
-                        contractMenu(offset);
-                    }
-                    $(window).trigger('onCloseOverlay', [this, e]);
+                    contractMenu(offset);
+		    console.log("cmsui: onClose overlay");
+                    $(document).trigger('onCloseOverlay', [this, e]);
                     return true; 
                 }
             } 
         });
-	$(window).bind('onFormOverlayLoadFailure', function(){ console.log("lkdslldk"); });
+
+	$(document).bind('onBeforeAjaxClickHandled', function(event, ele, api, clickevent){
+	    console.log("cmsui: onBeforeAjaxClickHandled");
+	    if(ele == CURRENT_OVERLAY_TRIGGER){
+		return event.preventDefault();
+	    }else{
+		if(CURRENT_OVERLAY_TRIGGER != null){
+		    var overlays = $('div.overlay:visible');
+		    overlays.fadeOut(function(){ $(this).remove(); });
+		}
+		CURRENT_OVERLAY_TRIGGER = ele;
+	    }
+	});
 
         $("a.overlayLink").live('click', function(){
-            $(window).trigger('onOverlayLinkClicked', [this]);
+            $(document).trigger('onOverlayLinkClicked', [this]);
+	    console.log("cmsui: overlay link clicked");
             var url = $(this).attr("href");
             $(this).closest('.pb-ajax').loadOverlay(url + ' ' + common_content_filter);
             return false;
@@ -248,6 +264,16 @@ function eraseCookie(name) {
     
     
 }(jQuery));
+
+/**
+ * Initialize tinymce
+ */
+$(window).bind('onLoadInsideOverlay', function() {
+    $('textarea.mce_editable').each(function() {
+        var config = new TinyMCEConfig($(this).attr('id'));
+        config.init();
+    });
+});
 
 
 /**

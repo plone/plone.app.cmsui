@@ -75,4 +75,13 @@
         directory="skins"
         recursive="true" />
 
+    <!-- disable KSS -->
+    <browser:viewletManager
+        name="plone.resourceregistries.kineticstylesheets"
+        provides="Products.ResourceRegistries.interfaces.IHtmlHeadStyles"
+        template="null.pt"
+        permission="zope2.View"
+        layer="..interfaces.ICMSUILayer"
+        />
+
 </configure>
