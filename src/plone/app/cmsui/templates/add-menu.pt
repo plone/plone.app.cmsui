@@ -16,7 +16,8 @@
                 <tal:children tal:repeat="crumb view/breadcrumbs">
                     /
                     <a tal:content="crumb/Title"
-                       tal:attributes="href crumb/absolute_url" />
+                       tal:attributes="href crumb/absolute_url"
+                       tal:omit-tag="repeat/crumb/end" />
                 </tal:children>
             </p>
         </header>
