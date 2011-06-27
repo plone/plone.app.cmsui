@@ -183,7 +183,7 @@ class QuickUploadFile(BrowserView):
         # do not support it
         response.setHeader('Content-Type', 'text/html; charset=utf-8')
         
-        if request.HTTP_X_REQUESTED_WITH :
+        if request.HTTP_X_REQUESTED_WITH:
             # using ajax upload
             file_name = urllib.unquote(request.HTTP_X_FILE_NAME)
             # upload_with = "XHR"
