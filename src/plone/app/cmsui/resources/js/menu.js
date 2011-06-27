@@ -385,9 +385,10 @@ PloneQuickUpload.sendDataAndUpload = function (uploader, domelement, typeupload)
     jQuery('.uploadifybuttons', jQuery(domelement).parent()).hide();
     jQuery('.uploadifybuttons', jQuery(domelement).parent()).find('input').removeAttr('disabled').attr('opacity', 1);
 }
-PloneQuickUpload.onAllUploadsComplete = function(){
-    // Browser.onUploadComplete();
+PloneQuickUpload.onAllUploadsComplete = function(uploader){
+    $("div.pb-ajax").loadOverlay(uploader._options.container_url);
 }
+
 PloneQuickUpload.clearQueue = function(uploader, domelement) {
     var handler = uploader._handler;
     var files = handler._files;
@@ -411,7 +412,7 @@ PloneQuickUpload.onUploadComplete = function (uploader, domelement, id, fileName
             // after the last upload, if no errors, reload the page
             var newlist = jQuery('li', uploadList);
             if (! newlist.length) {
-                window.setTimeout(PloneQuickUpload.onAllUploadsComplete, 5);
+                PloneQuickUpload.onAllUploadsComplete(uploader);
             }
         }, 50);
     }

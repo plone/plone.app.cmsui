@@ -78,6 +78,7 @@ XHR_UPLOAD_JS = """
         xhr_%(ul_id)s = new qq.FileUploader({
             element: jQuery('#%(ul_id)s')[0],
             action: '%(context_url)s/@@quick_upload_file',
+            container_url: '%(context_url)s/@@cmsui-structure',
             autoUpload: auto,
             onAfterSelect: addUploadFields_%(ul_id)s,
             onComplete: onUploadComplete_%(ul_id)s,
