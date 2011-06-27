@@ -50,6 +50,10 @@ function showMessagesFromOverlay() {
     });
 }
 
+function notify(options) {
+    window.parent.frames['plone-cmsui-notifications'].$.plone.notify(options);
+}
+
 // http://www.quirksmode.org/js/cookies.html
 function createCookie(name, value, days) {
     var expires = '', date;
