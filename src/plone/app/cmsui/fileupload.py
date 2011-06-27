@@ -39,16 +39,6 @@ def getDataFromAllRequests(request, dataitem) :
         data = decodeQueryString(request.get('QUERY_STRING','')).get(dataitem)
     return data    
 
-def _listTypesForInterface(context, interface):
-    """
-    List of portal types that have File interface
-    @param context: context
-    @param interface: Zope interface
-    @return: ['Image', 'News Item']
-    """
-    archetype_tool = getToolByName(context, 'archetype_tool')
-    all_types = [tipe.getId() for tipe in archetype_tool.listPortalTypesWithInterfaces([interface])]
-    return dict.fromkeys(all_types).keys() 
 
 class QuickUploadView(BrowserView):
     """ The Quick Upload View
