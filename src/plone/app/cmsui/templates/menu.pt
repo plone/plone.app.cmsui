@@ -20,7 +20,6 @@
 
     <tal:resourceregistries>
       <tal:styles replace="structure provider:plone.resourceregistries.styles" />
-      <tal:kss replace="structure provider:plone.resourceregistries.kineticstylesheets" />
       <tal:scripts replace="structure provider:plone.resourceregistries.scripts" />
     </tal:resourceregistries>
 
@@ -119,12 +118,12 @@
                      id="document-settings">
                      <a class="dropdownLink" href="#">More&hellip;</a>
                         <!-- TODO: We don't have a good way to show this yet, so hiding for now -->
-                        <ul class="dropdownItems" style="display: none">
+                        <ul class="dropdownItems">
                             <li tal:repeat="action view/settingsActions">
                                 <a class="overlayLink"
                                    tal:content="action/title"
                                    tal:attributes="href action/url;
-                                                   style string:background: url(${action/icon});;" />
+                                                   style string:background: url(${action/icon}) 50% 0 no-repeat;" />
                             </li>
                         </ul>
                 </li>

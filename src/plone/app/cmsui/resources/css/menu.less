@@ -47,8 +47,7 @@ button {
 	margin-top: 0;
     color: @baseFontColor;
     position: fixed;
-    z-index: 10000;
-    opacity: 0;
+    z-index: 10001;
 
 	&:after {
 	    /*
@@ -68,9 +67,32 @@ button {
 	    padding: 0;
 	    li {
 		    display: inline;
+		    position: relative;
 		    a {
 			    display: inline-block;
 	            padding: @verticalSpace/4 @horizontalSpace/2;
+			}
+			ul.dropdownItems {
+				display: none;
+			    position: absolute;
+			    top: 10px;
+			    left: 0;
+			    background: darken(@ploneColor, 20%);
+			    .css3_border_radius(5px);
+			    width: 300px;
+			    padding: 10px;
+			    margin-top: 1em;
+			    
+			    &:before {
+				    content: "\0020";
+                    display: block;
+                    height: 0px;
+                    width: 0px;
+                    margin-top: -20px;
+                    margin-bottom: 10px;
+                    .toolTipArrow();
+                    border-bottom-color: darken(@ploneColor, 20%);
+				}
 			}
 		}
 	}
@@ -168,6 +190,7 @@ button {
 #manage-page-close,
 #manage-page-open {
     margin-left: 24px;
+    display: none;
 }
 .small #toolbar-bottom {
     display: none;
@@ -181,12 +204,12 @@ button {
     border-bottom: 2px solid darken(@ploneColor, 20%);
 }
 
-.small #manage-page-close {
-    display: none;
+.large #manage-page-close {
+    display: inline;
 }
 
-.large #manage-page-open {
-    display: none;
+.small #manage-page-open {
+    display: inline;
 }
 
 #toggle-toolbar {
@@ -206,7 +229,6 @@ button {
 		}*/
 	}
 }
-
 
 
 /* @group Icons */

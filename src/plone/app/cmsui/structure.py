@@ -126,19 +126,17 @@ class StructureView(BrowserView):
 
         contentsMethod = self.contentsMethod()
 
-        show_all = self.request.get('show_all', '').lower() == 'true'
-        pagesize = 20
         pagenumber = int(self.request.get('pagenumber', 1))
-        start = (pagenumber - 1) * pagesize
-        end = start + pagesize
+        start = (pagenumber - 1) * self.pagesize
+        end = start + self.pagesize
 
         results = []
         for i, obj in enumerate(contentsMethod(self.contentFilter)):
-            path = obj.getPath or "/".join(obj.getPhysicalPath())
+            path = obj.getPath() or "/".join(obj.getPhysicalPath())
 
             # avoid creating unnecessary info for items outside the current
             # batch;  only the path is needed for the "select all" case...
-            if not show_all and not start <= i < end:
+            if not self.selectall and not start <= i < end:
                 results.append(dict(path = path))
                 continue
 
@@ -360,7 +358,7 @@ class StructureView(BrowserView):
 
 class MoveItem(BrowserView):
     """
-    Pretty much straigh copy of the folder_moveitem.py script
+    Pretty much straight copy of the folder_moveitem.py script
     so we can eventually remove the bloody thing.
     """
     def __call__(self, item_id, delta, subset_ids=None):

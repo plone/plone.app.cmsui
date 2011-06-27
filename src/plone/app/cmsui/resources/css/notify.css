@@ -61,8 +61,7 @@
     right: 3px;
     width: 30px;
     height: 30px;
-    background-image: url(++resource++plone.app.cmsui/images/window.png);
-    background-position: -12px 0px;
+    background-image: url(++resource++plone.app.cmsui/images/pb_close.png);
     cursor: pointer;
     z-index: 1101;
     display: none;
@@ -111,6 +110,11 @@
 
 .notification-message {
     color: #FFF;
+}
+
+a {
+    color: #FFF;
+    text-decoration: underline;
 }
 
 /* @end */
