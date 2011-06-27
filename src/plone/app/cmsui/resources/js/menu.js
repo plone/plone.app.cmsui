@@ -286,7 +286,7 @@ function eraseCookie(name) {
 /**
  * Initialize tinymce
  */
-$(document).bind('onLoadInsideOverlay', function() {
+$(document).bind('loadInsideOverlay', function() {
     $('textarea.mce_editable').each(function() {
         var config = new TinyMCEConfig($(this).attr('id'));
         config.init();
