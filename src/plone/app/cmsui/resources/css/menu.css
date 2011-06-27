@@ -653,6 +653,7 @@ button:hover {
 }
 #manage-page-close, #manage-page-open {
   margin-left: 24px;
+  display: none;
 }
 .small #toolbar-bottom {
   display: none;
@@ -663,11 +664,11 @@ button:hover {
 #toolbar.large #toolbar-bottom {
   border-bottom: 2px solid #1b3d5b;
 }
-.small #manage-page-close {
-  display: none;
+.large #manage-page-close {
+  display: inline;
 }
-.large #manage-page-open {
-  display: none;
+.small #manage-page-open {
+  display: inline;
 }
 #toggle-toolbar {
   background: #3272aa;
