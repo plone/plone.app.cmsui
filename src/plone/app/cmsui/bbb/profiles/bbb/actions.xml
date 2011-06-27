@@ -14,7 +14,7 @@
     </object>
 
     <object name="object_buttons" meta_type="CMF Action Category">
-        <object name="paste" i18n:domain="plone">
+        <object name="paste" i18n:domain="plone" remove="true">
             <property name="available_expr">python:object.cb_dataValid() and object.isPrincipiaFolderish</property>
         </object>
         <object name="cut" i18n:domain="plone">

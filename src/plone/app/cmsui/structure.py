@@ -139,7 +139,7 @@ class StructureView(BrowserView):
 
             # avoid creating unnecessary info for items outside the current
             # batch;  only the path is needed for the "select all" case...
-            if not self.selectall and not start <= i < end:
+            if not self.selectall and not self.show_all and not start <= i < end:
                 results.append(dict(path = path))
                 continue
 
@@ -324,7 +324,10 @@ class StructureView(BrowserView):
 
     @property
     def show_all_url(self):
-        return self.view_url + '?show_all=true'
+        base = self.view_url + '?show_all=true'
+        if self.selectall:
+            base += '&select=all'
+        return base
 
     def quote_plus(self, string):
         return urllib.quote_plus(string)

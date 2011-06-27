@@ -101,6 +101,7 @@ qq.FileUploader = function(o){
     
     // number of files being uploaded
     this._filesInProgress = 0;
+    this._filesUploaded = 0;
     
     // easier access
     this._classes = this._options.classes;
@@ -307,7 +308,8 @@ qq.FileUploader.prototype = {
                     }
                 }
                 self._filesInProgress--;
-                self._options.onComplete(id, fileName, result);                                
+                self._filesUploaded++;
+                self._options.onComplete(id, fileName, result);
             }
         });
 

@@ -84,7 +84,7 @@
                     <tal:buttons tal:repeat="button view/object_buttons">
                     <a tal:attributes="href button/url; 
                                        id string:structure-btn-${button/id}; 
-                                       class python: repeat['button'].start and 'first overlayLink' or repeat['button'].end and 'last overlayLink' or 'overlayLink'" 
+                                       class python: repeat['button'].start and 'first' or repeat['button'].end and 'last' or ''" 
                        tal:content="button/title">
                       action
                     </a>
