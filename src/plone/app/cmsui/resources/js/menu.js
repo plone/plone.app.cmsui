@@ -231,7 +231,7 @@ function eraseCookie(name) {
         createCookie('__plone_height', $('#toolbar').outerHeight());
 
         $('#manage-page-open').click(function () {
-            $(window).trigger('onManagePageOpening', [this]);
+            $(document).trigger('onManagePageOpening', [this]);
             var bottom_height = $('#toolbar-bottom').outerHeight();
             toolbar.addClass('large').removeClass('small');
             height = toolbar.outerHeight();
@@ -241,11 +241,11 @@ function eraseCookie(name) {
             iframe.stop().animate({'height': height}, 500);
             createCookie('__plone_menu', 'large');
             createCookie('__plone_height', height);
-            $(window).trigger('onManagePageOpened', [this]);
+            $(document).trigger('onManagePageOpened', [this]);
             return false;
         });
         $('#manage-page-close').click(function () {
-            $(window).trigger('onManagePageClosing', [this]);
+            $(document).trigger('onManagePageClosing', [this]);
             var bottom_height = $('#toolbar-bottom').outerHeight();
             height = toolbar.outerHeight() - bottom_height + 1;
             iframe.stop().animate({'height': height}, 500);
@@ -255,7 +255,7 @@ function eraseCookie(name) {
             $('#toolbar-bottom').stop().animate({'top': -bottom_height}, 500);
             createCookie('__plone_menu', 'small');
             createCookie('__plone_height', height);
-            $(window).trigger('onManagePageClosed', [this]);
+            $(document).trigger('onManagePageClosed', [this]);
             return false;
         });
     });
