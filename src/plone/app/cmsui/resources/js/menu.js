@@ -101,6 +101,7 @@ function eraseCookie(name) {
     $().ready(function () {
         var iframe = $('#plone-cmsui-menu', window.parent.document);
 
+        $('#toolbar').css({'opacity': 0});
         $(document).bind('onFormOverlayLoadSuccess', function () {
             showMessagesFromOverlay();
         });
