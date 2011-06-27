@@ -65,14 +65,14 @@ function eraseCookie(name) {
 (function ($) {
     // jquery method to load an overlay
     $.fn.loadOverlay = function(href, data, callback) {
-        $(window).trigger('onStartLoadOverlay', [this, href, data]);
+        $(document).trigger('onStartLoadOverlay', [this, href, data]);
         var $overlay = this.closest('.pb-ajax');
         this.load(href, data, function() {
             if (callback != undefined) {
                 callback.apply(this, arguments);
             }
             $overlay[0].handle_load_inside_overlay.apply(this, arguments);
-            $(window).trigger('onEndLoadOverlay', [this, href, data]);
+            $(document).trigger('onEndLoadOverlay', [this, href, data]);
         });
         return this;
     }
@@ -92,26 +92,25 @@ function eraseCookie(name) {
                 top: 130,
                 onBeforeLoad: function (e) { 
                     offset = expandMenu();
-                    $(window).trigger('onBeforeOverlay', [this, e]);
+                    $(document).trigger('onBeforeOverlay', [this, e]);
                     return true; 
                 },
                 onLoad: function (e) {
                     loadUploader();
                     showMessagesFromOverlay();
-                    $(window).trigger('onLoadOverlay', [this, e]);
+                    $(document).trigger('onLoadOverlay', [this, e]);
                     return true; 
                 }, 
                 onClose: function (e) { 
                     contractMenu(offset);
-                    $(window).trigger('onCloseOverlay', [this, e]);
+                    $(document).trigger('onCloseOverlay', [this, e]);
                     return true; 
                 }
             } 
         });
-	$(window).bind('onFormOverlayLoadFailure', function(){ console.log("lkdslldk"); });
 
         $("a.overlayLink").live('click', function(){
-            $(window).trigger('onOverlayLinkClicked', [this]);
+            $(documnet).trigger('onOverlayLinkClicked', [this]);
             var url = $(this).attr("href");
             $(this).closest('.pb-ajax').loadOverlay(url + ' ' + common_content_filter);
             return false;

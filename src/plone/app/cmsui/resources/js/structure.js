@@ -28,9 +28,10 @@ jQuery(function ($) {
         overlay_location = href;
     }
 
-    $(window).bind('onStructureEndSlideTo', function(){ $("table.orderable").ploneDnD(); });
-    $(window).bind('onEndLoadOverlay', function(){ $("table.orderable").ploneDnD(); });
-    $(window).bind('onLoadOverlay', function(){ $("table.orderable").ploneDnD(); });
+    $(document).bind('onStructureEndSlideTo', function(){ $("table.orderable").ploneDnD(); });
+    $(document).bind('onEndLoadOverlay', function(){ $("table.orderable").ploneDnD(); });
+    $(document).bind('onLoadOverlay', function(){ $("table.orderable").ploneDnD(); });
+    $(document).bind('onFormOverlayLoadSuccess', function(){ $("table.orderable").ploneDnD(); });
 
     // trigger navigation into child folders
     $('#structure-dialog a.link-child').live('click', function(e) {
