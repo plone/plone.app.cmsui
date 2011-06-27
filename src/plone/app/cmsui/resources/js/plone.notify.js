@@ -85,7 +85,8 @@ immed: true, strict: true, maxlen: 80, maxerr: 9999 */
             title: "",
             message: "",
             fadeSpeed: "slow",
-            duration: 3000
+            sticky: true,
+            duration: 8000
         }, options);
 
         // Check if title or message is empty
@@ -178,17 +179,21 @@ immed: true, strict: true, maxlen: 80, maxerr: 9999 */
                 .fadeIn(options.fadeSpeed, function () {
                     elm = $(this);
 
-                    // Set timeout to hide notification
-                    window.setTimeout(function () {
+                    // Don't set timeout when sticky
+                    if (options.sticky !== true) {
 
-                        // If not mouseover fadeout and remove the message
-                        if (elm.data("mouseover") === false) {
-                            elm.fadeOut(options.fadeSpeed, function () {
-                                elm.remove();
-                            });
-                        }
-                        elm.data("timeout", true);
-                    }, options.duration);
+                        // Set timeout to hide notification
+                        window.setTimeout(function () {
+
+                            // If not mouseover fadeout and remove the message
+                            if (elm.data("mouseover") === false) {
+                                elm.fadeOut(options.fadeSpeed, function () {
+                                    elm.remove();
+                                });
+                            }
+                            elm.data("timeout", true);
+                        }, options.duration);
+                    }
 
                     // Set initial state
                     elm.data("timeout", false);
@@ -244,8 +249,10 @@ immed: true, strict: true, maxlen: 80, maxerr: 9999 */
         // Show first notifications
         $('.showNotify', window.parent.frames['plone-cmsui-menu'].document).each(function () {
             var type,
-                portal_message = $(this);
+                portal_message = $(this),
+                sticky = true;
             if (portal_message.hasClass('info')) {
+                sticky = false;
                 type = 'info';
             } else if (portal_message.hasClass('warning')) {
                 type = 'warning';
@@ -255,7 +262,8 @@ immed: true, strict: true, maxlen: 80, maxerr: 9999 */
             $.plone.notify({
                 'title': portal_message.children('dt').html(),
                 'message': portal_message.children('dd').html(),
-                'type': type
+                'type': type,
+                'sticky': sticky
             });
         });
     });
