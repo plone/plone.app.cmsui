@@ -23,7 +23,7 @@
         </header>
         
         <tal:content tal:define="showUploadForm view/showUploadForm;">
-            <div tal:attributes="class python:grid_5 if showUploadForm else ''">
+            <div tal:attributes="class python:'grid_5' if showUploadForm else ''">
                 <dl>
                     <tal:items repeat="type view/allowedTypes">
                         <dt tal:attributes="class string:contenttype-${type/extra/id}">

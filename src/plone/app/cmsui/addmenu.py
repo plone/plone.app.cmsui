@@ -141,7 +141,7 @@ class AddMenu(BrowserView):
         # TODO How are we sure which types are uploadable?
         # For now, just check on File/Image.
         
-        return ('Image' in self.allowedTypes) or ('File' in self.allowedTypes)
+        return True #('Image' in self.allowedTypes) or ('File' in self.allowedTypes)
 
     def getUploadUrl(self):
         """
