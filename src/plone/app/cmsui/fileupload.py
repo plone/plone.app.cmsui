@@ -264,26 +264,3 @@ class QuickUploadFile(BrowserView):
 
         return newid
 
-class QuickUploadCheckFile(BrowserView):
-    """
-    check if file exists
-    """
-    
-    def __call__(self):
-        """
-        """
-        
-        context = aq_inner(self.context)
-        request = self.request
-        
-        always_exist = {}
-        formdict = request.form
-        ids = context.objectIds()
-        
-        for k,v in formdict.items():
-            if k!='folder' :
-                if v in ids :
-                    always_exist[k] = v
-        
-        return str(always_exist)
-
