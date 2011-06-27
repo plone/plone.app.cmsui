@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<object name="portal_javascripts">
+    
+    <!-- BBB: Create bundles for jQuery tools and Tiny MCE - see registry.xml -->
+    <stylesheet bundle="jquerytools" rendering="link" id="++resource++plone.app.jquerytools.overlays.css"  />
+    <stylesheet bundle="jquerytools" rendering="link" id="++resource++plone.app.jquerytools.dateinput.css"  />
+    
+    <stylesheet bundle="tinymce" id="++resource++tinymce.stylesheets/tinymce.css"  />
+
+</object>

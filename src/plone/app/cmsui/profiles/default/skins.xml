@@ -7,6 +7,9 @@
         <layer name="cmsui_templates"/>
         <layer name="ATContentTypes"/>
         <layer name="referencebrowser"/>
+        <layer name="tinymce"/>
+        <layer name="cmfeditions_views"/>
+        <layer name="CMFEditions"/>
         <layer name="archetypes"/>
         <layer name="mimetypes_icons"/>
         <layer name="PasswordReset"/>
