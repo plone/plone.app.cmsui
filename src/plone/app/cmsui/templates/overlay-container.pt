@@ -50,36 +50,28 @@
 
 <body tal:define="isRTL portal_state/is_rtl"
     tal:attributes="dir python:isRTL and 'rtl' or 'ltr'">
-
-<div id="visual-portal-wrapper">
-
-        <metal:block define-slot="content">
-            <div metal:define-macro="content">
-
-                <div metal:use-macro="context/global_statusmessage/macros/portal_message">
-                    Status message
-                </div>
-
-                <div id="content">
-                    <section id="overlay-content" class="clearfix">
-                        <metal:slot define-slot="body">
-
-                            <metal:header define-slot="header" tal:content="nothing">
-                                Visual Header
-                            </metal:header>
-
-                            <metal:bodytext define-slot="main" tal:content="nothing">
-                                Body
-                            </metal:bodytext>
-                        </metal:slot>
-                    </section>
-                </div>
-
-            </div>
-        </metal:block>
-
-</div>
-</body>
+    <div id="visual-portal-wrapper">
+      <metal:block define-slot="content">
+        <div metal:define-macro="content">
+          <div metal:use-macro="context/global_statusmessage/macros/portal_message">
+            Status message
+          </div>
+          <div id="content">
+            <section id="overlay-content" class="clearfix">        
+              <metal:slot define-slot="body">
+                <metal:header define-slot="header" tal:content="nothing">
+                  Visual Header
+                </metal:header>
+                <metal:bodytext define-slot="main" tal:content="nothing">
+                  Body
+                </metal:bodytext>
+              </metal:slot>
+            </section>
+          </div>
+        </div>
+      </metal:block>
+    </div>
+  </body>
 </html>
 
 </metal:page>
