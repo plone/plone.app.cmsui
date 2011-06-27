@@ -113,6 +113,11 @@
     clear: both;
 }
 
+.qq-upload-list .file_title_field {
+    width: 60%;
+    margin-right: 25px;
+}
+
 /* IE7 fixes */
 
 *+html .quick-uploader #label-upload {
