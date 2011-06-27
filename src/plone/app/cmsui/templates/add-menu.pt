@@ -21,7 +21,9 @@
                 </tal:children>
             </p>
         </header>
-            <div class="grid_5">
+        
+        <tal:content tal:define="showUploadForm view/showUploadForm;">
+            <div tal:attributes="class python:'grid_5' if showUploadForm else ''">
                 <dl>
                     <tal:items repeat="type view/allowedTypes">
                         <dt tal:attributes="class string:contenttype-${type/extra/id}">
@@ -38,7 +40,8 @@
                 </dl>
             </div>
 
-            <div class="grid_7">
+            <div class="grid_7"
+                 tal:condition="showUploadForm">
 
                 <!--
                     TODO We need a non-JS fallback
@@ -54,7 +57,9 @@
                            class="uploadData"
                            tal:attributes="value view/getDataForUploadUrl" />
                 </div>
-        </div>
+            </div>
+        </tal:content>
+        
 </metal:content-core>
 
 </body>

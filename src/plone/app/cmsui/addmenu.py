@@ -54,9 +54,12 @@ class AddNewContentForm(form.Form):
         id = chooser._findUniqueName(id, None)
 
         # create the object
-        container.invokeFactory(data['type_name'], id=id, title=title)
-        
-        self.request.response.redirect("%s/edit" % container[id].absolute_url())
+        type_name = data['type_name']
+        container.invokeFactory(type_name, id=id, title=title)
+        if type_name in [u'Folder']:
+            self.request.response.redirect("%s/@@cmsui-structure" % container[id].absolute_url())
+        else:
+            self.request.response.redirect("%s/edit" % container[id].absolute_url())
 
 AddNewContentView = wrap_form(AddNewContentForm)
 
@@ -135,16 +138,25 @@ class AddMenu(BrowserView):
         
         return self.index()
 
+    def showUploadForm(self):
+        """We can't show the upload form if uploadable types can't be created here.
+        """
+        # TODO How are we sure which types are uploadable?
+        # For now, just check on File/Image.
+        uploadTypes = ['Image','File']
+        for a in self.allowedTypes:
+            if a['id'] in uploadTypes:
+                return True
+        return False
 
     def getUploadUrl(self):
-           """
-           return upload url
-           in current folder
-           """
-           ploneview = getMultiAdapter((self.context, self.request), name="plone")
-           
-           folder_url = ploneview.getCurrentFolderUrl()                      
-           return '%s/@@quick_upload' %folder_url
+        """
+        return upload url in current folder
+        """
+        ploneview = getMultiAdapter((self.context, self.request), name="plone")
+
+        folder_url = ploneview.getCurrentFolderUrl()                      
+        return '%s/@@quick_upload' %folder_url
 
     def getDataForUploadUrl(self):
         return 'data_url'

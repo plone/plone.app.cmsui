@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <object name="portal_javascripts">
     
-    <javascript bundle="cmsui" id="++resource++plone.app.cmsui/js/jquery.js" insert-before="*" />
+    <javascript bundle="cmsui" compression="none" id="++resource++plone.app.cmsui/js/jquery.js" insert-before="*" />
     
     <javascript bundle="cmsui" id="++resource++plone.app.cmsui/js/menu.js"  />
     <javascript bundle="cmsui" id="++resource++plone.app.cmsui/js/libs/fileuploader.js"  />
