@@ -3,6 +3,8 @@
 /* Code that runs inside the iframe menu
  */
 
+CURRENT_OVERLAY_TRIGGER = null;
+
 function expandMenu() {
     var offset = $(window.parent).scrollTop();
     $('body', window.parent.document).css('overflow', 'hidden');
@@ -72,6 +74,7 @@ function eraseCookie(name) {
                 callback.apply(this, arguments);
             }
             $overlay[0].handle_load_inside_overlay.apply(this, arguments);
+	    console.log("cmsui: onEndLoadOverlay");
             $(document).trigger('onEndLoadOverlay', [this, href, data]);
         });
         return this;
@@ -92,25 +95,42 @@ function eraseCookie(name) {
                 top: 130,
                 onBeforeLoad: function (e) { 
                     offset = expandMenu();
+		    console.log("cmsui: onBeforeLoad overlay");
                     $(document).trigger('onBeforeOverlay', [this, e]);
                     return true; 
                 },
                 onLoad: function (e) {
                     loadUploader();
                     showMessagesFromOverlay();
+		    console.log("cmsui: onLoad overlay");
                     $(document).trigger('onLoadOverlay', [this, e]);
                     return true; 
                 }, 
                 onClose: function (e) { 
                     contractMenu(offset);
+		    console.log("cmsui: onClose overlay");
                     $(document).trigger('onCloseOverlay', [this, e]);
                     return true; 
                 }
             } 
         });
 
+	$(document).bind('onBeforeAjaxClickHandled', function(event, ele, api, clickevent){
+	    console.log("cmsui: onBeforeAjaxClickHandled");
+	    if(ele == CURRENT_OVERLAY_TRIGGER){
+		return event.preventDefault();
+	    }else{
+		if(CURRENT_OVERLAY_TRIGGER != null){
+		    var overlays = $('div.overlay:visible');
+		    overlays.fadeOut(function(){ $(this).remove(); });
+		}
+		CURRENT_OVERLAY_TRIGGER = ele;
+	    }
+	});
+
         $("a.overlayLink").live('click', function(){
-            $(documnet).trigger('onOverlayLinkClicked', [this]);
+            $(document).trigger('onOverlayLinkClicked', [this]);
+	    console.log("cmsui: overlay link clicked");
             var url = $(this).attr("href");
             $(this).closest('.pb-ajax').loadOverlay(url + ' ' + common_content_filter);
             return false;
