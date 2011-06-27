@@ -74,14 +74,14 @@ function eraseCookie(name) {
         loadUploader;
     // jquery method to load an overlay
     $.fn.loadOverlay = function(href, data, callback) {
-        $(document).trigger('onStartLoadOverlay', [this, href, data]);
+        $(document).trigger('startLoadOverlay', [this, href, data]);
         var $overlay = this.closest('.pb-ajax');
         this.load(href, data, function () {
             $overlay[0].handle_load_inside_overlay.apply(this, arguments);
             if (callback !== undefined) {
                 callback.apply(this, arguments);
             }
-            $(document).trigger('onEndLoadOverlay', [this, href, data]);
+            $(document).trigger('endLoadOverlay', [this, href, data]);
         });
         return this;
     };
@@ -90,7 +90,7 @@ function eraseCookie(name) {
         var iframe = $('#plone-cmsui-menu', window.parent.document);
 
         $('#toolbar').css({'opacity': 0});
-        $(document).bind('onFormOverlayLoadSuccess', function () {
+        $(document).bind('formOverlayLoadSuccess', function () {
             showMessagesFromOverlay();
         });
 
@@ -110,24 +110,24 @@ function eraseCookie(name) {
                 onBeforeLoad: function (e) { 
                     // Close other overlays
                     expandMenu();
-                    $(document).trigger('onBeforeOverlay', [this, e]);
+                    $(document).trigger('beforeOverlay', [this, e]);
                     return true; 
                 },
                 onLoad: function (e) {
                     loadUploader();
                     showMessagesFromOverlay();
-                    $(document).trigger('onLoadOverlay', [this, e]);
+                    $(document).trigger('loadOverlay', [this, e]);
                     return true; 
                 }, 
                 onClose: function (e) { 
                     CURRENT_OVERLAY_TRIGGER = null;
                     contractMenu();
-                    $(document).trigger('onCloseOverlay', [this, e]);
+                    $(document).trigger('closeOverlay', [this, e]);
                     return true; 
                 }
             }
         });
-        $(document).bind('onBeforeAjaxClickHandled', function(event, ele, api, clickevent){
+        $(document).bind('beforeAjaxClickHandled', function(event, ele, api, clickevent){
             if(ele == CURRENT_OVERLAY_TRIGGER){
                 return event.preventDefault();
             }else{
@@ -140,7 +140,7 @@ function eraseCookie(name) {
       });
 
         $("a.overlayLink").live('click', function(){
-            $(document).trigger('onOverlayLinkClicked', [this]);
+            $(document).trigger('overlayLinkClicked', [this]);
             var url = $(this).attr("href");
             $(this).closest('#overlay-content').loadOverlay(url + ' ' + common_content_filter);
             return false;
@@ -224,7 +224,7 @@ function eraseCookie(name) {
         createCookie('__plone_height', $('#toolbar').outerHeight());
 
         $('#manage-page-open').click(function () {
-            $(document).trigger('onManagePageOpening', [this]);
+            $(document).trigger('managePageOpening', [this]);
             var bottom_height = $('#toolbar-bottom').outerHeight();
             toolbar.addClass('large').removeClass('small');
             height = toolbar.outerHeight();
@@ -234,11 +234,11 @@ function eraseCookie(name) {
             iframe.stop().animate({'height': height}, 500);
             createCookie('__plone_menu', 'large');
             createCookie('__plone_height', height);
-            $(document).trigger('onManagePageOpened', [this]);
+            $(document).trigger('managePageOpened', [this]);
             return false;
         });
         $('#manage-page-close').click(function () {
-            $(document).trigger('onManagePageClosing', [this]);
+            $(document).trigger('managePageClosing', [this]);
             var bottom_height = $('#toolbar-bottom').outerHeight();
             height = toolbar.outerHeight() - bottom_height + 1;
             iframe.stop().animate({'height': height}, 500);
@@ -248,7 +248,7 @@ function eraseCookie(name) {
             $('#toolbar-bottom').stop().animate({'top': -bottom_height}, 500);
             createCookie('__plone_menu', 'small');
             createCookie('__plone_height', height);
-            $(document).trigger('onManagePageClosed', [this]);
+            $(document).trigger('managePageClosed', [this]);
             return false;
         });
     });
