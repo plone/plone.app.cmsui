@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rules
+    xmlns="http://namespaces.plone.org/diazo"
+    xmlns:css="http://namespaces.plone.org/diazo/css"
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+
+    <theme href="index.html" css:if-content="#visual-portal-wrapper" />
+    <notheme if="ajax_load" />
+    
+    <!-- Load the editing UI -->
+    <before css:theme-children="body" css:content="#plone-cmsui-trigger" />
+
+    <!-- Theme integration -->
+
+    <replace theme="/html/head/title" content="/html/head/title"/>
+    <replace theme="/html/head/base" content="/html/head/base" />
+
+    <drop theme="/html/head/meta" />
+    <drop theme="/html/head/title" />
+    <before content-children='/html/head' theme-children='/html/head' />
+
+    <drop attributes="id" css:content="#portal-globalnav"/>
+    <drop attributes="id" css:content="#portal-siteactions"/>
+    <drop attributes="id" css:content="#siteaction-sitemap"/>
+    <drop attributes="id" css:content="#siteaction-accessibility"/>
+    <drop attributes="id" css:content="#siteaction-contact"/>
+    <drop attributes="id" css:content="#portal-colophon"/>
+    <drop attributes="id" css:content="#portal-footer"/>
+    <drop attributes="class" css:content=".portletHeader"/>
+    <drop attributes="id" css:content="#"/>
+
+    <copy attributes="class" css:content="body" css:theme="body"/>
+    <copy attributes="id dir" css:content="body" css:theme="body"/>
+
+    <!-- Logo (link target) -->
+    <copy attributes="href title" css:content='#portal-logo' css:theme="#logo h1 a" />
+
+    <before css:content='#portal-searchbox' css:theme-children='#header' />
+
+    <replace css:content='#portal-footer'      css:theme-children='#footer' />
+    <replace css:content='#portal-colophon'    css:theme-children='div.column2' />
+    <replace css:content='#portal-siteactions' css:theme-children='div.column1' />
+    <replace css:content='#portal-globalnav'   css:theme-children='#menu' />
+
+    <!--  CONTENT -->
+    <drop css:theme="#content div"/>
+    <before css:theme-children="#page" css:content="#viewlet-above-content"/>
+    <after css:theme-children="#content" css:content-children="#content"/>
+    <after css:theme-children="#content" css:content="#viewlet-below-content"/>
+
+    <!-- SIDE BAR -->
+    <drop css:theme="#sidebar ul"/>
+    <after css:content="#portal-column-one .portletWrapper" css:theme-children="#sidebar"/>
+    <after css:content="#portal-column-one .managePortletsLink" css:theme-children="#sidebar"/>
+    <after css:content="#portletmanager-plone-leftcolumn" css:theme-children="#sidebar"/>
+    <after css:content="#portlet-prefs" css:theme-children="#sidebar"/>
+
+    <drop css:content=".portletTopLeft" />
+    <drop css:content=".portletTopRight" />
+
+</rules>
