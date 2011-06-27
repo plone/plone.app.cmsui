@@ -87,7 +87,7 @@ function eraseCookie(name) {
     // jquery method to load an overlay
     $.fn.loadOverlay = function(href, data, callback) {
         $(document).trigger('onStartLoadOverlay', [this, href, data]);
-        var $overlay = this.closest('.pb-ajax');
+        var $overlay = this.closest('#overlay-content');
         this.load(href, data, function () {
             if (callback !== undefined) {
                 callback.apply(this, arguments);
@@ -151,7 +151,7 @@ function eraseCookie(name) {
         $("a.overlayLink").live('click', function(){
             $(document).trigger('onOverlayLinkClicked', [this]);
             var url = $(this).attr("href");
-            $(this).closest('.pb-ajax').loadOverlay(url + ' ' + common_content_filter);
+            $(this).closest('#overlay-content').loadOverlay(url + ' ' + common_content_filter);
             return false;
         });
         $('.dropdownLink').bind('click', function (e) {
