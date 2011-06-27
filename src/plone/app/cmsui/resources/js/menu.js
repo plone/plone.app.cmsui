@@ -150,7 +150,7 @@ function eraseCookie(name) {
         $("a.overlayLink").live('click', function(){
             $(document).trigger('onOverlayLinkClicked', [this]);
             var url = $(this).attr("href");
-            $(this).closest('.pb-ajax').loadOverlay(url + ' ' + common_content_filter);
+            $(this).closest('#overlay-content').loadOverlay(url + ' ' + common_content_filter);
             return false;
         });
         $('.dropdownLink').bind('click', function (e) {
