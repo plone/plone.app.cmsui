@@ -70,6 +70,30 @@ immed: true, strict: true, maxlen: 80, maxerr: 9999 */
                            parseInt(last_notification.css("top"), 10) +
                            last_notification.height() + 10 : 0)
     }
+    
+    $.plone.showNotifyFromElements = function(data){
+        $(data).each(function(){
+            $('.portalMessage', this).each(function(){
+                var type,
+                    portal_message = $(this),
+                    sticky = true;
+                if (portal_message.hasClass('info')) {
+                    type = 'info';
+                    sticky = false;
+                } else if (portal_message.hasClass('warning')) {
+                    type = 'warning';
+                } else if (portal_message.hasClass('error')) {
+                    type = 'error';
+                }
+                $.plone.notify({
+                    'title': portal_message.children('dt').html(),
+                    'message': portal_message.children('dd').html(),
+                    'type': type,
+                    'sticky': sticky
+                });
+            });
+        });
+    }
 
     /**
      * Display a notification

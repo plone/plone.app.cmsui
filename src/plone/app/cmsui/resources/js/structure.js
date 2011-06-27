@@ -33,6 +33,19 @@ jQuery(function ($) {
     $(document).bind('onEndLoadOverlay', function(){ $("table.orderable").ploneDnD(); });
     $(document).bind('onLoadOverlay', function(){ $("table.orderable").ploneDnD(); });
     $(document).bind('onFormOverlayLoadSuccess', function(){ $("table.orderable").ploneDnD(); });
+    
+    /* current item actions need to be specially handled */
+    $("a#structure-btn-cut,a#structure-btn-copy", $('#item-actions-menu')).live('click', function(e){
+        $.ajax({
+            url : $(this).attr('href'),
+            complete : function(request, textStatus){
+                window.parent.frames['plone-cmsui-notifications'].$.plone.showNotifyFromElements(request.responseText);
+            },
+            type : 'POST'
+        });
+        return e.preventDefault();
+    });
+    
 
     // trigger navigation into child folders
     $('#structure-dialog a.link-child').live('click', function(e) {

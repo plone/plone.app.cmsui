@@ -29,25 +29,7 @@ function toggleMenu() {
 }
 
 function showMessagesFromOverlay() {
-    $('.overlay .portalMessage').each(function () {
-        var type,
-            portal_message = $(this),
-            sticky = true;
-        if (portal_message.hasClass('info')) {
-            type = 'info';
-            sticky = false;
-        } else if (portal_message.hasClass('warning')) {
-            type = 'warning';
-        } else if (portal_message.hasClass('error')) {
-            type = 'error';
-        }
-        window.parent.frames['plone-cmsui-notifications'].$.plone.notify({
-            'title': portal_message.children('dt').html(),
-            'message': portal_message.children('dd').html(),
-            'type': type,
-            'sticky': sticky
-        });
-    });
+    window.parent.frames['plone-cmsui-notifications'].$.plone.showNotifyFromElements($('.overlay'));
 }
 
 // http://www.quirksmode.org/js/cookies.html
