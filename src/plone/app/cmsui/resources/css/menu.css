@@ -459,7 +459,7 @@ button:hover {
   margin-top: 0;
   color: #ffffff;
   position: fixed;
-  z-index: 10000;
+  z-index: 10001;
   opacity: 0;
 }
 #toolbar:after {
