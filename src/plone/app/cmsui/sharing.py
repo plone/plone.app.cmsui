@@ -18,7 +18,7 @@ from plone.app.workflow import PloneMessageFactory as _
 from plone.app.workflow.interfaces import ISharingPageRole
 
 AUTH_GROUP = 'AuthenticatedUsers'
-STICKY = (AUTH_GROUP,)
+STICKY = set([AUTH_GROUP])
 
 def merge_search_results(results, key):
     """Merge member search results.
@@ -227,7 +227,7 @@ class SharingView(BrowserView):
                                      sitewide = [],
                                      acquired = [],
                                      local = [],)
-
+        
         # If the current user has been given roles, remove them so that he
         # doesn't accidentally lock himself out.
         
@@ -235,10 +235,26 @@ class SharingView(BrowserView):
         if member.getId() in items:
             items[member.getId()]['disabled'] = True
 
+        # Make sure we include the current user's groups
+        groups = [portal_groups.getGroupById(m) for m in portal_groups.getGroupsForPrincipal(member)]
+        current_groups = set([])
+        for g in groups:
+            group_id = g.getId()
+            current_groups.add(group_id)
+            if group_id not in items:
+                items[group_id] = dict(id = group_id,
+                                        name = g.getGroupTitleOrName(),
+                                        type = 'group',
+                                        sitewide = [],
+                                        acquired = [],
+                                        local = [],
+                                        )
+
         # Sort the list: first the authenticated users virtual group, then 
         # all other groups and then all users, alphabetically
 
-        dec_users = [( a['id'] not in STICKY,
+        sticky = STICKY | current_groups
+        dec_users = [( a['id'] not in sticky,
                        a['type'], 
                        a['name'],
                        a) for a in items.values()]
@@ -286,10 +302,10 @@ class SharingView(BrowserView):
                     have_roles = True # at least one role is set
                 else:
                     info_item['roles'][r] = False
-                    
-            if have_roles or rid in STICKY:
-                info.append(info_item)
             
+            if have_roles or rid in sticky:
+                info.append(info_item)
+        
         return info
     
     def _principal_search_results(self,
@@ -380,7 +396,7 @@ class SharingView(BrowserView):
         
         def get_principal_title(group, _):
             return group.getGroupTitleOrName()
-            
+        
         return self._principal_search_results(search_for_principal,
             get_principal_by_id, get_principal_title, 'group', 'groupid')
         
