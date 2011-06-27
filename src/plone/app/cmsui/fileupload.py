@@ -11,7 +11,6 @@ from zope.component import getUtility
 from Products.CMFCore.utils import getToolByName
 from Products.Five.browser import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile 
-from Products.ATContentTypes.interfaces import IImageContent
 from zope.app.container.interfaces import INameChooser
 from plone.i18n.normalizer.interfaces import IIDNormalizer
 
@@ -133,42 +132,6 @@ class QuickUploadInit(BrowserView):
     """ Initialize uploadify js
     """
 
-    def ul_content_types_infos (self, mediaupload):
-        """
-        return some content types infos depending on mediaupload type
-        mediaupload could be 'image', 'video', 'audio' or any
-        extension like '*.doc'
-        """
-        ext = '*.*;'
-        extlist = []
-        msg = u'Choose files to upload'
-        if mediaupload == 'image' :
-            ext = '*.jpg;*.jpeg;*.gif;*.png;'
-            msg = u'Choose images to upload'
-        elif mediaupload == 'video' :
-            ext = '*.flv;*.avi;*.wmv;*.mpg;'
-            msg = u'Choose video files to upload'
-        elif mediaupload == 'audio' :
-            ext = '*.mp3;*.wav;*.ogg;*.mp4;*.wma;*.aif;'
-            msg = u'Choose audio files to upload'
-        elif mediaupload == 'flash' :
-            ext = '*.swf;'
-            msg = u'Choose flash files to upload'
-        elif mediaupload :
-            # you can also pass a list of extensions in mediaupload request var
-            # with this syntax '*.aaa;*.bbb;'
-            ext = mediaupload 
-            msg = u'Choose file for upload : ' + ext 
-        
-        try :
-            extlist = [f.split('.')[1].strip() for f in ext.split(';') if f.strip()]
-        except :
-            extlist = []
-        if extlist==['*'] :
-            extlist = []
-        
-        return ( ext, extlist, self._utranslate(msg))
-    
     def _utranslate(self, msg):
         # XXX fixme : the _ (SiteMessageFactory) doesn't work
         context = aq_inner(self.context)
@@ -192,6 +155,9 @@ class QuickUploadInit(BrowserView):
             ul_size_limit          = '1',
             ul_xhr_size_limit      = '0',
             ul_sim_upload_limit    = '1',
+            ul_file_extensions     = '*.*',
+            ul_file_extensions_list = '[]',
+            ul_file_description    = self._utranslate(u'Choose files to upload'),
             ul_button_text         = self._utranslate(u'Choose one or more files to upload:'),
             ul_draganddrop_text    = self._utranslate(u'Drag and drop files to upload'),
             ul_msg_all_sucess      = self._utranslate(u'All files uploaded with success.'),
@@ -211,22 +177,6 @@ class QuickUploadInit(BrowserView):
             ul_error_server        = self._utranslate(u"Server error, please contact support and/or try again."),
         )        
         
-        mediaupload = session.get('mediaupload', request.get('mediaupload', ''))  
-        typeupload = session.get('typeupload', request.get('typeupload', ''))
-        settings['typeupload'] = typeupload
-        if typeupload :
-            imageTypes = _listTypesForInterface(context, IImageContent)
-            if typeupload in imageTypes :
-                ul_content_types_infos = self.ul_content_types_infos('image')
-            else :
-                ul_content_types_infos = self.ul_content_types_infos(mediaupload)
-        else :
-            ul_content_types_infos = self.ul_content_types_infos(mediaupload)
-        
-        settings['ul_file_extensions'] = ul_content_types_infos[0]
-        settings['ul_file_extensions_list'] = str(ul_content_types_infos[1])
-        settings['ul_file_description'] = ul_content_types_infos[2]
-            
         return settings
 
     def __call__(self, for_id="uploader"):
