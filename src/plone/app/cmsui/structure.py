@@ -15,6 +15,7 @@ from plone.app.content.batching import Batch
 from zope.cachedescriptors.property import Lazy as lazy_property
 from plone.registry.interfaces import IRegistry
 from plone.folder.interfaces import IOrderableFolder, IExplicitOrdering
+from plone.app.cmsui.interfaces import ICMSUISettings
 
 _ = MessageFactory('plone')
 
@@ -29,8 +30,10 @@ class StructureView(BrowserView):
         self.request.response.setHeader('X-Theme-Disabled', 'True')
 
         registry = getUtility(IRegistry)
-
-        self.pagesize = registry.get('plone.app.cmsui.interfaces.ICMSUISettings.folder_contents_batch_size', 30)
+        settings = registry.forInterface(ICMSUISettings, False)
+        
+        
+        self.pagesize = settings.folderContentsBatchSize
         self.show_all = self.request.get('show_all', '').lower() == 'true'
 
         selection = self.request.get('select')

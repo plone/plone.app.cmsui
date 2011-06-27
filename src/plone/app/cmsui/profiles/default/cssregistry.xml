@@ -1,4 +1,11 @@
 <?xml version="1.0"?>
 <object name="portal_javascripts">
+    
+    <stylesheet bundle="cmsui" id="++resource++plone.app.cmsui/css/boilerplate.css"  />
+    <stylesheet bundle="cmsui" id="++resource++plone.app.cmsui/css/structure.css"  />
+    <stylesheet bundle="cmsui" id="++resource++plone.app.cmsui/css/authoring.css"  />
+    <stylesheet bundle="cmsui" id="++resource++plone.app.cmsui/css/sprites.css"  />
+    <stylesheet bundle="cmsui" id="++resource++plone.app.cmsui/css/menu.css"  />
+    <stylesheet bundle="cmsui" id="++resource++plone.app.cmsui/css/fileuploader.css"  />
 
 </object>

@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<object name="portal_skins">
+
+    <!-- BBB: We can lose this once we no longer need to customise stuff -->
+    <object
+        name="cmsui_bbb"
+        meta_type="Filesystem Directory View"
+        directory="plone.app.cmsui.bbb:skins/cmsui_bbb"
+        />
+
+    <skin-path name="*">
+        <layer name="cmsui_bbb" insert-after="custom" />
+    </skin-path>
+    
+</object>
