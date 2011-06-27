@@ -486,10 +486,41 @@ button:hover {
 }
 #toolbar ul li {
   display: inline;
+  position: relative;
 }
 #toolbar ul li a {
   display: inline-block;
   padding: 2.5px 1%;
+}
+#toolbar ul li ul.dropdownItems {
+  display: none;
+  position: absolute;
+  top: 10px;
+  left: 0;
+  background: #1b3d5b;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  -webkit-background-clip: padding-box;
+  width: 300px;
+  padding: 10px;
+  margin-top: 1em;
+}
+#toolbar ul li ul.dropdownItems:before {
+  content: "\0020";
+  display: block;
+  height: 0px;
+  width: 0px;
+  margin-top: -20px;
+  margin-bottom: 10px;
+  display: block;
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 11px solid #fff;
+  border-top: 0;
+  border-bottom-color: #1b3d5b;
 }
 #toolbar .container:first-of-type {
   margin-top: 0;
