@@ -154,7 +154,7 @@ function eraseCookie(name) {
             return false;
         });
         $('.dropdownLink').bind('click', function (e) {
-            if ($('#plone-cmsui-menu')) {
+            if (menu_size === 'menu') {
                 // iframe is collapsed
                 expandMenu();
                 $(this).nextAll('.dropdownItems').slideToggle();
