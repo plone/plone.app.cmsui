@@ -161,7 +161,9 @@ function eraseCookie(name) {
             }
             else {
                 $(this).nextAll('.dropdownItems').slideToggle(function () {
-                    contractMenu();
+                    if ($(".overlay").length === 0) {
+                        contractMenu();
+                    }
                 });
             }
             e.preventDefault();
