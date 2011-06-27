@@ -8,7 +8,7 @@
     /*margin: 20px 0;*/
     /*width: 150px;*/
     text-align: center;
-    display: inline-block;
+    display: block;
     border: 1px solid #265883;
     background: #3272aa;
     padding: 0.8em 1em;
@@ -55,7 +55,7 @@
 
 .qq-upload-file {}
 /* note : the '/++resource++quickupload_static' inside url is for Plone3 portal_css compliance */
-.qq-upload-spinner {display:none; background: url("/++resource++quickupload_static/loading.gif"); width:15px; height:15px; vertical-align:text-bottom; margin-left: 10px}
+.qq-upload-spinner {display:none; background: url("/++resource++plone.app.cmsui/images/loading.gif"); width:15px; height:15px; vertical-align:text-bottom; margin-left: 10px}
 .qq-upload-size,.qq-upload-cancel {font-size:11px;}
 
 .qq-upload-list .qq-upload-cancel {
@@ -64,7 +64,7 @@
    width: 16px;
    height: 16px;
    /* note : the '/++resource++quickupload_static' inside url is for Plone3 portal_css compliance */
-   background: transparent url("/++resource++quickupload_static/cancel.png") top left no-repeat;
+   background: transparent url("/++resource++plone.app.cmsui/images/cancel.png") top left no-repeat;
 }
 
 
@@ -111,6 +111,11 @@
 .qq-upload-list li .server-error {
     color: #880000;
     clear: both;
+}
+
+.qq-upload-list .file_title_field {
+    width: 60%;
+    margin-right: 25px;
 }
 
 /* IE7 fixes */

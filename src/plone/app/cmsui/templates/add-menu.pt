@@ -21,40 +21,39 @@
                 </tal:children>
             </p>
         </header>
+            <div class="grid_5">
+                <dl>
+                    <tal:items repeat="type view/allowedTypes">
+                        <dt tal:attributes="class string:contenttype-${type/extra/id}">
+                            <a class="overlayLink" tal:attributes="href type/action"
+                               tal:content="type/title">
+                                Title
+                            </a>
+                        </dt>
 
-        <div class="grid_5">
-            <dl>
-                <tal:items repeat="type view/allowedTypes">
-                    <dt tal:attributes="class string:contenttype-${type/extra/id}">
-                        <a class="overlayLink" tal:attributes="href type/action"
-                           tal:content="type/title">
-                            Title
-                        </a>
-                    </dt>
-
-                    <dd tal:content="type/description">
-                        Description
-                    </dd>
-                </tal:items>
-            </dl>
-        </div>
-
-        <div class="grid_7">
-
-            <!--
-                TODO We need a non-JS fallback
-            -->
-
-            <div class="uploaderContainer">
-                <input type="hidden" 
-                       name="uploadUrl"
-                       class="uploadUrl"
-                       tal:attributes="value view/getUploadUrl" />
-                <input type="hidden" 
-                       name="uploadData"
-                       class="uploadData"
-                       tal:attributes="value view/getDataForUploadUrl" />
+                        <dd tal:content="type/description">
+                            Description
+                        </dd>
+                    </tal:items>
+                </dl>
             </div>
+
+            <div class="grid_7">
+
+                <!--
+                    TODO We need a non-JS fallback
+                -->
+
+                <div class="uploaderContainer">
+                    <input type="hidden" 
+                           name="uploadUrl"
+                           class="uploadUrl"
+                           tal:attributes="value view/getUploadUrl" />
+                    <input type="hidden" 
+                           name="uploadData"
+                           class="uploadData"
+                           tal:attributes="value view/getDataForUploadUrl" />
+                </div>
         </div>
 </metal:content-core>
 
