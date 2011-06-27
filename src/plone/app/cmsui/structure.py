@@ -365,11 +365,10 @@ class MoveItem(BrowserView):
     def __call__(self, item_id, delta, subset_ids=None):
         context = aq_inner(self.context)
         try:
-            if not IOrderableFolder.providedBy(context):
+            if not IOrderableFolder.providedBy(context) and \
+                        not hasattr(context, 'moveObjectsByDelta'):
+                # for instance, plone site root does not use plone.folder
                 raise ValueError("Not ordered folder.")
-            ordering = context.getOrdering()
-            if not IExplicitOrdering.providedBy(ordering):
-                raise ValueError("Folder not explicitly orderable.")
 
             delta = int(delta)
             if subset_ids is not None:

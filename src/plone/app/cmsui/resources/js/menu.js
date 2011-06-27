@@ -81,6 +81,11 @@ function eraseCookie(name) {
         var iframe = $('#plone-cmsui-menu', window.parent.document);
         var offset;
 
+        $(window).bind('onFormOverlayLoadSucces', function () {
+            showMessagesFromOverlay();
+            console.log('test');
+        });
+
         $('a.overlayLink').prepOverlay({
             subtype: 'ajax',
             filter: common_content_filter,
@@ -108,7 +113,8 @@ function eraseCookie(name) {
                 }
             } 
         });
-        
+	$(window).bind('onFormOverlayLoadFailure', function(){ console.log("lkdslldk"); });
+
         $("a.overlayLink").live('click', function(){
             $(window).trigger('onOverlayLinkClicked', [this]);
             var url = $(this).attr("href");
