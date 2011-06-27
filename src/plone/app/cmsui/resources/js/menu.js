@@ -15,10 +15,12 @@ function expandMenu() {
     menu_size = 'full';
 }
 function contractMenu() {
-    $('body', window.parent.document).css('overflow', 'auto');
-    $(window.parent).scrollTop(menu_offset);
-    $('#plone-cmsui-menu', window.parent.document).css('height', $('#toolbar').outerHeight());
-    menu_size = 'menu';
+    if ($('.overlay').length === 0 && $('.dropdownItems').length === 0) { 
+        $('body', window.parent.document).css('overflow', 'auto');
+        $(window.parent).scrollTop(menu_offset);
+        $('#plone-cmsui-menu', window.parent.document).css('height', $('#toolbar').outerHeight());
+        menu_size = 'menu';
+    }
 }
 function toggleMenu() {
     if (menu_size === 'menu') {
@@ -97,6 +99,10 @@ function eraseCookie(name) {
             formselector: 'form.overlayForm',
             config: {
                 top: 130,
+                mask: {
+                    color: '#000000',
+                    opacity: 0.5
+                },
                 onBeforeLoad: function (e) { 
                     // Close other overlays
                     expandMenu();
@@ -143,9 +149,7 @@ function eraseCookie(name) {
             }
             else {
                 $(this).nextAll('.dropdownItems').slideToggle(function () {
-                    if ($(".overlay").length === 0) {
-                        contractMenu();
-                    }
+                    contractMenu();
                 });
             }
             e.preventDefault();
