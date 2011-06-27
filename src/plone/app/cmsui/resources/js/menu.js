@@ -89,10 +89,10 @@ function eraseCookie(name) {
         $(document).trigger('onStartLoadOverlay', [this, href, data]);
         var $overlay = this.closest('.pb-ajax');
         this.load(href, data, function () {
+            $overlay[0].handle_load_inside_overlay.apply(this, arguments);
             if (callback !== undefined) {
                 callback.apply(this, arguments);
             }
-            $overlay[0].handle_load_inside_overlay.apply(this, arguments);
             $(document).trigger('onEndLoadOverlay', [this, href, data]);
         });
         return this;
