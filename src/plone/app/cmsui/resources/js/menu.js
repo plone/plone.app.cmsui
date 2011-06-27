@@ -87,7 +87,7 @@ function eraseCookie(name) {
     // jquery method to load an overlay
     $.fn.loadOverlay = function(href, data, callback) {
         $(document).trigger('onStartLoadOverlay', [this, href, data]);
-        var $overlay = this.closest('.pb-ajax');
+        var $overlay = this.closest('#overlay-content');
         this.load(href, data, function () {
             if (callback !== undefined) {
                 callback.apply(this, arguments);
