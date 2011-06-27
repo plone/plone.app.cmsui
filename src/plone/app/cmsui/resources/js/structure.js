@@ -1,6 +1,3 @@
-/*globals window, jQuery*/
-CURRENT_STRUCTURE_URL = null;
-
 /* Set up the Structure overlay */
 jQuery(function ($) {
 
@@ -21,7 +18,7 @@ jQuery(function ($) {
         $('#structure-dialog').css({height: $slider.outerHeight()});
         $('<div class="structure-slider" style="width: 100%"><' + '/div>')
             .prependTo($('#structure-dialog'))
-            .loadOverlay(href + ' .structure-slider>*', function(){
+            .loadOverlay(href + ' .structure-slider>*', undefined, function(){
                 $slider.remove();
             })
             .css({position: 'absolute', left: (dir=='left'?width:-width), top: 0})
@@ -52,7 +49,7 @@ jQuery(function ($) {
         window.parent.history.pushState({structure_href: href}, null, window.parent.location.href);
         return e.preventDefault();
     });
-
+    
     // update current folder after back/forward history navigation
     window.parent.addEventListener('popstate', function(e) {
         if (e.state != null && e.state.structure_href !== undefined) {

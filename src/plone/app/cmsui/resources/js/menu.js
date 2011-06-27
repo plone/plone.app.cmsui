@@ -15,10 +15,12 @@ function expandMenu() {
     menu_size = 'full';
 }
 function contractMenu() {
-    $('body', window.parent.document).css('overflow', 'auto');
-    $(window.parent).scrollTop(menu_offset);
-    $('#plone-cmsui-menu', window.parent.document).css('height', $('#toolbar').outerHeight());
-    menu_size = 'menu';
+    if ($('.overlay').length === 0 && $('.dropdownItems').length === 0) { 
+        $('body', window.parent.document).css('overflow', 'auto');
+        $(window.parent).scrollTop(menu_offset);
+        $('#plone-cmsui-menu', window.parent.document).css('height', $('#toolbar').outerHeight());
+        menu_size = 'menu';
+    }
 }
 function toggleMenu() {
     if (menu_size === 'menu') {
@@ -89,10 +91,10 @@ function eraseCookie(name) {
         $(document).trigger('onStartLoadOverlay', [this, href, data]);
         var $overlay = this.closest('.pb-ajax');
         this.load(href, data, function () {
+            $overlay[0].handle_load_inside_overlay.apply(this, arguments);
             if (callback !== undefined) {
                 callback.apply(this, arguments);
             }
-            $overlay[0].handle_load_inside_overlay.apply(this, arguments);
             $(document).trigger('onEndLoadOverlay', [this, href, data]);
         });
         return this;
@@ -115,6 +117,10 @@ function eraseCookie(name) {
             formselector: 'form.overlayForm',
             config: {
                 top: 130,
+                mask: {
+                    color: '#000000',
+                    opacity: 0.5
+                },
                 onBeforeLoad: function (e) { 
                     // Close other overlays
                     expandMenu();
@@ -150,7 +156,7 @@ function eraseCookie(name) {
         $("a.overlayLink").live('click', function(){
             $(document).trigger('onOverlayLinkClicked', [this]);
             var url = $(this).attr("href");
-            $(this).closest('.pb-ajax').loadOverlay(url + ' ' + common_content_filter);
+            $(this).closest('#overlay-content').loadOverlay(url + ' ' + common_content_filter);
             return false;
         });
         $('.dropdownLink').bind('click', function (e) {
