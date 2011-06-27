@@ -123,7 +123,6 @@ class QuickUploadInit(BrowserView):
     def upload_settings(self):
         context = aq_inner(self.context)
         request = self.request
-        session = request.get('SESSION', {})
         portal_url = getToolByName(context, 'portal_url')()
         
         settings = dict(
