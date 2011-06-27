@@ -12,7 +12,7 @@
 <div class="quick-uploader"
      i18n:domain="collective.quickupload">
     <div tal:define="uploader_id view/uploader_id">
-      <h2>Upload Files</h2>
+      <h2>Upload files</h2>
       <!-- uploader comes here -->
       <div id="uploader"
            class="main-uploader"
