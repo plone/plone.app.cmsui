@@ -1,4 +1,17 @@
 <?xml version="1.0"?>
 <registry>
     <records interface="plone.app.cmsui.interfaces.ICMSUISettings" />
+    
+    <record
+        interface="Products.ResourceRegistries.interfaces.settings.IResourceRegistriesSettings"
+        field="resourceBundlesForThemes">
+        <value purge="false">
+            <element key="cmsui">
+                <element>cmsui</element>
+                <element>jquerytools</element>
+                <element>tinymce</element>
+            </element>
+        </value>
+    </record>
+    
 </registry>

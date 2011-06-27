@@ -1,6 +1,25 @@
 <registry>
     
-    <!-- TODO: Should be in CMFPlone -->
+    <!-- BBB: Should be in CMFPlone -->
     <records interface="Products.ResourceRegistries.interfaces.settings.IResourceRegistriesSettings" />
+    
+    <record
+        interface="Products.ResourceRegistries.interfaces.settings.IResourceRegistriesSettings"
+        field="resourceBundlesForThemes">
+        <value purge="false">
+            <element key="Plone Default">
+                <element>default</element>
+                <element>jquerytools</element>
+            </element>
+            <element key="Plone Classic Theme">
+                <element>default</element>
+                <element>jquerytools</element>
+            </element>
+            <element key="Sunburst Theme">
+                <element>default</element>
+                <element>jquerytools</element>
+            </element>
+        </value>
+    </record>
     
 </registry>

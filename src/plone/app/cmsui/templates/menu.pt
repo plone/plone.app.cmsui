@@ -19,25 +19,11 @@
       <tal:styles replace="structure provider:plone.resourceregistries.styles" />
     </tal:resourceregistries>
 
-    <script type="text/javascript" src="++resource++plone.app.cmsui/js/menu.js"></script>
-    <script type="text/javascript" src="++resource++plone.app.cmsui/js/libs/fileuploader.js"></script>
-    <script type="text/javascript" src="++resource++plone.app.cmsui/js/dragdropreorder.js"></script>
-    <script type="text/javascript" src="++resource++plone.app.cmsui/js/structure.js"></script>
-
-    <link rel="stylesheet" href="++resource++plone.app.cmsui/css/boilerplate.css" />
-    <link rel="stylesheet" href="++resource++plone.app.cmsui/css/structure.css" />
-    <link rel="stylesheet" href="++resource++plone.app.cmsui/css/authoring.css" />
-    <link rel="stylesheet" href="++resource++plone.app.cmsui/css/sprites.css" />
-    <link rel="stylesheet" href="++resource++plone.app.cmsui/css/menu.css" />    
-    <link rel="stylesheet" href="++resource++plone.app.cmsui/css/fileuploader.css" />
-    <link rel="stylesheet" href="member.css" />
-
 </head>
 <body tal:define="isRTL portal_state/is_rtl"
     tal:attributes="dir python:isRTL and 'rtl' or 'ltr'">
 
-<section id="toolbar"
-         tal:define="folder context/@@plone_context_state/folder">
+<section id="toolbar" tal:define="folder context_state/folder">
 
     <div id="toolbar-top" class="container clearfix">
 
@@ -45,7 +31,7 @@
         <nav id="portal-breadcrumbs" class="grid_5">
             <ul>
                 <li id='path-home'>
-                    <a tal:attributes="href view/portalState/navigation_root_url">Home</a></li>
+                    <a tal:attributes="href portal_state/navigation_root_url">Home</a></li>
                 <li tal:repeat="crumb view/breadcrumbs">
                     <a tal:condition="not:repeat/crumb/end"
                        tal:attributes="href crumb/absolute_url;"
@@ -101,14 +87,14 @@
                     <a class="overlayLink"
                         id="plone-contentmenu-workflow"
                         tal:attributes="href string:${view/baseURL}/@@cmsui-workflow-panel"
-                        ><span class="" tal:attributes="class string:state-${view/contextState/workflow_state}"
+                        ><span class="" tal:attributes="class string:state-${context_state/workflow_state}"
                           tal:content="view/workflowState">Draft</span></a></li>
                 <li tal:condition="python:view.editLink()"
                     tal:attributes="id python:view.contextState.is_locked() and 'document-edit-locked' or 'document-edit';">
                     <a class="overlayLink"
                         tal:attributes="href string:${view/editLink}">
-                        <span tal:condition="not:view/contextState/is_locked" i18n:translate="cmsiu_edit" tal:omit-tag="">Edit</span>
-                        <span tal:condition="view/contextState/is_locked" i18n:translate="cmsiu_locked" tal:omit-tag="">Locked</span>
+                        <span tal:condition="not:context_state/is_locked" i18n:translate="cmsiu_edit" tal:omit-tag="">Edit</span>
+                        <span tal:condition="context_state/is_locked" i18n:translate="cmsiu_locked" tal:omit-tag="">Locked</span>
                     </a>
                 </li>
                 <li tal:condition="python:view.settingsActions()"
@@ -130,7 +116,7 @@
             <ul id="folder-actions">
                 <li id="folder-add_content">
                     <a class="overlayLink" href="" 
-                       tal:attributes="href string:${plone_view/getCurrentFolderUrl}/@@cmsui-add-content">
+                       tal:attributes="href string:${folder/absolute_url}/@@cmsui-add-content">
                     Add Content
                     </a>
                 </li>
@@ -139,7 +125,7 @@
 
         <aside class="grid_2" id="site-setup">
             <a class="overlayLink"
-                tal:attributes="href string:${view/portalState/navigation_root_url}/@@overview-controlpanel"
+                tal:attributes="href string:${portal_state/navigation_root_url}/@@overview-controlpanel"
                 i18n:translate="cmsui_site_configuration">Site configuration</a>
         </aside>
     </div>

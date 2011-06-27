@@ -1,6 +1,9 @@
 from zope.component import getMultiAdapter
+from zope.component import getUtility
 from zope.publisher.browser import BrowserView
+from plone.registry.interfaces import IRegistry
 from plone.memoize.instance import memoize
+from plone.app.cmsui.interfaces import ICMSUISettings
 
 from Acquisition import aq_base
 from AccessControl import getSecurityManager
@@ -11,17 +14,12 @@ class Menu(BrowserView):
     """The view containing the overlay menu
     """
     
-    EDIT_ACTION_ID = 'edit'
-    EXCLUDED_ACTION_IDS = ('view', 'edit',)
-    DEFAULT_ACTION_ICON = '/++resource++plone.app.cmsui/icons/List.png'
-    SKIN_NAME = "CMSUI"
-    
     def __call__(self):
         # Disable theming
         self.request.response.setHeader('X-Theme-Disabled', 'True')
         
         # Set the CMSUI skin so that we get the correct resources
-        # self.context.changeSkin(self.SKIN_NAME, self.request)
+        self.context.changeSkin(self.settings.skinName, self.request)
         
         # Commonly useful variables
         self.securityManager = getSecurityManager()
@@ -42,6 +40,11 @@ class Menu(BrowserView):
     @memoize
     def portalState(self):
         return getMultiAdapter((self.context, self.request), name=u'plone_portal_state')
+
+    @property
+    @memoize
+    def settings(self):
+        return getUtility(IRegistry).forInterface(ICMSUISettings, False)
 
     @memoize
     def personalActions(self):
@@ -165,7 +168,7 @@ class Menu(BrowserView):
         
         objectActions = self.contextState.actions('object')
         for action in objectActions:
-            if action['id'] == self.EDIT_ACTION_ID:
+            if action['id'] == self.settings.editActionId:
                 return "%s?last_referer=%s" % (action['url'], self.context.absolute_url())
         
         return None
@@ -179,10 +182,10 @@ class Menu(BrowserView):
         actions = []
         objectActions = self.contextState.actions('object')
         
-        defaultIcon = self.portalState.navigation_root_url() + self.DEFAULT_ACTION_ICON
+        defaultIcon = self.portalState.navigation_root_url() + self.settings.defaultActionIcon
         
         for action in objectActions:
-            if action['id'] in self.EXCLUDED_ACTION_IDS:
+            if action['id'] in self.settings.excludedActionIds:
                 continue
             
             icon = action['icon']

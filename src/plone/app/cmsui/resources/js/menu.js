@@ -6,6 +6,7 @@
 CURRENT_OVERLAY_TRIGGER = null;
 var menu_offset;
 var menu_size = 'menu';
+var common_content_filter = '#content>*:not(div.configlet),dl.portalMessage.error,dl.portalMessage.info';
 
 function expandMenu() {
     menu_offset = $(window.parent).scrollTop();

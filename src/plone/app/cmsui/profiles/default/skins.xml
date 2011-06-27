@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<object name="portal_skins">
+
+    <!-- Register the cmsui skin, which is associated with the cmsui bundle -->
+    <skin-path name="cmsui">
+        <layer name="custom"/>
+        <layer name="cmsui_templates"/>
+        <layer name="ATContentTypes"/>
+        <layer name="referencebrowser"/>
+        <layer name="archetypes"/>
+        <layer name="mimetypes_icons"/>
+        <layer name="PasswordReset"/>
+        <layer name="LanguageTool"/>
+        <layer name="plone_ecmascript"/>
+        <layer name="plone_wysiwyg"/>
+        <layer name="plone_prefs"/>
+        <layer name="plone_templates"/>
+        <layer name="plone_styles"/>
+        <layer name="plone_form_scripts"/>
+        <layer name="plone_scripts"/>
+        <layer name="plone_forms"/>
+        <layer name="plone_images"/>
+        <layer name="plone_content"/>
+        <layer name="plone_login"/>
+        <layer name="plone_3rdParty"/>
+    </skin-path>
+    
+</object>
