@@ -259,7 +259,7 @@ PloneQuickUpload.addUploadFields = function(uploader, domelement, file, id, fill
         var labelfiledescription = jQuery('#uploadify_label_file_description').val();
         jQuery('.qq-upload-cancel', blocFile).after('\
                   <div class="uploadField">\
-                      <label>' + labelfiledescription + '&nbsp;:&nbsp;</label> \
+                      <label for="description_' + id + '">' + labelfiledescription + '&nbsp;:&nbsp;</label> \
                       <textarea rows="2" \
                              class="file_description_field" \
                              id="description_' + id + '" \
@@ -272,7 +272,7 @@ PloneQuickUpload.addUploadFields = function(uploader, domelement, file, id, fill
         var labelfiletitle = jQuery('#uploadify_label_file_title').val();
         jQuery('.qq-upload-cancel', blocFile).after('\
                   <div class="uploadField">\
-                      <label>' + labelfiletitle + '&nbsp;:&nbsp;</label> \
+                      <label for="title_' + id + '">' + labelfiletitle + '&nbsp;:&nbsp;</label> \
                       <input type="text" \
                              class="file_title_field" \
                              id="title_' + id + '" \
