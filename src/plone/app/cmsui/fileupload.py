@@ -178,6 +178,10 @@ class QuickUploadFile(BrowserView):
         request = self.request
         response = request.RESPONSE
         
+        # Disable theming on this response, otherwise Diazo completely mucks
+        # things up.
+        response.setHeader('X-Theme-Disabled', 'True')
+        
         response.setHeader('Expires', 'Sat, 1 Jan 2000 00:00:00 GMT')
         response.setHeader('Cache-control', 'no-cache')
         # the good content type woul be text/json or text/plain but IE
@@ -246,7 +250,6 @@ class QuickUploadFile(BrowserView):
                 msg = {u'error': f['error']}
         else :
             msg = {u'error': u'emptyError'}
-        
         return json.dumps(msg)
     
     def _get_file_id(self, id):
@@ -263,27 +266,4 @@ class QuickUploadFile(BrowserView):
         newid = newid.replace('_','-').replace(' ','-').lower()
 
         return newid
-
-class QuickUploadCheckFile(BrowserView):
-    """
-    check if file exists
-    """
-    
-    def __call__(self):
-        """
-        """
-        
-        context = aq_inner(self.context)
-        request = self.request
-        
-        always_exist = {}
-        formdict = request.form
-        ids = context.objectIds()
-        
-        for k,v in formdict.items():
-            if k!='folder' :
-                if v in ids :
-                    always_exist[k] = v
-        
-        return str(always_exist)
 

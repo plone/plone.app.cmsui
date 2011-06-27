@@ -135,16 +135,22 @@ class AddMenu(BrowserView):
         
         return self.index()
 
+    def showUploadForm(self):
+        """We can't show the upload form if uploadable types can't be created here.
+        """
+        # TODO How are we sure which types are uploadable?
+        # For now, just check on File/Image.
+        
+        return True #('Image' in self.allowedTypes) or ('File' in self.allowedTypes)
 
     def getUploadUrl(self):
-           """
-           return upload url
-           in current folder
-           """
-           ploneview = getMultiAdapter((self.context, self.request), name="plone")
-           
-           folder_url = ploneview.getCurrentFolderUrl()                      
-           return '%s/@@quick_upload' %folder_url
+        """
+        return upload url in current folder
+        """
+        ploneview = getMultiAdapter((self.context, self.request), name="plone")
+
+        folder_url = ploneview.getCurrentFolderUrl()                      
+        return '%s/@@quick_upload' %folder_url
 
     def getDataForUploadUrl(self):
         return 'data_url'
