@@ -493,6 +493,7 @@ qq.UploadButton = function(o){
         multiple: false,
         // name attribute of file input
         name: 'file',
+        id: 'file-upload',
         onChange: function(input){},
         hoverClass: 'qq-upload-button-hover',
         focusClass: 'qq-upload-button-focus'                       
@@ -537,6 +538,7 @@ qq.UploadButton.prototype = {
                 
         input.setAttribute("type", "file");
         input.setAttribute("name", this._options.name);
+        input.setAttribute("id", this._options.id);
         
         // qq.css(input, {
         //     position: 'absolute',
