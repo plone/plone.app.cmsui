@@ -44,15 +44,10 @@ class QuickUploadView(BrowserView):
     """ The Quick Upload View
     """
 
-    template = ViewPageTemplateFile("templates/file-upload.pt")
-
     def __init__(self, context, request):
         super(QuickUploadView, self).__init__(context, request)
         self.uploader_id = self._uploader_id()
 
-    def __call__(self):
-        return self.template()
-    
     def _uploader_id(self) :
         return 'uploader%s' %str(random.random()).replace('.','')
     
@@ -283,7 +278,7 @@ class QuickUploadCheckFile(BrowserView):
         """
         
         context = aq_inner(self.context)
-        request = self.request          
+        request = self.request
         
         always_exist = {}
         formdict = request.form
@@ -295,5 +290,4 @@ class QuickUploadCheckFile(BrowserView):
                     always_exist[k] = v
         
         return str(always_exist)
-        
-                             
+
