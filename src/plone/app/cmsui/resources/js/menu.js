@@ -117,6 +117,10 @@ function eraseCookie(name) {
             formselector: 'form.overlayForm',
             config: {
                 top: 130,
+                mask: {
+                    color: '#000000',
+                    opacity: 0.5
+                },
                 onBeforeLoad: function (e) { 
                     // Close other overlays
                     expandMenu();
