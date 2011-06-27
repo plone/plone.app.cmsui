@@ -1,4 +1,3 @@
-from Acquisition import aq_inner
 from Products.CMFCore.utils import getToolByName
 from plone.app.z3cform.layout import wrap_form
 from plone.i18n.normalizer.interfaces import IIDNormalizer
@@ -12,6 +11,7 @@ from zope.component import getUtility, queryUtility, getMultiAdapter
 from zope.container.interfaces import INameChooser
 from zope.interface import implements
 from zope.publisher.browser import BrowserView
+from plone.app.cmsui.interfaces import _
 
 
 class IAddNewContent(interface.Interface):
@@ -24,7 +24,7 @@ class AddNewContentForm(form.Form):
     
     fields = field.Fields(IAddNewContent)
     ignoreContext = True # don't use context to get widget data
-    label = "Add content"
+    label = _(u"Add content")
     css_class = 'overlayForm'
     
     def update(self):
@@ -33,7 +33,7 @@ class AddNewContentForm(form.Form):
         tn.field.default = unicode(getattr(self.request, 'type_name', ''))
         super(AddNewContentForm, self).update()
 
-    @button.buttonAndHandler(u'Add content')
+    @button.buttonAndHandler(_(u'Add content'))
     def handleApply(self, action):
         data, errors = self.extractData()
         if errors:
@@ -72,9 +72,9 @@ class FileUploadForm(form.Form):
     
     fields = field.Fields(IFileUploadForm)
     ignoreContext = True # don't use context to get widget data
-    label = "Add content"
+    label = _(u"Add content")
     
-    @button.buttonAndHandler(u'Upload content')
+    @button.buttonAndHandler(_(u'Upload content'))
     def handleApply(self, action):
         data, errors = self.extractData()
         if errors:
@@ -143,8 +143,11 @@ class AddMenu(BrowserView):
         """
         # TODO How are we sure which types are uploadable?
         # For now, just check on File/Image.
-        
-        return True #('Image' in self.allowedTypes) or ('File' in self.allowedTypes)
+        uploadTypes = ['Image','File']
+        for a in self.allowedTypes:
+            if a['id'] in uploadTypes:
+                return True
+        return False
 
     def getUploadUrl(self):
         """

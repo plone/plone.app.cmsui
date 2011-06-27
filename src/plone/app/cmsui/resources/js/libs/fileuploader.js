@@ -40,8 +40,8 @@ qq.FileUploader = function(o){
         //
         // UI customizations
         template: '<div class="qq-uploader">' + 
-                '<div class="qq-upload-drop-area"><span>Drop files here to upload</span></div>' +
                 '<div class="qq-upload-button">Browse for a file</div>' +
+                '<div class="qq-upload-drop-area"><span>Drop files here to upload</span></div>' +
                 '<ul class="qq-upload-list"></ul>' + 
              '</div>',
 
@@ -219,8 +219,6 @@ qq.FileUploader.prototype = {
         var self = this,
             dropArea = this._getElement('drop');                        
         
-        dropArea.style.display = 'none';
-        
         var hideTimeout;        
         qq.attach(document, 'dragenter', function(e){            
             e.preventDefault(); 
@@ -257,21 +255,11 @@ qq.FileUploader.prototype = {
                 if (dropArea == e.target || qq.contains(dropArea,e.target)){                                        
                     qq.removeClass(dropArea, self._classes.dropActive);      
                     e.stopPropagation();                                       
-                } else {
-                                        
-                    if (hideTimeout){
-                        clearTimeout(hideTimeout);
-                    }
-                    
-                    hideTimeout = setTimeout(function(){                                                
-                        dropArea.style.display = 'none';                            
-                    }, 77);
-                }   
-            }            
+                }
+            }
         });
         
         qq.attach(dropArea, 'drop', function(e){            
-            dropArea.style.display = 'none';
             self._addSelection(e.dataTransfer.files);            
             e.preventDefault();
         });                      

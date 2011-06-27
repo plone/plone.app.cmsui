@@ -5,6 +5,9 @@
         <object name="folderContents" i18n:domain="plone">
             <property name="visible">False</property>
         </object>
+        <object name="local_roles" i18n:domain="plone">
+            <property name="visible">False</property>
+        </object>
     </object>
 
     <object name="user" meta_type="CMF Action Category">
