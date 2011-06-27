@@ -21,12 +21,13 @@ jQuery(function ($) {
         $('#structure-dialog').css({height: $slider.outerHeight()});
         $('<div class="structure-slider" style="width: 100%"><' + '/div>')
             .prependTo($('#structure-dialog'))
-            .loadOverlay(href + ' .structure-slider>*')
+            .loadOverlay(href + ' .structure-slider>*', function(){
+                $slider.remove();
+            })
             .css({position: 'absolute', left: (dir=='left'?width:-width), top: 0})
             .animate({left: 0}, 400, 'swing', function() {$('.structure-slider').css('position', 'static'); $('#structure-dialog').css('height', 'auto');});
         $slider.css('position', 'relative').animate({'left': (dir=='left')?-width:width}, 400, 'swing', function(){
-            $slider.remove();
-            $(window).trigger('onStructureEndSlideTo', [this, $slider, href, dir]);
+            $(document).trigger('onStructureEndSlideTo', [this, $slider, href, dir]);
         });
         overlay_location = href;
     }
