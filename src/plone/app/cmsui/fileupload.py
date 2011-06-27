@@ -178,6 +178,10 @@ class QuickUploadFile(BrowserView):
         request = self.request
         response = request.RESPONSE
         
+        # Disable theming on this response, otherwise Diazo completely mucks
+        # things up.
+        response.setHeader('X-Theme-Disabled', 'True')
+        
         response.setHeader('Expires', 'Sat, 1 Jan 2000 00:00:00 GMT')
         response.setHeader('Cache-control', 'no-cache')
         # the good content type woul be text/json or text/plain but IE
@@ -246,7 +250,6 @@ class QuickUploadFile(BrowserView):
                 msg = {u'error': f['error']}
         else :
             msg = {u'error': u'emptyError'}
-        
         return json.dumps(msg)
     
     def _get_file_id(self, id):
