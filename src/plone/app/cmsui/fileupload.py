@@ -9,7 +9,7 @@ from interfaces import IQuickUploadFileFactory
 from zope.component import getUtility
 
 from Products.CMFCore.utils import getToolByName
-from Products.Five.browser import BrowserView
+from zope.publisher.browser import BrowserView
 from zope.app.container.interfaces import INameChooser
 from plone.i18n.normalizer.interfaces import IIDNormalizer
 
