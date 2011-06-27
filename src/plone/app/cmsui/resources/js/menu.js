@@ -96,6 +96,8 @@ function eraseCookie(name) {
             config: { 
                 top: 130,
                 onBeforeLoad: function (e) { 
+                    // Close other overlays
+                    $('.overlay').overlay().close();
                     offset = expandMenu();
                     $(window).trigger('onBeforeOverlay', [this, e]);
                     return true; 
@@ -107,7 +109,9 @@ function eraseCookie(name) {
                     return true; 
                 }, 
                 onClose: function (e) { 
-                    contractMenu(offset);
+                    if ($('.overlay').length === 0) {
+                        contractMenu(offset);
+                    }
                     $(window).trigger('onCloseOverlay', [this, e]);
                     return true; 
                 }
