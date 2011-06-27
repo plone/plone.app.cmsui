@@ -77,8 +77,7 @@
                     ></a></li>
                <li tal:condition="python:view.modificationDate()"
                     id="document-history">
-                    <a class="overlayLink"
-                       href="#"
+                    <a href="#"
                        tal:content="view/modificationDate">June 23, 2011</a>
                 </li>
                 <li tal:condition="python:view.authorName()"
