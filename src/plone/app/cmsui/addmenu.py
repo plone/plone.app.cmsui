@@ -135,6 +135,13 @@ class AddMenu(BrowserView):
         
         return self.index()
 
+    def showUploadForm(self):
+        """We can't show the upload form if uploadable types can't be created here.
+        """
+        # TODO How are we sure which types are uploadable?
+        # For now, just check on File/Image.
+        
+        return ('Image' in self.allowedTypes) or ('File' in self.allowedTypes)
 
     def getUploadUrl(self):
            """
