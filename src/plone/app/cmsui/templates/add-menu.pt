@@ -39,7 +39,7 @@
             </dl>
         </div>
 
-        <div class="">
+        <div class="grid_7">
 
             <!--
                 TODO We need a non-JS fallback
