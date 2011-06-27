@@ -68,9 +68,33 @@ button {
 	    padding: 0;
 	    li {
 		    display: inline;
+		    position: relative;
 		    a {
 			    display: inline-block;
 	            padding: @verticalSpace/4 @horizontalSpace/2;
+			}
+			ul.dropdownItems {
+				display: none;
+			    position: absolute;
+			    top: 10px;
+			    left: 0;
+			    background: darken(@ploneColor, 20%);
+			    .css3_border_radius(5px);
+			    width: auto;
+			    min-width: 200px;
+			    padding: 10px;
+			    margin-top: 1em;
+			    
+			    &:before {
+				    content: "\0020";
+                    display: block;
+                    height: 0px;
+                    width: 0px;
+                    margin-top: -20px;
+                    margin-bottom: 10px;
+                    .toolTipArrow();
+                    border-bottom-color: darken(@ploneColor, 20%);
+				}
 			}
 		}
 	}
@@ -206,7 +230,6 @@ button {
 		}*/
 	}
 }
-
 
 
 /* @group Icons */
