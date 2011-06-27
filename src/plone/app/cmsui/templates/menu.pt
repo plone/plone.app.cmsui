@@ -95,7 +95,8 @@
                 <li tal:condition="python:view.authorName()"
                     id="document-author">
                     <a class="overlayLink"
-                       href="#"
+                       tal:attributes="href string:${view/baseURL}/@@cmsui-sharing"
+                       tal:omit-tag="python:not view.tools.membership().checkPermission('Sharing page: Delegate roles', context)"
                        tal:content="view/authorName">John Doe</a>
                 </li>
                 <li tal:condition="python:view.workflowState()"

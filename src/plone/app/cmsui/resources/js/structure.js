@@ -1,6 +1,3 @@
-/*globals window, jQuery*/
-CURRENT_STRUCTURE_URL = null;
-
 /* Set up the Structure overlay */
 jQuery(function ($) {
 
@@ -21,7 +18,7 @@ jQuery(function ($) {
         $('#structure-dialog').css({height: $slider.outerHeight()});
         $('<div class="structure-slider" style="width: 100%"><' + '/div>')
             .prependTo($('#structure-dialog'))
-            .loadOverlay(href + ' .structure-slider>*', function(){
+            .loadOverlay(href + ' .structure-slider>*', undefined, function(){
                 $slider.remove();
             })
             .css({position: 'absolute', left: (dir=='left'?width:-width), top: 0})
@@ -36,6 +33,19 @@ jQuery(function ($) {
     $(document).bind('onEndLoadOverlay', function(){ $("table.orderable").ploneDnD(); });
     $(document).bind('onLoadOverlay', function(){ $("table.orderable").ploneDnD(); });
     $(document).bind('onFormOverlayLoadSuccess', function(){ $("table.orderable").ploneDnD(); });
+    
+    /* current item actions need to be specially handled */
+    $("a#structure-btn-cut,a#structure-btn-copy", $('#item-actions-menu')).live('click', function(e){
+        $.ajax({
+            url : $(this).attr('href'),
+            complete : function(request, textStatus){
+                window.parent.frames['plone-cmsui-notifications'].$.plone.showNotifyFromElements(request.responseText);
+            },
+            type : 'POST'
+        });
+        return e.preventDefault();
+    });
+    
 
     // trigger navigation into child folders
     $('#structure-dialog a.link-child').live('click', function(e) {
@@ -52,7 +62,7 @@ jQuery(function ($) {
         window.parent.history.pushState({structure_href: href}, null, window.parent.location.href);
         return e.preventDefault();
     });
-
+    
     // update current folder after back/forward history navigation
     window.parent.addEventListener('popstate', function(e) {
         if (e.state != null && e.state.structure_href !== undefined) {
