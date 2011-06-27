@@ -143,6 +143,7 @@
         <aside class="grid_2" id="site-setup">
             <a class="overlayLink"
                 tal:attributes="href string:${view/portalState/navigation_root_url}/@@overview-controlpanel"
+                tal:condition="python:view.tools.membership().checkPermission('Plone Site Setup', context)"
                 i18n:translate="cmsui_site_configuration">Site configuration</a>
         </aside>
     </div>
