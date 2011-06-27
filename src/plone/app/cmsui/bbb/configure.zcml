@@ -52,6 +52,15 @@
         template="../templates/structure.pt"
         permission="plone.ViewCMSUI"
         />
+    
+    <browser:page
+        name="sharing"
+        for="*"
+        class="..sharing.SharingView"
+        template="../templates/sharing.pt"
+        permission="plone.DelegateRoles"
+        layer="..interfaces.ICMSUILayer"
+        />
 
     <browser:viewlet
         name="plone.personal_bar"

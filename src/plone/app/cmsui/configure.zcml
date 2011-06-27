@@ -99,6 +99,15 @@
         layer=".interfaces.ICMSUILayer"
         />
 
+    <!-- Sharing overlay -->
+    <browser:page
+        name="cmsui-sharing"
+        for="*"
+        class=".sharing.SharingView"
+        template="templates/sharing.pt"
+        permission="plone.DelegateRoles"
+        />
+
     <!-- "Add new" menu overlay -->
 
     <browser:page
