@@ -31,25 +31,11 @@ function toggleMenu() {
 }
 
 function showMessagesFromOverlay() {
-    $('.overlay .portalMessage').each(function () {
-        var type,
-            portal_message = $(this),
-            sticky = true;
-        if (portal_message.hasClass('info')) {
-            type = 'info';
-            sticky = false;
-        } else if (portal_message.hasClass('warning')) {
-            type = 'warning';
-        } else if (portal_message.hasClass('error')) {
-            type = 'error';
-        }
-        window.parent.frames['plone-cmsui-notifications'].$.plone.notify({
-            'title': portal_message.children('dt').html(),
-            'message': portal_message.children('dd').html(),
-            'type': type,
-            'sticky': sticky
-        });
-    });
+    window.parent.frames['plone-cmsui-notifications'].$.plone.showNotifyFromElements($('.overlay'));
+}
+
+function notify(options) {
+    window.parent.frames['plone-cmsui-notifications'].$.plone.notify(options);
 }
 
 // http://www.quirksmode.org/js/cookies.html
@@ -117,6 +103,10 @@ function eraseCookie(name) {
             formselector: 'form.overlayForm',
             config: {
                 top: 130,
+                mask: {
+                    color: '#000000',
+                    opacity: 0.5
+                },
                 onBeforeLoad: function (e) { 
                     // Close other overlays
                     expandMenu();
@@ -387,9 +377,14 @@ PloneQuickUpload.sendDataAndUpload = function (uploader, domelement, typeupload)
     jQuery('.uploadifybuttons', jQuery(domelement).parent()).hide();
     jQuery('.uploadifybuttons', jQuery(domelement).parent()).find('input').removeAttr('disabled').attr('opacity', 1);
 }
-PloneQuickUpload.onAllUploadsComplete = function(){
-    // Browser.onUploadComplete();
+PloneQuickUpload.onAllUploadsComplete = function(uploader){
+    $("div.pb-ajax").loadOverlay(uploader._options.container_url);
+    notify({
+        'title': 'Info',
+        'message': uploader._filesUploaded + ' files have been uploaded.'
+    });
 }
+
 PloneQuickUpload.clearQueue = function(uploader, domelement) {
     var handler = uploader._handler;
     var files = handler._files;
@@ -413,7 +408,7 @@ PloneQuickUpload.onUploadComplete = function (uploader, domelement, id, fileName
             // after the last upload, if no errors, reload the page
             var newlist = jQuery('li', uploadList);
             if (! newlist.length) {
-                window.setTimeout(PloneQuickUpload.onAllUploadsComplete, 5);
+                PloneQuickUpload.onAllUploadsComplete(uploader);
             }
         }, 50);
     }
