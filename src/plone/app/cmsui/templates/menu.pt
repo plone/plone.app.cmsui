@@ -45,11 +45,17 @@
             <!-- Personal links -->
             <!-- In the flexible grid, when inside a cell we get 12 cells to use again. -->
             <ul id="personal-tools" class="alpha grid_9">
-                <li id="cmsui-logged-in-as" i18n:translate="cmsui_logged_in_as"><a
-                    class="overlayLink" tal:attributes="href view/userHomeLinkURL">Logged in as <span
-                    i18n:name="name" tal:replace="view/userName" /></a></li><li
-                class="overlayLink" tal:repeat="action view/personalActions" tal:attributes="id string:cmsui-personallink-${action/id}"><a
-                class="overlayLink" tal:attributes="href action/url" tal:content="action/title" /></li>
+                <li id="cmsui-logged-in-as"><a
+                    i18n:translate="cmsui_logged_in_as"
+                    class="overlayLink"
+                    tal:attributes="href string:${portal_state/navigation_root_url}/@@personal-information">Logged in as <span
+                        i18n:name="name" 
+                        tal:replace="view/userName" /></a></li><li
+                tal:repeat="action view/personalActions"
+                tal:attributes="id string:cmsui-personallink-${action/id}"><a
+                    tal:attributes="href action/url;
+                                    class python:id != 'logout' and 'overlayLink' or None"
+                    tal:content="action/title" /></li>
             </ul>
 
             <!-- Edit bar toggle -->
