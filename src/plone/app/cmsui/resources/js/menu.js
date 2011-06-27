@@ -118,6 +118,7 @@ function eraseCookie(name) {
                 onBeforeLoad: function (e) { 
                     // Close other overlays
                     expandMenu();
+                    $('.dropdownItems').slideUp();
                     $(document).trigger('onBeforeOverlay', [this, e]);
                     return true; 
                 },
@@ -145,7 +146,7 @@ function eraseCookie(name) {
                 }
                 CURRENT_OVERLAY_TRIGGER = ele;
             }
-      });
+        });
 
         $("a.overlayLink").live('click', function(){
             $(document).trigger('onOverlayLinkClicked', [this]);
