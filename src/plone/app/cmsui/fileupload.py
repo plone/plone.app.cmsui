@@ -26,7 +26,7 @@ def decodeQueryString(QueryString):
           },
          None,1)
   r.processInputs()
-  return r.form 
+  return r.form
 
 def getDataFromAllRequests(request, dataitem) :
     """
@@ -36,17 +36,17 @@ def getDataFromAllRequests(request, dataitem) :
     if data is None:
         # try to get data from QueryString
         data = decodeQueryString(request.get('QUERY_STRING','')).get(dataitem)
-    return data    
+    return data
 
 
 class QuickUploadView(BrowserView):
     """ The Quick Upload View
     """
-
+    
     def __init__(self, context, request):
         super(QuickUploadView, self).__init__(context, request)
         self.uploader_id = self._uploader_id()
-
+    
     def _uploader_id(self) :
         return 'uploader%s' %str(random.random()).replace('.','')
     
@@ -55,7 +55,7 @@ class QuickUploadView(BrowserView):
         return context.restrictedTraverse('@@quick_upload_init')(for_id = self.uploader_id)
 
 
-XHR_UPLOAD_JS = """       
+XHR_UPLOAD_JS = """
     var fillTitles = %(ul_fill_titles)s;
     var fillDescriptions = %(ul_fill_descriptions)s;
     var auto = %(ul_auto_upload)s;
@@ -66,16 +66,16 @@ XHR_UPLOAD_JS = """
     sendDataAndUpload_%(ul_id)s = function() {
         var uploader = xhr_%(ul_id)s;
         PloneQuickUpload.sendDataAndUpload(uploader, uploader._element, '%(typeupload)s');
-    }    
+    }
     clearQueue_%(ul_id)s = function() {
         var uploader = xhr_%(ul_id)s;
-        PloneQuickUpload.clearQueue(uploader, uploader._element);    
-    }    
-    onUploadComplete_%(ul_id)s = function(id, fileName, responseJSON) {       
+        PloneQuickUpload.clearQueue(uploader, uploader._element);
+    }
+    onUploadComplete_%(ul_id)s = function(id, fileName, responseJSON) {
         var uploader = xhr_%(ul_id)s;
         PloneQuickUpload.onUploadComplete(uploader, uploader._element, id, fileName, responseJSON);
     }
-    createUploader_%(ul_id)s= function(){    
+    createUploader_%(ul_id)s= function(){
         xhr_%(ul_id)s = new qq.FileUploader({
             element: jQuery('#%(ul_id)s')[0],
             action: '%(context_url)s/@@quick_upload_file',
@@ -88,7 +88,7 @@ XHR_UPLOAD_JS = """
             template: '<div class="qq-uploader">' +
                       '<div class="qq-upload-drop-area"><span>%(ul_draganddrop_text)s</span></div>' +
                       '<div class="qq-upload-button"><label for="file-upload">%(ul_button_text)s</label></div>' +
-                      '<ul class="qq-upload-list"></ul>' + 
+                      '<ul class="qq-upload-list"></ul>' +
                       '</div>',
             fileTemplate: '<li>' +
                     '<a class="qq-upload-cancel" href="#">&nbsp;</a>' +
@@ -96,7 +96,7 @@ XHR_UPLOAD_JS = """
                     '<span class="qq-upload-spinner"></span>' +
                     '<span class="qq-upload-failed-text">%(ul_msg_failed)s</span></div>' +
                     '<div class="qq-upload-size"></div>' +
-                '</li>',                      
+                '</li>',
             messages: {
                 serverError: "%(ul_error_server)s",
                 serverErrorAlwaysExist: "%(ul_error_always_exists)s {file}",
@@ -104,28 +104,28 @@ XHR_UPLOAD_JS = """
                 serverErrorNoPermission: "%(ul_error_no_permission)s",
                 typeError: "%(ul_error_bad_ext)s {file}. %(ul_error_onlyallowed)s {extensions}.",
                 sizeError: "%(ul_error_file_large)s {file}, %(ul_error_maxsize_is)s {sizeLimit}.",
-                emptyError: "%(ul_error_empty_file)s {file}, %(ul_error_try_again_wo)s"            
-            }            
-        });           
+                emptyError: "%(ul_error_empty_file)s {file}, %(ul_error_try_again_wo)s"
+            }
+        });
     }
-    jQuery(document).ready(createUploader_%(ul_id)s); 
+    jQuery(document).ready(createUploader_%(ul_id)s);
 """
 
 
 class QuickUploadInit(BrowserView):
     """ Initialize uploadify js
     """
-
+    
     def _utranslate(self, msg):
         # XXX fixme : the _ (SiteMessageFactory) doesn't work
         context = aq_inner(self.context)
         return context.translate(msg, domain="collective.quickupload")
-
+    
     def upload_settings(self):
         context = aq_inner(self.context)
         request = self.request
         session = request.get('SESSION', {})
-        portal_url = getToolByName(context, 'portal_url')()    
+        portal_url = getToolByName(context, 'portal_url')()
         
         settings = dict(
             portal_url             = portal_url,
@@ -159,36 +159,36 @@ class QuickUploadInit(BrowserView):
             ul_error_always_exists = self._utranslate(u"This file already exists with the same name on server :"),
             ul_error_zodb_conflict = self._utranslate(u"A data base conflict error happened when uploading this file :"),
             ul_error_server        = self._utranslate(u"Server error, please contact support and/or try again."),
-        )        
+        )
         
         return settings
-
+    
     def __call__(self, for_id="uploader"):
         self.uploader_id = for_id
         settings = self.upload_settings()
-        return XHR_UPLOAD_JS % settings   
+        return XHR_UPLOAD_JS % settings
 
 
 class QuickUploadFile(BrowserView):
     """ Upload a file
-    """  
+    """
     
     def __call__(self):
         """
-        """        
+        """
         context = aq_inner(self.context)
         request = self.request
-        response = request.RESPONSE      
+        response = request.RESPONSE
         
         response.setHeader('Expires', 'Sat, 1 Jan 2000 00:00:00 GMT')
-        response.setHeader('Cache-control', 'no-cache') 
-        # the good content type woul be text/json or text/plain but IE 
+        response.setHeader('Cache-control', 'no-cache')
+        # the good content type woul be text/json or text/plain but IE
         # do not support it
-        response.setHeader('Content-Type', 'text/html; charset=utf-8')               
-
+        response.setHeader('Content-Type', 'text/html; charset=utf-8')
+        
         if request.HTTP_X_REQUESTED_WITH :
             # using ajax upload
-            file_name = urllib.unquote(request.HTTP_X_FILE_NAME)       
+            file_name = urllib.unquote(request.HTTP_X_FILE_NAME)
             upload_with = "XHR"
             try :
                 file = request.BODYFILE
@@ -208,15 +208,15 @@ class QuickUploadFile(BrowserView):
             # using classic form post method (MSIE<=8)
             file_data = request.get("qqfile", None)
             filename = getattr(file_data,'filename', '')
-            file_name = filename.split("\\")[-1]  
+            file_name = filename.split("\\")[-1]
             upload_with = "CLASSIC FORM POST"
             # we must test the file size in this case (no client test)
-
+        
         # TODO Just change the id, instead of blocking the upload.
         if not self._check_file_id(file_name) :
             # logger.info("The file id for %s always exist, upload rejected" % file_name)
             return json.dumps({u'error': u'serverErrorAlwaysExist'})
-
+        
         content_type = mimetypes.guess_type(file_name)[0]
         # sometimes plone mimetypes registry could be more powerful
         if not content_type :
@@ -236,7 +236,7 @@ class QuickUploadFile(BrowserView):
         if file_data:
             factory = IQuickUploadFileFactory(context)
             # logger.info("uploading file with %s : filename=%s, title=%s, description=%s, content_type=%s, portal_type=%s" % \
-            # (upload_with, file_name, title, description, content_type, portal_type))                             
+            # (upload_with, file_name, title, description, content_type, portal_type))
             
             try :
                 f = factory(file_name, title, description, content_type, file_data, portal_type)
@@ -245,14 +245,14 @@ class QuickUploadFile(BrowserView):
             
             if f['success'] is not None :
                 o = f['success']
-                # logger.info("file url: %s" % o.absolute_url()) 
+                # logger.info("file url: %s" % o.absolute_url())
                 msg = {u'success': True}
             else :
                 msg = {u'error': f['error']}
         else :
             msg = {u'error': u'emptyError'}
-            
-        return json.dumps(msg)          
+        
+        return json.dumps(msg)
     
     def _check_file_id(self, id):
         context = aq_inner(self.context)
@@ -271,7 +271,7 @@ class QuickUploadCheckFile(BrowserView):
     """
     check if file exists
     """
-     
+    
     def __call__(self):
         """
         """
