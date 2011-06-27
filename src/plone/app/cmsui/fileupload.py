@@ -122,7 +122,6 @@ class QuickUploadInit(BrowserView):
     
     def upload_settings(self):
         context = aq_inner(self.context)
-        request = self.request
         portal_url = getToolByName(context, 'portal_url')()
         
         settings = dict(
@@ -187,7 +186,7 @@ class QuickUploadFile(BrowserView):
         if request.HTTP_X_REQUESTED_WITH :
             # using ajax upload
             file_name = urllib.unquote(request.HTTP_X_FILE_NAME)
-            upload_with = "XHR"
+            # upload_with = "XHR"
             try :
                 file = request.BODYFILE
                 file_data = file.read()
@@ -207,7 +206,7 @@ class QuickUploadFile(BrowserView):
             file_data = request.get("qqfile", None)
             filename = getattr(file_data,'filename', '')
             file_name = filename.split("\\")[-1]
-            upload_with = "CLASSIC FORM POST"
+            # upload_with = "CLASSIC FORM POST"
             # we must test the file size in this case (no client test)
         
         # TODO Just change the id, instead of blocking the upload.
@@ -242,7 +241,7 @@ class QuickUploadFile(BrowserView):
                 return json.dumps({u'error': u'serverError'})
             
             if f['success'] is not None :
-                o = f['success']
+                # o = f['success']
                 # logger.info("file url: %s" % o.absolute_url())
                 msg = {u'success': True}
             else :
