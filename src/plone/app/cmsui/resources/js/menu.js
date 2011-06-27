@@ -220,9 +220,9 @@ function eraseCookie(name) {
     // https://dev.plone.org/plone/ticket/10894
     if (jQuery.browser.msie) jQuery("#settings").remove();
     var Browser = {};
-    Browser.onUploadComplete = function() {
-        window.location.reload();
-    }
+    // Browser.onUploadComplete = function() {
+    //     window.location.reload();
+    // }
     loadUploader = function() {
         var ulContainer = jQuery('.uploaderContainer');
         ulContainer.each(function(){
@@ -274,7 +274,7 @@ PloneQuickUpload.addUploadFields = function(uploader, domelement, file, id, fill
         var labelfiledescription = jQuery('#uploadify_label_file_description').val();
         jQuery('.qq-upload-cancel', blocFile).after('\
                   <div class="uploadField">\
-                      <label>' + labelfiledescription + '&nbsp;:&nbsp;</label> \
+                      <label for="description_' + id + '">' + labelfiledescription + '</label> \
                       <textarea rows="2" \
                              class="file_description_field" \
                              id="description_' + id + '" \
@@ -287,12 +287,12 @@ PloneQuickUpload.addUploadFields = function(uploader, domelement, file, id, fill
         var labelfiletitle = jQuery('#uploadify_label_file_title').val();
         jQuery('.qq-upload-cancel', blocFile).after('\
                   <div class="uploadField">\
-                      <label>' + labelfiletitle + '&nbsp;:&nbsp;</label> \
+                      <label for="title_' + id + '">' + labelfiletitle + '</label> \
                       <input type="text" \
                              class="file_title_field" \
                              id="title_' + id + '" \
                              name="title" \
-                             value="" />\
+                             value="' + file.fileName + '" />\
                   </div>\
                    ')
     }
@@ -333,7 +333,7 @@ PloneQuickUpload.sendDataAndUpload = function(uploader, domelement, typeupload) 
     jQuery('.uploadifybuttons', jQuery(domelement).parent()).find('input').removeAttr('disabled').attr('opacity', 1);
 }
 PloneQuickUpload.onAllUploadsComplete = function(){
-    Browser.onUploadComplete();
+    // Browser.onUploadComplete();
 }
 PloneQuickUpload.clearQueue = function(uploader, domelement) {
     var handler = uploader._handler;
