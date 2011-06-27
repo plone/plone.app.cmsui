@@ -460,7 +460,6 @@ button:hover {
   color: #ffffff;
   position: fixed;
   z-index: 10001;
-  opacity: 0;
 }
 #toolbar:after {
   /*

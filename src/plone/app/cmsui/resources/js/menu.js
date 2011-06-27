@@ -101,6 +101,7 @@ function eraseCookie(name) {
     $().ready(function () {
         var iframe = $('#plone-cmsui-menu', window.parent.document);
 
+        $('#toolbar').css({'opacity': 0});
         $(document).bind('onFormOverlayLoadSuccess', function () {
             showMessagesFromOverlay();
         });
@@ -134,7 +135,6 @@ function eraseCookie(name) {
                 }
             }
         });
-
         $(document).bind('onBeforeAjaxClickHandled', function(event, ele, api, clickevent){
             if(ele == CURRENT_OVERLAY_TRIGGER){
                 return event.preventDefault();
@@ -145,7 +145,7 @@ function eraseCookie(name) {
                 }
                 CURRENT_OVERLAY_TRIGGER = ele;
             }
-    	});
+      });
 
         $("a.overlayLink").live('click', function(){
             $(document).trigger('onOverlayLinkClicked', [this]);

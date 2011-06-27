@@ -126,7 +126,6 @@ class StructureView(BrowserView):
 
         contentsMethod = self.contentsMethod()
 
-        show_all = self.request.get('show_all', '').lower() == 'true'
         pagenumber = int(self.request.get('pagenumber', 1))
         start = (pagenumber - 1) * self.pagesize
         end = start + self.pagesize
@@ -137,7 +136,7 @@ class StructureView(BrowserView):
 
             # avoid creating unnecessary info for items outside the current
             # batch;  only the path is needed for the "select all" case...
-            if not show_all and not start <= i < end:
+            if not self.selectall and not start <= i < end:
                 results.append(dict(path = path))
                 continue
 
