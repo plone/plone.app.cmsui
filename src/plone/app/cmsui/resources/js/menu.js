@@ -4,26 +4,38 @@
  */
 
 CURRENT_OVERLAY_TRIGGER = null;
+var menu_offset;
+var menu_size = 'menu';
 
 function expandMenu() {
-    var offset = $(window.parent).scrollTop();
+    menu_offset = $(window.parent).scrollTop();
     $('body', window.parent.document).css('overflow', 'hidden');
-    $(window.parent).scrollTop(offset);
+    $(window.parent).scrollTop(menu_offset);
     $('#plone-cmsui-menu', window.parent.document).css('height', '100%');
-    return offset;
+    menu_size = 'full';
 }
-function contractMenu(offset) {
+function contractMenu() {
     $('body', window.parent.document).css('overflow', 'auto');
-    $(window.parent).scrollTop(offset);
+    $(window.parent).scrollTop(menu_offset);
     $('#plone-cmsui-menu', window.parent.document).css('height', $('#toolbar').outerHeight());
+    menu_size = 'menu';
+}
+function toggleMenu() {
+    if (menu_size === 'menu') {
+        expandMenu();
+    } else {
+        contractMenu();
+    }
 }
 
 function showMessagesFromOverlay() {
     $('.overlay .portalMessage').each(function () {
         var type,
-            portal_message = $(this);
+            portal_message = $(this),
+            sticky = true;
         if (portal_message.hasClass('info')) {
             type = 'info';
+            sticky = false;
         } else if (portal_message.hasClass('warning')) {
             type = 'warning';
         } else if (portal_message.hasClass('error')) {
@@ -32,7 +44,8 @@ function showMessagesFromOverlay() {
         window.parent.frames['plone-cmsui-notifications'].$.plone.notify({
             'title': portal_message.children('dt').html(),
             'message': portal_message.children('dd').html(),
-            'type': type
+            'type': type,
+            'sticky': sticky
         });
     });
 }
@@ -80,19 +93,16 @@ function eraseCookie(name) {
                 callback.apply(this, arguments);
             }
             $overlay[0].handle_load_inside_overlay.apply(this, arguments);
-	    console.log("cmsui: onEndLoadOverlay");
             $(document).trigger('onEndLoadOverlay', [this, href, data]);
         });
         return this;
     };
 
     $().ready(function () {
-        var iframe = $('#plone-cmsui-menu', window.parent.document),
-            offset;
+        var iframe = $('#plone-cmsui-menu', window.parent.document);
 
         $(document).bind('onFormOverlayLoadSuccess', function () {
             showMessagesFromOverlay();
-            console.log('test');
         });
 
         $('a.overlayLink').prepOverlay({
@@ -106,49 +116,53 @@ function eraseCookie(name) {
                 top: 130,
                 onBeforeLoad: function (e) { 
                     // Close other overlays
-                    offset = expandMenu();
-		    console.log("cmsui: onBeforeLoad overlay");
+                    expandMenu();
                     $(document).trigger('onBeforeOverlay', [this, e]);
                     return true; 
                 },
                 onLoad: function (e) {
                     loadUploader();
                     showMessagesFromOverlay();
-		    console.log("cmsui: onLoad overlay");
                     $(document).trigger('onLoadOverlay', [this, e]);
                     return true; 
                 }, 
                 onClose: function (e) { 
-                    contractMenu(offset);
-		    console.log("cmsui: onClose overlay");
+                    CURRENT_OVERLAY_TRIGGER = null;
+                    contractMenu();
                     $(document).trigger('onCloseOverlay', [this, e]);
                     return true; 
                 }
             }
         });
 
-	$(document).bind('onBeforeAjaxClickHandled', function(event, ele, api, clickevent){
-	    console.log("cmsui: onBeforeAjaxClickHandled");
-	    if(ele == CURRENT_OVERLAY_TRIGGER){
-		return event.preventDefault();
-	    }else{
-		if(CURRENT_OVERLAY_TRIGGER != null){
-		    var overlays = $('div.overlay:visible');
-		    overlays.fadeOut(function(){ $(this).remove(); });
-		}
-		CURRENT_OVERLAY_TRIGGER = ele;
-	    }
-	});
+        $(document).bind('onBeforeAjaxClickHandled', function(event, ele, api, clickevent){
+            if(ele == CURRENT_OVERLAY_TRIGGER){
+                return event.preventDefault();
+            }else{
+                if(CURRENT_OVERLAY_TRIGGER != null){
+                    var overlays = $('div.overlay:visible');
+                    overlays.fadeOut(function(){ $(this).remove(); });
+                }
+                CURRENT_OVERLAY_TRIGGER = ele;
+            }
+    	});
 
         $("a.overlayLink").live('click', function(){
             $(document).trigger('onOverlayLinkClicked', [this]);
-	    console.log("cmsui: overlay link clicked");
             var url = $(this).attr("href");
             $(this).closest('.pb-ajax').loadOverlay(url + ' ' + common_content_filter);
             return false;
         });
         $('.dropdownLink').bind('click', function (e) {
-            $(this).nextAll('.dropdownItems').slideToggle();
+            if ($('#plone-cmsui-menu')) {
+                // iframe is collapsed
+                expandMenu();
+                $(this).nextAll('.dropdownItems').slideToggle();
+            }
+            else {
+                $(this).nextAll('.dropdownItems').slideToggle();
+                contractMenu();
+            }
             e.preventDefault();
         });
     });
@@ -279,7 +293,7 @@ function eraseCookie(name) {
 /**
  * Initialize tinymce
  */
-$(window).bind('onLoadInsideOverlay', function() {
+$(document).bind('onLoadInsideOverlay', function() {
     $('textarea.mce_editable').each(function() {
         var config = new TinyMCEConfig($(this).attr('id'));
         config.init();
