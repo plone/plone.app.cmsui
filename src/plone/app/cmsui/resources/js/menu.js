@@ -391,6 +391,10 @@ PloneQuickUpload.sendDataAndUpload = function (uploader, domelement, typeupload)
 }
 PloneQuickUpload.onAllUploadsComplete = function(uploader){
     $("div.pb-ajax").loadOverlay(uploader._options.container_url);
+    notify({
+        'title': 'Info',
+        'message': uploader._filesUploaded + ' files have been uploaded.'
+    });
 }
 
 PloneQuickUpload.clearQueue = function(uploader, domelement) {
