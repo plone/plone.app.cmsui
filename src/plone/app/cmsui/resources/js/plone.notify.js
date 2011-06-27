@@ -85,7 +85,7 @@ immed: true, strict: true, maxlen: 80, maxerr: 9999 */
             title: "",
             message: "",
             fadeSpeed: "slow",
-            duration: 3000
+            duration: 8000
         }, options);
 
         // Check if title or message is empty
