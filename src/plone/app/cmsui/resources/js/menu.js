@@ -135,7 +135,6 @@ function eraseCookie(name) {
                 }
             }
         });
-
         $(document).bind('onBeforeAjaxClickHandled', function(event, ele, api, clickevent){
             if(ele == CURRENT_OVERLAY_TRIGGER){
                 return event.preventDefault();
@@ -146,7 +145,7 @@ function eraseCookie(name) {
                 }
                 CURRENT_OVERLAY_TRIGGER = ele;
             }
-    	});
+      });
 
         $("a.overlayLink").live('click', function(){
             $(document).trigger('onOverlayLinkClicked', [this]);
