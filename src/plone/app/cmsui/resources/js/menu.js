@@ -160,8 +160,9 @@ function eraseCookie(name) {
                 $(this).nextAll('.dropdownItems').slideToggle();
             }
             else {
-                $(this).nextAll('.dropdownItems').slideToggle();
-                contractMenu();
+                $(this).nextAll('.dropdownItems').slideToggle(function () {
+                    contractMenu();
+                });
             }
             e.preventDefault();
         });
