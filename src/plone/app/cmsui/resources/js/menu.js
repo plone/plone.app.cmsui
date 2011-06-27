@@ -75,8 +75,8 @@ function eraseCookie(name) {
     // jquery method to load an overlay
     $.fn.loadOverlay = function(href, data, callback) {
         $(document).trigger('startLoadOverlay', [this, href, data]);
-        var $overlay = this.closest('.pb-ajax');
-        this.load(href, data, function () {
+        var $overlay = $('div.overlay-ajax:visible div.pb-ajax');
+        $overlay.load(href, data, function () {
             $overlay[0].handle_load_inside_overlay.apply(this, arguments);
             if (callback !== undefined) {
                 callback.apply(this, arguments);
@@ -94,7 +94,7 @@ function eraseCookie(name) {
             showMessagesFromOverlay();
         });
 
-        $('a.overlayLink').prepOverlay({
+        $('a.overlayLink,.configlets a').prepOverlay({
             subtype: 'ajax',
             filter: common_content_filter,
             // Add this to a link or button to make it close the overlay e.g.
@@ -139,7 +139,7 @@ function eraseCookie(name) {
             }
       });
 
-        $("a.overlayLink").live('click', function(){
+        $("a.overlayLink,.configlets a").live('click', function(){
             $(document).trigger('overlayLinkClicked', [this]);
             var url = $(this).attr("href");
             $(this).closest('#overlay-content').loadOverlay(url + ' ' + common_content_filter);
