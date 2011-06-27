@@ -17,6 +17,15 @@
         <object name="paste" i18n:domain="plone">
             <property name="available_expr">python:object.cb_dataValid() and object.isPrincipiaFolderish</property>
         </object>
+        <object name="cut" i18n:domain="plone">
+            <property name="available_expr">python:checkPermission("Delete objects", globals_view.getParentObject()) and checkPermission("Copy or Move", object) and context.portal_type != 'Plone Site'</property>
+        </object>
+        <object name="copy" i18n:domain="plone">
+            <property name="available_expr">python:checkPermission("Copy or Move", object) and context.portal_type != 'Plone Site'</property>
+        </object>
+        <object name="delete" i18n:domain="plone">
+            <property name="available_expr">python:checkPermission("Delete objects", globals_view.getParentObject()) and context.portal_type != 'Plone Site'</property>
+        </object>
     </object>
 
 </object>

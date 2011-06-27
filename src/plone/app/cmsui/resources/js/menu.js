@@ -89,12 +89,12 @@ function eraseCookie(name) {
     // jquery method to load an overlay
     $.fn.loadOverlay = function(href, data, callback) {
         $(document).trigger('onStartLoadOverlay', [this, href, data]);
-        var $overlay = this.closest('#overlay-content');
+        var $overlay = this.closest('.pb-ajax');
         this.load(href, data, function () {
+            $overlay[0].handle_load_inside_overlay.apply(this, arguments);
             if (callback !== undefined) {
                 callback.apply(this, arguments);
             }
-            $overlay[0].handle_load_inside_overlay.apply(this, arguments);
             $(document).trigger('onEndLoadOverlay', [this, href, data]);
         });
         return this;
@@ -120,7 +120,6 @@ function eraseCookie(name) {
                 onBeforeLoad: function (e) { 
                     // Close other overlays
                     expandMenu();
-                    $('.dropdownItems').slideUp();
                     $(document).trigger('onBeforeOverlay', [this, e]);
                     return true; 
                 },
@@ -148,7 +147,7 @@ function eraseCookie(name) {
                 }
                 CURRENT_OVERLAY_TRIGGER = ele;
             }
-        });
+      });
 
         $("a.overlayLink").live('click', function(){
             $(document).trigger('onOverlayLinkClicked', [this]);
