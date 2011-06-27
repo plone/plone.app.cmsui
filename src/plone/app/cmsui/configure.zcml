@@ -168,6 +168,7 @@
     for=".interfaces.IQuickUploadCapable"
     name="quick_upload"
     class=".fileupload.QuickUploadView"
+    template="templates/file-upload.pt"
     permission="cmf.AddPortalContent"/>     
   
 <!-- Quick Upload javascript Init -->

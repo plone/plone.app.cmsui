@@ -3,6 +3,8 @@
 /* Code that runs inside the iframe menu
  */
 
+CURRENT_OVERLAY_TRIGGER = null;
+
 function expandMenu() {
     var offset = $(window.parent).scrollTop();
     $('body', window.parent.document).css('overflow', 'hidden');
@@ -70,15 +72,16 @@ function eraseCookie(name) {
     var Browser = {}, 
         loadUploader;
     // jquery method to load an overlay
-    $.fn.loadOverlay = function (href, data, callback) {
-        $(window).trigger('onStartLoadOverlay', [this, href, data]);
+    $.fn.loadOverlay = function(href, data, callback) {
+        $(document).trigger('onStartLoadOverlay', [this, href, data]);
         var $overlay = this.closest('.pb-ajax');
         this.load(href, data, function () {
             if (callback !== undefined) {
                 callback.apply(this, arguments);
             }
             $overlay[0].handle_load_inside_overlay.apply(this, arguments);
-            $(window).trigger('onEndLoadOverlay', [this, href, data]);
+	    console.log("cmsui: onEndLoadOverlay");
+            $(document).trigger('onEndLoadOverlay', [this, href, data]);
         });
         return this;
     };
@@ -87,7 +90,7 @@ function eraseCookie(name) {
         var iframe = $('#plone-cmsui-menu', window.parent.document),
             offset;
 
-        $(window).bind('onFormOverlayLoadSucces', function () {
+        $(document).bind('onFormOverlayLoadSucces', function () {
             showMessagesFromOverlay();
             console.log('test');
         });
@@ -101,31 +104,46 @@ function eraseCookie(name) {
             formselector: 'form.overlayForm',
             config: {
                 top: 130,
-                onBeforeLoad: function (e) {
+                onBeforeLoad: function (e) { 
+                    // Close other overlays
                     offset = expandMenu();
-                    $(window).trigger('onBeforeOverlay', [this, e]);
-                    return true;
+		    console.log("cmsui: onBeforeLoad overlay");
+                    $(document).trigger('onBeforeOverlay', [this, e]);
+                    return true; 
                 },
                 onLoad: function (e) {
                     loadUploader();
                     showMessagesFromOverlay();
-                    $(window).trigger('onLoadOverlay', [this, e]);
-                    return true;
-                },
-                onClose: function (e) {
+		    console.log("cmsui: onLoad overlay");
+                    $(document).trigger('onLoadOverlay', [this, e]);
+                    return true; 
+                }, 
+                onClose: function (e) { 
                     contractMenu(offset);
-                    $(window).trigger('onCloseOverlay', [this, e]);
-                    return true;
+		    console.log("cmsui: onClose overlay");
+                    $(document).trigger('onCloseOverlay', [this, e]);
+                    return true; 
                 }
             }
         });
-        $(window).bind('onFormOverlayLoadFailure', function () {
-            console.log('lkdslldk');
-        });
 
-        $('a.overlayLink').live('click', function () {
-            $(window).trigger('onOverlayLinkClicked', [this]);
-            var url = $(this).attr('href');
+	$(document).bind('onBeforeAjaxClickHandled', function(event, ele, api, clickevent){
+	    console.log("cmsui: onBeforeAjaxClickHandled");
+	    if(ele == CURRENT_OVERLAY_TRIGGER){
+		return event.preventDefault();
+	    }else{
+		if(CURRENT_OVERLAY_TRIGGER != null){
+		    var overlays = $('div.overlay:visible');
+		    overlays.fadeOut(function(){ $(this).remove(); });
+		}
+		CURRENT_OVERLAY_TRIGGER = ele;
+	    }
+	});
+
+        $("a.overlayLink").live('click', function(){
+            $(document).trigger('onOverlayLinkClicked', [this]);
+	    console.log("cmsui: overlay link clicked");
+            var url = $(this).attr("href");
             $(this).closest('.pb-ajax').loadOverlay(url + ' ' + common_content_filter);
             return false;
         });
@@ -230,19 +248,17 @@ function eraseCookie(name) {
 
     // workaround this MSIE bug :
     // https://dev.plone.org/plone/ticket/10894
-    if (jQuery.browser.msie) {
-        jQuery('#settings').remove();
-    }
-    Browser.onUploadComplete = function () {
-        window.location.reload();
-    };
-    loadUploader = function () {
-        var ulContainer, uploadUrl, uploadData, UlDiv;
-        ulContainer = jQuery('.uploaderContainer');
-        ulContainer.each(function () {
-            uploadUrl = jQuery('.uploadUrl', this).val();
-            uploadData = jQuery('.uploadData', this).val();
-            UlDiv = jQuery(this);
+    if (jQuery.browser.msie) jQuery("#settings").remove();
+    var Browser = {};
+    // Browser.onUploadComplete = function() {
+    //     window.location.reload();
+    // }
+    loadUploader = function() {
+        var ulContainer = jQuery('.uploaderContainer');
+        ulContainer.each(function(){
+            var uploadUrl =  jQuery('.uploadUrl', this).val();
+            var uploadData =  jQuery('.uploadData', this).val();
+            var UlDiv = jQuery(this);
             jQuery.ajax({
                 type: 'GET',
                 url: uploadUrl,
@@ -259,6 +275,16 @@ function eraseCookie(name) {
 
 
 }(jQuery));
+
+/**
+ * Initialize tinymce
+ */
+$(window).bind('onLoadInsideOverlay', function() {
+    $('textarea.mce_editable').each(function() {
+        var config = new TinyMCEConfig($(this).attr('id'));
+        config.init();
+    });
+});
 
 
 /**
@@ -279,24 +305,31 @@ PloneQuickUpload.addUploadFields = function (uploader, domelement, file, id, fil
             id = parseInt(id.replace('qq-upload-handler-iframe', ''), 10);
         }
     }
-    if (fillDescriptions) {
-        labelfiledescription = jQuery('#uploadify_label_file_description').val();
-        jQuery('.qq-upload-cancel', blocFile).after('<div class="uploadField">' +
-                      '<label>' + labelfiledescription + '&nbsp;:&nbsp;</label>' +
-                      '<textarea rows="2" ' +
-                             'class="file_description_field"' +
-                             'id="description_' + id + '"' +
-                             'name="description"' +
-                             'value="" />' +
-                  '</div>');
+    if (fillDescriptions)  {
+        var labelfiledescription = jQuery('#uploadify_label_file_description').val();
+        jQuery('.qq-upload-cancel', blocFile).after('\
+                  <div class="uploadField">\
+                      <label for="description_' + id + '">' + labelfiledescription + '</label> \
+                      <textarea rows="2" \
+                             class="file_description_field" \
+                             id="description_' + id + '" \
+                             name="description" \
+                             value="" />\
+                  </div>\
+                   ')
     }
-    if (fillTitles) {
-        labelfiletitle = jQuery('#uploadify_label_file_title').val();
-        jQuery('.qq-upload-cancel', blocFile).after('<div class="uploadField">' +
-                      '<label>' + labelfiletitle + '&nbsp;:&nbsp;</label>' +
-                      '<input type="text" class="file_title_field"' +
-                             'id="title_' + id + '" name="title" value="" />' +
-                  '</div>');
+    if (fillTitles)  {
+        var labelfiletitle = jQuery('#uploadify_label_file_title').val();
+        jQuery('.qq-upload-cancel', blocFile).after('\
+                  <div class="uploadField">\
+                      <label for="title_' + id + '">' + labelfiletitle + '</label> \
+                      <input type="text" \
+                             class="file_title_field" \
+                             id="title_' + id + '" \
+                             name="title" \
+                             value="' + file.fileName + '" />\
+                  </div>\
+                   ')
     }
     PloneQuickUpload.showButtons(uploader, domelement);
 };
@@ -336,15 +369,14 @@ PloneQuickUpload.sendDataAndUpload = function (uploader, domelement, typeupload)
     }
     jQuery('.uploadifybuttons', jQuery(domelement).parent()).hide();
     jQuery('.uploadifybuttons', jQuery(domelement).parent()).find('input').removeAttr('disabled').attr('opacity', 1);
-};
-PloneQuickUpload.onAllUploadsComplete = function () {
-    Browser.onUploadComplete();
-};
-PloneQuickUpload.clearQueue = function (uploader, domelement) {
-    var handler = uploader._handler,
-        files = handler._files,
-        id;
-    for (id = 0; id < files.length; id += 1) {
+}
+PloneQuickUpload.onAllUploadsComplete = function(){
+    // Browser.onUploadComplete();
+}
+PloneQuickUpload.clearQueue = function(uploader, domelement) {
+    var handler = uploader._handler;
+    var files = handler._files;
+    for ( var id = 0; id < files.length; id++ ) {
         if (files[id]) {
             handler.cancel(id);
         }

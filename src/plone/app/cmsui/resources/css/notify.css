@@ -113,4 +113,9 @@
     color: #FFF;
 }
 
+a {
+    color: #FFF;
+    text-decoration: underline;
+}
+
 /* @end */
