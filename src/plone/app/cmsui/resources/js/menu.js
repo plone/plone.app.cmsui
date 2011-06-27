@@ -129,6 +129,10 @@ function eraseCookie(name) {
             $(this).closest('.pb-ajax').loadOverlay(url + ' ' + common_content_filter);
             return false;
         });
+        $('.dropdownLink').bind('click', function (e) {
+            $(this).nextAll('.dropdownItems').slideToggle();
+            e.preventDefault();
+        });
     });
     $(window).load(function () {
         var menu_state = readCookie('__plone_menu'),
