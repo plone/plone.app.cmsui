@@ -278,8 +278,9 @@ class QuickUploadCheckFile(BrowserView):
     check if file exists
     """
      
-
-    def quick_upload_check_file(self) :
+    def __call__(self):
+        """
+        """
         
         context = aq_inner(self.context)
         request = self.request          
@@ -294,11 +295,5 @@ class QuickUploadCheckFile(BrowserView):
                     always_exist[k] = v
         
         return str(always_exist)
-    
-    
-    def __call__(self):
-        """
-        """        
-        return self.quick_upload_check_file()  
         
                              
