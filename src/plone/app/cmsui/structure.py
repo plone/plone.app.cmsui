@@ -256,14 +256,20 @@ class StructureView(BrowserView):
 
     @property
     def selectallUrl(self):
-        return self.selectnoneUrl+'&select=all'
+        if '?' in self.selectnoneUrl:
+            return self.selectnoneUrl+'&select=all'
+        else:
+            return self.selectnoneUrl+'?select=all'
 
 
     @property
     def selectnoneUrl(self):
         base = self.viewUrl
         if self.showAll:
-            base += '&show_all=true'
+            if '?' in base:
+                base += '&show_all=true'
+            else:
+                base += '?show_all=true'
         return base
 
 
