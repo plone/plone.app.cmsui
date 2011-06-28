@@ -26,6 +26,7 @@
             <div tal:attributes="class python:'grid_5' if showUploadForm else ''">
                 <dl>
                     <tal:items repeat="type view/allowedTypes">
+                    <tal:item tal:condition="python: type['id'] not in view.quickUploadTypes">
                         <dt tal:attributes="class string:contenttype-${type/extra/id}">
                             <a class="overlayLink" tal:attributes="href type/action"
                                tal:content="type/title">
@@ -36,6 +37,7 @@
                         <dd tal:content="type/description">
                             Description
                         </dd>
+                    </tal:item>
                     </tal:items>
                 </dl>
             </div>
