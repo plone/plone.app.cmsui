@@ -33,6 +33,9 @@ Plone 4.1rc3 - update versions as applicable::
         Plone
         plone.app.cmsui
 
+Make sure you install the "CMS User Interface" profile when creating your
+Plone site.
+
 Using with Diazo
 ================
 
