@@ -10,6 +10,8 @@ from plone.app.testing import setRoles
 from plone.testing.z2 import Browser
 import transaction
 
+from plone.app.cmsui.tests import createObject
+
 class TestWorkflowPanel(unittest.TestCase):
 
     layer = CMSUI_FUNCTIONAL_TESTING
@@ -18,8 +20,7 @@ class TestWorkflowPanel(unittest.TestCase):
         browser = Browser(self.layer['app'])
         portal = self.layer['portal']
         setRoles(portal, TEST_USER_ID, ('Member', 'Manager'))
-        document_id = portal.invokeFactory("Document", "panel_linked_to_in_menu_doc", title="Workflow transitions")
-        document = portal[document_id]
+        document = createObject(portal, "Document", "panel_linked_to_in_menu_doc", delete_first=True, title="Workflow transitions")
         # Commit so the change in roles is visible to the browser
         transaction.commit()
         
@@ -35,8 +36,7 @@ class TestWorkflowPanel(unittest.TestCase):
         browser = Browser(self.layer['app'])
         portal = self.layer['portal']
         setRoles(portal, TEST_USER_ID, ('Member', 'Manager'))
-        document_id = portal.invokeFactory("Document", "transition_shown_in_workflow_panel_doc", title="Workflow transitions")
-        document = portal[document_id]
+        document = createObject(portal, "Document", "transition_shown_in_workflow_panel_doc", delete_first=True, title="Workflow transitions")
         # Commit so the change in roles is visible to the browser
         transaction.commit()
         
@@ -64,8 +64,7 @@ class TestWorkflowPanel(unittest.TestCase):
         browser = Browser(self.layer['app'])
         portal = self.layer['portal']
         setRoles(portal, TEST_USER_ID, ('Member', 'Manager'))
-        document_id = portal.invokeFactory("Document", "do_workflow_transition_doc", title="Workflow transitioning")
-        document = portal[document_id]
+        document = createObject(portal, "Document", "do_workflow_transition_doc", delete_first=True, title="Workflow transitioning")
         transaction.commit()
         
         browser_login(portal, browser)
@@ -82,8 +81,7 @@ class TestWorkflowPanel(unittest.TestCase):
         browser = Browser(self.layer['app'])
         portal = self.layer['portal']
         setRoles(portal, TEST_USER_ID, ('Member', 'Manager'))
-        document_id = portal.invokeFactory("Document", "changenote_transition_doc", title="Workflow note")
-        document = portal[document_id]
+        document = createObject(portal, "Document", "changenote_transition_doc", delete_first=True, title="Workflow note")
         transaction.commit()
         
         browser_login(portal, browser)
@@ -104,8 +102,7 @@ class TestWorkflowPanel(unittest.TestCase):
         browser = Browser(self.layer['app'])
         portal = self.layer['portal']
         setRoles(portal, TEST_USER_ID, ('Member', 'Manager'))
-        document_id = portal.invokeFactory("Document", "effective_date_transition_doc", title="Workflow note")
-        document = portal[document_id]
+        document = createObject(portal, "Document", "effective_date_transition_doc", delete_first=True, title="Workflow note")
         transaction.commit()
         
         browser_login(portal, browser)
@@ -130,13 +127,15 @@ class TestWorkflowPanel(unittest.TestCase):
         self.assertEqual("publish", document.workflow_history['plone_workflow'][-1]['action'])
         self.assertEqual("published", portal.portal_workflow.getInfoFor(document, "review_state"))
         self.assertEqual(DateTime(tommorow), document.getRawEffectiveDate())
+        
+        # cleanup
+        portal.manage_delObjects(['effective_date_transition_doc'])
 
     def test_can_enter_expiry_date(self):
         browser = Browser(self.layer['app'])
         portal = self.layer['portal']
         setRoles(portal, TEST_USER_ID, ('Member', 'Manager'))
-        document_id = portal.invokeFactory("Document", "effective_date_transition_doc", title="Workflow note")
-        document = portal[document_id]
+        document = createObject(portal, "Document", "effective_date_transition_doc", delete_first=True, title="Workflow note")
         transaction.commit()
         
         browser_login(portal, browser)
@@ -161,13 +160,14 @@ class TestWorkflowPanel(unittest.TestCase):
         self.assertEqual("publish", document.workflow_history['plone_workflow'][-1]['action'])
         self.assertEqual("published", portal.portal_workflow.getInfoFor(document, "review_state"))
         self.assertEqual(DateTime(next_year), document.getRawExpirationDate())
+        
+        portal.manage_delObjects(['effective_date_transition_doc'])
 
     def test_can_enter_expiration_date_without_transaction(self):
         browser = Browser(self.layer['app'])
         portal = self.layer['portal']
         setRoles(portal, TEST_USER_ID, ('Member', 'Manager'))
-        document_id = portal.invokeFactory("Document", "expiration_date_without_transition_doc", title="Workflow note")
-        document = portal[document_id]
+        document = createObject(portal, "Document", "expiration_date_without_transition_doc", delete_first=True, title="Workflow note")
         transaction.commit()
         
         browser_login(portal, browser)

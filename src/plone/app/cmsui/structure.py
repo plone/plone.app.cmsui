@@ -16,6 +16,7 @@ from zope.cachedescriptors.property import Lazy as lazy_property
 from plone.registry.interfaces import IRegistry
 from plone.folder.interfaces import IOrderableFolder, IExplicitOrdering
 from plone.app.cmsui.interfaces import ICMSUISettings
+from Products.CMFPlone.utils import base_hasattr
 
 _ = MessageFactory('plone')
 
@@ -370,10 +371,14 @@ class MoveItem(BrowserView):
     def __call__(self, item_id, delta, subset_ids=None):
         context = aq_inner(self.context)
         try:
-            if not IOrderableFolder.providedBy(context) and \
-                        not hasattr(context, 'moveObjectsByDelta'):
-                # for instance, plone site root does not use plone.folder
-                raise ValueError("Not ordered folder.")
+            if not IOrderableFolder.providedBy(context):
+                if not base_hasattr(context, 'moveObjectsByDelta'):
+                    # for instance, plone site root does not use plone.folder
+                    raise ValueError("Not an ordered folder.")
+            else:
+                ordering = context.getOrdering()
+                if not IExplicitOrdering.providedBy(ordering):
+                    raise ValueError("Ordering disable on folder.")
 
             delta = int(delta)
             if subset_ids is not None:

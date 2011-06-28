@@ -6,7 +6,8 @@ from plone.app.testing import setRoles
 from plone.app.testing import TEST_USER_ID
 from plone.app.cmsui.testing import CMSUI_FUNCTIONAL_TESTING
 from plone.app.cmsui.testing import browser_login
-
+from plone.app.cmsui.structure import MoveItem
+from plone.app.cmsui.tests import createObject
 
 class TestFolderContents(unittest.TestCase):
 
@@ -15,7 +16,7 @@ class TestFolderContents(unittest.TestCase):
     def setUp(self):
         portal = self.layer['portal']
         setRoles(portal, TEST_USER_ID, ['Manager'])
-        portal.invokeFactory('Folder', 'empty-folder', title=u"Folder 1")
+        createObject(portal, 'Folder', 'empty-folder', delete_first=True, title=u"Folder 1")
         transaction.commit()
         
         self.portal = portal
@@ -30,7 +31,7 @@ class TestFolderContents(unittest.TestCase):
     def test_bbb_view(self):
         browser_login(self.portal, self.browser)
         self.browser.open('http://nohost/plone/@@folder_contents')
-        self.assertTrue('cmsui-folder-contents' in self.browser.contents)
+        self.assertTrue('cmsui-structure' in self.browser.contents)
 
     def test_table_headers_hidden_on_empty_folder(self):
         browser_login(self.portal, self.browser)
@@ -42,7 +43,66 @@ class TestFolderContents(unittest.TestCase):
         # non-empty folder
         self.browser.open('http://nohost/plone/cmsui-structure')
         self.assertTrue('foldercontents-title-column' in self.browser.contents)
+        
 
+class TestMoveItem(unittest.TestCase):
+    layer = CMSUI_FUNCTIONAL_TESTING
+    
+    def setUp(self):
+        portal = self.layer['portal']
+        setRoles(portal, TEST_USER_ID, ['Manager'])
+        testfolder = createObject(portal, 'Folder', 'test-folder', check_for_first=True, title='Test Folder')
+        createObject(portal, 'Folder', 'test-folder-2', check_for_first=True, title='Test Folder 2')
+        createObject(testfolder, 'Document', 'test1', check_for_first=True)
+        createObject(testfolder, 'Document', 'test2', check_for_first=True)
+        createObject(testfolder, 'Document', 'test3', check_for_first=True)
+        createObject(testfolder, 'Document', 'test4', check_for_first=True)
+        createObject(testfolder, 'Document', 'test5', check_for_first=True)
+        createObject(testfolder, 'Document', 'test6', check_for_first=True)
+        createObject(testfolder, 'Document', 'test7', check_for_first=True)
+        createObject(testfolder, 'Document', 'test8', check_for_first=True)
+        createObject(testfolder, 'Document', 'test9', check_for_first=True)
+        
+        self.portal = portal
+        self.testfolder = testfolder
+        self.moveitem = MoveItem(testfolder, self.layer['request'])
+
+    def test_move_item_up(self):
+        self.moveitem('test1', 3, subset_ids=['test1', 'test2', 'test3', 'test4', 'test5'])
+        self.assertTrue(self.testfolder.getObjectPosition('test1') == 3)
+        
+    def test_move_item_down(self):
+        self.moveitem('test5', -3, subset_ids=['test1', 'test2', 'test3', 'test4', 'test5'])
+        self.assertTrue(self.testfolder.getObjectPosition('test5') == 1)
+        
+    def test_throws_error_on_inconsistent_structure(self):
+        res = self.moveitem('test5', 3, subset_ids=['test3', 'test2', 'test1', 'test4', 'test5'])
+        self.assertTrue('Client/server ordering mismatch.' in res)
+        
+    def test_can_reorder_portal_site_root(self):
+        moveitem = MoveItem(self.portal, self.layer['request'])
+        orig_order = self.portal.getObjectPosition('test-folder')
+        moveitem('test-folder', 1, subset_ids=['test-folder', 'test-folder-2'])
+        self.assertTrue(self.portal.getObjectPosition('test-folder') == (orig_order+1))
+        
+    def test_can_not_reorder_if_ordering_is_disabled(self):
+        folder = createObject(self.portal, 'Folder', 'test-folder-3')
+        folder.setOrdering('unordered')
+        
+        createObject(folder, 'Document', 'test-1')
+        createObject(folder, 'Document', 'test-2')
+        
+        moveitem = MoveItem(folder, self.layer['request'])
+        res = moveitem('test-1', 1, subset_ids=['test-1', 'test-2'])
+        self.assertTrue('Ordering disable on folder.' in res)
+        
+    def test_can_not_reorder_on_item_that_is_not_a_folder(self):
+        test = createObject(self.portal, 'Document', 'test-1')
+        moveitem = MoveItem(test, self.layer['request'])
+        res = moveitem('something', 1)
+        self.assertTrue("Not an ordered folder." in res)
+        
+        
 """
     Buttons
     -------
