@@ -14,12 +14,15 @@ function expandMenu() {
     $('#plone-cmsui-menu', window.parent.document).css('height', '100%');
     menu_size = 'full';
 }
+function forceContractMenu() {
+    $('body', window.parent.document).css('overflow', 'auto');
+    $(window.parent).scrollTop(menu_offset);
+    $('#plone-cmsui-menu', window.parent.document).css('height', $('#toolbar').outerHeight());
+    menu_size = 'menu';
+}
 function contractMenu() {
-    if ($('.overlay').length === 0 && $('.dropdownItems').length === 0) { 
-        $('body', window.parent.document).css('overflow', 'auto');
-        $(window.parent).scrollTop(menu_offset);
-        $('#plone-cmsui-menu', window.parent.document).css('height', $('#toolbar').outerHeight());
-        menu_size = 'menu';
+    if ($('.overlay').length === 0 && $('.dropdownItems:visible').length === 0) { 
+        forceContractMenu();
     }
 }
 function toggleMenu() {
@@ -75,8 +78,13 @@ function eraseCookie(name) {
     // jquery method to load an overlay
     $.fn.loadOverlay = function(href, data, callback) {
         $(document).trigger('startLoadOverlay', [this, href, data]);
+        var self = $(this);
         var $overlay = this.closest('.pb-ajax');
-        this.load(href, data, function () {
+        if(self.length == 0){
+            $overlay = $('div.overlay-ajax:visible div.pb-ajax');
+            self = $overlay;
+        }
+        self.load(href, data, function () {
             $overlay[0].handle_load_inside_overlay.apply(this, arguments);
             if (callback !== undefined) {
                 callback.apply(this, arguments);
@@ -94,13 +102,13 @@ function eraseCookie(name) {
             showMessagesFromOverlay();
         });
 
-        $('a.overlayLink').prepOverlay({
+        $('a.overlayLink,.configlets a').prepOverlay({
             subtype: 'ajax',
             filter: common_content_filter,
             // Add this to a link or button to make it close the overlay e.g.
             // on cancel without reloading the page
             closeselector: '.overlayCloseAction',
-            formselector: 'form.overlayForm',
+            formselector: 'form.overlayForm,form.edit-form',
             config: {
                 top: 130,
                 mask: {
@@ -108,8 +116,8 @@ function eraseCookie(name) {
                     opacity: 0.5
                 },
                 onBeforeLoad: function (e) { 
-                    // Close other overlays
                     expandMenu();
+                    $('.dropdownItems').slideUp();
                     $(document).trigger('beforeOverlay', [this, e]);
                     return true; 
                 },
@@ -121,8 +129,8 @@ function eraseCookie(name) {
                 }, 
                 onClose: function (e) { 
                     CURRENT_OVERLAY_TRIGGER = null;
-                    contractMenu();
                     $(document).trigger('closeOverlay', [this, e]);
+                    forceContractMenu();
                     return true; 
                 }
             }
@@ -137,9 +145,9 @@ function eraseCookie(name) {
                 }
                 CURRENT_OVERLAY_TRIGGER = ele;
             }
-      });
+        });
 
-        $("a.overlayLink").live('click', function(){
+        $("a.overlayLink,.configlets a").live('click', function(){
             $(document).trigger('overlayLinkClicked', [this]);
             var url = $(this).attr("href");
             $(this).closest('#overlay-content').loadOverlay(url + ' ' + common_content_filter);

@@ -1,8 +1,8 @@
 from datetime import datetime
 from DateTime import DateTime
 
+from zExceptions import Unauthorized
 from Products.CMFCore.utils import getToolByName
-from zope.publisher.browser import BrowserView
 from plone.app.cmsui.interfaces import _
 
 from zope.interface import Interface, implements
@@ -11,16 +11,10 @@ from z3c.form import form, field, button
 from zope.schema import vocabulary, interfaces
 from z3c.form.browser.radio import RadioFieldWidget
 
+
 class WorkflowActionsSourceBinder(object):
     implements(interfaces.IContextSourceBinder)
     """Generates vocabulary for all allowed workflow transitions"""
-    
-    def __call__(self):
-        # Disable theming
-        self.request.response.setHeader('X-Theme-Disabled', 'True')
-        if self.request.method == "GET":
-            return self.index()
-        self.request.RESPONSE.redirect(self.context.absolute_url())
     
     def getTransitions(self):
         wft = getToolByName(self.context, 'portal_workflow')
@@ -32,6 +26,7 @@ class WorkflowActionsSourceBinder(object):
             vocabulary.SimpleVocabulary.createTerm(t['id'],t['id'],t['name'])
             for t in wft.getTransitionsFor(context)
         ])
+
 
 class IWorkflowPanel(Interface):
     """Form for workflow panel"""
@@ -64,14 +59,25 @@ class IWorkflowPanel(Interface):
         required = False
         )
 
+
 class WorkflowPanel(form.Form):
-    """Shows a panel with the adanced workflow options
+    """Shows a panel with the advanced workflow options
     """
+    
+    @property
+    def label(self):
+        return _(u'Workflow for ${name}', mapping = {'name': self.context.Title()})
+    
+    def render(self):
+        return self.index()
+
+    css_class = 'overlayForm'
+    
     fields = field.Fields(IWorkflowPanel)
     fields['workflow_action'].widgetFactory = RadioFieldWidget
     ignoreContext = True
 
-    @button.buttonAndHandler(u'Save')
+    @button.buttonAndHandler(_(u'Save'))
     def handleSave(self, action):
         data, errors = self.extractData()
         if errors:
@@ -107,7 +113,7 @@ class WorkflowPanel(form.Form):
         
         self.request.response.redirect(postwf_context.absolute_url())
 
-    @button.buttonAndHandler(u'Cancel')
+    @button.buttonAndHandler(_(u'Cancel'))
     def cancel(self, action):
         self.request.response.redirect(self.context.absolute_url())
 

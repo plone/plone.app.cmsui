@@ -1,0 +1,51 @@
+title:string=NOT USED by default, but here for backwards compatibility
+
+plone_skin:string=Sunburst Theme
+
+logoName:string=logo.png
+
+fontFamily:string="Helvetica Neue", Arial, FreeSans, sans-serif;
+linkColor:string=#205c90
+editBarColor:string=#75ad0a
+
+compatibilityClassic:string=The below values are copied directly from the old Plone theme to make sure that products that rely on them don't break.
+
+fontBaseSize:string=69%
+fontColor:string=Black
+fontSmallSize:string=90%
+
+backgroundColor:string=White
+
+linkActiveColor:string=Red
+linkVisitedColor:string=Purple
+
+borderWidth:string=1px
+borderStyle:string=solid
+borderStyleAnnotations:string=solid
+
+globalBorderColor:string=White
+globalBackgroundColor:string=#dddddd
+globalFontColor:string=Black
+
+headingFontFamily:string="Lucida Grande", Verdana, Lucida, Helvetica, Arial, sans-serif
+
+contentViewBorderColor:string=#74ae0b
+contentViewBackgroundColor:string=#75AD0A
+contentViewFontColor:string=White
+
+inputFontColor:string=Black
+
+textTransform:string=none
+
+evenRowBackgroundColor:string=#eef3f5
+oddRowBackgroundColor:string=transparent
+
+notifyBorderColor:string=#9C6E3D
+notifyBackgroundColor:string=#ffffe3
+
+discreetColor:string=#76797c
+helpBackgroundColor:string=#ffffe1
+
+portalMinWidth:string=70em
+columnOneWidth:string=22.75%
+columnTwoWidth:string=22.75%
