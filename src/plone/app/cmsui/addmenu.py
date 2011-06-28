@@ -150,7 +150,6 @@ class AddMenu(BrowserView):
             if key in allowedTypesKeys:
                 allowedTypesResult.append(allowedTypes[key])
         for key in allowedTypesKeys:
-            print key
             if key not in self.typeOrder:
                 allowedTypesResult.append(allowedTypes[key])
         return allowedTypesResult
