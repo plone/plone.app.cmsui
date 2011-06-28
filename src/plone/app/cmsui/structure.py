@@ -1,22 +1,22 @@
-from zope.publisher.browser import BrowserView
 from Acquisition import aq_inner, aq_parent
-from Products.CMFPlone.utils import pretty_title_or_id, isExpired
-from zope.component import getMultiAdapter, getUtility
+from Products.CMFPlone.utils import pretty_title_or_id, isExpired, base_hasattr, \
+    safe_unicode
 from Products.CMFCore.utils import getToolByName
-from Products.CMFPlone.interfaces import IPloneSiteRoot
-from AccessControl import Unauthorized
 from Products.ATContentTypes.interface import IATTopic
-from zope.i18n import translate
-import urllib
-from Products.CMFPlone.utils import safe_unicode
+
 from plone.memoize import instance
-from zope.i18nmessageid import MessageFactory
 from plone.app.content.batching import Batch
-from zope.cachedescriptors.property import Lazy as lazy_property
 from plone.registry.interfaces import IRegistry
 from plone.folder.interfaces import IOrderableFolder, IExplicitOrdering
 from plone.app.cmsui.interfaces import ICMSUISettings
-from Products.CMFPlone.utils import base_hasattr
+
+from zope.component import getMultiAdapter, getUtility
+from zope.i18n import translate
+from zope.i18nmessageid import MessageFactory
+from zope.cachedescriptors.property import Lazy as lazy_property
+from zope.publisher.browser import BrowserView
+
+import urllib
 
 _ = MessageFactory('plone')
 
@@ -43,67 +43,27 @@ class StructureView(BrowserView):
         else:
             self.selectall = False
 
-        self.pagenumber =  int(self.request.get('pagenumber', 1))
-
-        self.context_state = getMultiAdapter((self.context, self.request), name=u'plone_context_state')
+        self.context_state = getMultiAdapter((self.context, self.request), 
+            name=u'plone_context_state')
 
         return self.index()
 
-    def title(self):
-        """
-        """
-        return pretty_title_or_id(context=self.context, obj=self.context)
-
-    def icon(self):
-        """
-        """
-        context = aq_inner(self.context)
-        plone_layout = getMultiAdapter((context, self.request), name="plone_layout")
-        icon = plone_layout.getIcon(context)
-        return icon.html_tag()
-
-    def parent_url(self):
-        """
-        """
-        context = aq_inner(self.context)
-        portal_membership = getToolByName(context, 'portal_membership')
-
-        obj = context
-
-        checkPermission = portal_membership.checkPermission
-
-        # Abort if we are at the root of the portal
-        if IPloneSiteRoot.providedBy(context):
-            return None
-
-        # Get the parent. If we can't get it (unauthorized), use the portal
-        parent = aq_parent(obj)
-
-        # # We may get an unauthorized exception if we're not allowed to access#
-        # the parent. In this case, return None
-        try:
-            if getattr(parent, 'getId', None) is None or \
-                   parent.getId() == 'talkback':
-                # Skip any Z3 views that may be in the acq tree;
-                # Skip past the talkback container if that's where we are
-                parent = aq_parent(parent)
-
-            if not checkPermission('List folder contents', parent):
-                return None
-
-            return parent.absolute_url()
-        except Unauthorized:
-            return None
-
     def breadcrumbs(self):
-        breadcrumbsView = getMultiAdapter((self.context, self.request), name='breadcrumbs_view')
+        breadcrumbsView = getMultiAdapter((self.context, self.request), 
+            name='breadcrumbs_view')
         breadcrumbs = list(breadcrumbsView.breadcrumbs())
         if self.context_state.is_default_page():
             # then we need to mess with the breadcrumbs a bit.
             parent = aq_parent(aq_inner(self.context))
             if breadcrumbs:
-                breadcrumbs[-1] = {'absolute_url' : parent.absolute_url(), 'Title': parent.Title()}
-            breadcrumbs.append({'absolute_url' : self.context.absolute_url(), 'Title': self.context.Title()})
+                breadcrumbs[-1] = {
+                    'absolute_url' : parent.absolute_url(), 
+                    'Title': parent.Title()
+                    }
+            breadcrumbs.append({
+                'absolute_url' : self.context.absolute_url(),
+                'Title': self.context.Title()}
+                )
         return breadcrumbs
 
     def contentsMethod(self):
@@ -130,8 +90,7 @@ class StructureView(BrowserView):
 
         contentsMethod = self.contentsMethod()
 
-        pagenumber = int(self.request.get('pagenumber', 1))
-        start = (pagenumber - 1) * self.pagesize
+        start = 0
         end = start + self.pagesize
 
         results = []
@@ -235,7 +194,8 @@ class StructureView(BrowserView):
         buttons = []
         context = aq_inner(self.context)
         portal_actions = getToolByName(context, 'portal_actions')
-        button_actions = portal_actions.listActionInfos(object=aq_inner(self.context), categories=('folder_buttons', ))
+        button_actions = portal_actions.listActionInfos(
+            object=aq_inner(self.context), categories=('folder_buttons',))
 
         # Do not show buttons if there is no data, unless there is data to be
         # pasted
@@ -268,10 +228,6 @@ class StructureView(BrowserView):
                  default=u"Select ${title}",
                  mapping={'title': safe_unicode(title_or_id)})
 
-    @property
-    def within_batch_size(self):
-        return len(self.folderitems) <= self.pagesize
-
     def set_checked(self, item):
         item['checked'] = self.selectall and 'checked' or None
         item['table_row_class'] = item.get('table_row_class', '')
@@ -284,10 +240,12 @@ class StructureView(BrowserView):
             pagesize = len(self.folderitems)
         b = Batch(self.folderitems,
                   pagesize=pagesize,
-                  pagenumber=self.pagenumber)
+                  pagenumber=1)
         map(self.set_checked, b)
         return b
 
+    # options
+    _select_all = False
     def _get_select_all(self):
         return self._select_all
 
@@ -295,18 +253,6 @@ class StructureView(BrowserView):
         self._select_all = bool(value)
 
     selectall = property(_get_select_all, _set_select_all)
-
-    # options
-    _select_all = False
-
-    @property
-    def show_select_all_items(self):
-        return not self.selectall
-
-    def get_nosort_class(self):
-        """
-        """
-        return "nosort"
 
     @lazy_property
     def view_url(self):
@@ -318,7 +264,7 @@ class StructureView(BrowserView):
 
     @property
     def selectnone_url(self):
-        base = self.view_url + '?pagenumber=%s' % (self.pagenumber)
+        base = self.view_url
         if self.show_all:
             base += '&show_all=true'
         return base
@@ -382,7 +328,8 @@ class MoveItem(BrowserView):
 
             delta = int(delta)
             if subset_ids is not None:
-                position_id = [(self.context.getObjectPosition(id), id) for id in subset_ids]
+                objectPos = self.context.getObjectPosition
+                position_id = [(objectPos(id), id) for id in subset_ids]
                 position_id.sort()
                 if subset_ids != [id for position, id in position_id]:
                     raise ValueError("Client/server ordering mismatch.")
