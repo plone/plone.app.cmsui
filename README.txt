@@ -24,7 +24,7 @@ Plone 4.1rc3 - update versions as applicable::
     [buildout]
     parts = instance
     extends =
-        http://good-py.appspot.com/release/plone.app.cmsui/1.0a1?plone=4.1rc1
+        http://good-py.appspot.com/release/plone.app.cmsui/1.0a1?plone=4.1rc3
     
     [instance]
     recipe = plone.recipe.zope2instance
@@ -54,6 +54,7 @@ Participation and conventions
 
 See http://projects-wiki.plone.org/display/NEWUI/Home for details about how
 to participate, the rationale behind the project, and related information.
+Log in with your plone.org username.
 
 The following rules and conventions apply:
 
