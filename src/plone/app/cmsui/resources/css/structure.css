@@ -137,9 +137,15 @@ div#structure-dialog .link-parent {
 }
 
 
-#structure-dialog tr.dragging{ outline: 2px solid #FFD700; border-bottom:none; }
-#structure-dialog tr.dragging td{ border-bottom: none }
-#structure-dialog tr.dragindicator{ outline: none;}
+#structure-dialog table.listing.dragcopy tr.dragging td{ 
+    background-color:#FFDD4A; 
+}
+#structure-dialog table.listing.dragcopy tr.dragging{ 
+    border: 2px dashed #666;
+}
+#structure-dialog tr.dragindicator{ 
+    outline: none;
+}
 
 #structure-dialog table.listing th.numitems{
    text-align: right;
@@ -199,7 +205,7 @@ div#structure-dialog .link-parent {
 }
 
 #structure-dialog table.listing tr#meta-actions{
-
+    background: transparent;
 }
 
 #structure-dialog table.listing tr.hide-table th, #structure-dialog table.listing tr.hide-table td{
