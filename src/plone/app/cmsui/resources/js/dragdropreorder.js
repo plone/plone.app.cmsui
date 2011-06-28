@@ -95,14 +95,14 @@ jQuery.tableDnD = {
             this.tableDnDConfig = jQuery.extend({
                 onDragStyle: null,
                 onDropStyle: null,
-    // Add in the default class for whileDragging
-    onDragClass: "tDnD_whileDrag",
+                // Add in the default class for whileDragging
+                onDragClass: "tDnD_whileDrag",
                 onDrop: null,
                 onDragStart: null,
-    onMove: null,
+                onMove: null,
                 scrollAmount: 5,
-    serializeRegexp: /[^\-]*$/, // The regular expression to use to trim row IDs
-    serializeParamName: null, // If you want to specify another parameter name instead of the table ID
+                serializeRegexp: /[^\-]*$/, // The regular expression to use to trim row IDs
+                serializeParamName: null, // If you want to specify another parameter name instead of the table ID
                 dragHandle: null // If you give the name of a class here, then only Cells with this class will be draggable
             }, options || {});
             // Now make the rows draggable
@@ -122,21 +122,21 @@ jQuery.tableDnD = {
     /** This function makes all the rows on the table draggable apart from those marked as "NoDrag" */
     makeDraggable: function(table) {
         var config = table.tableDnDConfig;
-  if (table.tableDnDConfig.dragHandle) {
-      // We only need to add the event to the specified cells
-      var cells = jQuery("tbody td."+table.tableDnDConfig.dragHandle, table);
-      cells.each(function() {
-    // The cell is bound to "this"
-    jQuery(this).mousedown(function(ev) {
-        jQuery.tableDnD.dragObject = this.parentNode;
-        jQuery.tableDnD.currentTable = table;
-        jQuery.tableDnD.mouseOffset = jQuery.tableDnD.getMouseOffset(this, ev);
-        if (config.onDragStart) {
-      // Call the onDrop method if there is one
-      config.onDragStart(table, this);
+        if (table.tableDnDConfig.dragHandle) {
+            // We only need to add the event to the specified cells
+            var cells = jQuery("tbody td."+table.tableDnDConfig.dragHandle, table);
+            cells.each(function() {
+                // The cell is bound to "this"
+                jQuery(this).mousedown(function(ev) {
+                    jQuery.tableDnD.dragObject = this.parentNode;
+                    jQuery.tableDnD.currentTable = table;
+                    jQuery.tableDnD.mouseOffset = jQuery.tableDnD.getMouseOffset(this, ev);
+                    if (config.onDragStart) {
+                        // Call the onDrop method if there is one
+                        config.onDragStart(table, this);
                     }
                     return false;
-    });
+                });
             });
         } else {
             // For backwards compatibility, we add the event to the whole row
@@ -146,29 +146,29 @@ jQuery.tableDnD = {
                 var row = jQuery(this);
                 row.mousedown(function(ev) {
                     if (!$(this).hasClass("nodrag")) {
-      if (ev.target.tagName == "TD") {
-                      jQuery.tableDnD.dragObject = this;
-                      jQuery.tableDnD.currentTable = table;
-                      jQuery.tableDnD.mouseOffset = jQuery.tableDnD.getMouseOffset(this, ev);
-                      if (config.onDragStart) {
-        // Call the onDrop method if there is one
-        config.onDragStart(table, this);
-                      }
-                      return false;
-      }
+                        if (ev.target.tagName == "TD") {
+                            jQuery.tableDnD.dragObject = this;
+                            jQuery.tableDnD.currentTable = table;
+                            jQuery.tableDnD.mouseOffset = jQuery.tableDnD.getMouseOffset(this, ev);
+                            if (config.onDragStart) {
+                                // Call the onDrop method if there is one
+                                config.onDragStart(table, this);
+                            }
+                            return false;
+                        }
+                    }
+                }).css("cursor", "move"); // Store the tableDnD object
+            });
         }
-          }).css("cursor", "move"); // Store the tableDnD object
-      });
-  }
     },
 
     updateTables: function() {
-  this.each(function() {
-      // this is now bound to each matching table
-      if (this.tableDnDConfig) {
-    jQuery.tableDnD.makeDraggable(this);
-      }
-  });
+        this.each(function() {
+            // this is now bound to each matching table
+            if (this.tableDnDConfig) {
+                jQuery.tableDnD.makeDraggable(this);
+            }
+        });
     },
     
     /** Get the mouse coordinates from the event (allowing for browser differences) */
@@ -229,31 +229,30 @@ jQuery.tableDnD = {
         var mousePos = jQuery.tableDnD.mouseCoords(ev);
         var y = mousePos.y - jQuery.tableDnD.mouseOffset.y;
         //auto scroll the window
-  var yOffset = window.pageYOffset;
-  if (document.all) {
-      // Windows version
-      //yOffset=document.body.scrollTop;
-      if (typeof document.compatMode != 'undefined' &&
-          document.compatMode != 'BackCompat') {
-          yOffset = document.documentElement.scrollTop;
-      }
-      else if (typeof document.body != 'undefined') {
-          yOffset=document.body.scrollTop;
-      }    
-  }     
-  if (mousePos.y-yOffset < config.scrollAmount) {
-      window.scrollBy(0, -config.scrollAmount);
-  } else {
+        var yOffset = window.pageYOffset;
+        if (document.all) {
+            // Windows version
+            //yOffset=document.body.scrollTop;
+            if (typeof document.compatMode != 'undefined' &&
+              document.compatMode != 'BackCompat') {
+                  yOffset = document.documentElement.scrollTop;
+            }else if (typeof document.body != 'undefined') {
+                yOffset=document.body.scrollTop;
+            }    
+        }     
+        if (mousePos.y-yOffset < config.scrollAmount) {
+            window.scrollBy(0, -config.scrollAmount);
+        } else {
             var windowHeight = window.innerHeight ? window.innerHeight
                 : document.documentElement.clientHeight ? document.documentElement.clientHeight : document.body.clientHeight;
             if (windowHeight-(mousePos.y-yOffset) < config.scrollAmount) {
                 window.scrollBy(0, config.scrollAmount);
             }
         }
-  if (config.onMove) {
-      // Call the onDrop method if there is one
-      config.onMove(dragObj, mousePos, y);
-  }
+        if (config.onMove) {
+            // Call the onDrop method if there is one
+            config.onMove(dragObj, mousePos, y);
+        }
   
         if (y != jQuery.tableDnD.oldY) {
             // work out if we're going up or down...
@@ -261,28 +260,27 @@ jQuery.tableDnD = {
             // update the old value
             jQuery.tableDnD.oldY = y;
             // update the style to show we're dragging
-      if (config.onDragClass) {
-    dragObj.addClass(config.onDragClass);
-      } else {
-          dragObj.css(config.onDragStyle);
-      }
+            if (config.onDragClass) {
+                dragObj.addClass(config.onDragClass);
+            } else {
+                dragObj.css(config.onDragStyle);
+            }
             // If we're over a row then move the dragged row to there so that the user sees the
             // effect dynamically
             var currentRow = jQuery.tableDnD.findDropTargetRow(dragObj, y);
             if (currentRow) {
                 // TODO worry about what happens when there are multiple TBODIES
                 if (movingDown && jQuery.tableDnD.dragObject != currentRow) {
-        try{
-      jQuery.tableDnD.dragObject.parentNode.insertBefore(jQuery.tableDnD.dragObject, currentRow.nextSibling);
-        }catch(e){}
+                    try{
+                        jQuery.tableDnD.dragObject.parentNode.insertBefore(jQuery.tableDnD.dragObject, currentRow.nextSibling);
+                    }catch(e){}
                 } else if (!movingDown && jQuery.tableDnD.dragObject != currentRow) {
-        try{
-      jQuery.tableDnD.dragObject.parentNode.insertBefore(jQuery.tableDnD.dragObject, currentRow);
-        }catch(e){}
+                    try{
+                        jQuery.tableDnD.dragObject.parentNode.insertBefore(jQuery.tableDnD.dragObject, currentRow);
+                    }catch(e){}
                 }
             }
         }
-  
         return false;
     },
 
@@ -300,8 +298,8 @@ jQuery.tableDnD = {
             // Because we always have to insert before, we need to offset the height a bit
             if ((y > rowY - rowHeight) && (y < (rowY + rowHeight))) {
                 // that's the row we're over
-    // If it's the same as the current row, ignore it
-    if (row == draggedRow) {return null;}
+                // If it's the same as the current row, ignore it
+                if (row == draggedRow) {return null;}
                 var config = jQuery.tableDnD.currentTable.tableDnDConfig;
                 if (config.onAllowDrop) {
                     if (config.onAllowDrop(draggedRow, row)) {
@@ -310,7 +308,7 @@ jQuery.tableDnD = {
                         return null;
                     }
                 } else {
-        // If a row has nodrop class, then don't allow dropping (inspired by John Tarr and Famic)
+                    // If a row has nodrop class, then don't allow dropping (inspired by John Tarr and Famic)
                     var nodrop = jQuery(row).hasClass("nodrop");
                     if (! nodrop) {
                         return row;
@@ -330,11 +328,11 @@ jQuery.tableDnD = {
             var config = jQuery.tableDnD.currentTable.tableDnDConfig;
             // If we have a dragObject, then we need to release it,
             // The row will already have been moved to the right place so we just reset stuff
-      if (config.onDragClass) {
-              jQuery(droppedRow).removeClass(config.onDragClass);
-      } else {
-              jQuery(droppedRow).css(config.onDropStyle);
-      }
+            if (config.onDragClass) {
+                jQuery(droppedRow).removeClass(config.onDragClass);
+            } else {
+                jQuery(droppedRow).css(config.onDropStyle);
+            }
             jQuery.tableDnD.dragObject   = null;
             if (config.onDrop) {
                 // Call the onDrop method if there is one
@@ -362,7 +360,6 @@ jQuery.tableDnD = {
             if (rowId && rowId && table.tableDnDConfig && table.tableDnDConfig.serializeRegexp) {
                 rowId = rowId.match(table.tableDnDConfig.serializeRegexp)[0];
             }
-      
             result += tableId + '[]=' + rowId;
         }
         return result;
@@ -371,9 +368,9 @@ jQuery.tableDnD = {
     serializeTables: function() {
         var result = "";
         this.each(function() {
-      // this is now bound to each matching table
-      result += jQuery.tableDnD.serializeTable(this);
-  });
+            // this is now bound to each matching table
+            result += jQuery.tableDnD.serializeTable(this);
+        });
         return result;
     }
 }
@@ -388,92 +385,92 @@ var ploneDnD = function(){
 var table = this;
 (function($){ $(function() {
     var get_pos = function(tr){
-  tr = $(tr); // make sure we have the plain object
-  var tbody = $(tr).parent();
-  var pos = 0;
-  var rows = tbody.find('tr');
-  for(var i=0; i<rows.length; i++){
-      if(rows[i] == tr[0]){ return pos; }
-      pos += 1;
-  }
+        tr = $(tr); // make sure we have the plain object
+        var tbody = $(tr).parent();
+        var pos = 0;
+        var rows = tbody.find('tr');
+        for(var i=0; i<rows.length; i++){
+            if(rows[i] == tr[0]){ return pos; }
+            pos += 1;
+        }
     };
 
     var store_order = function(){
-  $("#listing-table").data('ploneDnDReorder.subset_ids', $.map(
+        $("#listing-table").data('ploneDnDReorder.subset_ids', $.map(
             $("tr.draggable", table),
             function(elem) {
-    return $(elem).attr('id').substr('folder-contents-item-'.length);
-      }));
+                return $(elem).attr('id').substr('folder-contents-item-'.length);
+        }));
     };
 
     var store_positions = function(){
-  var pos = 0;
-  $("tbody tr").each(function(){ this.last_pos = pos; pos += 1;});
+        var pos = 0;
+        $("tbody tr").each(function(){ this.last_pos = pos; pos += 1;});
     };
 
     // Initialise the table
     store_order();
     store_positions();
     $(table).tableDnD({
-  onDragStart: function(table, row){
-      $('table.listing.dragcopy').remove();
-      var copy = $(row).clone();
-      var copytable = copy.wrap('<table class="listing dragcopy"><tbody/></table>').parent().parent();
-      row.dragged = copytable[0];
-      var tds = $(row).find('td');
-      copy.css('width', $(row).width());
-      copytable.css('position', 'fixed');
-      copytable.css('top', $(row).offset().top);
-      copy.addClass('dragging');
-      $(row).parent().parent().before(copytable);
-      for(var i=0; i<tds.length; i++){
-    copy.find('td').eq(i).width($(tds[i]).width() + 'px');
-      }
-  },
-  onMove: function(row, mousePos, y){
-      row = $(row)[0];
-      if(row.dragged != undefined){
-    $(row.dragged).css('top', y);
-      }
-  },
-  onDrop: function(table, row) {
-      var raw_row = $(row)[0]
-      var row = $(raw_row);
-      $('table.listing.dragcopy').remove();
-      delete raw_row.dragged;
-      // Before we do anything, let's lock it down so you can't drag anymore until
-      // we get a response back from the server.
-      $("tbody tr", table).addClass('nodrag').css('cursor', '');
-      var pos = get_pos(row);
-      var last_pos = raw_row.last_pos;
-      args = {
-    item_id: $(row).attr('id').substr('folder-contents-item-'.length),
-    subset_ids: $(table).data('ploneDnDReorder.subset_ids')
-      };
-      var delta = pos - last_pos;
-      if(delta == 0){ 
-    $("tbody tr", table).removeClass('nodrag').css('cursor', 'pointer');
-    return;
-      }else{ args['delta:int'] = delta };
-      encoded = $.param(args);
-      // Convert jQuery's name[]=1&name[]=2 to Zope's name:list=1&name:list=2
-      encoded = $.param(args).replace(/%5B%5D=/g, '%3Alist=');
-      $.ajax({
-    type: 'POST',
-    url: $('#folder-structure-form #base-url').val() + '/@@folder_moveitem',
-    data: encoded,
-    complete : function(xhr, textStatus) {
-        if (textStatus === "success" || textStatus === "notmodified") {
-      $("tbody tr", table).removeClass('nodrag').css('cursor', 'pointer');
-        } else {
-      $(row).addClass("error");
-        }
-    }
-      });
-      store_positions();
-      store_order();
-  },
-  onDragClass: 'dragindicator'
+        onDragStart: function(table, row){
+            $('table.listing.dragcopy').remove();
+            var copy = $(row).clone();
+            var copytable = copy.wrap('<table class="listing dragcopy"><tbody/></table>').parent().parent();
+            row.dragged = copytable[0];
+            var tds = $(row).find('td');
+            copy.css('width', $(row).width());
+            copytable.css('position', 'fixed');
+            copytable.css('top', $(row).offset().top);
+            copy.addClass('dragging');
+            $(row).parent().parent().before(copytable);
+            for(var i=0; i<tds.length; i++){
+                copy.find('td').eq(i).width($(tds[i]).width() + 'px');
+            }
+        },
+        onMove: function(row, mousePos, y){
+            row = $(row)[0];
+            if(row.dragged != undefined){
+                $(row.dragged).css('top', y);
+            }
+        },
+        onDrop: function(table, row) {
+            var raw_row = $(row)[0]
+            var row = $(raw_row);
+            $('table.listing.dragcopy').remove();
+            delete raw_row.dragged;
+            // Before we do anything, let's lock it down so you can't drag anymore until
+            // we get a response back from the server.
+            $("tbody tr", table).addClass('nodrag').css('cursor', '');
+            var pos = get_pos(row);
+            var last_pos = raw_row.last_pos;
+            args = {
+                item_id: $(row).attr('id').substr('folder-contents-item-'.length),
+                subset_ids: $(table).data('ploneDnDReorder.subset_ids')
+            };
+            var delta = pos - last_pos;
+            if(delta == 0){ 
+                $("tbody tr", table).removeClass('nodrag').css('cursor', 'move');
+                return;
+            }else{ args['delta:int'] = delta };
+            encoded = $.param(args);
+            // Convert jQuery's name[]=1&name[]=2 to Zope's name:list=1&name:list=2
+            encoded = $.param(args).replace(/%5B%5D=/g, '%3Alist=');
+            $.ajax({
+                type: 'POST',
+                url: $('#folder-structure-form #base-url').val() + '/@@folder_moveitem',
+                data: encoded,
+                complete : function(xhr, textStatus) {
+                    if (textStatus === "success" || textStatus === "notmodified") {
+                        $("tbody tr", table).removeClass('nodrag').css('cursor', 'move');
+                    } else {
+                        $(row).addClass("error");
+                    }
+                }
+            });
+            store_positions();
+            store_order();
+        },
+        onDragClass: 'dragindicator'
     });
     $("td.draggable", table).addClass('draggingHook').html('⣿');
 }); })(jQuery);
