@@ -106,7 +106,6 @@
                 <li tal:condition="python:view.settingsActions()"
                      id="document-settings">
                      <a class="dropdownLink" href="#">More&hellip;</a>
-                        <!-- TODO: We don't have a good way to show this yet, so hiding for now -->
                         <ul class="dropdownItems">
                             <li tal:repeat="action view/settingsActions">
                                 <a class="overlayLink"
