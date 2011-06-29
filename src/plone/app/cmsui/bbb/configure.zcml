@@ -24,10 +24,6 @@
         permission="plone.ViewCMSUI"
         />
 
-    <!-- TODO: Disable elements that should not be used when the new UI is
-               in place. See http://projects.plone.org/browse/NEWUI-1
-      -->
-
     <browser:viewlet
         name="plone.contentviews"
         for="*"

@@ -14,11 +14,6 @@
 
 <head>
 
-    <!-- TODO: Manage overlay resources and shared elements here.
-               See http://projects.plone.org/browse/NEWUI-83 and
-                   http://projects.plone.org/browse/NEWUI-86
-      -->
-
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
     <!-- Forces IE8+ into newest rendering engine even if on an intranet. This has to be defined before any script/style tags. -->
@@ -30,7 +25,6 @@
 
     <tal:resourceregistries>
       <tal:styles replace="structure provider:plone.resourceregistries.styles" />
-      <tal:styles replace="structure provider:plone.resourceregistries.kineticstylesheets" />
       <tal:scripts replace="structure provider:plone.resourceregistries.scripts" />
     </tal:resourceregistries>
 
