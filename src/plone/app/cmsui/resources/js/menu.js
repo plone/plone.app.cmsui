@@ -33,14 +33,6 @@ function toggleMenu() {
     }
 }
 
-function showMessagesFromOverlay() {
-    window.parent.frames['plone-cmsui-notifications'].$.plone.showNotifyFromElements($('.overlay'));
-}
-
-function notify(options) {
-    window.parent.frames['plone-cmsui-notifications'].$.plone.notify(options);
-}
-
 // http://www.quirksmode.org/js/cookies.html
 function createCookie(name, value, days) {
     var expires = '', date;
@@ -99,7 +91,7 @@ function eraseCookie(name) {
 
         $('#toolbar').css({'opacity': 0});
         $(document).bind('formOverlayLoadSuccess', function () {
-            showMessagesFromOverlay();
+            $.plone.showNotifyFromElements($(".overlay"));
         });
 
         $('a.overlayLink,.configlets a').prepOverlay({
@@ -123,7 +115,7 @@ function eraseCookie(name) {
                 },
                 onLoad: function (e) {
                     loadUploader();
-                    showMessagesFromOverlay();
+                    $.plone.showNotifyFromElements($(".overlay"));
                     $(document).trigger('loadOverlay', [this, e]);
                     return true; 
                 }, 
@@ -387,7 +379,7 @@ PloneQuickUpload.sendDataAndUpload = function (uploader, domelement, typeupload)
 }
 PloneQuickUpload.onAllUploadsComplete = function(uploader){
     $("div.pb-ajax").loadOverlay(uploader._options.container_url);
-    notify({
+    $.plone.notify({
         'title': 'Info',
         'message': uploader._filesUploaded + ' files have been uploaded.'
     });

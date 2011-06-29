@@ -266,10 +266,21 @@ immed: true, strict: true, maxlen: 80, maxerr: 9999 */
 
     // Init Deco on load
     $(window).load(function () {
+        var menu_frame = window.parent.frames['plone-cmsui-menu'];
 
         // Init notification
         $.plone.initNotify();
 
+        // Define plone namespace if it doesn't exist
+        if (typeof(menu_frame.$.plone) === "undefined") {
+            menu_frame.$.plone = {};
+        }
+
+        // Make notify available to menu frame
+        menu_frame.$.plone.notify = $.plone.notify;
+        menu_frame.$.plone.showNotifyFromElements = 
+            $.plone.showNotifyFromElements;
+ 
         // Show first notifications
         $('.showNotify', window.parent.frames['plone-cmsui-menu'].document).each(function () {
             var type,

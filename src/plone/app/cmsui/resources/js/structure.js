@@ -39,7 +39,7 @@ jQuery(function ($) {
         $.ajax({
             url : $(this).attr('href'),
             complete : function(request, textStatus){
-                window.parent.frames['plone-cmsui-notifications'].$.plone.showNotifyFromElements(request.responseText);
+                $.plone.showNotifyFromElements(request.responseText);
             },
             type : 'POST'
         });
