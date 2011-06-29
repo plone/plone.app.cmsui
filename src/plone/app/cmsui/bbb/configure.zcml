@@ -12,6 +12,8 @@
          should not be in place when using plone.app.cmsui
       -->
 
+    <include package="plone.app.workflow" />
+
     <browser:viewlet
         name="plone.cmsui.menulink"
         for="*"
