@@ -172,7 +172,7 @@ function eraseCookie(name) {
             toolbar.addClass(menu_state);
             iframe.height(toolbar.outerHeight());
             parent_body.css('margin-top', toolbar.outerHeight());
-            toolbar.animate({'opacity': 1}, 300, function () {
+            toolbar.animate({'opacity': 1}, 250, function () {
                 iframe.css('background', 'transparent');
 
                 // Check if an overlay should be opened
@@ -218,8 +218,8 @@ function eraseCookie(name) {
                 'top': -height,
                 'height': height
             });
-            iframe.animate({'top': 0}, 1000);
-            parent_body.animate({'margin-top': toolbar.outerHeight()}, 1000);
+            iframe.animate({'top': 0}, 500);
+            parent_body.animate({'margin-top': toolbar.outerHeight()}, 500);
         }
         createCookie('__plone_height', $('#toolbar').outerHeight());
 
@@ -229,9 +229,9 @@ function eraseCookie(name) {
             toolbar.addClass('large').removeClass('small');
             height = toolbar.outerHeight();
             $('#toolbar-bottom').css('top', -bottom_height);
-            parent_body.stop().animate({'margin-top': height}, 500);
-            $('#toolbar-bottom').stop().animate({'top': 0}, 500);
-            iframe.stop().animate({'height': height}, 500);
+            parent_body.stop().animate({'margin-top': height}, 250);
+            $('#toolbar-bottom').stop().animate({'top': 0}, 250);
+            iframe.stop().animate({'height': height}, 250);
             createCookie('__plone_menu', 'large');
             createCookie('__plone_height', height);
             $(document).trigger('managePageOpened', [this]);
@@ -241,11 +241,11 @@ function eraseCookie(name) {
             $(document).trigger('managePageClosing', [this]);
             var bottom_height = $('#toolbar-bottom').outerHeight();
             height = toolbar.outerHeight() - bottom_height + 1;
-            iframe.stop().animate({'height': height}, 500);
-            parent_body.stop().animate({'margin-top': height}, 500, function () {
+            iframe.stop().animate({'height': height}, 250);
+            parent_body.stop().animate({'margin-top': height}, 250, function () {
                 toolbar.addClass('small').removeClass('large');
             });
-            $('#toolbar-bottom').stop().animate({'top': -bottom_height}, 500);
+            $('#toolbar-bottom').stop().animate({'top': -bottom_height}, 250);
             createCookie('__plone_menu', 'small');
             createCookie('__plone_height', height);
             $(document).trigger('managePageClosed', [this]);
