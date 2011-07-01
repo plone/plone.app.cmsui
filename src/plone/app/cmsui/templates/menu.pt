@@ -23,7 +23,8 @@
 <body tal:define="isRTL portal_state/is_rtl"
     tal:attributes="dir python:isRTL and 'rtl' or 'ltr'">
 
-<section id="toolbar" tal:define="folder context_state/folder">
+<section id="toolbar" tal:define="folder context_state/folder;
+                                  canonical_object context_state/canonical_object;">
 
     <div id="toolbar-top" class="container clearfix">
 
@@ -71,7 +72,7 @@
         <!-- Information about the current document -->
         <div class="grid_10">
             <ul id="document-info">
-               <li id="structure"><a href="#" class="overlayLink" tal:attributes="href string:${folder/absolute_url}/cmsui-structure"
+               <li id="structure"><a href="#" class="overlayLink" tal:attributes="href string:${canonical_object/absolute_url}/@@cmsui-structure"
                     ><span i18n:translate="cmsui_contents" tal:omit-tag="">Structure</span
                     ><tal:block condition="python:(view.contextState.is_structural_folder() or view.contextState.is_default_page()) and view.itemsInFolder() is not None"> (<span tal:replace="view/itemsInFolder">12</span>)</tal:block
                     ></a></li>

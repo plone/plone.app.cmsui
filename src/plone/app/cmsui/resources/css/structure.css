@@ -128,6 +128,10 @@ div#structure-dialog .link-parent {
     margin-right: 0.5em;
 }
 
+#structure-dialog #overlay-breadcrumbs li span#homepage:after {
+    content: "";
+}
+
 #structure-dialog  a:link {
     color: #205C90;
 }
@@ -206,6 +210,10 @@ div#structure-dialog .link-parent {
 
 #structure-dialog table.listing tr#meta-actions{
     background: transparent;
+}
+
+#structure-dialog table.listing tr#meta-actions span.actions{
+    padding-left: 5px;
 }
 
 #structure-dialog table.listing tr.hide-table th, #structure-dialog table.listing tr.hide-table td{
