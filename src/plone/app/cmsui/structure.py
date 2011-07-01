@@ -35,8 +35,8 @@ class StructureView(BrowserView):
         
         self.pagesize = settings.folderContentsBatchSize
         self.showAll = self.request.get('show_all', '').lower() == 'true'
-
-        selection = self.request.get('select', '').lower() == 'all'
+        self.selectAll = self.request.get('select', '').lower() == 'all'
+        
         return self.index()
 
 
