@@ -77,11 +77,11 @@
                   </tal:info>
                 </ul>
               </th>
-              <th colspan="4" tal:attributes="colspan python: cols-3">
-                <div id="item-actions-menu">
+              <th colspan="4" tal:attributes="colspan python: cols-3" tal:define="buttons view/objectButtons">
+                <div id="item-actions-menu" tal:condition="buttons">
                   <fieldset>
                     <legend>Actions for "<tal:name tal:replace="contextState/object_title" />"</legend>
-                    <tal:buttons tal:repeat="button view/objectButtons">
+                    <tal:buttons tal:repeat="button buttons">
                     <a tal:attributes="href button/url; 
                                        id string:structure-btn-${button/id}; 
                                        class python: repeat['button'].start and 'first' or repeat['button'].end and 'last' or ''" 
