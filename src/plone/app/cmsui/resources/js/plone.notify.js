@@ -68,12 +68,12 @@ immed: true, strict: true, maxlen: 80, maxerr: 9999 */
         $('#plone-cmsui-notifications', window.parent.document)
             .css('height', last_notification.length > 0 ?
                            parseInt(last_notification.css("top"), 10) +
-                           last_notification.height() + 10 : 0)
+                           last_notification.height() + 10 : 0);
     }
     
-    $.plone.showNotifyFromElements = function(data){
-        $(data).each(function(){
-            $('.portalMessage', this).each(function(){
+    $.plone.showNotifyFromElements = function (data) {
+        $(data).each(function () {
+            $('.portalMessage', this).each(function () {
                 var type,
                     portal_message = $(this),
                     sticky = true;
@@ -93,7 +93,7 @@ immed: true, strict: true, maxlen: 80, maxerr: 9999 */
                 });
             });
         });
-    }
+    };
 
     /**
      * Display a notification

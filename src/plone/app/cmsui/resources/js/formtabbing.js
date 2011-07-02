@@ -18,6 +18,10 @@
  */
 
 
+/*jslint white:false, onevar:true, undef:true, nomen:false, eqeqeq:true, plusplus:true, bitwise:true, regexp:true, newcap:true, immed:true, strict:false, browser:true */
+/*global jQuery:false, document:false, window:false, location:false */
+
+
 var ploneFormTabbing = {
         // standard jQueryTools configuration options for all form tabs
         jqtConfig:{current:'selected'}
@@ -27,11 +31,17 @@ var ploneFormTabbing = {
 (function($) {
 
 ploneFormTabbing._buildTabs = function(container, legends) {
-    var threshold = legends.length > 6;
-    var panel_ids, tab_ids = [], tabs = '';
+    var threshold = legends.length > 6,
+        panel_ids, tab_ids = [], tabs = '',
+        i,
+        className,
+        tab,
+        legend,
+        lid;
 
-    for (var i=0; i < legends.length; i++) {
-        var className, tab, legend = legends[i], lid = legend.id;
+    for (i=0; i < legends.length; i+=1) {
+        legend = legends[i];
+        lid = legend.id;
         tab_ids[i] = '#' + lid;
 
         switch (i) {
@@ -64,9 +74,9 @@ ploneFormTabbing._buildTabs = function(container, legends) {
     if (threshold) {
         tabs = $('<select class="formTabs">'+tabs+'</select>');
         tabs.change(function(){
-        	var selected = $(this).attr('value');
-        	jq('#'+selected).click();
-        })
+            var selected = $(this).attr('value');
+            $('#'+selected).click();
+        });
     } else {
         tabs = $('<ul class="formTabs">'+tabs+'</ul>');
     }
@@ -76,8 +86,9 @@ ploneFormTabbing._buildTabs = function(container, legends) {
 
 
 ploneFormTabbing.initializeDL = function() {
-    var ftabs = $(ploneFormTabbing._buildTabs(this, $(this).children('dt')));
-    var targets = $(this).children('dd');
+    var ftabs = $(ploneFormTabbing._buildTabs(this, $(this).children('dt'))),
+        targets = $(this).children('dd');
+
     $(this).before(ftabs);
     targets.addClass('formPanel');
     ftabs.tabs(targets, ploneFormTabbing.jqtConfig);
@@ -85,13 +96,18 @@ ploneFormTabbing.initializeDL = function() {
 
 
 ploneFormTabbing.initializeForm = function() {
-    var jqForm = $(this);
-    var fieldsets = jqForm.children('fieldset');
+    var jqForm = $(this),
+        fieldsets = jqForm.children('fieldset'),
+        ftabs,
+        initialIndex,
+        count,
+        found,
+        tabSelector,
+        tabsConfig;
 
     if (!fieldsets.length) {return;}
 
-    var ftabs = ploneFormTabbing._buildTabs(
-        this, fieldsets.children('legend'));
+    ftabs = ploneFormTabbing._buildTabs(this, fieldsets.children('legend'));
     $(this).prepend(ftabs);
     fieldsets.addClass("formPanel");
 
@@ -105,22 +121,22 @@ ploneFormTabbing.initializeForm = function() {
     });
 
     // set the initial tab
-    var initialIndex = 0;
-    var count = 0;
-    var found = false;
+    initialIndex = 0;
+    count = 0;
+    found = false;
     $(this).find('.formPanel').each(function() {
-        if (!found && $(this).find('div.field.error').length!=0) {
+        if (!found && $(this).find('div.field.error').length !== 0) {
             initialIndex = count;
             found = true;
         }
         count += 1;
     });
 
-    var tabSelector = 'ul.formTabs';
+    tabSelector = 'ul.formTabs';
     if ($(ftabs).is('select.formTabs')) {
         tabSelector = 'select.formTabs';
     }
-    var tabsConfig = $.extend({}, ploneFormTabbing.jqtConfig, {'initialIndex':initialIndex});
+    tabsConfig = $.extend({}, ploneFormTabbing.jqtConfig, {'initialIndex':initialIndex});
     jqForm.children(tabSelector).tabs(
         'form.enableFormTabbing fieldset.formPanel',
         tabsConfig
@@ -128,14 +144,16 @@ ploneFormTabbing.initializeForm = function() {
 
     // save selected tab on submit
     jqForm.submit(function() {
-    	var selected;
-    	if(ftabs.find('a.selected').length>=1){
-    		selected = ftabs.find('a.selected').attr('href').replace(/^#fieldsetlegend-/, "#fieldset-");
-    	}
-    	else{
-    		selected = ftabs.attr('value').replace(/^fieldsetlegend-/,'#fieldset-');
-    	}
-        var fsInput = jqForm.find('input[name="fieldset.current"]');
+        var selected,
+            fsInput;
+
+        if(ftabs.find('a.selected').length>=1){
+            selected = ftabs.find('a.selected').attr('href').replace(/^#fieldsetlegend-/, "#fieldset-");
+        }
+        else{
+            selected = ftabs.attr('value').replace(/^fieldsetlegend-/,'#fieldset-');
+        }
+        fsInput = jqForm.find('input[name="fieldset.current"]');
         if (selected && fsInput) {
             fsInput.val(selected);
         }
@@ -149,13 +167,14 @@ ploneFormTabbing.initializeForm = function() {
 
 $.fn.ploneTabInit = function(pbo) {
     return this.each(function() {
-        var item = $(this);
+        var item = $(this),
+            targetPane;
 
         item.find("form.enableFormTabbing,div.enableFormTabbing").each(ploneFormTabbing.initializeForm);
         item.find("dl.enableFormTabbing").each(ploneFormTabbing.initializeDL);
 
         //Select tab if it's part of the URL or designated in a hidden input
-        var targetPane = item.find('.enableFormTabbing input[name="fieldset.current"]').val() || window.location.hash;
+        targetPane = item.find('.enableFormTabbing input[name="fieldset.current"]').val() || window.location.hash;
         if (targetPane) {
             item.find(".enableFormTabbing .formTab a[href='" +
              targetPane.replace("'", "").replace(/^#fieldset-/, "#fieldsetlegend-") +
@@ -169,6 +188,6 @@ ploneFormTabbing.initialize = function() {
     $('body').ploneTabInit();
 };
 
-})(jQuery);
+}(jQuery));
 
 jQuery(function(){ploneFormTabbing.initialize();});
