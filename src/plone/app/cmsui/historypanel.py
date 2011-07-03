@@ -7,10 +7,9 @@ from plone.app.cmsui.interfaces import _
 from Products.CMFCore.utils import _checkPermission
 from Products.CMFCore.utils import getToolByName
 from Products.CMFEditions.Permissions import AccessPreviousVersions
-from Products.Five import BrowserView
+from zope.publisher.browser import BrowserView
 
 from zope.i18n import translate
-from zope.security import checkPermission
 
 from zExceptions import Unauthorized
 

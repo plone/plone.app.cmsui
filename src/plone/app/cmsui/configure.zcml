@@ -152,16 +152,6 @@
         directory="resources"
         />
 
-    <!-- Control panel -->
-
-    <browser:page
-        name="cmsui-controlpanel"
-        for="Products.CMFPlone.interfaces.IPloneSiteRoot"
-        class=".controlpanel.CMSUIControlPanelView"
-        permission="cmf.ManagePortal"
-        />
-
-
 
 <!-- Stolen from collective.quickupload -->
 <!--
