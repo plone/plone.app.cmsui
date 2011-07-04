@@ -27,6 +27,16 @@
                                   breadcrumbs view/breadcrumbs">
     <div id="structure-dialog">
       <div class="structure-slider">
+        <span id="primary-actions" class="actions">
+          <a href="#" class="overlayLink" tal:attributes="href string:${context/absolute_url}/edit">Edit</a> | 
+          <a href="#" tal:attributes="href string:${context/absolute_url}/view">View</a>
+          <tal:add tal:condition="contextState/is_structural_folder"> | 
+            <a href="#" class="overlayLink" 
+                        tal:attributes="href string:${context/absolute_url}/@@cmsui-add-content">
+              Add content
+            </a>
+          </tal:add>
+        </span>
         <nav id="overlay-breadcrumbs">
           <ul>
             <li id='path-home'>
@@ -66,16 +76,6 @@
             <thead>
               <tr id="meta-actions" class="hide-table">
                 <th colspan="3" id="meta-info">
-                  <span class="actions">
-                    <a href="#" class="overlayLink" tal:attributes="href string:${context/absolute_url}/edit">Edit</a> | 
-                    <a href="#" tal:attributes="href string:${context/absolute_url}/view">View</a>
-                    <tal:add tal:condition="contextState/is_structural_folder"> | 
-                      <a href="#" class="overlayLink" 
-                                  tal:attributes="href string:${context/absolute_url}/@@cmsui-add-content">
-                        Add content
-                      </a>
-                    </tal:add>
-                  </span>
                   <ul>
                     <tal:info tal:repeat="info view/objectInfo">
                     <li><span class="title" tal:content="string:${info/name}">Kind</span>: 

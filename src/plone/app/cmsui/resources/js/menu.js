@@ -134,6 +134,7 @@ function eraseCookie(name) {
                 onBeforeLoad: function (e) {
                     expandMenu();
                     $('.dropdownItems').slideUp();
+                    this.getOverlay().addClass($(CURRENT_OVERLAY_TRIGGER).closest('li').attr('id') + '-overlay');
                     $(document).trigger('beforeOverlay', [this, e]);
                     return true;
                 },
@@ -160,6 +161,7 @@ function eraseCookie(name) {
                     overlays.fadeOut(function(){ $(this).remove(); });
                 }
                 CURRENT_OVERLAY_TRIGGER = ele;
+                
             }
         });
 

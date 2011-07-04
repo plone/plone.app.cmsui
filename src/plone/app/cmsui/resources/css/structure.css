@@ -106,6 +106,8 @@ div#structure-dialog {
 
 div.structure-slider {
     width: 100%;
+    position:relative;
+    padding: 2em;
 }
 
 div#structure-dialog .link-parent {
@@ -212,10 +214,6 @@ div#structure-dialog .link-parent {
     background: transparent;
 }
 
-#structure-dialog table.listing tr#meta-actions span.actions{
-    padding-left: 5px;
-}
-
 #structure-dialog table.listing tr.hide-table th, #structure-dialog table.listing tr.hide-table td{
    background: transparent;
    border:none;
@@ -252,4 +250,20 @@ div#structure-dialog .link-parent {
 
 #structure-dialog table.listing #meta-actions ul li .info{
 
+}
+
+
+#structure-dialog span#primary-actions{
+    position:absolute;
+    top: 0;
+    left: 550px;
+    background-color:#EEEEEE;
+    padding: 0.5em;
+    border: 1px solid #DDDDDD;
+    border-top: none;
+    display:none;
+}
+
+div.structure-overlay div.pb-ajax > div, div.structure-overlay div.pb-ajax #overlay-content {
+    padding:0;
 }

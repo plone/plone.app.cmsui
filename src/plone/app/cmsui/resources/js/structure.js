@@ -15,6 +15,12 @@ jQuery(function ($) {
 
     window.parent.history.replaceState({structure_href: overlay_location}, null, window.parent.location.href);
 
+    positionPrimaryActions = function(){
+        var actions = $('#primary-actions');
+        actions.css('left', ($('#listing-table').width() - actions.width()) + 'px');
+        actions.fadeIn();
+    }
+
     // animate navigation to a new folder
     slideTo = function(href, dir) {
         if(overlay_location === href){
@@ -44,9 +50,15 @@ jQuery(function ($) {
         overlay_location = href;
     };
 
-    $(document).bind('structureEndSlideTo', function(){ $("table.orderable").ploneDnD(); });
+    $(document).bind('structureEndSlideTo', function(){ 
+        $("table.orderable").ploneDnD(); 
+        positionPrimaryActions();
+    });
     $(document).bind('endLoadOverlay', function(){ $("table.orderable").ploneDnD(); });
-    $(document).bind('loadOverlay', function(){ $("table.orderable").ploneDnD(); });
+    $(document).bind('loadOverlay', function(){ 
+        $("table.orderable").ploneDnD(); 
+        positionPrimaryActions();
+    });
     $(document).bind('formOverlayLoadSuccess', function(){ $("table.orderable").ploneDnD(); });
 
     /* current item actions need to be specially handled */
