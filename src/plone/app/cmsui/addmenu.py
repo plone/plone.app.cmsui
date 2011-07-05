@@ -115,6 +115,9 @@ class FileUploadForm(form.Form):
 class AddMenu(BrowserView):
     """Add menu overlay
     """
+    quickUploadTypes = ["File", "Image"]
+    typeOrder = ["Document","Folder","Topic","News Item","Event"]
+    
     
     def __call__(self):
         # Disable theming
@@ -127,25 +130,39 @@ class AddMenu(BrowserView):
         breadcrumbs_view = getMultiAdapter((self.context, self.request),
                                            name='breadcrumbs_view')
         self.breadcrumbs = breadcrumbs_view.breadcrumbs()
-        
-        factories_view = getMultiAdapter((self.context, self.request), name='folder_factories')
-        
-        self.allowedTypes = factories_view.addable_types()
-        
+                
         self.uploadForm = FileUploadForm(self.context, self.request)
         self.uploadForm.update()
         
         
         return self.index()
 
+    def allowedTypes(self,order=True):
+        factories_view = getMultiAdapter((self.context, self.request), name='folder_factories')
+        if not order:
+            return factories_view.addable_types()
+        allowedTypes = {}
+        for t in factories_view.addable_types():
+            allowedTypes[t['id']]=t
+        allowedTypesKeys = allowedTypes.keys()
+        allowedTypesResult = []
+        for key in self.typeOrder:
+            if key in allowedTypesKeys:
+                allowedTypesResult.append(allowedTypes[key])
+        for key in allowedTypesKeys:
+            if key not in self.typeOrder:
+                allowedTypesResult.append(allowedTypes[key])
+        return allowedTypesResult
+            
+        
     def showUploadForm(self):
         """We can't show the upload form if uploadable types can't be created here.
         """
         # TODO How are we sure which types are uploadable?
         # For now, just check on File/Image.
-        uploadTypes = ['Image','File']
-        for a in self.allowedTypes:
-            if a['id'] in uploadTypes:
+
+        for a in self.allowedTypes(order=False):
+            if a['id'] in self.quickUploadTypes:
                 return True
         return False
 
