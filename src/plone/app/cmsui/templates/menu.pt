@@ -55,7 +55,7 @@
                 tal:repeat="action view/personalActions"
                 tal:attributes="id string:cmsui-personallink-${action/id}"><a
                     tal:attributes="href action/url;
-                                    class python:id != 'logout' and 'overlayLink' or None"
+                                    class python:action['id'] != 'logout' and 'overlayLink' or None"
                     tal:content="action/title" /></li>
             </ul>
 
