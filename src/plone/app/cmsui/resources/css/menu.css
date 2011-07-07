@@ -436,7 +436,7 @@ button {
   display: inline-block;
   border: 1px solid #265883;
   background: #3272aa;
-  padding: 0.8em 1em;
+  padding: 0.8em 1em .5em;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   border-radius: 5px;
