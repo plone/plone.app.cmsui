@@ -20,22 +20,13 @@
     background: no-repeat transparent 0px -1724px url(++resource++plone.app.cmsui/images/contenttypes-sprite.png);
 }
 
-.contenttype-file {
-    background: no-repeat transparent 0px -428px url(++resource++plone.app.cmsui/images/contenttypes-sprite.png);
-}
-.contenttype-image {
-    background: no-repeat transparent 0px -860px url(++resource++plone.app.cmsui/images/contenttypes-sprite.png);
-}
-
 .contenttype-document,
 .contenttype-event,
 .contenttype-folder,
 .contenttype-link,
 .contenttype-news-item,
 .contenttype-plone-site,
-.contenttype-topic,
-.contenttype-file,
-.contenttype-image {
+.contenttype-topic {
     line-height: 2em;
     display: inline-block;
     *display: block;
