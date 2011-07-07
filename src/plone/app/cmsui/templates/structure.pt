@@ -145,8 +145,8 @@
           <tr tal:define="id item/id|item/getId;
                           title item/title|item/Title|item/titleOrId;
                           titleOrId python:title or id;"
-              tal:attributes="class item/tableRowClass;
-                              id string:folder-contents-item-${id};">
+              class="draggable"
+              tal:attributes="id string:folder-contents-item-${id};">
             <td tal:condition="view/showSortColumn" class="draggable">
               <tal:block tal:define="quotedId item/quotedId|python: view.quotePlus(id);">
               <a href=""

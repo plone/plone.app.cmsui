@@ -103,11 +103,6 @@ class StructureView(BrowserView):
                 results.append(dict(path = path))
                 continue
 
-            if (i + 1) % 2 == 0:
-                tableRowClass = "draggable even"
-            else:
-                tableRowClass = "draggable odd"
-
             url = obj.getURL()
             viewUrl = url + "/cmsui-structure"
             
@@ -147,7 +142,6 @@ class StructureView(BrowserView):
                 isBrowserDefault = isBrowserDefault,
                 folderish = obj.is_folderish,
                 viewUrl = viewUrl,
-                tableRowClass = tableRowClass,
                 isExpired = isExpired(obj),
             ))
         return results
@@ -224,7 +218,6 @@ class StructureView(BrowserView):
 
     def setChecked(self, item):
         item['checked'] = self.selectAll and 'checked' or None
-        item['tableRowClass'] = item.get('tableRowClass', '')
 
 
     @lazy_property

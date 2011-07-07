@@ -40,7 +40,7 @@ table.listing th {
     border-style: solid solid none;
     background: #ddd;
 }
-table.listing tr.odd th {
+table.listing:nth-of-type(2n) {
     border: 0.1em solid #fff;
     border-style: solid solid none none;
 }
@@ -50,13 +50,13 @@ table.listing tbody th {
 table.listing tbody tr {
     text-align:left;
 }
-table.listing tbody tr.odd {
+table.listing tbody tr:nth-of-type(2n) {
     background: #eee;
 }
 table.listing tbody tr td {
     background: transparent;
 }
-table.listing tbody tr.odd td {
+table.listing tbody tr:nth-of-type(2n) td {
     background: #eee;
 }
 table.listing td {
