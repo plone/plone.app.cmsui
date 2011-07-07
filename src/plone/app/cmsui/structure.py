@@ -278,38 +278,6 @@ class StructureView(BrowserView):
         return urllib.quote_plus(string)
 
 
-    @instance.memoize
-    def objectButtons(self):
-        """
-        Get the Actions for the current item.
-        """
-        actions = []
-        for action in self.contextState.actions('object_buttons'):
-            actions.append({
-                'id': action['id'],
-                'url': action['url'],
-                'title': action['title'],
-                'description': action['description'],
-            })        
-        return actions
-
-
-    def objectInfo(self):
-        """
-        Retrieve information on the current item.
-        """
-        info = []
-        pt = getToolByName(self.context, 'portal_types')
-        fti = pt.listTypeTitles().get(self.context.portal_type, 'unknown')
-        info.append({'name' : 'Kind', 'info' : fti.title})
-        info.extend([
-                {'name' : 'Created', 'info' : self.context.created()},
-                {'name' : 'Modified', 'info' : self.context.modified()},
-                {'name' : 'Owner', 'info' : self.context.getOwner()},
-                ])
-        return info
-        
-
 class MoveItem(BrowserView):
     """
     Pretty much straight copy of the folder_moveitem.py script

@@ -74,32 +74,6 @@
               i18n:attributes="summary summary_content_listing;"
               tal:attributes="class python: orderable and 'listing orderable' or 'listing'">
             <thead>
-              <tr id="meta-actions" class="hide-table">
-                <th colspan="3" id="meta-info">
-                  <ul>
-                    <tal:info tal:repeat="info view/objectInfo">
-                      <li><span class="title" tal:content="string:${info/name}">Kind</span>: 
-                        <span class="info" tal:content="string:${info/info}">Collection</span>
-                      </li>
-                    </tal:info>
-                  </ul>
-                </th>
-                <th colspan="4" tal:attributes="colspan python: cols-3" tal:define="buttons view/objectButtons">
-                  <div id="item-actions-menu" tal:condition="buttons">
-                    <fieldset>
-                      <legend>Actions for "<tal:name tal:replace="contextState/object_title" />"</legend>
-                      <tal:buttons tal:repeat="button buttons">
-                        <a tal:attributes="href button/url; 
-                                           id string:structure-btn-${button/id}; 
-                                           class python: repeat['button'].start and 'first' or repeat['button'].end and 'last' or ''" 
-                           tal:content="button/title">
-                          action
-                        </a>
-                      </tal:buttons>
-                    </fieldset>
-                  </div>
-                </th>
-              </tr>
               <tr class="hide-table" tal:condition="view/folderItems">
                 <th colspan="4" class="nosort" tal:attributes="colspan python: cols-3">
                   <a tal:attributes="href view/selectallUrl" tal:condition="not: view/selectAll"
