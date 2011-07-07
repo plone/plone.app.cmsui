@@ -78,177 +78,174 @@
                 <th colspan="3" id="meta-info">
                   <ul>
                     <tal:info tal:repeat="info view/objectInfo">
-                    <li><span class="title" tal:content="string:${info/name}">Kind</span>: 
-                      <span class="info" tal:content="string:${info/info}">Collection</span>
-                    </li>
-                  </tal:info>
-                </ul>
-              </th>
-              <th colspan="4" tal:attributes="colspan python: cols-3" tal:define="buttons view/objectButtons">
-                <div id="item-actions-menu" tal:condition="buttons">
-                  <fieldset>
-                    <legend>Actions for "<tal:name tal:replace="contextState/object_title" />"</legend>
-                    <tal:buttons tal:repeat="button buttons">
-                    <a tal:attributes="href button/url; 
-                                       id string:structure-btn-${button/id}; 
-                                       class python: repeat['button'].start and 'first' or repeat['button'].end and 'last' or ''" 
-                       tal:content="button/title">
-                      action
+                      <li><span class="title" tal:content="string:${info/name}">Kind</span>: 
+                        <span class="info" tal:content="string:${info/info}">Collection</span>
+                      </li>
+                    </tal:info>
+                  </ul>
+                </th>
+                <th colspan="4" tal:attributes="colspan python: cols-3" tal:define="buttons view/objectButtons">
+                  <div id="item-actions-menu" tal:condition="buttons">
+                    <fieldset>
+                      <legend>Actions for "<tal:name tal:replace="contextState/object_title" />"</legend>
+                      <tal:buttons tal:repeat="button buttons">
+                        <a tal:attributes="href button/url; 
+                                           id string:structure-btn-${button/id}; 
+                                           class python: repeat['button'].start and 'first' or repeat['button'].end and 'last' or ''" 
+                           tal:content="button/title">
+                          action
+                        </a>
+                      </tal:buttons>
+                    </fieldset>
+                  </div>
+                </th>
+              </tr>
+              <tr class="hide-table" tal:condition="view/folderItems">
+                <th colspan="4" class="nosort" tal:attributes="colspan python: cols-3">
+                  <a tal:attributes="href view/selectallUrl" tal:condition="not: view/selectAll"
+                     id="foldercontents-selectall-completebatch" class="overlayLink"
+                     i18n:translate="tableheading_select_all_items">Select all 
+                     <tal:block replace="num_items" i18n:name="count"/> items in this folder.
+                  </a>
+                  <span tal:omit-tag="" i18n:translate="tableheading_all_items_selected" tal:condition="view/selectAll">
+                    All <tal:block replace="num_items" i18n:name="count"/> items on this
+                    page are selected. <a tal:attributes="href string:${context/absolute_url}/@@cmsui-structure" class="overlayLink">De-select all.</a>
+                  </span>
+                </th>
+                <th colspan="3" class="nosort numitems">
+                  <tal:folder tal:condition="python: folderish and num_items != batch.items_on_page">
+                  <span tal:replace="contextState/object_title" /> contains <span tal:replace="num_items" /> items
+                  (<a class="overlayLink" href="#" tal:attributes="href view/showAllUrl">show all</a>)
+                  </tal:folder>
+                  <tal:block tal:condition="python: folderish and num_items == batch.items_on_page">
+                  Showing all items.
+                  </tal:block>
+                </th>
+              </tr>
+              <tr tal:condition="view/folderItems">
+                <th class="nosort column sorter" id="foldercontents-order-column" tal:condition="view/showSortColumn">
+                </th>
+                <th class="nosort" id="foldercontents-select-column">&nbsp;</th>
+                <th class="nosort column" id="foldercontents-title-column">
+                  &nbsp;<tal:title i18n:translate="listingheader_title">Title</tal:title>&nbsp;
+                </th>
+                <th class="nosort column" id="foldercontents-creator-column">&nbsp;
+                  <tal:responsible i18n:translate="listingheader_creator">Responsible</tal:responsible>&nbsp;
+                </th>
+                <th class="nosort column" id="foldercontents-modified-column">&nbsp;
+                  <tal:modified i18n:translate="listingheader_modified">Modified</tal:modified>&nbsp;
+                </th>
+                <th class="nosort column" id="foldercontents-status-column">&nbsp;
+                  <tal:state i18n:translate="listingheader_status">State</tal:state>&nbsp;
+                </th>
+              </tr>
+            </thead>
+            <tbody tal:condition="folderish">
+              <tal:items tal:repeat="item batch">
+                <tr tal:define="id item/id|item/getId;
+                                title item/title|item/Title|item/titleOrId;
+                                titleOrId python:title or id;"
+                    class="draggable"
+                    tal:attributes="id string:folder-contents-item-${id};">
+                  <td tal:condition="view/showSortColumn" class="draggable">
+                    <tal:block tal:define="quotedId item/quotedId|python: view.quotePlus(id);">
+                    <a href=""
+                       title="Move item up"
+                       class="overlayLink"
+                       i18n:attributes="title title_move_item_up;"
+                       tal:attributes="href string:${context/absolute_url}/folder_position?position=up&amp;id=${quotedId}">
+                          &#9650;
                     </a>
+                    &nbsp;
+                    <a href=""
+                       title="Move item down"
+                       class="overlayLink"
+                       i18n:attributes="title title_move_item_down;"
+                       tal:attributes="href string:${context/absolute_url}/folder_position?position=down&amp;id=${quotedId}">
+                      &#9660;
+                    </a>
+                  </tal:block>
+                </td>
+                <td>
+                  <input type="checkbox"
+                         class="noborder"
+                         name="paths:list" id="#"
+                         value="#"
+                         tal:attributes="value item/path|id;
+                                         id string:cb_${id};
+                                         checked item/checked;
+                                         alt python:view.msgSelectItem(item);
+                                         title python:view.msgSelectItem(item)" />
+                  <input type="hidden" name="selected_obj_paths:list" value="#" tal:attributes="value item/path|id" />
+                  <label tal:content="titleOrId"
+                         tal:attributes="for string:cb_${id}" 
+                         class="hiddenStructure">
+                    Item Title
+                  </label>
+                </td>
+                <td>
+                  <img tal:replace="structure item/icon|nothing" />
+                  <a href="#" tal:attributes="href string:${item/viewUrl};
+                                              title item/url_href_title|nothing;
+                                              class string:link-child ${item/stateClass|python:''} ${item/typeClass|python:''};">
+                    <strong tal:omit-tag="not: item/isBrowserDefault|nothing" tal:content="titleOrId"/>
+                  </a>
+                  <span class="state-expired"
+                        tal:condition="item/isExpired|nothing"
+                        i18n:translate="time_expired">
+                    expired
+                  </span>
+                </td>    
+                <td tal:content="item/creator" />
+                <td tal:content="item/modified"
+                    tal:attributes="class item/stateClass|nothing">
+                  08/19/2001 03:01 AM
+                </td>
+                <td>
+                  <span i18n:translate=""
+                        tal:condition="item/stateTitle|nothing"
+                        tal:content="item/stateTitle"
+                        tal:attributes="class item/stateClass|nothing" />
+                    <span tal:condition="not: item/stateTitle|nothing">&nbsp;</span>
+                  </td>
+                </tr>
+              </tal:items>
+            </tbody>
+            <tfoot tal:condition="folderish">
+              <tr class="numitems hide-table">
+                <th colspan="4" id="batch-actions" tal:attributes="colspan python: cols-3">
+                  <tal:buttons tal:repeat="button view/buttons">
+                    <input class="context"
+                           type="submit"
+                           name=""
+                           value=""
+                           i18n:attributes="value"
+                           tal:attributes="value button/title; name button/url; class button/cssclass|nothing" />
                   </tal:buttons>
-                </fieldset>
-              </div>
-            </th>
-          </tr>
-          <tr class="hide-table" tal:condition="view/folderItems">
-            <th colspan="4" class="nosort" tal:attributes="colspan python: cols-3">
-              <a tal:attributes="href view/selectallUrl" tal:condition="not: view/selectAll"
-                 id="foldercontents-selectall-completebatch" class="overlayLink"
-                 i18n:translate="tableheading_select_all_items">Select all 
-                 <tal:block replace="num_items" i18n:name="count"/> items in this folder.
-              </a>
-              <span tal:omit-tag="" i18n:translate="tableheading_all_items_selected" tal:condition="view/selectAll">
-                All <tal:block replace="num_items" i18n:name="count"/> items on this
-                page are selected. <a tal:attributes="href string:${context/absolute_url}/@@cmsui-structure" class="overlayLink">De-select all.</a>
-              </span>
-            </th>
-            <th colspan="3" class="nosort numitems">
-              <tal:folder tal:condition="python: folderish and num_items != batch.items_on_page">
-              <span tal:replace="contextState/object_title" /> contains <span tal:replace="num_items" /> items
-              (<a class="overlayLink" href="#" tal:attributes="href view/showAllUrl">show all</a>)
-              </tal:folder>
-              <tal:block tal:condition="python: folderish and num_items == batch.items_on_page">
-              Showing all items.
-              </tal:block>
-            </th>
-          </tr>
-          <tr tal:condition="view/folderItems">
-            <th class="nosort column sorter" id="foldercontents-order-column" tal:condition="view/showSortColumn">
-            </th>
-            <th class="nosort" id="foldercontents-select-column">&nbsp;</th>
-            <th class="nosort column" id="foldercontents-title-column">
-              &nbsp;<tal:title i18n:translate="listingheader_title">Title</tal:title>&nbsp;
-            </th>
-            <th class="nosort column" id="foldercontents-creator-column">&nbsp;
-              <tal:responsible i18n:translate="listingheader_creator">Responsible</tal:responsible>&nbsp;
-            </th>
-            <th class="nosort column" id="foldercontents-modified-column">&nbsp;
-              <tal:modified i18n:translate="listingheader_modified">Modified</tal:modified>&nbsp;
-            </th>
-            <th class="nosort column" id="foldercontents-status-column">&nbsp;
-              <tal:state i18n:translate="listingheader_status">State</tal:state>&nbsp;
-            </th>
-          </tr>
-        </thead>
-        <tbody tal:condition="folderish">
-          <tal:items tal:repeat="item batch">
-          <tr tal:define="id item/id|item/getId;
-                          title item/title|item/Title|item/titleOrId;
-                          titleOrId python:title or id;"
-              class="draggable"
-              tal:attributes="id string:folder-contents-item-${id};">
-            <td tal:condition="view/showSortColumn" class="draggable">
-              <tal:block tal:define="quotedId item/quotedId|python: view.quotePlus(id);">
-              <a href=""
-                 title="Move item up"
-                 class="overlayLink"
-                 i18n:attributes="title title_move_item_up;"
-                 tal:attributes="href string:${context/absolute_url}/folder_position?position=up&amp;id=${quotedId}">
-                    &#9650;
-              </a>
-              &nbsp;
-              <a href=""
-                 title="Move item down"
-                 class="overlayLink"
-                 i18n:attributes="title title_move_item_down;"
-                 tal:attributes="href string:${context/absolute_url}/folder_position?position=down&amp;id=${quotedId}">
-                &#9660;
-              </a>
-            </tal:block>
-          </td>
-          <td>
-            <input type="checkbox"
-                   class="noborder"
-                   name="paths:list" id="#"
-                   value="#"
-                   tal:attributes="value item/path|id;
-                                   id string:cb_${id};
-                                   checked item/checked;
-                                   alt python:view.msgSelectItem(item);
-                                   title python:view.msgSelectItem(item)" />
-            <input type="hidden" name="selected_obj_paths:list" value="#" tal:attributes="value item/path|id" />
-            <label tal:content="titleOrId"
-                   tal:attributes="for string:cb_${id}" 
-                   class="hiddenStructure">
-              Item Title
-            </label>
-          </td>
-          <td>
-            <img tal:replace="structure item/icon|nothing" />
-            <a href="#" tal:attributes="href string:${item/viewUrl};
-                                        title item/url_href_title|nothing;
-                                        class string:link-child ${item/stateClass|python:''} ${item/typeClass|python:''};">
-              <strong tal:omit-tag="not: item/isBrowserDefault|nothing" tal:content="titleOrId"/>
-            </a>
-            <span class="state-expired"
-                  tal:condition="item/isExpired|nothing"
-                  i18n:translate="time_expired">
-              expired
-            </span>
-          </td>    
-          <td tal:content="item/creator" />
-          <td tal:content="item/modified"
-              tal:attributes="class item/stateClass|nothing">
-            08/19/2001 03:01 AM
-          </td>
-          <td>
-            <span i18n:translate=""
-                  tal:condition="item/stateTitle|nothing"
-                  tal:content="item/stateTitle"
-                  tal:attributes="class item/stateClass|nothing" />
-              <span tal:condition="not: item/stateTitle|nothing">&nbsp;</span>
-            </td>
-          </tr>
-        </tal:items>
-      </tbody>
-      <tfoot tal:condition="folderish">
-        <tr class="numitems hide-table">
-          <th colspan="4" id="batch-actions" tal:attributes="colspan python: cols-3">
-            <tal:buttons tal:repeat="button view/buttons">
-              <input class="context"
-                     type="submit"
-                     name=""
-                     value=""
-                     i18n:attributes="value"
-                     tal:attributes="value button/title; name button/url; class button/cssclass|nothing" />
-            </tal:buttons>
-          </th>
-          <th colspan="3" class="nosort numitems" tal:condition="batch">
-            <tal:folder tal:condition="python: folderish and num_items != batch.items_on_page">
-              <span tal:replace="contextState/object_title" /> contains <span tal:replace="num_items" /> items
-              (<a class="overlayLink" href="#" tal:attributes="href view/showAllUrl">show all</a>)
-            </tal:folder>
-            <tal:block tal:condition="python: folderish and num_items == batch.items_on_page">
-              Showing all items.
-            </tal:block>
-          </th>
-          <th colspan="3" class="numitems nosort" tal:condition="not: batch">
-            There are no items in this folder.
-          </th>
-        </tr>
-      </tfoot>
-    </table>
-    <tal:block tal:condition="view/selectAll" tal:repeat="item batch/items_not_on_page">
-      <input type="hidden" name="paths:list" value="#" tal:attributes="value item/path|item/id|nothing" />
-    </tal:block>
-    <input tal:replace="structure context/@@authenticator/authenticator" />
-  </form>
-    
-  </div>
-</div>
-<br style="clear: both;" />
-  
-</metal:content-core>
+                </th>
+                <th colspan="3" class="nosort numitems" tal:condition="batch">
+                  <tal:folder tal:condition="python: folderish and num_items != batch.items_on_page">
+                    <span tal:replace="contextState/object_title" /> contains <span tal:replace="num_items" /> items
+                    (<a class="overlayLink" href="#" tal:attributes="href view/showAllUrl">show all</a>)
+                  </tal:folder>
+                  <tal:block tal:condition="python: folderish and num_items == batch.items_on_page">
+                    Showing all items.
+                  </tal:block>
+                </th>
+                <th colspan="3" class="numitems nosort" tal:condition="not: batch">
+                  There are no items in this folder.
+                </th>
+              </tr>
+            </tfoot>
+          </table>
+          <tal:block tal:condition="view/selectAll" tal:repeat="item batch/items_not_on_page">
+            <input type="hidden" name="paths:list" value="#" tal:attributes="value item/path|item/id|nothing" />
+          </tal:block>
+          <input tal:replace="structure context/@@authenticator/authenticator" />
+        </form>
+      </div>
+    </div>
+    <br style="clear: both;" />  
+  </metal:content-core>
 </body>
 </html>
-
