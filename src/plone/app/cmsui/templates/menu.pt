@@ -61,7 +61,7 @@
 
             <!-- Edit bar toggle -->
             <div class="omega grid_3">
-                <a href="#" id="manage-page-open">Edit content &#9660;</a>
+                <a href="#" id="manage-page-open">Show edit bar &#9660;</a>
                 <a href="#" id="manage-page-close">Hide edit bar &#9650;</a>
             </div>
         </div>
