@@ -1,6 +1,28 @@
 Changelog
 =========
 
+1.0a2 - unreleased
+------------------
+
+* Structure overlay improvements and refinements
+  [davisagli,vangheem]
+  
+* Don't load logout link in overlay
+  [davisagli]
+  
+* jslint cleanup
+  [smcmahon]
+  
+* Register quick upload views on layer. 
+  [Rob Gietema]
+  
+* Speed up animations. 
+  [Rob Gietema]
+  
+* Refactored notify, now available through $.plone.notify 
+  [Rob Gietema]
+
+
 1.0a1 - 2011-06-28
 ------------------
 
