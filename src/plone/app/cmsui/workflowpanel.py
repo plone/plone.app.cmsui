@@ -23,7 +23,7 @@ class WorkflowActionsSourceBinder(object):
     def __call__(self, context):
         wft = getToolByName(context, 'portal_workflow')
         return vocabulary.SimpleVocabulary([
-            vocabulary.SimpleVocabulary.createTerm(t['id'],t['id'],t['name'])
+            vocabulary.SimpleVocabulary.createTerm(t['id'], t['id'], t['name'])
             for t in wft.getTransitionsFor(context)
         ])
 
@@ -31,32 +31,32 @@ class WorkflowActionsSourceBinder(object):
 class IWorkflowPanel(Interface):
     """Form for workflow panel"""
     workflow_action = schema.Choice(
-        title = _(u'label_workflow_action', u"Change State"),
-        description = _(u'help_workflow_action',
+        title=_(u'label_workflow_action', u"Change State"),
+        description=_(u'help_workflow_action',
                           default=u"Select the transition to be used for modifying the items state."),
-        source= WorkflowActionsSourceBinder(),
-        required= False,
+        source=WorkflowActionsSourceBinder(),
+        required=False,
         )
     comment = schema.Text(
-        title = _(u"label_comment", u"Comments"),
-        description = _(u'help_comment',
+        title=_(u"label_comment", u"Comments"),
+        description=_(u'help_comment',
                           default=u"Will be added to the publishing history. If multiple "
                                    "items are selected, this comment will be attached to all of them."),
-        required= False,
+        required=False,
         )
     effective_date = schema.Datetime(
-        title = _(u'label_effective_date', u'Publishing Date'),
-        description = _(u'help_effective_date',
+        title=_(u'label_effective_date', u'Publishing Date'),
+        description=_(u'help_effective_date',
                           default=u"If this date is in the future, the content will "
                                    "not show up in listings and searches until this date."),
-        required = False
+        required=False
         )
     expiration_date = schema.Datetime(
-        title = _(u'label_expiration_date', u'Expiration Date'),
-        description = _(u'help_expiration_date',
+        title=_(u'label_expiration_date', u'Expiration Date'),
+        description=_(u'help_expiration_date',
                               default=u"When this date is reached, the content will no"
                                        "longer be visible in listings and searches."),
-        required = False
+        required=False
         )
 
 
@@ -66,7 +66,7 @@ class WorkflowPanel(form.Form):
 
     @property
     def label(self):
-        return _(u'Workflow for ${name}', mapping = {'name': self.context.Title()})
+        return _(u'Workflow for ${name}', mapping={'name': self.context.Title()})
 
     def render(self):
         return self.index()
@@ -94,8 +94,8 @@ class WorkflowPanel(form.Form):
         # Read form
         workflow_action = data.get('workflow_action', '')
         effective_date = data.get('effective_date', None)
-        if workflow_action and not effective_date and real_context.EffectiveDate()=='None':
-            effective_date=DateTime()
+        if workflow_action and not effective_date and real_context.EffectiveDate() == 'None':
+            effective_date = DateTime()
         expiration_date = data.get('expiration_date', None)
 
         # Try editing content, might not be able to yet
@@ -109,7 +109,8 @@ class WorkflowPanel(form.Form):
         if workflow_action is not None:
             postwf_context = real_context.portal_workflow.doActionFor(self.context,
                              workflow_action, comment=data.get('comment', ''))
-        if postwf_context is None: postwf_context = real_context
+        if postwf_context is None:
+            postwf_context = real_context
 
         # Retry if need be
         if retryContentEdit:
@@ -125,10 +126,12 @@ class WorkflowPanel(form.Form):
         kwargs = {}
         if isinstance(effective, datetime):
             kwargs['effective_date'] = DateTime(effective)
-        elif effective and (isinstance(effective, DateTime) or len(effective) > 5): # may contain the year
+        # may contain the year
+        elif effective and (isinstance(effective, DateTime) or len(effective) > 5):
             kwargs['effective_date'] = effective
         if isinstance(expiry, datetime):
             kwargs['expiration_date'] = DateTime(expiry)
-        elif expiry and (isinstance(expiry, DateTime) or len(expiry) > 5): # may contain the year
+        # may contain the year
+        elif expiry and (isinstance(expiry, DateTime) or len(expiry) > 5):
             kwargs['expiration_date'] = expiry
         context.plone_utils.contentEdit(context, **kwargs)
