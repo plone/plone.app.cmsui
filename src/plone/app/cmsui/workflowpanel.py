@@ -15,11 +15,11 @@ from z3c.form.browser.radio import RadioFieldWidget
 class WorkflowActionsSourceBinder(object):
     implements(interfaces.IContextSourceBinder)
     """Generates vocabulary for all allowed workflow transitions"""
-    
+
     def getTransitions(self):
         wft = getToolByName(self.context, 'portal_workflow')
         return wft.getTransitionsFor(self.context)
-    
+
     def __call__(self, context):
         wft = getToolByName(context, 'portal_workflow')
         return vocabulary.SimpleVocabulary([
@@ -63,19 +63,23 @@ class IWorkflowPanel(Interface):
 class WorkflowPanel(form.Form):
     """Shows a panel with the advanced workflow options
     """
-    
+
     @property
     def label(self):
         return _(u'Workflow for ${name}', mapping = {'name': self.context.Title()})
-    
+
     def render(self):
         return self.index()
 
     css_class = 'overlayForm'
-    
+
     fields = field.Fields(IWorkflowPanel)
     fields['workflow_action'].widgetFactory = RadioFieldWidget
     ignoreContext = True
+
+    def updateActions(self):
+        super(WorkflowPanel, self).updateActions()
+        self.actions["cancel"].addClass("overlayCloseAction")
 
     @button.buttonAndHandler(_(u'Save'))
     def handleSave(self, action):
@@ -83,34 +87,34 @@ class WorkflowPanel(form.Form):
         if errors:
             self.status = self.formErrorsMessage
             return
-        
+
         # Context might be temporary
         real_context = self.context.portal_factory.doCreate(self.context)
-        
+
         # Read form
         workflow_action = data.get('workflow_action', '')
         effective_date = data.get('effective_date', None)
         if workflow_action and not effective_date and real_context.EffectiveDate()=='None':
             effective_date=DateTime()
         expiration_date = data.get('expiration_date', None)
-        
+
         # Try editing content, might not be able to yet
         retryContentEdit = False
         try:
             self._editContent(real_context, effective_date, expiration_date)
         except Unauthorized:
             retryContentEdit = True
-        
+
         postwf_context = None
         if workflow_action is not None:
             postwf_context = real_context.portal_workflow.doActionFor(self.context,
                              workflow_action, comment=data.get('comment', ''))
         if postwf_context is None: postwf_context = real_context
-        
+
         # Retry if need be
         if retryContentEdit:
             self._editContent(postwf_context, effective_date, expiration_date)
-        
+
         self.request.response.redirect(postwf_context.absolute_url())
 
     @button.buttonAndHandler(_(u'Cancel'))
