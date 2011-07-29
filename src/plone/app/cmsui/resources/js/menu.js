@@ -1,6 +1,6 @@
 /*
     Code that runs inside the iframe menu
-    
+
     XXX: Way too many globals created; needs a namespace
     Globals exported:
         CURRENT_OVERLAY_TRIGGER
@@ -12,10 +12,10 @@
         expandMenu
         forceContractMenu
         menu_offset
-        menu_size, 
+        menu_size,
         readCookie
         toggleMenu
-    
+
 */
 
  /*jslint white:false, onevar:true, undef:true, nomen:false, eqeqeq:true,
@@ -132,11 +132,16 @@ function eraseCookie(name) {
                     opacity: 0.5
                 },
                 onBeforeLoad: function (e) {
-                    expandMenu();
                     $('.dropdownItems').slideUp();
                     this.getOverlay().addClass($(CURRENT_OVERLAY_TRIGGER).closest('li').attr('id') + '-overlay');
                     $(document).trigger('beforeOverlay', [this, e]);
-                    return true;
+                    if (this.getOverlay().find('#form-widgets-ILayoutAware-content').length > 0) {
+                        $.deco.init();
+                        return false;
+                    } else {
+                        expandMenu();
+                        return true;
+                    }
                 },
                 onLoad: function (e) {
                     loadUploader();
@@ -161,7 +166,7 @@ function eraseCookie(name) {
                     overlays.fadeOut(function(){ $(this).remove(); });
                 }
                 CURRENT_OVERLAY_TRIGGER = ele;
-                
+
             }
         });
 
