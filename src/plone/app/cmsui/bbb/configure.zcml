@@ -65,7 +65,7 @@
         for="*"
         layer="..interfaces.ICMSUILayer"
         manager="plone.app.layout.viewlets.interfaces.IPortalHeader"
-        class=".nullviewlet.NullViewlet"
+        class=".cmsuipersonalbarviewlet.CMSUIPersonalBarViewlet"
         permission="zope.Public"
         />
     

@@ -55,9 +55,7 @@
                   sunburst_view python:context.restrictedTraverse('@@sunburstview')"
     tal:attributes="class body_class;
                     dir python:isRTL and 'rtl' or 'ltr'">
-
 <div id="visual-portal-wrapper">
-
         <div id="portal-top"
             class="row"
             i18n:domain="plone"
