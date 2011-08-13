@@ -125,7 +125,7 @@ function eraseCookie(name) {
             // on cancel without reloading the page
             closeselector: '.overlayCloseAction',
             formselector: 'form.overlayForm,form.edit-form,#document-base-edit',
-            noform: 'close',
+            noform: 'reload', // XXX : this will probably need to get smarter
             config: {
                 top: 130,
                 mask: {
