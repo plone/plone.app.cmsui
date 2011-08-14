@@ -40,7 +40,7 @@ class IWorkflowPanel(Interface):
     comment = schema.Text(
         title=_(u"label_comment", u"Comments"),
         description=_(u'help_comment',
-                          default=u"Will be added to the publishing history. If multiple "
+                          default=u"Any comments will be added to the publishing history. If multiple "
                                    "items are selected, this comment will be attached to all of them."),
         required=False,
         )
