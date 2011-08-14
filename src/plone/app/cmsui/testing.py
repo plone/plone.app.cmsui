@@ -28,11 +28,16 @@ CMSUI_INTEGRATION_TESTING = IntegrationTesting(bases=(CMSUI_FIXTURE,), name="CMS
 CMSUI_FUNCTIONAL_TESTING = FunctionalTesting(bases=(CMSUI_FIXTURE,), name="CMSUI:Functional")
 
 def browser_login(portal, browser, username=None, password=None):
-    browser.open(portal.absolute_url() + '/login_form')
-    if username is None:
-        username = TEST_USER_NAME
-    if password is None:
-        password = TEST_USER_PASSWORD
-    browser.getControl(name='__ac_name').value = username
-    browser.getControl(name='__ac_password').value = password
-    browser.getControl(name='submit').click()
+    handleErrors = browser.handleErrors
+    try:
+        browser.handleErrors = False
+        browser.open(portal.absolute_url() + '/login_form')
+        if username is None:
+            username = TEST_USER_NAME
+        if password is None:
+            password = TEST_USER_PASSWORD
+        browser.getControl(name='__ac_name').value = username
+        browser.getControl(name='__ac_password').value = password
+        browser.getControl(name='submit').click()
+    finally:
+        browser.handleErrors = handleErrors
