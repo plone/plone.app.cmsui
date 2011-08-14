@@ -76,12 +76,11 @@
                     ><span i18n:translate="cmsui_contents" tal:omit-tag="">Structure</span
                     ><tal:block condition="python:(view.contextState.is_structural_folder() or view.contextState.is_default_page()) and view.itemsInFolder() is not None"> (<span tal:replace="view/itemsInFolder">12</span>)</tal:block
                     ></a></li>
-               <li tal:condition="python:view.modificationDate()"
-                    id="document-history">
+               <li id="document-history">
                     <a class="overlayLink"
-                       title="History&hellip;"
+                       title="View history and previous revisions&hellip;"
                        tal:attributes="href string:${view/baseURL}/@@cmsui-history-panel"
-                       tal:content="view/modificationDate">June 23, 2011</a>
+                       >History</a>
                 </li>
                 <li id="document-author">
                     <a class="overlayLink"
