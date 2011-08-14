@@ -83,13 +83,12 @@
                        tal:attributes="href string:${view/baseURL}/@@cmsui-history-panel"
                        tal:content="view/modificationDate">June 23, 2011</a>
                 </li>
-                <li tal:condition="python:view.authorName()"
-                    id="document-author">
+                <li id="document-author">
                     <a class="overlayLink"
                        title="Sharing&hellip;"
                        tal:attributes="href string:${view/baseURL}/@@cmsui-sharing"
                        tal:omit-tag="python:not view.tools.membership().checkPermission('Sharing page: Delegate roles', context)"
-                       tal:content="view/authorName">John Doe</a>
+                       >Sharing</a>
                 </li>
                 <li tal:condition="python:view.workflowState()"
                     id="document-workflow_state">
