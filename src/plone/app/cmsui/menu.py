@@ -172,6 +172,25 @@ class Menu(BrowserView):
                 return "%s?last_referer=%s" % (action['url'], self.context.absolute_url())
         
         return None
+        
+    @memoize
+    def deleteLink(self):
+        """Get the URL of the delete action - also looks at locking
+        """
+        
+        if not self.securityManager.checkPermission('Delete objects', self.context):
+            return None
+        
+        if self.contextState.is_locked():
+            return self.context.absolute_url() + "/@@cmsui-lock-info"
+        
+        objectButtons = self.contextState.actions('object_buttons')
+        for action in objectButtons:
+            if action['id'] == 'delete':
+                return "%s" % (action['url'])
+        
+        return None
+    
     
     @memoize
     def settingsActions(self):

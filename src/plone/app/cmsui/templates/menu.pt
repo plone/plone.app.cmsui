@@ -67,15 +67,53 @@
         </div>
     </div>
 
-    <div id="toolbar-bottom" class="container clearfix">
+    <div id="toolbar-bottom" class="container clearfix"
+        tal:define="isLocked     python:view.contextState.is_locked()">
 
         <!-- Information about the current document -->
         <div class="grid_10">
-            <ul id="document-info">
-               <li id="structure"><a href="#" class="overlayLink" tal:attributes="href string:${canonical_object/absolute_url}/@@cmsui-structure"
+            <!-- Links tangentially related to the current document -->
+            <ul id="folder-actions">
+                <li id="folder-add_content">
+                    <a class="overlayLink" href="" 
+                       tal:attributes="href string:${folder/absolute_url}/@@cmsui-add-content">
+                    Add Content
+                    </a>
+                </li>
+                <li id="structure"><a href="#" class="overlayLink" tal:attributes="href string:${canonical_object/absolute_url}/@@cmsui-structure"
                     ><span i18n:translate="cmsui_contents" tal:omit-tag="">Structure</span
                     ><tal:block condition="python:(view.contextState.is_structural_folder() or view.contextState.is_default_page()) and view.itemsInFolder() is not None"> (<span tal:replace="view/itemsInFolder">12</span>)</tal:block
                     ></a></li>
+            </ul>
+            <ul id="document-info">
+               <li tal:condition="python:view.editLink()"
+                    tal:attributes="id python:isLocked and 'document-edit-locked' or 'document-edit';">
+                    <a class="overlayLink"
+                        tal:attributes="href string:${view/editLink}">
+                        <span tal:condition="not:isLocked" i18n:translate="cmsiu_edit" tal:omit-tag="">Edit</span>
+                        <span tal:condition="isLocked" i18n:translate="cmsiu_locked" tal:omit-tag="">Locked</span>
+                    </a>
+                </li>
+                <li tal:condition="deleteLink"
+                    tal:define="deleteLink python:view.deleteLink()"
+                    tal:attributes="id python:isLocked and 'document-delete-locked' or 'document-delete';">
+                    <a class="overlayLink"
+                        tal:attributes="href string:${view/deleteLink}">
+                        <span tal:condition="not:isLocked" i18n:translate="cmsiu_delete" 
+                            tal:omit-tag="">Delete</span>
+                        <span tal:condition="isLocked" i18n:translate="cmsiu_locked" 
+                            tal:omit-tag="">Locked</span>
+                    </a>
+                </li>
+               <li tal:condition="python:view.workflowState()"
+                    id="document-workflow_state">
+                    <a class="overlayLink"
+                        title="Workflow&hellip;"
+                        id="plone-contentmenu-workflow"
+                        tal:attributes="href string:${view/baseURL}/@@cmsui-workflow-panel"
+                        >Status: <span class="" tal:attributes="class string:state-${context_state/workflow_state}"
+                          tal:content="view/workflowState">Draft</span></a>
+               </li>
                <li id="document-history">
                     <a class="overlayLink"
                        title="View history and previous revisions&hellip;"
@@ -88,22 +126,6 @@
                        tal:attributes="href string:${view/baseURL}/@@cmsui-sharing"
                        tal:omit-tag="python:not view.tools.membership().checkPermission('Sharing page: Delegate roles', context)"
                        >Sharing</a>
-                </li>
-                <li tal:condition="python:view.workflowState()"
-                    id="document-workflow_state">
-                    <a class="overlayLink"
-                        title="Workflow&hellip;"
-                        id="plone-contentmenu-workflow"
-                        tal:attributes="href string:${view/baseURL}/@@cmsui-workflow-panel"
-                        ><span class="" tal:attributes="class string:state-${context_state/workflow_state}"
-                          tal:content="view/workflowState">Draft</span></a></li>
-                <li tal:condition="python:view.editLink()"
-                    tal:attributes="id python:view.contextState.is_locked() and 'document-edit-locked' or 'document-edit';">
-                    <a class="overlayLink"
-                        tal:attributes="href string:${view/editLink}">
-                        <span tal:condition="not:context_state/is_locked" i18n:translate="cmsiu_edit" tal:omit-tag="">Edit</span>
-                        <span tal:condition="context_state/is_locked" i18n:translate="cmsiu_locked" tal:omit-tag="">Locked</span>
-                    </a>
                 </li>
                 <tal:otheractions define="actions view/settingsActions"
                     condition="actions">
@@ -131,15 +153,6 @@
                 </tal:otheractions>
             </ul>
 
-            <!-- Links tangentially related to the current document -->
-            <ul id="folder-actions">
-                <li id="folder-add_content">
-                    <a class="overlayLink" href="" 
-                       tal:attributes="href string:${folder/absolute_url}/@@cmsui-add-content">
-                    Add Content
-                    </a>
-                </li>
-            </ul>
         </div>
 
         <aside class="grid_2" id="site-setup">

@@ -641,7 +641,7 @@ button:hover {
   font-family: Verdana, sans-serif;
 }
 #toolbar .container:last-of-type #folder-actions {
-  margin-left: 4%;
+  margin-right: 6%;
 }
 #toolbar .container:last-of-type #site-setup {
   text-align: right;
@@ -728,6 +728,9 @@ button:hover {
 }
 #document-edit-locked a {
   background: transparent url('../icons/Lock.png') 50% 0 no-repeat;
+}
+#document-delete a {
+  background: transparent url('../icons/Folder_Delete.png') 50% 0 no-repeat;
 }
 #structure a {
   background: transparent url('../icons/Folder.png') 50% 0 no-repeat;
