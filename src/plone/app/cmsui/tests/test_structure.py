@@ -45,6 +45,28 @@ class TestFolderContents(unittest.TestCase):
         self.assertTrue('foldercontents-title-column' in self.browser.contents)
         
 
+class TestDeleteItem(unittest.TestCase):
+    layer = CMSUI_FUNCTIONAL_TESTING
+    
+    def setUp(self):
+        portal = self.layer['portal']
+        setRoles(portal, TEST_USER_ID, ['Manager'])
+        createObject(portal, 'Folder', 'key-party', delete_first=True, title=u"Folder 1")
+        party = portal.get('key-party')
+        createObject(party, 'Document', 'he', delete_first=True, title=u"John Key")
+        createObject(party, 'Document', 'she', delete_first=True, title=u"Joan Key")
+        transaction.commit()
+        self.portal = portal
+        
+    def test_delete_existence(self): 
+        setRoles(self.layer['portal'], TEST_USER_ID, ['Owner'])
+        browser = Browser(self.layer['app'])
+        browser_login(self.portal, browser)
+        browser.open('http://nohost/plone/key-party/he/@@cmsui-menu')
+        self.assertTrue(browser.getLink('Delete').url.endswith('he/delete_confirmation'))
+
+    # TODO: test locking - I think this is broken for edit as well
+    
 class TestMoveItem(unittest.TestCase):
     layer = CMSUI_FUNCTIONAL_TESTING
     
