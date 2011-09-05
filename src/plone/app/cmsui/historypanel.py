@@ -16,7 +16,7 @@ from zExceptions import Unauthorized
 class HistoryPanel(BrowserView):
     def __init__(self, context, request):
         super(HistoryPanel, self).__init__(context, request)
-
+        
         # Work out if a version was selected, if 2 were selected always
         # comparing newest first
         sel_versions = request.form.get('diff',None)
@@ -32,7 +32,7 @@ class HistoryPanel(BrowserView):
         else:
             self.sel_from = 'previous'
             self.sel_to   = 'latest'
-
+    
     def __call__(self):
         context = self.context
         #TODO: Is this how to do it?
@@ -56,7 +56,7 @@ class HistoryPanel(BrowserView):
         for i in xrange(edit_history.getLength(countPurged=False)-1, -1, -1):
             data = edit_history.retrieve(i, countPurged=False)
             meta = data["metadata"]["sys_metadata"]
-
+            
             # Get next version, updating which is latest and previous if need be
             version_id = edit_history.getVersionId(i, countPurged=False)
             if self.sel_to == 'latest':
@@ -77,12 +77,12 @@ class HistoryPanel(BrowserView):
               h['klass'] = 'sel_to'
               self.sel_to_version = h
             self.version_history.append(h)
-
+        
         return super(HistoryPanel, self).__call__()
-
+    
     def history_list(self):
         version_history = self.version_history
-
+        
         # Add workflow history to version history
         workflow = getToolByName(self.context, 'portal_workflow')
         for r in workflow.getInfoFor(self.context, 'review_history'):
