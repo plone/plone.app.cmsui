@@ -94,7 +94,7 @@ class HistoryPanel(BrowserView):
                 klass='',
             ))
         return sorted(version_history, key=lambda k: datetime.now() - k['timestamp'])
-
+    
     def history_changes(self):
         if not(isinstance(self.sel_from,int) and isinstance(self.sel_to,int)):
             return []
@@ -107,14 +107,14 @@ class HistoryPanel(BrowserView):
         )
         return [change for change in changeset.getDiffs()
                       if not change.same]
-
+    
     def _versionTitle(self, version):
         return translate(
             _(u"version ${version}",
               mapping=dict(version=version)),
             context=self.request
         )
-
+    
     def _getVersion(self, version):
         context=aq_inner(self.context)
         if version >= 0:
