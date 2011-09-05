@@ -240,7 +240,7 @@ function eraseCookie(name) {
                         '_top': 'expression(eval((document.body.scrollTop)?document.body.scrollTop:document.documentElement.scrollTop))',
                         'width': '320px',
                         'height': '0px',
-                        'z-index': 11000
+                        'z-index': 100000
                     })
                 );
             });
