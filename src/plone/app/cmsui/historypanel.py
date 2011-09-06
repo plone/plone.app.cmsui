@@ -87,7 +87,7 @@ class HistoryPanel(BrowserView):
         workflow = getToolByName(self.context, 'portal_workflow')
         for r in workflow.getInfoFor(self.context, 'review_history'):
             version_history.append(dict(entry_type='workflow',
-                transition=workflow.getTitleForTransitionOnType(r['action'], self.context.portal_type),
+                transition=workflow.getTitleForTransitionOnType(r['action'], self.context.portal_type) or _("Create"),
                 principal=r.get('actor', _(u'label_anonymous_user', default=u'Anonymous User')),
                 timestamp=datetime.fromtimestamp(float(r['time'])),
                 comment=r['comments'],
