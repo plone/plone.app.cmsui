@@ -69,10 +69,12 @@ class HistoryPanel(BrowserView):
                 version_id=version_id,
                 principal=meta['principal'],
                 timestamp=datetime.fromtimestamp(meta['timestamp']),
-                comment=meta['comment'],
+                comment=meta['comment'] or _("Edit"),
                 klass='',
             )
-            if self.sel_from == h['version_id']: h['klass'] = 'sel_from'
+            if self.sel_from == h['version_id']:
+              h['klass'] = 'sel_from'
+              self.sel_from_version = h
             if self.sel_to == h['version_id']:
               h['klass'] = 'sel_to'
               self.sel_to_version = h
@@ -90,7 +92,7 @@ class HistoryPanel(BrowserView):
                 transition=workflow.getTitleForTransitionOnType(r['action'], self.context.portal_type) or _("Create"),
                 principal=r.get('actor', _(u'label_anonymous_user', default=u'Anonymous User')),
                 timestamp=datetime.fromtimestamp(float(r['time'])),
-                comment=r['comments'],
+                comment=r['comments'] or _("Transition"),
                 klass='',
             ))
         return sorted(version_history, key=lambda k: datetime.now() - k['timestamp'])
