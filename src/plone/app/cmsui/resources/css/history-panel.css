@@ -42,3 +42,84 @@ ul.history-panel div.timeline {
 div.history-detail {
     margin-left: 16em;
 }
+
+.inline-diff {
+    font-size: 100%;
+    padding: 1em;
+}
+
+/* CSS for htmldiff.py inline diff view */
+
+/* BBB: this could be better */
+
+.diff-head {
+    padding-bottom: 1em
+}
+
+.diff-legend-label {
+    border-style: solid;
+    border-width: 1px;
+    text-align: center
+}
+
+#diff-legend {
+    position: relative;
+}
+
+#diff-table {
+    float: right;
+    width: 22.5em;
+    text-align: left;
+    padding: 0px;
+    margin: 0px;
+    font-size: 85%;
+}
+
+.delete {
+    background-color: #ffaaaa;
+    padding: 0px 2px 0px 2px;
+}
+
+.insert {
+    background-color: #aaffaa;
+    padding: 0px 2px 0px 2px;
+}
+
+.tagInsert {
+    background-color: #007700;
+    font-weight: bold;
+    padding: 0px 2px 0px 2px;
+    color: #ffffff
+}
+
+.tagDelete {
+    background-color: #770000;
+    font-weight: bold;
+    padding: 0px 2px 0px 2px;
+    color: #ffffff
+}
+
+/* CSS for Python 2.4 HtmlDiff classes */
+
+.diff_header {
+    background-color:#e0e0e0;
+}
+
+td.diff_header {
+    text-align:right;
+}
+.diff_next {
+    background-color:#c0c0c0;
+}
+
+.diff_add {
+    background-color:#aaffaa;
+}
+
+.diff_chg {
+    background-color:#ffff77;
+}
+
+.diff_sub {
+    background-color:#ffaaaa;
+}
