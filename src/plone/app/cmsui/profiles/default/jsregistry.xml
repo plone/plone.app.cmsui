@@ -8,5 +8,6 @@
     <javascript bundle="cmsui" id="++resource++plone.app.cmsui/js/dragdropreorder.js"  />
     <javascript bundle="cmsui" id="++resource++plone.app.cmsui/js/structure.js"  />
     <javascript bundle="cmsui" id="++resource++plone.app.cmsui/js/formtabbing.js"  />
+    <javascript bundle="cmsui" id="++resource++plone.app.cmsui/js/history-panel.js"  />
 
 </object>
