@@ -11,10 +11,15 @@ jQuery(function ($) {
 
     // Ctrl-clicking means change which version to diff against
     $('div.history-timeline a').live('click', function(e) {
+        var url = $(this).attr("href");
         if(e.ctrlKey) {
-            console.log("Ctrl-click detected");
-            return e.preventDefault();
+            var sel_to = $('div.history-timeline a.sel_to');
+            var results = new RegExp('sel_to=([0-9]+)').exec($(this).attr("href"));
+            url = sel_to.attr("href") + "&sel_from=" + results[1];
         }
+        
+        $(this).closest('#overlay-content').loadOverlay(url + ' ' + common_content_filter);
+        return false;
     });
 
 });

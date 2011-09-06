@@ -17,18 +17,14 @@ class HistoryPanel(BrowserView):
     def __init__(self, context, request):
         super(HistoryPanel, self).__init__(context, request)
         
-        # Work out if a version was selected, if 2 were selected always
-        # comparing newest first
-        sel_versions = request.form.get('diff',None)
-        if isinstance(sel_versions,list) and sel_versions[0] > sel_versions[1]:
-            self.sel_from = int(sel_versions[1])
-            self.sel_to   = int(sel_versions[0])
-        elif isinstance(sel_versions,list):
-            self.sel_from = int(sel_versions[0])
-            self.sel_to   = int(sel_versions[1])
-        elif isinstance(sel_versions,str):
+        sel_from = request.form.get('sel_from',None)
+        sel_to = request.form.get('sel_to',None)
+        if sel_from and sel_to:
+            self.sel_from = int(sel_from)
+            self.sel_to = int(sel_to)
+        elif sel_to:
             self.sel_from = 'previous'
-            self.sel_to   = int(sel_versions)
+            self.sel_to = int(sel_to)
         else:
             self.sel_from = 'previous'
             self.sel_to   = 'latest'

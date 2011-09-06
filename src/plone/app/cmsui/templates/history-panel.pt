@@ -19,8 +19,8 @@
       <li tal:repeat="item view/history_list" tal:attributes="class item/entry_type">
         <tal:t tal:condition="exists:item/version_id">
           <a tal:content="item/version_id"
-             tal:attributes="href string:${context/absolute_url}/@@cmsui-history-panel?diff=${item/version_id};
-                             class string:id-container overlayLink ${item/klass};
+             tal:attributes="href string:${context/absolute_url}/@@cmsui-history-panel?sel_to=${item/version_id};
+                             class string:id-container ${item/klass};
                              title string:${item/comment} by ${item/principal} at ${item/timestamp};
                             "/>
         </tal:t>
