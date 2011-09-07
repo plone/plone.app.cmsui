@@ -18,7 +18,7 @@ jQuery(function ($) {
             url = sel_to.attr("href") + "&sel_from=" + results[1];
         }
         
-        $(this).closest('#overlay-content').loadOverlay(url + ' ' + common_content_filter);
+        $(this).closest('#overlay-content').loadOverlay(url + ' #overlay-content > *');
         return false;
     });
 
