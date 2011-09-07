@@ -67,6 +67,13 @@
           </pre>
 
         </fieldset>
+
+        <form action="revertversion"
+              tal:attributes="action string:${context/absolute_url}/revertversion"
+              method="post">
+          <input type="hidden" name="version_id" tal:attributes="value view/sel_to_version/version_id" />
+          <input type="submit" value="Revert to this revision" />
+        </form>
       </div>
     </div>
   </metal:main>
