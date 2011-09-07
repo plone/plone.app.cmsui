@@ -13,56 +13,62 @@
   <metal:main fill-slot="body"
      tal:define="context_state context/@@plone_context_state">
 
-    <h1 class="documentFirstHeading">History panel</h1>
+    <div id="history-dialog">
+      <h1 class="documentFirstHeading">History panel</h1>
 
-    <div class="history-timeline cell width-4 position-0"><ul class="history-panel">
-      <li tal:repeat="item view/history_list" tal:attributes="class item/entry_type">
-        <tal:t tal:condition="exists:item/version_id">
-          <a tal:content="item/version_id"
-             tal:attributes="href string:${context/absolute_url}/@@cmsui-history-panel?sel_to=${item/version_id};
-                             class string:id-container ${item/klass};
-                             title string:${item/comment} by ${item/principal} at ${item/timestamp};
-                            "/>
-        </tal:t>
-        <tal:t tal:condition="exists:item/transition">
-          <span class="empty-id-container"></span>
-          <span tal:content="item/transition | item/type"
-             tal:attributes="title string:${item/comment} by ${item/principal} at ${item/timestamp}"/>
-        </tal:t>
-        <br/>
-      </li>
-    </ul></div>
+      <div class="history-sidebar">
+        <div class="history-timeline cell width-4 position-0"><ul>
+          <li tal:repeat="item view/history_list" tal:attributes="class item/entry_type">
+            <tal:t tal:condition="exists:item/version_id">
+              <a tal:content="item/version_id"
+                 tal:attributes="href string:${context/absolute_url}/@@cmsui-history-panel?sel_to=${item/version_id};
+                                 class string:id-container ${item/klass};
+                                 title string:${item/comment} by ${item/principal} at ${item/timestamp};
+                                "/>
+            </tal:t>
+            <tal:t tal:condition="exists:item/transition">
+              <span class="empty-id-container"></span>
+              <span tal:content="item/transition | item/type"
+                 tal:attributes="title string:${item/comment} by ${item/principal} at ${item/timestamp}"/>
+            </tal:t>
+            <tal:t tal:condition="exists:item/date">
+              <span tal:content="item/date">September 2010</span>
+            </tal:t>
+          </li>
+        </ul></div>
+        <small>Ctrl-click to compare against a different revision</small>
+      </div>
 
-    <div class="history-detail cell width-12 position-4" tal:condition="exists:view/sel_to_version">
-      <h2 tal:content="string:Revision ${view/sel_to_version/version_id}: ${view/sel_to_version/comment}">Comment</h2>
-      <p tal:content="string:By ${view/sel_to_version/principal} at ${view/sel_to_version/timestamp}">Description</p>
-      <hr />
-      <h3 tal:condition="exists:view/sel_from_version"
-         tal:content="string:Comparing to revision ${view/sel_from_version/version_id}">Comparing to</h3>
-      <fieldset class="diff" tal:repeat="diff view/history_changes">
-        <legend tal:content="diff/label">Body text</legend>
+      <div class="history-detail cell width-12 position-4" tal:condition="exists:view/sel_to_version">
+        <h2 tal:content="string:Revision ${view/sel_to_version/version_id}: ${view/sel_to_version/comment}">Comment</h2>
+        <p tal:content="string:By ${view/sel_to_version/principal} at ${view/sel_to_version/timestamp}">Description</p>
+        <hr />
+        <h3 tal:condition="exists:view/sel_from_version"
+           tal:content="string:Comparing to revision ${view/sel_from_version/version_id}">Comparing to</h3>
+        <fieldset class="diff" tal:repeat="diff view/history_changes">
+          <legend tal:content="diff/label">Body text</legend>
 
-        <div class="fieldDiff inline-diff"
-             tal:condition="python:exists('diff/inline_diff')"
-             tal:content="structure python:diff.inline_diff()">
-          Inline changes
-        </div>
+          <div class="fieldDiff inline-diff"
+               tal:condition="python:exists('diff/inline_diff')"
+               tal:content="structure python:diff.inline_diff()">
+            Inline changes
+          </div>
 
-        <pre class="fieldDiff code-diff"
-             tal:condition="python:not exists('diff/inline_diff') and exists('diff/html_diff')"
-             tal:content="diff/html_diff">
-          HTML diff-formatted changes
-        </pre>
+          <pre class="fieldDiff code-diff"
+               tal:condition="python:not exists('diff/inline_diff') and exists('diff/html_diff')"
+               tal:content="diff/html_diff">
+            HTML diff-formatted changes
+          </pre>
+    
+          <pre class="fieldDiff code-diff"
+               tal:condition="python:not exists('diff/inline_diff') and not exists('diff/html_diff') and exists('diff/ndiff')"
+               tal:content="diff/ndiff">
+            ndiff-formatted changes
+          </pre>
 
-        <pre class="fieldDiff code-diff"
-             tal:condition="python:not exists('diff/inline_diff') and not exists('diff/html_diff') and exists('diff/ndiff')"
-             tal:content="diff/ndiff">
-          ndiff-formatted changes
-        </pre>
-
-      </fieldset>
+        </fieldset>
+      </div>
     </div>
-
   </metal:main>
 
 </body>

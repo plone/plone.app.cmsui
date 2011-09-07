@@ -1,47 +1,61 @@
+#history-dialog div.history-sidebar {
+    padding: 0 0 0 1em;
+    float:left;
+}
+
+#history-dialog div.history-sidebar, #history-dialog div.history-timeline ul {
+    width: 14em;
+}
+
+div.history-detail {
+    margin-left: 16em;
+}
+
 div.history-timeline {
     border-right: 3px solid #2c6596;
-    overflow:visible;
-    margin-bottom: 20px;
-    width: 2.6em;
-    float: left;
+    overflow: visible;
+    width: 1.6em;
 }
-ul.history-panel {
-    padding: 0 0 0 10px;
+div.history-timeline ul {
+    padding: 0;
     margin: 0;
     line-height: 2em;
     list-style-type: none;
-    width: 15em; /*TODO: Eeeeeu */
 }
-.id-container, .empty-id-container {
+div.history-timeline ul li {
+    margin-bottom: 3px;
+}
+div.history-sidebar .id-container, div.history-sidebar .empty-id-container {
     display: inline-block;
     -moz-border-radius: 10px;
     border-radius: 10px;
     border: 3px solid #2c6596;
     text-align: center;
 }
-.id-container {
+div.history-sidebar .id-container {
     width: 3em;
     background: #CCC;
 }
-.empty-id-container {
-    vertical-align: top;
+div.history-sidebar .empty-id-container {
+    vertical-align: middle;
     width: 0.2em;
     height: 0px;
     margin: 0.5em 0 0.5em 1.6em;
 }
-.id-container.sel_to {
+div.history-sidebar .id-container.sel_to {
     border: 3px solid red;
     background: yellow;
 }
-.id-container.sel_from {
+div.history-sidebar .id-container.sel_from {
     border: 3px solid green;
 }
-ul.history-panel div.timeline {
-    position: absolute
-    border-right: 3px solid #2c6596;
-}
-div.history-detail {
-    margin-left: 16em;
+
+div.history-sidebar li.date-marker {
+    font-size: 0.7em;
+    line-height: 1.1em;
+    text-align: right;
+    border-top: 1px dotted #2c6596;
+    height: 1px;
 }
 
 .inline-diff {

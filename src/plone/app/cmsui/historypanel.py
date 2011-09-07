@@ -1,6 +1,7 @@
 from Acquisition import aq_inner
 
 from datetime import datetime
+from dateutil.relativedelta import relativedelta
 
 from plone.app.cmsui.interfaces import _
 
@@ -36,7 +37,6 @@ class HistoryPanel(BrowserView):
             raise Unauthorized
         
         # Get editing history
-        self.version_history = []
         self.repo_tool=getToolByName(self.context, "portal_repository")
         if self.repo_tool is None or not self.repo_tool.isVersionable(context):
             # Item isn't versionable
@@ -49,6 +49,7 @@ class HistoryPanel(BrowserView):
             return super(HistoryPanel, self).__call__()
         
         # Go through revision history backwards
+        history_list = []
         for i in xrange(edit_history.getLength(countPurged=False)-1, -1, -1):
             data = edit_history.retrieve(i, countPurged=False)
             meta = data["metadata"]["sys_metadata"]
@@ -74,24 +75,38 @@ class HistoryPanel(BrowserView):
             if self.sel_to == h['version_id']:
               h['klass'] = 'sel_to'
               self.sel_to_version = h
-            self.version_history.append(h)
-        
-        return super(HistoryPanel, self).__call__()
-    
-    def history_list(self):
-        version_history = self.version_history
+            history_list.append(h)
         
         # Add workflow history to version history
         workflow = getToolByName(self.context, 'portal_workflow')
         for r in workflow.getInfoFor(self.context, 'review_history'):
-            version_history.append(dict(entry_type='workflow',
-                transition=workflow.getTitleForTransitionOnType(r['action'], self.context.portal_type) or _("Create"),
+            title = workflow.getTitleForTransitionOnType(r['action'], self.context.portal_type)
+            if title is None: continue # No title means 'Create', and there'll be a edit_history entry for this.
+            history_list.append(dict(entry_type='workflow',
+                transition=title,
                 principal=r.get('actor', _(u'label_anonymous_user', default=u'Anonymous User')),
                 timestamp=datetime.fromtimestamp(float(r['time'])),
                 comment=r['comments'] or _("Transition"),
                 klass='',
             ))
-        return sorted(version_history, key=lambda k: datetime.now() - k['timestamp'])
+        
+        # Insert a date marker for every unique month
+        date_markers = dict()
+        for e in history_list:
+            date_string = e['timestamp'].strftime('%B %Y')
+            if date_markers.has_key(date_string): continue
+            date_markers[date_string] = dict(
+                entry_type='date-marker',
+                # Timestamp one month ahead so it's on top of all the entries it refers to
+                timestamp=datetime(e['timestamp'].year,e['timestamp'].month,1)+relativedelta(months=+1),
+                date=e['timestamp'].strftime('%B %Y'),
+            )
+        history_list += date_markers.values()
+        
+        # Sort list into reverse order
+        self.history_list = history_list = sorted(history_list, key=lambda k: datetime.now() - k['timestamp'])
+        
+        return super(HistoryPanel, self).__call__()
     
     def history_changes(self):
         if not(isinstance(self.sel_from,int) and isinstance(self.sel_to,int)):
