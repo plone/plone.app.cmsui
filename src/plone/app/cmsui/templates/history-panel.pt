@@ -16,7 +16,11 @@
     <div id="history-dialog">
       <h1 class="documentFirstHeading">History panel</h1>
 
-      <div class="history-sidebar">
+      <p tal:condition="not:exists:view/history_list">
+        This item does not have any previous versions.
+      </p>
+      
+      <div class="history-sidebar" tal:condition="exists:view/history_list">
         <div class="history-timeline cell width-4 position-0"><ul>
           <li tal:repeat="item view/history_list" tal:attributes="class item/entry_type">
             <tal:t tal:condition="exists:item/version_id">
