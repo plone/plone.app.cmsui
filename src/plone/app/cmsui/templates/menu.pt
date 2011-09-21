@@ -80,7 +80,8 @@
                     Add Content
                     </a>
                 </li>
-                <li id="structure"><a href="#" class="overlayLink" tal:attributes="href string:${canonical_object/absolute_url}/@@cmsui-structure"
+                <li id="structure" tal:condition="view/canListFolderContents">
+                  <a href="#" class="overlayLink" tal:attributes="href string:${canonical_object/absolute_url}/@@cmsui-structure"
                     ><span i18n:translate="cmsui_contents" tal:omit-tag="">Structure</span
                     ><tal:block condition="python:(view.contextState.is_structural_folder() or view.contextState.is_default_page()) and view.itemsInFolder() is not None"> (<span tal:replace="view/itemsInFolder">12</span>)</tal:block
                     ></a></li>

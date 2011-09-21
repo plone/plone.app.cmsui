@@ -229,3 +229,7 @@ class Menu(BrowserView):
     def canAdd(self):
         pm = getToolByName(self.context, 'portal_membership')
         return pm.checkPermission('Add portal content', self.context)
+
+    def canListFolderContents(self):
+        pm = getToolByName(self.context, 'portal_membership')
+        return pm.checkPermission('List folder contents', self.context)

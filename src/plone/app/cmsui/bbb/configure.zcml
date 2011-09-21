@@ -48,7 +48,7 @@
         layer="..interfaces.ICMSUILayer"
         class="..structure.StructureView"
         template="../templates/structure.pt"
-        permission="plone.ViewCMSUI"
+        permission="cmf.ListFolderContents"
         />
     
     <browser:page
