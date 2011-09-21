@@ -10,6 +10,7 @@ from AccessControl import getSecurityManager
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.interfaces import IPloneSiteRoot
 
+
 class Menu(BrowserView):
     """The view containing the overlay menu
     """
@@ -224,3 +225,27 @@ class Menu(BrowserView):
     @memoize
     def baseURL(self):
         return self.context.absolute_url()
+
+    def canAdd(self):
+        pm = getToolByName(self.context, 'portal_membership')
+        return pm.checkPermission('Add portal content', self.context)
+
+    def canListFolderContents(self):
+        pm = getToolByName(self.context, 'portal_membership')
+        return pm.checkPermission('List folder contents', self.context)
+
+    def canChangeState(self):
+        wft = getToolByName(self.context, 'portal_workflow')
+        return len(wft.getTransitionsFor(self.context))>0
+
+    def canAccessHistory(self):
+        pm = getToolByName(self.context, 'portal_membership')
+        return pm.checkPermission('CMFEditions: Access previous versions', self.context)
+
+    def canChangeSharing(self):
+        pm = getToolByName(self.context, 'portal_membership')
+        return pm.checkPermission('Sharing page: Delegate roles', self.context)
+
+    def canManageSite(self):
+        pm = getToolByName(self.context, 'portal_membership')
+        return pm.checkPermission('Plone Site Setup', self.context)

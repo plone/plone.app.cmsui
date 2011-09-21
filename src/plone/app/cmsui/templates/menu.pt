@@ -74,13 +74,14 @@
         <div class="grid_10">
             <!-- Links tangentially related to the current document -->
             <ul id="folder-actions">
-                <li id="folder-add_content">
+                <li id="folder-add_content" tal:condition="view/canAdd">
                     <a class="overlayLink" href="" 
                        tal:attributes="href string:${folder/absolute_url}/@@cmsui-add-content">
                     Add Content
                     </a>
                 </li>
-                <li id="structure"><a href="#" class="overlayLink" tal:attributes="href string:${canonical_object/absolute_url}/@@cmsui-structure"
+                <li id="structure" tal:condition="view/canListFolderContents">
+                  <a href="#" class="overlayLink" tal:attributes="href string:${canonical_object/absolute_url}/@@cmsui-structure"
                     ><span i18n:translate="cmsui_contents" tal:omit-tag="">Structure</span
                     ><tal:block condition="python:(view.contextState.is_structural_folder() or view.contextState.is_default_page()) and view.itemsInFolder() is not None"> (<span tal:replace="view/itemsInFolder">12</span>)</tal:block
                     ></a></li>
@@ -110,21 +111,22 @@
                     <a class="overlayLink"
                         title="Workflow&hellip;"
                         id="plone-contentmenu-workflow"
+                        tal:omit-tag="not: view/canChangeState"
                         tal:attributes="href string:${view/baseURL}/@@cmsui-workflow-panel"
                         >Status: <span class="" tal:attributes="class string:state-${context_state/workflow_state}"
                           tal:content="view/workflowState">Draft</span></a>
                </li>
-               <li id="document-history">
+               <li id="document-history"
+                   tal:condition="view/canAccessHistory">
                     <a class="overlayLink"
                        title="View history and previous revisions&hellip;"
                        tal:attributes="href string:${view/baseURL}/@@cmsui-history-panel"
                        >History</a>
                 </li>
-                <li id="document-author">
+                <li id="document-author" tal:condition="view/canChangeSharing">
                     <a class="overlayLink"
                        title="Sharing&hellip;"
                        tal:attributes="href string:${view/baseURL}/@@cmsui-sharing"
-                       tal:omit-tag="python:not view.tools.membership().checkPermission('Sharing page: Delegate roles', context)"
                        >Sharing</a>
                 </li>
                 <tal:otheractions define="actions view/settingsActions"
@@ -155,10 +157,10 @@
 
         </div>
 
-        <aside class="grid_2" id="site-setup">
+        <aside class="grid_2" id="site-setup"
+               tal:condition="view/canManageSite">
             <a class="overlayLink"
                 tal:attributes="href string:${portal_state/navigation_root_url}/@@overview-controlpanel"
-                tal:condition="python:view.tools.membership().checkPermission('Plone Site Setup', context)"
                 i18n:translate="cmsui_site_configuration">Site configuration</a>
         </aside>
     </div>
