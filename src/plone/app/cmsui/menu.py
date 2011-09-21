@@ -245,3 +245,7 @@ class Menu(BrowserView):
     def canChangeSharing(self):
         pm = getToolByName(self.context, 'portal_membership')
         return pm.checkPermission('Sharing page: Delegate roles', self.context)
+
+    def canManageSite(self):
+        pm = getToolByName(self.context, 'portal_membership')
+        return pm.checkPermission('Plone Site Setup', self.context)
