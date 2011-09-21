@@ -4,7 +4,8 @@
             <role name="Manager" />
             <role name="Owner" />
             <role name="Editor" />
-            <role name="Reviwer" />
+            <role name="Reviewer" />
+            <role name="Member" />
         </permission>
     </permissions>
 </rolemap>
