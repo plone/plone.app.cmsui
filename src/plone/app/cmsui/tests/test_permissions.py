@@ -79,6 +79,8 @@ class TestPermissions(unittest.TestCase):
         browser_login(self.portal, browser)
         browser.open('http://nohost/plone/empty-folder/cmsui-menu')
         self.assertTrue('plone-contentmenu-workflow' not in browser.contents)
+        self.assertTrue('Status:' in browser.contents)
+        self.assertTrue('Public draft' in browser.contents)
         setRoles(self.portal, TEST_USER_ID, ['Member', 'Reviewer'])
         transaction.commit()
         browser.open('http://nohost/plone/empty-folder/cmsui-menu')
