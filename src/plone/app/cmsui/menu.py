@@ -10,6 +10,7 @@ from AccessControl import getSecurityManager
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.interfaces import IPloneSiteRoot
 
+
 class Menu(BrowserView):
     """The view containing the overlay menu
     """
@@ -224,3 +225,7 @@ class Menu(BrowserView):
     @memoize
     def baseURL(self):
         return self.context.absolute_url()
+
+    def canAdd(self):
+        pm = getToolByName(self.context, 'portal_membership')
+        return pm.checkPermission('Add portal content', self.context)

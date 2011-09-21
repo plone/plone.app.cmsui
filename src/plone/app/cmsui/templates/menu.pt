@@ -74,7 +74,7 @@
         <div class="grid_10">
             <!-- Links tangentially related to the current document -->
             <ul id="folder-actions">
-                <li id="folder-add_content">
+                <li id="folder-add_content" tal:condition="view/canAdd">
                     <a class="overlayLink" href="" 
                        tal:attributes="href string:${folder/absolute_url}/@@cmsui-add-content">
                     Add Content
