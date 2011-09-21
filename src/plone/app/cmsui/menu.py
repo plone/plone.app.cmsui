@@ -241,3 +241,7 @@ class Menu(BrowserView):
     def canAccessHistory(self):
         pm = getToolByName(self.context, 'portal_membership')
         return pm.checkPermission('CMFEditions: Access previous versions', self.context)
+
+    def canChangeSharing(self):
+        pm = getToolByName(self.context, 'portal_membership')
+        return pm.checkPermission('Sharing page: Delegate roles', self.context)

@@ -123,11 +123,10 @@
                        tal:attributes="href string:${view/baseURL}/@@cmsui-history-panel"
                        >History</a>
                 </li>
-                <li id="document-author">
+                <li id="document-author" tal:condition="view/canChangeSharing">
                     <a class="overlayLink"
                        title="Sharing&hellip;"
                        tal:attributes="href string:${view/baseURL}/@@cmsui-sharing"
-                       tal:omit-tag="python:not view.tools.membership().checkPermission('Sharing page: Delegate roles', context)"
                        >Sharing</a>
                 </li>
                 <tal:otheractions define="actions view/settingsActions"
