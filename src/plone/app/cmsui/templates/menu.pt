@@ -116,7 +116,8 @@
                         >Status: <span class="" tal:attributes="class string:state-${context_state/workflow_state}"
                           tal:content="view/workflowState">Draft</span></a>
                </li>
-               <li id="document-history">
+               <li id="document-history"
+                   tal:condition="view/canAccessHistory">
                     <a class="overlayLink"
                        title="View history and previous revisions&hellip;"
                        tal:attributes="href string:${view/baseURL}/@@cmsui-history-panel"

@@ -237,3 +237,7 @@ class Menu(BrowserView):
     def canChangeState(self):
         wft = getToolByName(self.context, 'portal_workflow')
         return len(wft.getTransitionsFor(self.context))>0
+
+    def canAccessHistory(self):
+        pm = getToolByName(self.context, 'portal_membership')
+        return pm.checkPermission('CMFEditions: Access previous versions', self.context)
