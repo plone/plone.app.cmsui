@@ -233,3 +233,7 @@ class Menu(BrowserView):
     def canListFolderContents(self):
         pm = getToolByName(self.context, 'portal_membership')
         return pm.checkPermission('List folder contents', self.context)
+
+    def canChangeState(self):
+        wft = getToolByName(self.context, 'portal_workflow')
+        return len(wft.getTransitionsFor(self.context))>0

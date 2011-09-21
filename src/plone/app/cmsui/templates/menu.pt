@@ -111,6 +111,7 @@
                     <a class="overlayLink"
                         title="Workflow&hellip;"
                         id="plone-contentmenu-workflow"
+                        tal:omit-tag="not: view/canChangeState"
                         tal:attributes="href string:${view/baseURL}/@@cmsui-workflow-panel"
                         >Status: <span class="" tal:attributes="class string:state-${context_state/workflow_state}"
                           tal:content="view/workflowState">Draft</span></a>
