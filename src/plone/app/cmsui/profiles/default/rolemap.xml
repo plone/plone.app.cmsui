@@ -2,9 +2,7 @@
     <permissions>
         <permission name="Plone: View CMS UI" acquire="False">
             <role name="Manager" />
-            <role name="Owner" />
-            <role name="Editor" />
-            <role name="Reviewer" />
+            <role name="Site Administrator" />
             <role name="Member" />
         </permission>
     </permissions>
