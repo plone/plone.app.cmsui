@@ -10,8 +10,8 @@
         </object>
     </object>
 
-    <object name="user" meta_type="CMF Action Category">
-        <object name="plone_setup" i18n:domain="plone">
+    <object name="site_actions" meta_type="CMF Action Category">
+        <object name="plone_setup" purge="false">
             <property name="visible">False</property>
         </object>
     </object>
