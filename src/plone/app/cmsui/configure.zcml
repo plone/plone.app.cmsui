@@ -5,6 +5,7 @@
     xmlns:browser="http://namespaces.zope.org/browser"
     xmlns:i18n="http://namespaces.zope.org/i18n"
     xmlns:z3c="http://namespaces.zope.org/z3c"
+    xmlns:plone="http://namespaces.plone.org/plone"
     i18n_domain="plone">
 
     <!-- Permissions -->
@@ -170,7 +171,13 @@
 <class class="Products.CMFPlone.Portal.PloneSite">
   <implements interface=".interfaces.IQuickUploadCapable" />
 </class>       
-      
+
+<plone:behavior
+    title="Quick Upload Capable"
+    description="Show the quick upload form for this type"
+    provides=".interfaces.IQuickUploadCapable"
+    for="plone.dexterity.interfaces.IDexterityContainer"/>
+
 <!-- Quick Upload View -->
      
 <browser:page
