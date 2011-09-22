@@ -10,12 +10,6 @@
         </object>
     </object>
 
-    <object name="user" meta_type="CMF Action Category">
-        <object name="plone_setup" i18n:domain="plone">
-            <property name="visible">False</property>
-        </object>
-    </object>
-
     <object name="object_buttons" meta_type="CMF Action Category">
         <object name="paste" i18n:domain="plone" remove="true">
             <property name="available_expr">python:object.cb_dataValid() and object.isPrincipiaFolderish</property>
