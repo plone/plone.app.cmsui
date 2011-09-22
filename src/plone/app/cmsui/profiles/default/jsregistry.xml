@@ -5,6 +5,7 @@
     
     <javascript bundle="cmsui" id="++resource++plone.app.cmsui/js/menu.js"  />
     <javascript bundle="cmsui" id="++resource++plone.app.cmsui/js/libs/fileuploader.js"  />
+    <javascript bundle="cmsui" id="++resource++plone.app.cmsui/js/quickupload.js"  />
     <javascript bundle="cmsui" id="++resource++plone.app.cmsui/js/dragdropreorder.js"  />
     <javascript bundle="cmsui" id="++resource++plone.app.cmsui/js/structure.js"  />
     <javascript bundle="cmsui" id="++resource++plone.app.cmsui/js/formtabbing.js"  />
