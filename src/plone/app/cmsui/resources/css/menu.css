@@ -198,7 +198,7 @@ iframe { border-width: 0; border-style:none; }
   /* Chrome 10+, Saf5.1+ */
 
   background-image: linear-gradient(top, #2c6596, #3272aa);
-  position: relative;
+  position: absolute;
   z-index: -1;
 }
 #toolbar .container:last-of-type #document-info, #toolbar .container:last-of-type #folder-actions {
@@ -234,7 +234,18 @@ iframe { border-width: 0; border-style:none; }
   border-bottom: 2px solid #1b3d5b;
 }
 
+#toolbar #folder-actions{
+    display:inline;
 }
+
+#toolbar dl.actionMenu{
+    display:inline-block;
+}
+
+#toolbar #tools{
+    float: right;
+}
+
 .portalMessage {
   position: absolute;
   left: -10000px;
@@ -311,11 +322,10 @@ iframe { border-width: 0; border-style:none; }
 }
 
 dl.actionMenu {
-    float: right;
     white-space: nowrap;
-    position: relative;
     margin-left: 0.5em;
 }
+
 dl.actionMenu a,
 dl.actionMenu div {
     display: block !important;

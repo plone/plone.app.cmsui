@@ -26,7 +26,57 @@
 <section id="toolbar" tal:define="folder context_state/folder;
                                   canonical_object context_state/canonical_object;">
 
-  <ul id="folder-actions">
+  <div id="tools">
+      <dl class="actionMenu deactivated" id="personal-tools">
+        <dt class="actionMenuHeader">
+          <a tal:attributes="href string:${portal_state/navigation_root_url}/@@personal-information"
+          ><span id="user-name" tal:content="view/userName">John</span>
+          <span class="arrowDownAlternative">&#9660;</span
+          ></a>
+        </dt>
+        <dd class="actionMenuContent">
+          <ul><li tal:repeat="action view/personalActions"
+                  tal:attributes="id string:cmsui-personallink-${action/id}"><a
+                  tal:attributes="href action/url;
+                                  class python:action['id'] != 'logout' and 'overlayLink' or None"
+                  tal:content="action/title" /></li></ul>
+        </dd>
+      </dl>
+  
+
+      <dl class="actionMenu deactivated" id="site-tools">
+        <dt class="actionMenuHeader">
+          <a tal:attributes="href string:${portal_state/navigation_root_url}"
+             ><img alt="Site tools" title="" i18n:attributes="alt"
+              tal:attributes="src string:${portal_url}/++resource++plone.app.cmsui/icons/Cog.png"
+              /></a>
+        </dt>
+        <dd class="actionMenuContent">
+            <ul id="portal-siteactions"
+                tal:define="accesskeys python: {'sitemap' : '3', 'accessibility' : '0', 'contact' : '9'};
+                            actions python:view.contextState.actions('site_actions')"
+                tal:condition="actions"
+                i18n:domain="plone">
+    
+                <li tal:repeat="saction actions"
+                    tal:attributes="id string:siteaction-${saction/id}"><a
+                       href=""
+                       tal:define="title saction/title;
+                                   id saction/id;
+                                   accesskey python: accesskeys.get(id, '');"
+                       i18n:attributes="title"
+                       i18n:translate=""
+                       tal:content="title"
+                       tal:attributes="href saction/url;
+                                       title title;
+                                       accesskey accesskey;"
+                       >Site action</a></li>
+            </ul>
+      
+        </dd>
+      </dl>
+  </div>
+    <ul id="folder-actions">
       <li id="structure" tal:condition="view/canListFolderContents">
         <a href="#" class="overlayLink" tal:attributes="href string:${canonical_object/absolute_url}/@@cmsui-structure"
           ><img alt="" title=""
@@ -40,54 +90,6 @@
                tal:attributes="src string:${portal_url}/++resource++plone.app.cmsui/icons/Folder.png"
                />Add Content</a></li>
   </ul>
-
-  <dl class="actionMenu deactivated" id="personal-tools">
-    <dt class="actionMenuHeader">
-      <a tal:attributes="href string:${portal_state/navigation_root_url}/@@personal-information"
-      ><span id="user-name" tal:content="view/userName">John</span>
-      <span class="arrowDownAlternative">&#9660;</span
-      ></a>
-    </dt>
-    <dd class="actionMenuContent">
-      <ul><li tal:repeat="action view/personalActions"
-              tal:attributes="id string:cmsui-personallink-${action/id}"><a
-              tal:attributes="href action/url;
-                              class python:action['id'] != 'logout' and 'overlayLink' or None"
-              tal:content="action/title" /></li></ul>
-    </dd>
-  </dl>
-
-  <dl class="actionMenu deactivated" id="site-tools">
-    <dt class="actionMenuHeader">
-      <a tal:attributes="href string:${portal_state/navigation_root_url}"
-         ><img alt="Site tools" title="" i18n:attributes="alt"
-          tal:attributes="src string:${portal_url}/++resource++plone.app.cmsui/icons/Cog.png"
-          /></a>
-    </dt>
-    <dd class="actionMenuContent">
-        <ul id="portal-siteactions"
-            tal:define="accesskeys python: {'sitemap' : '3', 'accessibility' : '0', 'contact' : '9'};
-                        actions python:view.contextState.actions('site_actions')"
-            tal:condition="actions"
-            i18n:domain="plone">
-
-            <li tal:repeat="saction actions"
-                tal:attributes="id string:siteaction-${saction/id}"><a
-                   href=""
-                   tal:define="title saction/title;
-                               id saction/id;
-                               accesskey python: accesskeys.get(id, '');"
-                   i18n:attributes="title"
-                   i18n:translate=""
-                   tal:content="title"
-                   tal:attributes="href saction/url;
-                                   title title;
-                                   accesskey accesskey;"
-                   >Site action</a></li>
-        </ul>
-  
-    </dd>
-  </dl>
 
 </section>
 
