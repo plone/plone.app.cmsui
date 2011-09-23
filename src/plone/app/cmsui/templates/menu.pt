@@ -26,144 +26,68 @@
 <section id="toolbar" tal:define="folder context_state/folder;
                                   canonical_object context_state/canonical_object;">
 
-    <div id="toolbar-top" class="container clearfix">
+  <ul id="folder-actions">
+      <li id="structure" tal:condition="view/canListFolderContents">
+        <a href="#" class="overlayLink" tal:attributes="href string:${canonical_object/absolute_url}/@@cmsui-structure"
+          ><img alt="" title=""
+            tal:attributes="src string:${portal_url}/++resource++plone.app.cmsui/icons/Folder.png"
+            /><span i18n:translate="cmsui_contents" tal:omit-tag="">Structure</span
+          ></a></li>
+      <li id="folder-add_content" tal:condition="view/canAdd">
+          <a class="overlayLink" href=""
+             tal:attributes="href string:${folder/absolute_url}/@@cmsui-add-content"
+             ><img alt="" title=""
+               tal:attributes="src string:${portal_url}/++resource++plone.app.cmsui/icons/Folder.png"
+               />Add Content</a></li>
+  </ul>
 
-        <!-- Breadcrumbs -->
-        <nav id="portal-breadcrumbs" class="grid_5">
-            <ul>
-                <li id='path-home'>
-                    <a tal:attributes="href portal_state/navigation_root_url">Home</a></li>
-                <li tal:repeat="crumb view/breadcrumbs">
-                    <a tal:condition="not:repeat/crumb/end"
-                       tal:attributes="href crumb/absolute_url;"
-                       tal:content="crumb/Title">Item</a>
-                    <span tal:condition="repeat/crumb/end" class="current" tal:content="crumb/Title">Item</span>
-                </li>
-            </ul>
-        </nav>
+  <dl class="actionMenu deactivated" id="personal-tools">
+    <dt class="actionMenuHeader">
+      <a tal:attributes="href string:${portal_state/navigation_root_url}/@@personal-information"
+      ><span id="user-name" tal:content="view/userName">John</span>
+      <span class="arrowDownAlternative">&#9660;</span
+      ></a>
+    </dt>
+    <dd class="actionMenuContent">
+      <ul><li tal:repeat="action view/personalActions"
+              tal:attributes="id string:cmsui-personallink-${action/id}"><a
+              tal:attributes="href action/url;
+                              class python:action['id'] != 'logout' and 'overlayLink' or None"
+              tal:content="action/title" /></li></ul>
+    </dd>
+  </dl>
 
-        <div class="grid_7">
-            <!-- Personal links -->
-            <!-- In the flexible grid, when inside a cell we get 12 cells to use again. -->
-            <ul id="personal-tools" class="alpha grid_9">
-                <li id="cmsui-logged-in-as"><a
-                    i18n:translate="cmsui_logged_in_as"
-                    class="overlayLink"
-                    tal:attributes="href string:${portal_state/navigation_root_url}/@@personal-information">Logged in as <span
-                        i18n:name="name" 
-                        tal:replace="view/userName" /></a></li><li
-                tal:repeat="action view/personalActions"
-                tal:attributes="id string:cmsui-personallink-${action/id}"><a
-                    tal:attributes="href action/url;
-                                    class python:action['id'] != 'logout' and 'overlayLink' or None"
-                    tal:content="action/title" /></li>
-            </ul>
+  <dl class="actionMenu deactivated" id="site-tools">
+    <dt class="actionMenuHeader">
+      <a tal:attributes="href string:${portal_state/navigation_root_url}"
+         ><img alt="Site tools" title="" i18n:attributes="alt"
+          tal:attributes="src string:${portal_url}/++resource++plone.app.cmsui/icons/Cog.png"
+          /></a>
+    </dt>
+    <dd class="actionMenuContent">
+        <ul id="portal-siteactions"
+            tal:define="accesskeys python: {'sitemap' : '3', 'accessibility' : '0', 'contact' : '9'};
+                        actions python:view.contextState.actions('site_actions')"
+            tal:condition="actions"
+            i18n:domain="plone">
 
-            <!-- Edit bar toggle -->
-            <div class="omega grid_3">
-                <a href="#" id="manage-page-open">Show edit bar &#9660;</a>
-                <a href="#" id="manage-page-close">Hide edit bar &#9650;</a>
-            </div>
-        </div>
-    </div>
-
-    <div id="toolbar-bottom" class="container clearfix"
-        tal:define="isLocked     python:view.contextState.is_locked()">
-
-        <!-- Information about the current document -->
-        <div class="grid_10">
-            <!-- Links tangentially related to the current document -->
-            <ul id="folder-actions">
-                <li id="folder-add_content" tal:condition="view/canAdd">
-                    <a class="overlayLink" href="" 
-                       tal:attributes="href string:${folder/absolute_url}/@@cmsui-add-content">
-                    Add Content
-                    </a>
-                </li>
-                <li id="structure" tal:condition="view/canListFolderContents">
-                  <a href="#" class="overlayLink" tal:attributes="href string:${canonical_object/absolute_url}/@@cmsui-structure"
-                    ><span i18n:translate="cmsui_contents" tal:omit-tag="">Structure</span
-                    ><tal:block condition="python:(view.contextState.is_structural_folder() or view.contextState.is_default_page()) and view.itemsInFolder() is not None"> (<span tal:replace="view/itemsInFolder">12</span>)</tal:block
-                    ></a></li>
-            </ul>
-            <ul id="document-info">
-               <li tal:condition="python:view.editLink()"
-                    tal:attributes="id python:isLocked and 'document-edit-locked' or 'document-edit';">
-                    <a class="overlayLink"
-                        tal:attributes="href string:${view/editLink}">
-                        <span tal:condition="not:isLocked" i18n:translate="cmsiu_edit" tal:omit-tag="">Edit</span>
-                        <span tal:condition="isLocked" i18n:translate="cmsiu_locked" tal:omit-tag="">Locked</span>
-                    </a>
-                </li>
-                <li tal:condition="deleteLink"
-                    tal:define="deleteLink python:view.deleteLink()"
-                    tal:attributes="id python:isLocked and 'document-delete-locked' or 'document-delete';">
-                    <a class="overlayLink"
-                        tal:attributes="href string:${view/deleteLink}">
-                        <span tal:condition="not:isLocked" i18n:translate="cmsiu_delete" 
-                            tal:omit-tag="">Delete</span>
-                        <span tal:condition="isLocked" i18n:translate="cmsiu_locked" 
-                            tal:omit-tag="">Locked</span>
-                    </a>
-                </li>
-               <li tal:condition="python:view.workflowState()"
-                    id="document-workflow_state">
-                    <a class="overlayLink"
-                        title="Workflow&hellip;"
-                        id="plone-contentmenu-workflow"
-                        tal:omit-tag="not: view/canChangeState"
-                        tal:attributes="href string:${view/baseURL}/@@cmsui-workflow-panel"
-                        >Status: <span class="" tal:attributes="class string:state-${context_state/workflow_state}"
-                          tal:content="view/workflowState">Draft</span></a>
-               </li>
-               <li id="document-history"
-                   tal:condition="view/canAccessHistory">
-                    <a class="overlayLink"
-                       title="View history and previous revisions&hellip;"
-                       tal:attributes="href string:${view/baseURL}/@@cmsui-history-panel"
-                       >History</a>
-                </li>
-                <li id="document-author" tal:condition="view/canChangeSharing">
-                    <a class="overlayLink"
-                       title="Sharing&hellip;"
-                       tal:attributes="href string:${view/baseURL}/@@cmsui-sharing"
-                       >Sharing</a>
-                </li>
-                <tal:otheractions define="actions view/settingsActions"
-                    condition="actions">
-                    <li tal:condition="python:len(actions) > 1"
-                         id="document-settings">
-                         <a class="dropdownLink" href="#">More&hellip;</a>
-                            <ul class="dropdownItems" tal:condition="python:len(actions) > 1">
-                                <li tal:repeat="action actions">
-                                    <a class="overlayLink"
-                                       tal:content="action/title"
-                                       tal:attributes="href action/url;
-                                                       style string:background: url(${action/icon}) 50% 0 no-repeat;" />
-                                </li>
-                            </ul>
-                    </li>
-                    <li tal:condition="python:len(actions) == 1"
-                         id="document-settings">
-
-                        <a class="overlayLink"
-                           tal:define="action  python:actions[0]"
-                           tal:content="action/title"
-                           tal:attributes="href action/url;
-                                           style string:background: url(${action/icon}) 50% 0 no-repeat;" />
-                    </li>
-                </tal:otheractions>
-            </ul>
-
-        </div>
-
-        <aside class="grid_2" id="site-setup"
-               tal:condition="view/canManageSite">
-            <a class="overlayLink"
-                tal:attributes="href string:${portal_state/navigation_root_url}/@@overview-controlpanel"
-                i18n:translate="cmsui_site_configuration">Site configuration</a>
-        </aside>
-    </div>
+            <li tal:repeat="saction actions"
+                tal:attributes="id string:siteaction-${saction/id}"><a
+                   href=""
+                   tal:define="title saction/title;
+                               id saction/id;
+                               accesskey python: accesskeys.get(id, '');"
+                   i18n:attributes="title"
+                   i18n:translate=""
+                   tal:content="title"
+                   tal:attributes="href saction/url;
+                                   title title;
+                                   accesskey accesskey;"
+                   >Site action</a></li>
+        </ul>
+  
+    </dd>
+  </dl>
 
 </section>
 
