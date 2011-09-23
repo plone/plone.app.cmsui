@@ -5,12 +5,13 @@
  */
 
 (function ($) {
-    jQuery(document).ready(function() {
-        var ulContainer = jQuery('.uploaderContainer');
-        ulContainer.each(function(){
-            var uploadUrl =  jQuery('.uploadUrl', this).val(),
-                uploadData =  jQuery('.uploadData', this).val(),
-                UlDiv = jQuery(this);
+    initQuickUpload = function(){
+        $('.uploaderContainer').each(function(){
+            var ulDiv = $(this);
+            var uploadUrl = ulDiv.children('.uploadUrl').val();
+            var uploadData = ulDiv.children('.uploadData').val();
+            // If the uploaderContainer is already set up, leave it alone
+            if(typeof uploadUrl === "undefined") return;
             jQuery.ajax({
                 type: 'GET',
                 url: uploadUrl,
@@ -18,11 +19,13 @@
                 dataType: 'html',
                 contentType: 'text/html; charset=utf-8',
                 success: function (html) {
-                    UlDiv.html(html);
+                    ulDiv.html(html);
                 }
             });
         });
-    });
+    };
+    $(document).ajaxComplete(initQuickUpload);
+    $(document).ready(initQuickUpload);
 }(jQuery));
 
 var PloneQuickUpload = {};
