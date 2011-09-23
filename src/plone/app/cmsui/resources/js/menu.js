@@ -87,9 +87,6 @@ function eraseCookie(name) {
 }
 
 (function ($) {
-    var Browser = {},
-        loadUploader;
-
     // jquery method to load an overlay
     $.fn.loadOverlay = function(href, data, callback) {
         $(document).trigger('startLoadOverlay', [this, href, data]);
@@ -146,7 +143,6 @@ function eraseCookie(name) {
                     }
                 },
                 onLoad: function (e) {
-                    loadUploader();
                     $.plone.showNotifyFromElements($(".overlay"));
                     $(document).trigger('loadOverlay', [this, e]);
                     return true;
@@ -292,10 +288,6 @@ function eraseCookie(name) {
     // workaround this MSIE bug :
     // https://dev.plone.org/plone/ticket/10894
     if (jQuery.browser.msie) {jQuery("#settings").remove();}
-    Browser = {};
-    // Browser.onUploadComplete = function() {
-    //     window.location.reload();
-    // }
 
 }(jQuery));
 
