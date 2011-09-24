@@ -17,7 +17,6 @@
 #  along with this program; if not, write to the Free Software
 #  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-from types import UnicodeType
 from thread import allocate_lock
 
 import transaction
@@ -27,13 +26,10 @@ from Acquisition import aq_inner
 from zope import interface
 from zope import component
 from zope.event import notify
-from zope.lifecycleevent import ObjectModifiedEvent
 from zope.app.container.interfaces import INameChooser
 
 from plone.i18n.normalizer.interfaces import IIDNormalizer
 from Products.Archetypes.event import ObjectInitializedEvent
-from Products.CMFPlone import utils as ploneutils
-from Products.CMFCore import utils as cmfutils
 
 # from collective.quickupload import logger
 from plone.app.cmsui.interfaces import (
