@@ -172,12 +172,9 @@
   <implements interface=".interfaces.IQuickUploadCapable" />
 </class>       
 
-<plone:behavior
-    title="Quick Upload Capable"
-    description="Show the quick upload form for this type"
-    provides=".interfaces.IQuickUploadCapable"
-    for="plone.dexterity.interfaces.IDexterityContainer"/>
-
+<class class="plone.dexterity.content.Container">
+  <implements interface=".interfaces.IQuickUploadCapable" />
+</class>
 <!-- Quick Upload View -->
      
 <browser:page
@@ -188,14 +185,6 @@
     permission="cmf.AddPortalContent"
     layer=".interfaces.ICMSUILayer"/>
   
-<!-- Quick Upload javascript Init -->
-<browser:page
-    for="*"
-    name="quick_upload_init"
-    class=".fileupload.QuickUploadInit"
-    permission="cmf.AddPortalContent"
-    layer=".interfaces.ICMSUILayer"/>
-
 <browser:page
     for="*"
     name="quick_upload_file"
