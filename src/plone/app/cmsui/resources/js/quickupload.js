@@ -122,14 +122,14 @@ PloneQuickUpload.onAllUploadsComplete = function(uploader){
     overlay = $(uploader._element).closest("div.pb-ajax");
     if(overlay.length) {
         $("div.pb-ajax").loadOverlay(uploader._options.container_url);
+        $.plone.notify({
+            'title': 'Info',
+            'message': uploader._filesUploaded + ' files have been uploaded.'
+        });
     } else {
         // Not in an overlay, reload the page
         window.location.reload(true);
     }
-    $.plone.notify({
-        'title': 'Info',
-        'message': uploader._filesUploaded + ' files have been uploaded.'
-    });
 };
 
 PloneQuickUpload.clearQueue = function(uploader, domelement) {
