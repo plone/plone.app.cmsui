@@ -34,13 +34,13 @@
                class="context uploadifybutton"
                value="Upload Files"
                i18n:attributes="value label_upload_files"
-               tal:attributes="onclick string:sendDataAndUpload_${uploader_id}()" />
+               />
         <input type="button" 
                id="uploadify-clear-queue"
                class="context uploadifybutton"
                value="Clear Queue"
                i18n:attributes="value label_clear_queue"
-               tal:attributes="onclick string:clearQueue_${uploader_id}()" />
+               />
       </div>
     </div>
     <!-- uploadify javascript -->

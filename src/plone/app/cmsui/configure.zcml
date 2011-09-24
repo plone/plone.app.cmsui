@@ -188,14 +188,6 @@
     permission="cmf.AddPortalContent"
     layer=".interfaces.ICMSUILayer"/>
   
-<!-- Quick Upload javascript Init -->
-<browser:page
-    for="*"
-    name="quick_upload_init"
-    class=".fileupload.QuickUploadInit"
-    permission="cmf.AddPortalContent"
-    layer=".interfaces.ICMSUILayer"/>
-
 <browser:page
     for="*"
     name="quick_upload_file"
