@@ -113,6 +113,10 @@ function eraseCookie(name) {
         $('#toolbar').css({'opacity': 0});
         $(document).bind('formOverlayLoadSuccess', function () {
             $.plone.showNotifyFromElements($(".overlay"));
+            if ($('#form-widgets-ILayoutAware-content').length > 0) {
+                $.deco.init();
+                forceContractMenu();
+            }
         });
 
         $('a.overlayLink,.configlets a').prepOverlay({
@@ -121,7 +125,7 @@ function eraseCookie(name) {
             // Add this to a link or button to make it close the overlay e.g.
             // on cancel without reloading the page
             closeselector: '.overlayCloseAction',
-            formselector: 'form.overlayForm,form.edit-form,#document-base-edit',
+            formselector: 'form.overlayForm,form.edit-form,#document-base-edit,form#form',
             noform: 'reload', // XXX : this will probably need to get smarter
             config: {
                 closeOnClick: false,
