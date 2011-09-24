@@ -119,7 +119,13 @@ PloneQuickUpload.sendDataAndUpload = function (uploader, domelement, typeupload)
 };
 
 PloneQuickUpload.onAllUploadsComplete = function(uploader){
-    $("div.pb-ajax").loadOverlay(uploader._options.container_url);
+    overlay = $(uploader._element).closest("div.pb-ajax");
+    if(overlay.length) {
+        $("div.pb-ajax").loadOverlay(uploader._options.container_url);
+    } else {
+        // Not in an overlay, reload the page
+        window.location.reload(true);
+    }
     $.plone.notify({
         'title': 'Info',
         'message': uploader._filesUploaded + ' files have been uploaded.'
