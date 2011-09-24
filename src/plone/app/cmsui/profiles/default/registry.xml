@@ -10,6 +10,7 @@
                 <element>cmsui</element>
                 <element>jquerytools</element>
                 <element>tinymce</element>
+                <element>quickupload</element>
             </element>
         </value>
     </record>
