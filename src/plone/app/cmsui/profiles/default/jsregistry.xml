@@ -2,7 +2,10 @@
 <object name="portal_javascripts">
     
     <javascript bundle="cmsui" compression="none" id="++resource++plone.app.cmsui/js/jquery.js" insert-before="*" />
-    
+
+    <!-- JSvariables view from CMFPlone. Defines portal_url, etc. -->
+    <javascript bundle="cmsui" id="plone_javascript_variables.js" />    
+
     <javascript bundle="cmsui" id="++resource++plone.app.cmsui/js/menu.js"  />
     <javascript bundle="cmsui" id="++resource++plone.app.cmsui/js/dragdropreorder.js"  />
     <javascript bundle="cmsui" id="++resource++plone.app.cmsui/js/structure.js"  />
