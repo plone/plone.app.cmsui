@@ -172,12 +172,9 @@
   <implements interface=".interfaces.IQuickUploadCapable" />
 </class>       
 
-<plone:behavior
-    title="Quick Upload Capable"
-    description="Show the quick upload form for this type"
-    provides=".interfaces.IQuickUploadCapable"
-    for="plone.dexterity.interfaces.IDexterityContainer"/>
-
+<class class="plone.dexterity.content.Container">
+  <implements interface=".interfaces.IQuickUploadCapable" />
+</class>
 <!-- Quick Upload View -->
      
 <browser:page
