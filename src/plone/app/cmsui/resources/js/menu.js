@@ -140,13 +140,17 @@ function eraseCookie(name) {
                     $(document).trigger('beforeOverlay', [this, e]);
                     if (this.getOverlay().find('#form-widgets-ILayoutAware-content').length > 0) {
                         $.deco.init();
-                        return false;
+                        $('body', window.document).css('overflow', 'hidden');
                     } else {
                         expandMenu();
                         return true;
                     }
                 },
                 onLoad: function (e) {
+                    if (this.getOverlay().find('#form-widgets-ILayoutAware-content').length > 0) {
+                        $(".overlay").hide();
+                        $('body', window.document).css('overflow', 'auto');
+                    }
                     $.plone.showNotifyFromElements($(".overlay"));
                     $(document).trigger('loadOverlay', [this, e]);
                     return true;
