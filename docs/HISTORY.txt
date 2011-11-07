@@ -4,6 +4,9 @@ Changelog
 1.0a2 - 2011-07-17
 ------------------
 
+* Filename must be set as string not unicode
+  [erico_andrei]
+
 * Structure overlay improvements and refinements
   [davisagli,vangheem]
   
