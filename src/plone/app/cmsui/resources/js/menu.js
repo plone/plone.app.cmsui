@@ -149,6 +149,10 @@ function eraseCookie(name) {
                     loadUploader();
                     $.plone.showNotifyFromElements($(".overlay"));
                     $(document).trigger('loadOverlay', [this, e]);
+                    // ----------------------------------------------------------
+                    // trick to get rid of the styles applied by jquerytools
+                    $('.modal').removeAttr('style');
+                    // ----------------------------------------------------------
                     return true;
                 },
                 onClose: function (e) {
