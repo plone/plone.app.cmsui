@@ -50,7 +50,7 @@
                     i18n:translate="cmsui_logged_in_as"
                     class="overlayLink"
                     tal:attributes="href string:${portal_state/navigation_root_url}/@@personal-information">Logged in as <span
-                        i18n:name="name" 
+                        i18n:name="name"
                         tal:replace="view/userName" /></a></li><li
                 tal:repeat="action view/personalActions"
                 tal:attributes="id string:cmsui-personallink-${action/id}"><a
@@ -75,7 +75,7 @@
             <!-- Links tangentially related to the current document -->
             <ul id="folder-actions">
                 <li id="folder-add_content" tal:condition="view/canAdd">
-                    <a class="overlayLink" href="" 
+                    <a class="overlayLink" href=""
                        tal:attributes="href string:${folder/absolute_url}/@@cmsui-add-content">
                     Add Content
                     </a>
@@ -100,9 +100,9 @@
                     tal:attributes="id python:isLocked and 'document-delete-locked' or 'document-delete';">
                     <a class="overlayLink"
                         tal:attributes="href string:${view/deleteLink}">
-                        <span tal:condition="not:isLocked" i18n:translate="cmsiu_delete" 
+                        <span tal:condition="not:isLocked" i18n:translate="cmsiu_delete"
                             tal:omit-tag="">Delete</span>
-                        <span tal:condition="isLocked" i18n:translate="cmsiu_locked" 
+                        <span tal:condition="isLocked" i18n:translate="cmsiu_locked"
                             tal:omit-tag="">Locked</span>
                     </a>
                 </li>

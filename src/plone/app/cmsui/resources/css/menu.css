@@ -13,7 +13,7 @@
 	Based on 960 Grid System - http://960.gs/
 
 	Licensed under GPL and MIT.
-	
+
 	LESS integration — Denys Mishunov [denys.mishunov AT gmail.com]
 */
 /* Containers
@@ -246,9 +246,9 @@
   width: 0;
   height: 0;
 }
-/* Modular Scale 
----------------------- 
-12px @ 1:1.618	 69px @ 1:1.618	 
+/* Modular Scale
+----------------------
+12px @ 1:1.618	 69px @ 1:1.618
 ----------------------*/
 /*
 Pixels      Ems      % of 13
@@ -703,7 +703,7 @@ button:hover {
 			display: inline-block;
 			height: 30px;
 			width: 30px;
-			background: transparent url('../images/pointer_down.png') 50% 50% no-repeat;		    
+			background: transparent url('../images/pointer_down.png') 50% 50% no-repeat;
 		}*/
 
 }
