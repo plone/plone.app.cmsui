@@ -98,6 +98,8 @@ class QuickUploadCapableFileFactory(object):
                         # and the filename must be a string, not unicode
                         # otherwise Archetypes raise an error (so we use filename and not name)
                         if not obj.getFilename() :
+                            if isinstance(filename, unicode):
+                                filename = filename.encode(charset)
                             obj.setFilename(filename)
                         obj.reindexObject()
                         notify(ObjectInitializedEvent(obj))
