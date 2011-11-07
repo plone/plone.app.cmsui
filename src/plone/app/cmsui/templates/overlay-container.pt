@@ -51,16 +51,22 @@
             Status message
           </div>
           <div id="content">
-            <section id="overlay-content" class="clearfix">        
-              <metal:slot define-slot="body">
-                <metal:header define-slot="header" tal:content="nothing">
-                  Visual Header
-                </metal:header>
-                <metal:bodytext define-slot="main" tal:content="nothing">
-                  Body
-                </metal:bodytext>
-              </metal:slot>
-            </section>
+            <div class="modal">
+              <section id="overlay-content" class="clearfix">        
+                <metal:slot define-slot="body">
+                  <div class="modal-header">
+                    <metal:header define-slot="header" tal:content="nothing">
+                      Visual Header
+                    </metal:header>
+                  </div>
+                  <div class="modal-body">
+                    <metal:bodytext define-slot="main" tal:content="nothing">
+                     Body
+                    </metal:bodytext>
+                  </div>
+                </metal:slot>
+              </section>
+            </div>
           </div>
         </div>
       </metal:block>
