@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <object name="portal_javascripts">
     
+    <stylesheet bundle="cmsui" applyPrefix="true" id="++resource++plone.app.cmsui/css/bootstrap.min.css"  />
     <stylesheet bundle="cmsui" applyPrefix="true" id="++resource++plone.app.cmsui/css/boilerplate.css"  />
     <stylesheet bundle="cmsui" applyPrefix="true" id="++resource++plone.app.cmsui/css/structure.css"  />
     <stylesheet bundle="cmsui" applyPrefix="true" id="++resource++plone.app.cmsui/css/authoring.css"  />
