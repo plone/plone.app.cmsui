@@ -127,6 +127,7 @@ function eraseCookie(name) {
             formselector: 'form.overlayForm,form.edit-form,#document-base-edit',
             noform: 'reload', // XXX : this will probably need to get smarter
             config: {
+                overlayTarget : '#overlay-container',
                 closeOnClick: false,
                 top: 130,
                 mask: {

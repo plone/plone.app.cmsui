@@ -461,6 +461,7 @@ button:hover {
   position: fixed;
   z-index: 100001;
 }
+#overlay-container .modal{ z-index:100000000}
 #toolbar:after {
   /*
 	    content: " ";
