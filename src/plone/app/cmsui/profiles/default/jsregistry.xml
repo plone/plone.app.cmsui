@@ -2,12 +2,14 @@
 <object name="portal_javascripts">
     
     <javascript bundle="cmsui" compression="none" id="++resource++plone.app.cmsui/js/jquery.js" insert-before="*" />
-    
+
     <javascript bundle="cmsui" id="++resource++plone.app.cmsui/js/menu.js"  />
-    <javascript bundle="cmsui" id="++resource++plone.app.cmsui/js/libs/fileuploader.js"  />
     <javascript bundle="cmsui" id="++resource++plone.app.cmsui/js/dragdropreorder.js"  />
     <javascript bundle="cmsui" id="++resource++plone.app.cmsui/js/structure.js"  />
     <javascript bundle="cmsui" id="++resource++plone.app.cmsui/js/formtabbing.js"  />
     <javascript bundle="cmsui" id="++resource++plone.app.cmsui/js/history-panel.js"  />
+
+    <javascript bundle="quickupload" id="++resource++plone.app.cmsui/js/libs/fileuploader.js"  />
+    <javascript bundle="quickupload" id="++resource++plone.app.cmsui/js/quickupload.js"  />
 
 </object>

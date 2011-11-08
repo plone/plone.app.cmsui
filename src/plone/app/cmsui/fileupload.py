@@ -49,73 +49,6 @@ class QuickUploadView(BrowserView):
     def _uploader_id(self) :
         return 'uploader%s' %str(random.random()).replace('.','')
     
-    def script_content(self) :
-        context = aq_inner(self.context)
-        return context.restrictedTraverse('@@quick_upload_init')(for_id = self.uploader_id)
-
-
-XHR_UPLOAD_JS = """
-    var fillTitles = %(ul_fill_titles)s;
-    var fillDescriptions = %(ul_fill_descriptions)s;
-    var auto = %(ul_auto_upload)s;
-    addUploadFields_%(ul_id)s = function(file, id) {
-        var uploader = xhr_%(ul_id)s;
-        PloneQuickUpload.addUploadFields(uploader, uploader._element, file, id, fillTitles, fillDescriptions);
-    }
-    sendDataAndUpload_%(ul_id)s = function() {
-        var uploader = xhr_%(ul_id)s;
-        PloneQuickUpload.sendDataAndUpload(uploader, uploader._element, '%(typeupload)s');
-    }
-    clearQueue_%(ul_id)s = function() {
-        var uploader = xhr_%(ul_id)s;
-        PloneQuickUpload.clearQueue(uploader, uploader._element);
-    }
-    onUploadComplete_%(ul_id)s = function(id, fileName, responseJSON) {
-        var uploader = xhr_%(ul_id)s;
-        PloneQuickUpload.onUploadComplete(uploader, uploader._element, id, fileName, responseJSON);
-    }
-    createUploader_%(ul_id)s= function(){
-        xhr_%(ul_id)s = new qq.FileUploader({
-            element: jQuery('#%(ul_id)s')[0],
-            action: '%(context_url)s/@@quick_upload_file',
-            container_url: '%(context_url)s/@@cmsui-structure',
-            autoUpload: auto,
-            onAfterSelect: addUploadFields_%(ul_id)s,
-            onComplete: onUploadComplete_%(ul_id)s,
-            allowedExtensions: %(ul_file_extensions_list)s,
-            sizeLimit: %(ul_xhr_size_limit)s,
-            simUploadLimit: %(ul_sim_upload_limit)s,
-            template: '<div class="qq-uploader">' +
-                      '<div class="qq-upload-drop-area"><span>%(ul_draganddrop_text)s</span></div>' +
-                      '<div class="qq-upload-button"><label for="file-upload">%(ul_button_text)s</label></div>' +
-                      '<ul class="qq-upload-list"></ul>' +
-                      '</div>',
-            fileTemplate: '<li>' +
-                    '<a class="qq-upload-cancel" href="#">&nbsp;</a>' +
-                    '<div class="qq-upload-infos"><span class="qq-upload-file"></span>' +
-                    '<span class="qq-upload-spinner"></span>' +
-                    '<span class="qq-upload-failed-text">%(ul_msg_failed)s</span></div>' +
-                    '<div class="qq-upload-size"></div>' +
-                '</li>',
-            messages: {
-                serverError: "%(ul_error_server)s",
-                serverErrorAlwaysExist: "%(ul_error_always_exists)s {file}",
-                serverErrorZODBConflict: "%(ul_error_zodb_conflict)s {file}, %(ul_error_try_again)s",
-                serverErrorNoPermission: "%(ul_error_no_permission)s",
-                typeError: "%(ul_error_bad_ext)s {file}. %(ul_error_onlyallowed)s {extensions}.",
-                sizeError: "%(ul_error_file_large)s {file}, %(ul_error_maxsize_is)s {sizeLimit}.",
-                emptyError: "%(ul_error_empty_file)s {file}, %(ul_error_try_again_wo)s"
-            }
-        });
-    }
-    jQuery(document).ready(createUploader_%(ul_id)s);
-"""
-
-
-class QuickUploadInit(BrowserView):
-    """ Initialize uploadify js
-    """
-    
     def _utranslate(self, msg):
         # XXX fixme : the _ (SiteMessageFactory) doesn't work
         context = aq_inner(self.context)
@@ -161,11 +94,54 @@ class QuickUploadInit(BrowserView):
         
         return settings
     
-    def __call__(self, for_id="uploader"):
-        self.uploader_id = for_id
-        settings = self.upload_settings()
-        return XHR_UPLOAD_JS % settings
-
+    def script_content(self) :
+        return """
+    var fillTitles = %(ul_fill_titles)s;
+    var fillDescriptions = %(ul_fill_descriptions)s;
+    var auto = %(ul_auto_upload)s;
+    createUploader_%(ul_id)s= function(){
+        var uploader;
+        uploader = new qq.FileUploader({
+            element: jQuery('#%(ul_id)s')[0],
+            action: '%(context_url)s/@@quick_upload_file',
+            container_url: '%(context_url)s/@@cmsui-structure',
+            autoUpload: auto,
+            onAfterSelect: function(file, id) { PloneQuickUpload.addUploadFields(uploader, uploader._element, file, id, fillTitles, fillDescriptions) },
+            onComplete: function(id, fileName, responseJSON) { PloneQuickUpload.onUploadComplete(uploader, uploader._element, id, fileName, responseJSON) },
+            allowedExtensions: %(ul_file_extensions_list)s,
+            sizeLimit: %(ul_xhr_size_limit)s,
+            simUploadLimit: %(ul_sim_upload_limit)s,
+            template: '<div class="qq-uploader">' +
+                      '<div class="qq-upload-drop-area"><span>%(ul_draganddrop_text)s</span></div>' +
+                      '<div class="qq-upload-button"><label for="file-upload">%(ul_button_text)s</label></div>' +
+                      '<ul class="qq-upload-list"></ul>' +
+                      '</div>',
+            fileTemplate: '<li>' +
+                    '<a class="qq-upload-cancel" href="#">&nbsp;</a>' +
+                    '<div class="qq-upload-infos"><span class="qq-upload-file"></span>' +
+                    '<span class="qq-upload-spinner"></span>' +
+                    '<span class="qq-upload-failed-text">%(ul_msg_failed)s</span></div>' +
+                    '<div class="qq-upload-size"></div>' +
+                '</li>',
+            messages: {
+                serverError: "%(ul_error_server)s",
+                serverErrorAlwaysExist: "%(ul_error_always_exists)s {file}",
+                serverErrorZODBConflict: "%(ul_error_zodb_conflict)s {file}, %(ul_error_try_again)s",
+                serverErrorNoPermission: "%(ul_error_no_permission)s",
+                typeError: "%(ul_error_bad_ext)s {file}. %(ul_error_onlyallowed)s {extensions}.",
+                sizeError: "%(ul_error_file_large)s {file}, %(ul_error_maxsize_is)s {sizeLimit}.",
+                emptyError: "%(ul_error_empty_file)s {file}, %(ul_error_try_again_wo)s"
+            }
+        });
+        jQuery('#uploadify-upload').click(function(e) {
+            PloneQuickUpload.sendDataAndUpload(uploader, uploader._element, '%(typeupload)s');
+        });
+        jQuery('#uploadify-clear-queue').click(function(e) {
+            PloneQuickUpload.clearQueue(uploader, uploader._element);
+        });
+    }
+    jQuery(document).ready(createUploader_%(ul_id)s);
+        """ % self.upload_settings()
 
 class QuickUploadFile(BrowserView):
     """ Upload a file
@@ -184,9 +160,7 @@ class QuickUploadFile(BrowserView):
         
         response.setHeader('Expires', 'Sat, 1 Jan 2000 00:00:00 GMT')
         response.setHeader('Cache-control', 'no-cache')
-        # the good content type woul be text/json or text/plain but IE
-        # do not support it
-        response.setHeader('Content-Type', 'text/html; charset=utf-8')
+        response.setHeader('Content-Type', 'application/json')
         
         if request.HTTP_X_REQUESTED_WITH:
             # using ajax upload

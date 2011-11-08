@@ -3,6 +3,7 @@ from DateTime import DateTime
 
 from zExceptions import Unauthorized
 from Products.CMFCore.utils import getToolByName
+from Products.CMFPlone.utils import safe_unicode
 from plone.app.cmsui.interfaces import _
 
 from zope.interface import Interface, implements
@@ -66,7 +67,7 @@ class WorkflowPanel(form.Form):
 
     @property
     def label(self):
-        return _(u'Workflow for ${name}', mapping={'name': self.context.Title()})
+        return _(u'Workflow for ${name}', mapping={'name': safe_unicode(self.context.Title())})
 
     def render(self):
         return self.index()
