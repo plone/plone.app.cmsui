@@ -28,12 +28,12 @@
     <div id="structure-dialog">
       <div class="structure-slider">
         <span id="primary-actions" class="actions">
-          <a href="#" class="overlayLink" tal:attributes="href string:${context/absolute_url}/edit">Edit</a> | 
-          <a href="#" tal:attributes="href string:${context/absolute_url}/view">View</a>
+          <a href="#" class="overlayLink" tal:attributes="href string:${context/absolute_url}/edit" i18n:translate="">Edit</a> | 
+          <a href="#" tal:attributes="href string:${context/absolute_url}/view" i18n:translate="">View</a>
           <tal:add tal:condition="contextState/is_structural_folder"> | 
             <a href="#" class="overlayLink" 
-                        tal:attributes="href string:${context/absolute_url}/@@cmsui-add-content">
-              Add content
+                        tal:attributes="href string:${context/absolute_url}/@@cmsui-add-content" i18n:translate="cmsui_addcontent" i18n:domain="plone.app.cmsui">
+              Add Content
             </a>
           </tal:add>
         </span>
@@ -104,7 +104,7 @@
                   &nbsp;<tal:title i18n:translate="listingheader_title">Title</tal:title>&nbsp;
                 </th>
                 <th class="nosort column" id="foldercontents-creator-column">&nbsp;
-                  <tal:responsible i18n:translate="listingheader_creator">Responsible</tal:responsible>&nbsp;
+                  <tal:responsible i18n:translate="listingheader_author">Author</tal:responsible>&nbsp;
                 </th>
                 <th class="nosort column" id="foldercontents-modified-column">&nbsp;
                   <tal:modified i18n:translate="listingheader_modified">Modified</tal:modified>&nbsp;

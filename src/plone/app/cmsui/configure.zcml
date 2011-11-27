@@ -9,6 +9,7 @@
     i18n_domain="plone">
 
     <!-- Permissions -->
+    <i18n:registerTranslations directory="locales" />
 
     <permission
         id="plone.ViewCMSUI"

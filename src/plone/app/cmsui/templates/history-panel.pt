@@ -14,9 +14,9 @@
      tal:define="context_state context/@@plone_context_state">
 
     <div id="history-dialog">
-      <h1 class="documentFirstHeading">History panel</h1>
+      <h1 class="documentFirstHeading" i18n:translate="summary_history">History</h1>
 
-      <p tal:condition="not:exists:view/history_list">
+      <p tal:condition="not:exists:view/history_list" i18n:domain="plone.app.cmsui" i18n:translate="">
         This item does not have any previous versions.
       </p>
       
@@ -40,14 +40,14 @@
             </tal:t>
           </li>
         </ul></div>
-        <small>Ctrl-click to compare against a different revision</small>
+        <small i18n:domain="plone.app.cmsui" i18n:translate="">Ctrl-click to compare against a different revision</small>
       </div>
 
       <div class="history-detail cell width-12 position-4" tal:condition="exists:view/sel_to_version">
         <h2 tal:content="string:Revision ${view/sel_to_version/version_id}: ${view/sel_to_version/comment}">Comment</h2>
         <p tal:content="string:By ${view/sel_to_version/principal} at ${view/sel_to_version/timestamp}">Description</p>
         <hr />
-        <h3 tal:condition="exists:view/sel_from_version"
+        <h3 tal:condition="exists:view/sel_from_version" i18n:domain="plone.app.cmsui" i18n:translate=""
            tal:content="string:Comparing to revision ${view/sel_from_version/version_id}">Comparing to</h3>
         <fieldset class="diff" tal:repeat="diff view/history_changes">
           <legend tal:content="diff/label">Body text</legend>
@@ -76,7 +76,7 @@
               tal:attributes="action string:${context/absolute_url}/revertversion"
               method="post">
           <input type="hidden" name="version_id" tal:attributes="value view/sel_to_version/version_id" />
-          <input type="submit" value="Revert to this revision" />
+          <input type="submit" value="Revert to this revision" i18n:attributes="value title_revert_revision"/>
         </form>
       </div>
     </div>

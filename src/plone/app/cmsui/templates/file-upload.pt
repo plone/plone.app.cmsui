@@ -1,4 +1,10 @@
-
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      i18n:domain="plone.app.cmsui"
+      tal:omit-tag="">
 <metal:block use-macro="context/global_defines/macros/defines" />
 <tal:headers define="request context/REQUEST">
   <tal:block define="charset site_properties/default_charset|string:utf-8;
@@ -12,7 +18,7 @@
 <div class="quick-uploader"
      i18n:domain="collective.quickupload">
     <div tal:define="uploader_id view/uploader_id">
-      <h2>Upload files and images</h2>
+      <h2 i18n:translate="">Upload files and images</h2>
       <!-- uploader comes here -->
       <div id="uploader"
            class="main-uploader"
@@ -48,4 +54,4 @@
             tal:content="structure view/script_content">
     </script>
 </div>
-
+</html>
