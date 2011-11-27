@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2011-11-27 18:05+0000\n"
+"POT-Creation-Date: 2011-11-27 21:17+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -53,6 +53,10 @@ msgstr ""
 msgid "This item does not have any previous versions."
 msgstr ""
 
+#: ./addmenu.py:20
+msgid "Type"
+msgstr ""
+
 #: ./addmenu.py:77
 msgid "Upload content"
 msgstr ""
@@ -62,28 +66,28 @@ msgid "Workflow for ${name}"
 msgstr ""
 
 #. Default: "Add Content"
-#: ./templates/menu.pt:80
+#: ./templates/menu.pt:79
 #: ./templates/structure.pt:34
 msgid "cmsui_addcontent"
 msgstr ""
 
 #. Default: "Structure"
-#: ./templates/menu.pt:88
+#: ./templates/menu.pt:87
 msgid "cmsui_contents"
 msgstr ""
 
 #. Default: "Hide edit bar &#9650;"
-#: ./templates/menu.pt:67
+#: ./templates/menu.pt:66
 msgid "cmsui_hideeditbar"
 msgstr ""
 
 #. Default: "Logged in as ${name}"
-#: ./templates/menu.pt:54
+#: ./templates/menu.pt:53
 msgid "cmsui_logged_in_as"
 msgstr ""
 
 #. Default: "Show edit bar &#9660;"
-#: ./templates/menu.pt:66
+#: ./templates/menu.pt:65
 msgid "cmsui_showeditbar"
 msgstr ""
 
