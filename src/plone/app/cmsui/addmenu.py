@@ -16,8 +16,8 @@ from plone.app.cmsui.interfaces import _
 
 class IAddNewContent(interface.Interface):
 
-    title = schema.TextLine(title=u"Title")
-    type_name = schema.TextLine(title=u"Type")
+    title = schema.TextLine(title=_(u"Title"))
+    type_name = schema.TextLine(title=_(u"Type"))
 
 
 class AddNewContentForm(form.Form):
