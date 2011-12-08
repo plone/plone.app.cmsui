@@ -24,7 +24,7 @@ class WorkflowActionsSourceBinder(object):
     def __call__(self, context):
         wft = getToolByName(context, 'portal_workflow')
         return vocabulary.SimpleVocabulary([
-            vocabulary.SimpleVocabulary.createTerm(t['id'], t['id'], t['name'])
+            vocabulary.SimpleVocabulary.createTerm(t['id'], t['id'], _(t['name']))
             for t in wft.getTransitionsFor(context)
         ])
 
@@ -32,16 +32,16 @@ class WorkflowActionsSourceBinder(object):
 class IWorkflowPanel(Interface):
     """Form for workflow panel"""
     workflow_action = schema.Choice(
-        title=_(u'label_workflow_action', u"Change State"),
-        description=_(u'help_workflow_action',
+        title=_(u'label_change_status', u"Change State"),
+        description=_(u'help_change_status_action',
                           default=u"Select the transition to be used for modifying the items state."),
         source=WorkflowActionsSourceBinder(),
         required=False,
         )
     comment = schema.Text(
-        title=_(u"label_comment", u"Comments"),
-        description=_(u'help_comment',
-                          default=u"Any comments will be added to the publishing history. If multiple "
+        title=_(u"label_comments", u"Comments"),
+        description=_(u'help_publishing_comments',
+                          default=u"Will be added to the publishing history. If multiple "
                                    "items are selected, this comment will be attached to all of them."),
         required=False,
         )

@@ -1,0 +1,101 @@
+# --- PLEASE EDIT THE LINES BELOW CORRECTLY ---
+# SOME DESCRIPTIVE TITLE.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2011-11-27 21:17+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"Language-Code: en\n"
+"Language-Name: English\n"
+"Preferred-Encodings: utf-8 latin1\n"
+"Domain: plone.app.cmsui\n"
+
+#: ./interfaces.py:28
+msgid "Actions not shown in the more menu"
+msgstr ""
+
+#: ./addmenu.py:27
+msgid "Add content"
+msgstr ""
+
+#: ./templates/add-menu.pt:15
+msgid "Adding content to ${path}"
+msgstr ""
+
+#: ./interfaces.py:13
+msgid "CMS UI theme name"
+msgstr ""
+
+#: ./templates/history-panel.pt:43
+msgid "Ctrl-click to compare against a different revision"
+msgstr ""
+
+#: ./interfaces.py:33
+msgid "Default action icon path"
+msgstr ""
+
+#: ./interfaces.py:23
+msgid "Edit action id"
+msgstr ""
+
+#: ./interfaces.py:18
+msgid "Folder Contents Batch Size"
+msgstr ""
+
+#: ./templates/history-panel.pt:19
+msgid "This item does not have any previous versions."
+msgstr ""
+
+#: ./addmenu.py:20
+msgid "Type"
+msgstr ""
+
+#: ./addmenu.py:77
+msgid "Upload content"
+msgstr ""
+
+#: ./workflowpanel.py:70
+msgid "Workflow for ${name}"
+msgstr ""
+
+#. Default: "Add Content"
+#: ./templates/menu.pt:79
+#: ./templates/structure.pt:34
+msgid "cmsui_addcontent"
+msgstr ""
+
+#. Default: "Structure"
+#: ./templates/menu.pt:87
+msgid "cmsui_contents"
+msgstr ""
+
+#. Default: "Hide edit bar &#9650;"
+#: ./templates/menu.pt:66
+msgid "cmsui_hideeditbar"
+msgstr ""
+
+#. Default: "Logged in as ${name}"
+#: ./templates/menu.pt:53
+msgid "cmsui_logged_in_as"
+msgstr ""
+
+#. Default: "Show edit bar &#9660;"
+#: ./templates/menu.pt:65
+msgid "cmsui_showeditbar"
+msgstr ""
+
+#: ./workflowpanel.py:27
+msgid "name"
+msgstr ""
+
+#: ./historypanel.py:126
+msgid "version ${version}"
+msgstr ""
+

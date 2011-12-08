@@ -32,6 +32,7 @@ setup(name='plone.app.cmsui',
           'plone.formwidget.namedfile',
           # XXX: Unclear why this isn't being pulled into a plain Plone 4.1 site
           'zope.browserresource',
+          'plone.dexterity',
       ],
       extras_require={
         'test': ['plone.app.testing'],
