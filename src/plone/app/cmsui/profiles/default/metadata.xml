@@ -2,5 +2,6 @@
     <version>1</version>
     <dependencies>
         <dependency>profile-plone.app.cmsui:z_bbb</dependency>
+        <dependency>profile-plone.app.toolbar:default</dependency>
     </dependencies>
 </metadata>

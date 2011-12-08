@@ -28,6 +28,7 @@ setup(name='plone.app.cmsui',
           'setuptools',
           'plone.app.registry',
           'Products.CMFPlone',
+          'plone.app.toolbar',
           'plone.namedfile[blobs]',
           'plone.formwidget.namedfile',
           # XXX: Unclear why this isn't being pulled into a plain Plone 4.1 site
