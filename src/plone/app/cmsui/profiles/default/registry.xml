@@ -6,9 +6,11 @@
         interface="Products.ResourceRegistries.interfaces.settings.IResourceRegistriesSettings"
         field="resourceBundlesForThemes">
         <value purge="false">
-            <element key="cmsui">
-                <element>cmsui</element>
+            <element key="toolbar">
+                <element>jquery</element>
                 <element>jquerytools</element>
+                <element>toolbar</element>
+                <element>cmsui</element>
                 <element>tinymce</element>
                 <element>quickupload</element>
             </element>

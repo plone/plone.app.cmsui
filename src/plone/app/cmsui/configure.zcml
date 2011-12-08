@@ -38,32 +38,6 @@
         provides="Products.GenericSetup.interfaces.EXTENSION"
         />
 
-    <!-- Views -->
-
-    <browser:page
-        name="cmsui-menu"
-        for="*"
-        class=".menu.Menu"
-        template="templates/menu.pt"
-        permission="plone.ViewCMSUI"
-	     allowed_attributes="itemsInFolder"
-        />
-
-    <browser:page
-        name="cmsui-notifications"
-        for="*"
-        template="templates/notifications.pt"
-        permission="plone.ViewCMSUI"
-        />
-
-    <browser:page
-        name="cmsui-overlay-container"
-        for="*"
-        class=".overlaycontainer.OverlayContainer"
-        template="templates/overlay-container.pt"
-        permission="plone.ViewCMSUI"
-        />
-
     <!-- History overlay -->
     
     <browser:page
