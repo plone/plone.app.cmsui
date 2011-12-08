@@ -160,21 +160,23 @@
 -->
 <adapter factory=".uploadcapable.QuickUploadCapableFileFactory" />
 
-<class class="Products.ATContentTypes.content.folder.ATFolder">
-  <implements interface=".interfaces.IQuickUploadCapable" />
-</class>
+<configure zcml:condition="installed Products.ATContentTypes">
+    <class class="Products.ATContentTypes.content.folder.ATFolder">
+      <implements interface=".interfaces.IQuickUploadCapable" />
+    </class>
 
-<class class="Products.ATContentTypes.content.folder.ATBTreeFolder">
-  <implements interface=".interfaces.IQuickUploadCapable" />
-</class>
-
+    <class class="Products.ATContentTypes.content.folder.ATBTreeFolder">
+      <implements interface=".interfaces.IQuickUploadCapable" />
+    </class>
+</configure>
 <class class="Products.CMFPlone.Portal.PloneSite">
   <implements interface=".interfaces.IQuickUploadCapable" />
 </class>       
-
-<class class="plone.dexterity.content.Container">
-  <implements interface=".interfaces.IQuickUploadCapable" />
-</class>
+<configure zcml:condition="installed plone.dexterity">
+    <class class="plone.dexterity.content.Container">
+      <implements interface=".interfaces.IQuickUploadCapable" />
+    </class>
+</configure>
 <!-- Quick Upload View -->
      
 <browser:page
