@@ -3,8 +3,12 @@ Changelog
 
 1.0a3 - unreleased
 -------------------
+
 * i18n support completed
   [giacomos]
+
+* Added Spanish translation
+  [hvelarde]
 
 1.0a2 - 2011-07-17
 ------------------
